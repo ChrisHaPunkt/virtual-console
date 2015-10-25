@@ -15,6 +15,8 @@ var app = express();
 var network = require('./bin/serverNetwork');
 network.init(app, 5225, {
     onMessage: function(type, msg){
+        // example callback
+        // TODO use single method for each message type
         switch (type){
             case 'connection':
                 console.log('app.js | a user id ' + msg + ' connected');

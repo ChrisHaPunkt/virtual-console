@@ -6,9 +6,11 @@
 window.onload = function () {
     var clientNetwork = cn({
         onMessage: function (type, msg) {
+            // do anything you want with server messages
             writeContent(type + ' | ' + msg);
         }
     });
+
     var pageContent = document.getElementById('content');
 
     // write messages

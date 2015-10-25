@@ -63,6 +63,9 @@ module.exports = {
     getClientList : function () {
         return clients;
     },
+    disconnectClient : function(id){
+        // TODO implement
+    },
     sendToClient : function (id,msg) {
         sendToClient(id,msg);
     },
