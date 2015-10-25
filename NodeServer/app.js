@@ -11,6 +11,24 @@ var client = require('./routes/client');
 
 var app = express();
 
+// getting network module and start it
+var network = require('./bin/serverNetwork');
+network.init(app, 5225, {
+    onMessage: function(type, msg){
+        switch (type){
+            case 'connection':
+                console.log('app.js | a user id ' + msg + ' connected');
+                network.broadcastMessage('A new user joined us! ID: ' + msg);
+                console.log('app.js | ', network.getClientList());
+                //network.sendToClient(msg, 'Your Client ID is: ' + msg);
+                break;
+            case 'disconnect':
+                console.log('app.js | a user id ' + msg + ' disconnected');
+                network.broadcastMessage('A user left us! ID: ' + msg);
+                break;
+        }
+    }
+}).start();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
