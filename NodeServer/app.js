@@ -7,12 +7,10 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var client = require('./routes/client');
 
 var app = express();
 
-// getting network module and start it
-var network = require('./bin/serverNetwork');
-network.init(app, 5225).start();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/client', client);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
