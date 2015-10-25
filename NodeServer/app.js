@@ -10,6 +10,10 @@ var users = require('./routes/users');
 
 var app = express();
 
+// getting network module and start it
+var network = require('./bin/serverNetwork');
+network.init(app, 5225).start();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
