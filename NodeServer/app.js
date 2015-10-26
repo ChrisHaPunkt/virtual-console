@@ -14,21 +14,18 @@ var app = express();
 // getting network module and start it
 var network = require('./bin/serverNetwork');
 network.init(app, 5225, {
-    onMessage: function(type, msg){
-        // example callback
-        // TODO use single method for each message type
-        switch (type){
-            case 'connection':
-                console.log('app.js | a user id ' + msg + ' connected');
-                network.broadcastMessage('A new user joined us! ID: ' + msg);
-                console.log('app.js | ', network.getClientList());
-                //network.sendToClient(msg, 'Your Client ID is: ' + msg);
-                break;
-            case 'disconnect':
-                console.log('app.js | a user id ' + msg + ' disconnected');
-                network.broadcastMessage('A user left us! ID: ' + msg);
-                break;
-        }
+    onNewClient: function (id) {
+        console.log('app.js | a user id ' + id + ' connected');
+        network.broadcastMessage('A new user joined us! ID: ' + id);
+        network.sendToClient(id, 'message', 'Your Client ID is: ' + id);
+    },
+    onDisconnect: function (id) {
+        console.log('app.js | a user id ' + id + ' disconnected');
+        network.broadcastMessage('A user left us! ID: ' + id);
+    },
+    onMessage: function (id, data) {
+        console.log('app.js | a user id ' + id + ' sended a message: ' + data);
+        network.broadcastMessage('User ID ' + id + ': ' + data);
     }
 }).start();
 

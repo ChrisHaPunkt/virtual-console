@@ -8,68 +8,104 @@ var server = 0;
 var http = require('http');
 var app = 0;
 var port = 0;
-var clients = [];
-var msgCallback;
+var clients = {};
+var callback;
 
 // start webserver and socket
-var startListening = function() {
+var startListening = function () {
     // TODO dont create own http server, but use the one from /bin/www file
     server = http.createServer(app).listen(port, function () {
         console.log('serverNetwork | Server listening on port ' + port);
     });
     io.listen(server);
 
-    io.sockets.on('connection', function(socket){
+    io.sockets.on('connection', function (socket) {
         // new client connects
-        msgCallback.onMessage('connection', socket.id);
-        clients.push(socket.id, {id:socket.id,socket:socket,loggedIn:false}); // add client to client list
+        addClient(socket);
+        callback.onNewClient(socket.id);
+
+        // client sends message
+        socket.on('message', function (data) {
+            callback.onMessage(socket.id, data);
+        });
 
         // client disconnects
-        socket.on('disconnect', function(){
-            msgCallback.onMessage('disconnect', socket.id);
-            // TODO make this work
-            clients.splice(clients.indexOf(socket.id),1); // remove client from client list
+        socket.on('disconnect', function () {
+            callback.onDisconnect(socket.id);
+            deleteClient(socket.id);
         });
     });
 };
 
-// messaging functions
-var sendToClient = function(id,message){
-    clients[id].socket.emit('message',message);
+// client handling functions
+var addClient = function (socket) {
+    clients[socket.id] = {id: socket.id, socket: socket, loggedIn: false};
+    console.log('serverNetwork | added client with id ' + socket.id);
 };
-var broadcastMessage = function(message){
-    if(typeof message === 'string'){
+var getClient = function (id) {
+    if (clients.hasOwnProperty(id)) {
+        return clients[id];
+    } else {
+        console.error('serverNetwork | no client with id ' + id);
+        return null;
+    }
+};
+var deleteClient = function (id) {
+    if (clients.hasOwnProperty(id)) {
+        if (clients[id].socket.connected) {
+            console.log('serverNetwork | closing socket to client with id ' + id);
+            io.sockets.connected[id].disconnect();
+        }
+        delete clients[id];
+        console.log('serverNetwork | deleted client with id ' + id);
+    } else {
+        console.error('serverNetwork | no client with id ' + id + '. Cannot delete');
+    }
+};
+
+// messaging functions
+var sendToClient = function (id, messageType, message) {
+    if (clients.hasOwnProperty(id)) {
+        clients[id].socket.emit(messageType, message);
+    } else {
+        console.error('serverNetwork | no client with id ' + id + '. Cannot send message');
+    }
+};
+var broadcastMessage = function (message) {
+    if (typeof message === 'string') {
         io.emit('broadcast', message);
     }
 };
 
 // exports
 module.exports = {
-    init : function (inApp, inPort, callback) {
+    init: function (inApp, inPort, inCallback) {
         app = inApp;
         port = inPort;
-        msgCallback = callback;
+        callback = inCallback;
         return this;
     },
-    start : function(){
-        if(app != 0){
+    start: function () {
+        if (app == 0) {
+            console.error('serverNetwork | Please set app first.');
+        } else if (callback == 0) {
+            console.error('serverNetwork | Please set callback first.');
+        } else {
             startListening();
             //console.log('serverNetwork | Server network module started.');
-        }else{
-            console.error('serverNetwork | Please set app first.');
         }
         return this;
     },
-    getClientList : function () {
+    getClientList: function () {
         return clients;
     },
-    disconnectClient : function(id){
-        // TODO implement
+    disconnectClient: function (id) {
+        deleteClient(id);
     },
-    sendToClient : function (id,msg) {
-        sendToClient(id,msg);
+    sendToClient: function (id, messageType, msg) {
+        sendToClient(id, messageType, msg);
     },
-    broadcastMessage : function(message){
+    broadcastMessage: function (message) {
         broadcastMessage(message);
     }
 };
