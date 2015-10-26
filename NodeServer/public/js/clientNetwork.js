@@ -5,28 +5,34 @@
 var cn = (function () {
 
     var socket;
-    var msgCallback;
+    var callback;
 
     // open socket and set listener
-    var init = function (callback) {
+    var init = function (inCallback) {
 
         socket = io();
-        msgCallback = callback;
+        callback = inCallback;
 
         socket.on('message', function (message) {
-            msgCallback.onMessage('message', message);
+            callback.onMessage('message', message);
         });
         socket.on('broadcast', function (message) {
-            msgCallback.onMessage('broadcast', message);
+            callback.onMessage('broadcast', message);
         });
     };
 
     // public interface
-    return function (msgCallback) {
+    return function (inCallback) {
         if (io !== 'undefined') {
-            init(msgCallback);
+            init(inCallback);
+            return {
+                sendData: function (type, data) {
+                    socket.emit(type, data);
+                }
+            };
         } else {
             console.error('Please include socket.io client module. http://socket.io/download/');
+            return null;
         }
     };
 

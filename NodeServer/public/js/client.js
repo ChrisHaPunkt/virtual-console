@@ -13,7 +13,9 @@ window.onload = function () {
 
     var pageContent = document.getElementById('content');
 
-    // write messages
+    clientNetwork.sendData('message', 'hello from client');
+
+    // write to content
     var writeContent = function (msg) {
         if (typeof msg === 'string') {
             pageContent.innerHTML += '<p class="message">' + msg + '</p>';
