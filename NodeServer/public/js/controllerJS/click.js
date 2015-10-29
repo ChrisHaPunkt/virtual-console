@@ -4,8 +4,17 @@
 $('.myButton').mousedown(buttonwaspressed);
 $('.myButton').mouseup(buttonwasreleased);
 
+var socket = cn({
+    onMessage: function (type, msg) {
+        // do anything you want with server messages
+       console.log(msg);
+    }
+});
+
+
 function buttonwaspressed(button){
-    console.log($(this).attr('id') + 'ist gedrückt worden');
+    socket.sendData('message', $(this).attr('id') + 'ist gedrückt worden');
+    console.log();
 }
 
 function buttonwasreleased(){
