@@ -24,7 +24,7 @@ network.init(app, 5225, {
     },
     onDisconnect: function (id) {
         console.log('app.js | a user id ' + id + ' disconnected');
-        network.broadcastMessage('A user left us! ID: ' + id);
+        network.broadcastMessage('A user has left us! ID: ' + id);
     },
     onMessage: function (id, data) {
         console.log('app.js | a user id ' + id + ' sended a message: ' + data);
