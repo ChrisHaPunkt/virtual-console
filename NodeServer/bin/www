@@ -34,7 +34,7 @@ server.on('listening', onListening);
  * Initialize own Socket Server
  */
 
-var network = require('./serverNetwork');
+var network = require('./../sources/serverNetwork');
 network.init(server, {
     onNewClient: function (id) {
         console.log('app.js | a user id ' + id + ' connected');
