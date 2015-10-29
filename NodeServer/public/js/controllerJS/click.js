@@ -1,11 +1,11 @@
 /**
  * Created by michaelschleiss on 29.10.15.
  */
-$('.myButton').mousedown(function() {buttonwaspressed()});
-$('.myButton').mouseup(function() {buttonwasreleased()});
+$('.myButton').mousedown(function() {buttonwaspressed});
+$('.myButton').mouseup(function() {buttonwasreleased});
 
 function buttonwaspressed(){
-    console.log($('.myButton'));
+    console.log(this);
 }
 
 function buttonwasreleased(){
