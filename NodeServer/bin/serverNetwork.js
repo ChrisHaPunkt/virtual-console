@@ -14,10 +14,15 @@ var callback;
 // start webserver and socket
 var startListening = function () {
     // TODO dont create own http server, but use the one from /bin/www file
-    server = http.createServer(app).listen(port, function () {
-        console.log('serverNetwork | Server listening on port ' + port);
-    });
-    io.listen(server);
+    try {
+
+        io.listen(server);
+        console.log('serverNetwork | Server listening on port ' +  server.address().port );
+
+    } catch (e) {
+
+    }
+
 
     io.sockets.on('connection', function (socket) {
         // new client connects
@@ -79,14 +84,13 @@ var broadcastMessage = function (message) {
 
 // exports
 module.exports = {
-    init: function (inApp, inPort, inCallback) {
-        app = inApp;
-        port = inPort;
+    init: function (serverInstance, inCallback) {
+        server = serverInstance;
         callback = inCallback;
         return this;
     },
     start: function () {
-        if (app == 0) {
+        if (server == 0) {
             console.error('serverNetwork | Please set app first.');
         } else if (callback == 0) {
             console.error('serverNetwork | Please set callback first.');
