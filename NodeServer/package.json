@@ -14,6 +14,7 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "socket.io": "latest",
-    "jquery": "latest"
+    "jquery": "latest",
+    "mongodb": "2.0.47"
   }
 }
