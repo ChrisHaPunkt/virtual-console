@@ -10,14 +10,14 @@ function database(dbURL){
     this.db = undefined;
 
     ///////////////////////
-    //Connect to Database
+    //Connect to database
     ///////////////////////
     openDB = function(onSuccess){
-        MongoClient.connect(dbURL, function(err, db) {
-            if(err == null){
+        MongoClient.connect(dbURL, function(error, db) {
+            if(error == null){
                 this.db = db;
                 onSuccess(db);
-                console.log("Connected correctly to server.");
+                console.log("Connected to server!");
             } else {
                 console.log(err);
             }
@@ -26,7 +26,7 @@ function database(dbURL){
     }
 
     ///////////////////////
-    //Connect to Database
+    //Close database connection
     ///////////////////////
     closeDB = function(){
         db.close();
@@ -36,7 +36,7 @@ function database(dbURL){
     ///////////////////////
     //Public
     ///////////////////////
-    public = {
+    publicSection = {
         insert:function(collection, data) {
             openDB(function(db) {
                 var userCollection = db.collection(collection);
@@ -46,11 +46,9 @@ function database(dbURL){
                     data,
                     function (error, doc) {
                         if (error) {
-                            // If it failed, return error
                             console.log(error);
                         }
                         else {
-                            // And forward to success page
                             console.log("Add to DB: " + data);
                         }
                         closeDB();
@@ -75,7 +73,7 @@ function database(dbURL){
 
     }
 
-return public;
+return publicSection;
 
 }
 
@@ -88,3 +86,5 @@ return public;
 mongodb = new database("mongodb://localhost:27017/M113");
 mongodb.insert("userData", { name:"test"});
 mongodb.query("userData", { name:"test"},function(docs){console.log(docs);});
+
+
