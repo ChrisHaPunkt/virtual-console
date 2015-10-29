@@ -12,7 +12,7 @@ var users = require('./routes/users');
 var client = require('./routes/client');
 var controllerDemo = require('./routes/controllerDemo');
 
-var app = express();
+var app = module.exports.app = express();
 
 // getting network module and start it
 var network = require('./bin/serverNetwork');
@@ -24,7 +24,7 @@ network.init(app, 5225, {
     },
     onDisconnect: function (id) {
         console.log('app.js | a user id ' + id + ' disconnected');
-        network.broadcastMessage('A user left us! ID: ' + id);
+        network.broadcastMessage('A user has left us! ID: ' + id);
     },
     onMessage: function (id, data) {
         console.log('app.js | a user id ' + id + ' sended a message: ' + data);
