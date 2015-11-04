@@ -4,7 +4,6 @@
 
 var MongoClient = require('mongodb').MongoClient;
 
-
 function database(dbURL){
     this.dbURL = dbURL;
     this.db = undefined;
@@ -19,7 +18,7 @@ function database(dbURL){
                 onSuccess(db);
                 console.log("Connected to server!");
             } else {
-                console.log(err);
+                console.log(error);
             }
 
         });
@@ -73,7 +72,7 @@ function database(dbURL){
 
     }
 
-return publicSection;
+    return publicSection;
 
 }
 
@@ -84,7 +83,10 @@ return publicSection;
 
 //For test purpose
 mongodb = new database("mongodb://localhost:27017/M113");
+
+
+
 mongodb.insert("userData", { name:"test"});
-mongodb.query("userData", { name:"test"},function(docs){console.log(docs);});
+mongodb.query("userData", { name:"test"}, function(docs){console.log(docs);});
 
 
