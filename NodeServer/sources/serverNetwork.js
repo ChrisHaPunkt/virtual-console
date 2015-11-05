@@ -17,7 +17,7 @@ var startListening = function () {
     try {
 
         io.listen(server);
-        console.log('serverNetwork | Server listening on port ' +  server.address().port );
+        console.log('serverNetwork | Server listening on port ' + server.address().port);
 
     } catch (e) {
 
@@ -28,6 +28,14 @@ var startListening = function () {
         // new client connects
         addClient(socket);
         callback.onNewClient(socket.id);
+
+        // client login
+        socket.on('login', function (data) {
+            // call callback method and parse return value
+            var loginResult = callback.onLogin(socket.id, data.username, data.password);
+            // send authentication result back to client
+            sendToClient(socket.id, 'login', loginResult);
+        });
 
         // client sends message
         socket.on('message', function (data) {
