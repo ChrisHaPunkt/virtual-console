@@ -21,6 +21,17 @@ function getMotionData(rnd){
         var interval = event.interval;
 
 
+
+
+        if(typeof(rnd) != "undefined"){
+            accelerationX = accelerationX.toFixed(rnd);
+            accelerationY = accelerationY.toFixed(rnd);
+            accelerationZ = accelerationZ.toFixed(rnd);
+            rotationAlpha = rotationAlpha.toFixed(rnd);
+            rotationBeta = rotationBeta.toFixed(rnd);
+            rotationGamma =rotationGamma.toFixed(rnd);
+        }
+
         $('#x').html('Beschleunigung in X-Richtung:' + accelerationX);
         $('#y').html('Beschleunigung in Y-Richtung:' + accelerationY);
         $('#z').html('Beschleunigung in Z-Richtung:' + accelerationZ);
@@ -31,16 +42,9 @@ function getMotionData(rnd){
 
         $('#i').html('Rotation in Gamma:' + interval);
 
-    /*
-        if( rnd != []){
-            accelerationX = accelerationX.toFixed(rnd);
-            accelerationY = accelerationY.toFixed(rnd);
-            accelerationZ = accelerationZ.toFixed(rnd);
-            rotationAlpha = rotationAlpha.toFixed(rnd);
-            rotationBeta = rotationBeta.toFixed(rnd);
-            rotationGamma =rotationGamma.toFixed(rnd);
-        }
-        alert(accelerationX);
+
+        /*
+
 
         var motion = {
             accelerationX: accelerationX,
@@ -55,6 +59,8 @@ function getMotionData(rnd){
         */
     }
 }
+
+getMotionData(2);
 
 
 /*
