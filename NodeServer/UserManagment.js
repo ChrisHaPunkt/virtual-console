@@ -6,9 +6,11 @@ var database = require('./Database.js')("mongodb://localhost:27017/M113");
 
 module.exports = function(){
     var publicSection = {
-        addUser:function(name, password){
-            User = {name:name, password:password};
-            database.insert("userData", User);
+
+        registerUser:function(name, password){   //Dummy function
+           //todo
+            //User = {name:name, password:password};
+            //database.insert("userData", User);
         },
 
         authenticateUser:function(name, password){
