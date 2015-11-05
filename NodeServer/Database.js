@@ -2,9 +2,9 @@
  * Created by dennis on 29.10.15.
  */
 
-var MongoClient = require('mongodb').MongoClient;
 
-function database(dbURL){
+module.exports = function(dbURL){
+    var MongoClient = require('mongodb').MongoClient;
     this.dbURL = dbURL;
     this.db = undefined;
 
@@ -52,9 +52,7 @@ function database(dbURL){
                         }
                         closeDB();
                 });
-
             });
-
         },
 
         query:function(collection, query, onSuccess) {
@@ -71,22 +69,5 @@ function database(dbURL){
         }
 
     }
-
     return publicSection;
-
 }
-
-
-
-
-
-
-//For test purpose
-mongodb = new database("mongodb://localhost:27017/M113");
-
-
-
-mongodb.insert("userData", { name:"test"});
-mongodb.query("userData", { name:"test"}, function(docs){console.log(docs);});
-
-
