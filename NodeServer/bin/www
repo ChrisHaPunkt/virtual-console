@@ -52,6 +52,7 @@ network.init(server, {
     onMessage: function (id, data) {
         console.log('app.js | a user id ' + id + ' sended a message: ' + data);
         network.broadcastMessage('User ID ' + id + ': ' + data);
+        network.sendToFrontend(data);
     }
 }).start();
 
