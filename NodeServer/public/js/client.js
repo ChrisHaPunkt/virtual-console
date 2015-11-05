@@ -17,7 +17,7 @@ window.onload = function () {
 
     var pageContent = document.getElementById('content');
 
-    clientNetwork.sendData('message', 'hello from client');
+    clientNetwork.sendData('hello from client');
     clientNetwork.sendLogin('test','test');
 
     // write to content
