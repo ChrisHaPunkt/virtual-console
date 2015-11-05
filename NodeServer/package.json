@@ -13,7 +13,12 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
+    "jquery": "latest",
+    "engine.io":"latest",
+    "has-binary-data":"latest",
+    "ms":"latest",
     "socket.io": "latest",
-    "jquery": "latest"
+    "socket.io-client": "latest",
+    "socket.io-parser": "latest"
   }
 }
