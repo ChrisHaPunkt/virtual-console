@@ -8,7 +8,7 @@
 
 function getMotionData(rnd){
     window.ondevicemotion = function(event) {
-     /*   var accelerationX = event.acceleration.x; //links,rechts
+        var accelerationX = event.acceleration.x; //links,rechts
         var accelerationY = event.acceleration.y; //hoch, runter
         var accelerationZ = event.acceleration.z; //vor, zurück
 
@@ -16,11 +16,9 @@ function getMotionData(rnd){
         var rotationBeta   = event.rotationRate.beta; //rotation um karthesische Y-Achse (drehen)
         var rotationGamma   = event.rotationRate.gamma; //rotation um karthesische Z-Achse (kippen links, rechts)
 
-        $('#x').html('Beschleunigung in X-Richtung:' + beschleunigungX);
-
 
         var interval = event.interval;
-
+        /*
         if( rnd != []){
             accelerationX = accelerationX.toFixed(rnd);
             accelerationY = accelerationY.toFixed(rnd);
@@ -29,7 +27,6 @@ function getMotionData(rnd){
             rotationBeta = rotationBeta.toFixed(rnd);
             rotationGamma =rotationGamma.toFixed(rnd);
         }
-        alert(accelerationX);
 
         var motion = {
             accelerationX: accelerationX,
@@ -44,9 +41,15 @@ function getMotionData(rnd){
 
 
         //TEST
-        var beschleunigungX = event.acceleration.x; //links,rechts
         $('#x').html('Beschleunigung in X-Richtung:' + beschleunigungX);
+        $('#y').html('Beschleunigung in Y-Richtung:' + beschleunigungY);
+        $('#z').html('Beschleunigung in Z-Richtung:' + beschleunigungZ);
 
+        $('#a').html('Rotation in Alpha:' + rotationAlpha);
+        $('#b').html('Rotation in Beta:' + rotationBeta);
+        $('#c').html('Rotation in Gamma:' + rotationGamma);
+
+        $('#i').html('Interval:' + interval);
     }
 }
 
