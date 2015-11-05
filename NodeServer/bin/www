@@ -41,6 +41,10 @@ network.init(server, {
         network.broadcastMessage('A new user joined us! ID: ' + id);
         network.sendToClient(id, 'message', 'Your Client ID is: ' + id);
     },
+    onLogin: function (id, username, password) {
+        // TODO check user with authenticator module and return result
+        return true;
+    },
     onDisconnect: function (id) {
         console.log('app.js | a user id ' + id + ' disconnected');
         network.broadcastMessage('A user left us! ID: ' + id);

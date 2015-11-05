@@ -8,12 +8,17 @@ window.onload = function () {
         onMessage: function (type, msg) {
             // do anything you want with server messages
             writeContent(type + ' | ' + msg);
+        },
+        onLogin: function (msg) {
+            // use login return
+            writeContent('login | ' + msg);
         }
     });
 
     var pageContent = document.getElementById('content');
 
     clientNetwork.sendData('message', 'hello from client');
+    clientNetwork.sendLogin('test','test');
 
     // write to content
     var writeContent = function (msg) {

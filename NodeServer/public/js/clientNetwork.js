@@ -19,6 +19,9 @@ var cn = (function () {
         socket.on('broadcast', function (message) {
             callback.onMessage('broadcast', message);
         });
+        socket.on('login', function (message) {
+            callback.onLogin(message);
+        })
     };
 
     // public interface
@@ -28,6 +31,9 @@ var cn = (function () {
             return {
                 sendData: function (type, data) {
                     socket.emit(type, data);
+                },
+                sendLogin: function (username, password) {
+                    socket.emit('login', {username: username, password: password});
                 }
             };
         } else {
