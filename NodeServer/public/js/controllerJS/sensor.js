@@ -8,7 +8,7 @@
 
 function getMotionData(rnd){
     window.ondevicemotion = function(event) {
-        var accelerationX = event.acceleration.x; //links,rechts
+     /*   var accelerationX = event.acceleration.x; //links,rechts
         var accelerationY = event.acceleration.y; //hoch, runter
         var accelerationZ = event.acceleration.z; //vor, zurück
 
@@ -40,7 +40,13 @@ function getMotionData(rnd){
             rotationGamma: rotationGamma,
             interval: interval
         };
-        return motion;
+        return motion;*/
+
+
+        //TEST
+        var beschleunigungX = event.acceleration.x; //links,rechts
+        $('#x').html('Beschleunigung in X-Richtung:' + beschleunigungX);
+
     }
 }
 
