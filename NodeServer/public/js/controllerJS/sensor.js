@@ -7,7 +7,6 @@
  */
 
 function getMotionData(rnd){
-
     window.ondevicemotion = function(event) {
         var accelerationX = event.acceleration.x; //links,rechts
         var accelerationY = event.acceleration.y; //hoch, runter
@@ -20,19 +19,17 @@ function getMotionData(rnd){
         var interval = event.interval;
 
         if( rnd != []){
-            accelerationX = Math.round(accelerationX).toFixed(rnd);
-            accelerationY = Math.round(accelerationY).toFixed(rnd);
-            accelerationZ = Math.round(accelerationZ).toFixed(rnd);
-            rotationAlpha = Math.round(rotationAlpha).toFixed(rnd);
-            rotationBeta = Math.round(rotationBeta).toFixed(rnd);
-            rotationGamma = Math.round(rotationGamma).toFixed(rnd);
-        }
-        else {
-            rotationAlpha = Math.round(rotationAlpha);
-            rotationBeta = Math.round(rotationBeta);
-            rotationGamma = Math.round(rotationGamma);
+            accelerationX = accelerationX.toFixed(rnd);
+            accelerationY = accelerationY.toFixed(rnd);
+            accelerationZ = accelerationZ.toFixed(rnd);
+            rotationAlpha = rotationAlpha.toFixed(rnd);
+            rotationBeta = rotationBeta.toFixed(rnd);
+            rotationGamma =rotationGamma.toFixed(rnd);
         }
 
+
+
+        alert(accelerationX);
 
         var motion = {
             accelerationX: accelerationX,
