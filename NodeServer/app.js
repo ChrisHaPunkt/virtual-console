@@ -15,7 +15,22 @@ var controllerDemo = require('./routes/controllerDemo');
 var app = module.exports.app = express();
 
 // getting network module and start it
-
+var network = require('./bin/serverNetwork');
+network.init(app, 5225, {
+    onNewClient: function (id) {
+        console.log('app.js | a user id ' + id + ' connected');
+        network.broadcastMessage('A new user joined us! ID: ' + id);
+        network.sendToClient(id, 'message', 'Your Client ID is: ' + id);
+    },
+    onDisconnect: function (id) {
+        console.log('app.js | a user id ' + id + ' disconnected');
+        network.broadcastMessage('A user has left us! ID: ' + id);
+    },
+    onMessage: function (id, data) {
+        console.log('app.js | a user id ' + id + ' sended a message: ' + data);
+        network.broadcastMessage('User ID ' + id + ': ' + data);
+    }
+}).start();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
