@@ -1,10 +1,9 @@
 /**
  * Created by dennis on 29.10.15.
  */
-
+var MongoClient = require('mongodb').MongoClient;
 
 module.exports = function(dbURL){
-    var MongoClient = require('mongodb').MongoClient;
     this.dbURL = dbURL;
     this.db = undefined;
 
@@ -30,7 +29,6 @@ module.exports = function(dbURL){
     closeDB = function(){
         db.close();
     }
-
 
     ///////////////////////
     //Public
@@ -62,12 +60,8 @@ module.exports = function(dbURL){
                     onSuccess(docs);
                     closeDB();
                 });
-
-
             });
-
         }
-
     }
     return publicSection;
 }

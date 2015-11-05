@@ -12,6 +12,12 @@ var users = require('./routes/users');
 var client = require('./routes/client');
 var controllerDemo = require('./routes/controllerDemo');
 
+var userManagment = require('./UserManagment.js')();
+
+
+userManagment.addUser("Klaus", "Test");
+
+
 var app = express();
 
 // getting network module and start it

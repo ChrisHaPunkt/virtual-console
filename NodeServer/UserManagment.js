@@ -2,18 +2,14 @@
  * Created by dennis on 29.10.15.
  */
 
+var database = require('./Database.js')("mongodb://localhost:27017/M113");
 
-
-function UserManagment(){
-    this.database = new database("mongodb://localhost:27017/M113");
-    this.userCollection = "userData";
-
+module.exports = function(){
     var publicSection = {
         addUser:function(name, password){
             User = {name:name, password:password};
-            database.insert(this.userCollection, User);
+            database.insert("userData", User);
         },
-
 
         authenticateUser:function(name, password){
             query = { name:name, password:password};
@@ -22,10 +18,9 @@ function UserManagment(){
 
         },
 
-
         setUserData:function(){},
         getUserData:function(){}
     }
     return publicSection;
 
-}
+};
