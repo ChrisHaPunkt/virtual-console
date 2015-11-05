@@ -8,7 +8,7 @@
 
 function getMotionData(rnd){
     window.ondevicemotion = function(event) {
-        var accelerationX = event.acceleration.x; //links,rechts
+        var accelerationX = event.acceleration.x; //hoch, runter
         var accelerationY = event.acceleration.y; //hoch, runter
         var accelerationZ = event.acceleration.z; //vor, zurück
 
@@ -17,8 +17,21 @@ function getMotionData(rnd){
         var rotationGamma   = event.rotationRate.gamma; //rotation um karthesische Z-Achse (kippen links, rechts)
 
 
+
         var interval = event.interval;
-        /*
+
+
+        $('#x').html('Beschleunigung in X-Richtung:' + accelerationX);
+        $('#y').html('Beschleunigung in Y-Richtung:' + accelerationY);
+        $('#z').html('Beschleunigung in Z-Richtung:' + accelerationZ);
+
+        $('#a').html('Rotation in Alpha:' + rotationAlpha);
+        $('#b').html('Rotation in Beta:' + rotationBeta);
+        $('#c').html('Rotation in Gamma:' + rotationGamma);
+
+        $('#i').html('Rotation in Gamma:' + interval);
+
+    /*
         if( rnd != []){
             accelerationX = accelerationX.toFixed(rnd);
             accelerationY = accelerationY.toFixed(rnd);
@@ -27,6 +40,7 @@ function getMotionData(rnd){
             rotationBeta = rotationBeta.toFixed(rnd);
             rotationGamma =rotationGamma.toFixed(rnd);
         }
+        alert(accelerationX);
 
         var motion = {
             accelerationX: accelerationX,
@@ -37,19 +51,8 @@ function getMotionData(rnd){
             rotationGamma: rotationGamma,
             interval: interval
         };
-        return motion;*/
-
-
-        //TEST
-        $('#x').html('Beschleunigung in X-Richtung:' + beschleunigungX);
-        $('#y').html('Beschleunigung in Y-Richtung:' + beschleunigungY);
-        $('#z').html('Beschleunigung in Z-Richtung:' + beschleunigungZ);
-
-        $('#a').html('Rotation in Alpha:' + rotationAlpha);
-        $('#b').html('Rotation in Beta:' + rotationBeta);
-        $('#c').html('Rotation in Gamma:' + rotationGamma);
-
-        $('#i').html('Interval:' + interval);
+        return motion;
+        */
     }
 }
 
