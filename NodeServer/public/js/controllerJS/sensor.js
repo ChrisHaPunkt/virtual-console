@@ -26,9 +26,6 @@ function getMotionData(rnd){
             rotationBeta = rotationBeta.toFixed(rnd);
             rotationGamma =rotationGamma.toFixed(rnd);
         }
-
-
-
         alert(accelerationX);
 
         var motion = {
