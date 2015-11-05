@@ -1,10 +1,9 @@
 /**
  * Created by dennis on 29.10.15.
  */
-
 var MongoClient = require('mongodb').MongoClient;
 
-function database(dbURL){
+module.exports = function(dbURL){
     this.dbURL = dbURL;
     this.db = undefined;
 
@@ -31,7 +30,6 @@ function database(dbURL){
         db.close();
     }
 
-
     ///////////////////////
     //Public
     ///////////////////////
@@ -52,9 +50,7 @@ function database(dbURL){
                         }
                         closeDB();
                 });
-
             });
-
         },
 
         query:function(collection, query, onSuccess) {
@@ -64,29 +60,8 @@ function database(dbURL){
                     onSuccess(docs);
                     closeDB();
                 });
-
-
             });
-
         }
-
     }
-
     return publicSection;
-
 }
-
-
-
-
-
-
-//For test purpose
-mongodb = new database("mongodb://localhost:27017/M113");
-
-
-
-mongodb.insert("userData", { name:"test"});
-mongodb.query("userData", { name:"test"}, function(docs){console.log(docs);});
-
-

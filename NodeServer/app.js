@@ -13,6 +13,11 @@ var frontendRoute = require('./routes/frontendRoute');
 var controllerDemo = require('./routes/controllerDemo');
 
 var app = module.exports.app = express();
+var userManagment = require('./UserManagment.js');
+
+
+userManagment().addUser("Klaus", "Test");
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
