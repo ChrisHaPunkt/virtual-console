@@ -45,7 +45,7 @@ function getMotionData(rnd){
 }
 
 
-
+/*
 function getBatteryStatus(){
     navigator.getBattery().then(function(battery) {
         BatteryStatus{
@@ -75,4 +75,4 @@ function getBatteryStatus(){
 
 
 
-}
+}*/
