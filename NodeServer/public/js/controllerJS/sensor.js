@@ -6,6 +6,24 @@
 
  */
 
+/*
+function getBrowserByFeature(){
+var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+// Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+// At least Safari 3+: "[object HTMLElementConstructor]"
+var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6}
+
+
+
+function vibrate(milliseconds){
+    window.navigator.vibrate(milliseconds);
+}
+
+
+
 function getMotionData(rnd){
     window.ondevicemotion = function(event) {
         var accelerationX = event.acceleration.x; //hoch, runter
@@ -63,34 +81,98 @@ function getMotionData(rnd){
 getMotionData(2);
 
 
-/*
-function getBatteryStatus(){
-    navigator.getBattery().then(function(battery) {
-        BatteryStatus{
 
+
+
+
+
+
+
+function getUserAudioVideo(){
+    /*
+     VIDEO AND AUDIO CAPTURING WITH getUserMedia()
+     */
+
+    navigator.getUserMedia = (navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia);
+
+    // Check that the browser supports getUserMedia.
+    // If it doesn't show an alert, otherwise continue.
+    if (navigator.getUserMedia) {
+        // Request the camera.
+        navigator.getUserMedia(
+            // Constraints
+            {
+                audio: true,
+                video: true
+            },
+            // Success Callback
+            function(localMediaStream) {
+                // Get a reference to the video element on the page.
+                var vid = document.getElementById('camera-stream');
+                // Create an object URL for the video stream and use this
+                // to set the video source.
+                vid.src = window.URL.createObjectURL(localMediaStream);
+            },
+            // Error Callback
+            function(err) {
+                // Log the error to the console.
+                alert('The following error occurred when trying to use getUserMedia: ' + err);
+            }
+        );
+    } else {
+        alert('Sorry, your browser does not support getUserMedia');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getBatteryStatus() {
+    navigator.getBattery().then(function (battery) {
+        BatteryStatus
+        {
             var batteryChargingState = battery.charging;
             var batteryLevel = battery.level;
             var batteryChargingTime = battery.chargingTime;
             var batteryDischargingTime = battery.dischargingTime;
 
-
-
-
-        battery.addEventListener('chargingchange', function () {
-            $('#batteryChargingState').html("Battery charging? " + (battery.charging ? "Yes" : "No"));
-        });
-        battery.addEventListener('levelchange', function () {
-            $('#batteryLevel').html("Battery level: " + battery.level * 100 + "%");
-        });
-        battery.addEventListener('chargingtimechange', function () {
-            $('#batteryChargingTime').html("Battery charging time: " + battery.chargingTime + " seconds");
-        });
-        battery.addEventListener('dischargingtimechange', function () {
-            $('#batteryDischargingTime').html("Battery discharging time: " + battery.dischargingTime + " seconds");
-        });
+            battery.addEventListener('chargingchange', function () {
+                $('#batteryChargingState').html("Battery charging? " + (battery.charging ? "Yes" : "No"));
+                batteryChargingState = battery.charging;
+            });
+            battery.addEventListener('levelchange', function () {
+                $('#batteryLevel').html("Battery level: " + battery.level * 100 + "%");
+                batteryLevel = battery.level;
+            });
+            battery.addEventListener('chargingtimechange', function () {
+                $('#batteryChargingTime').html("Battery charging time: " + battery.chargingTime + " seconds");
+                batteryChargingTime = battery.chargingTime;
+            });
+            battery.addEventListener('dischargingtimechange', function () {
+                $('#batteryDischargingTime').html("Battery discharging time: " + battery.dischargingTime + " seconds");
+                batteryDischargingTime = battery.dischargingTime;
+            });
         }
     });
+}
 
 
+function getDeviceOrientation(){
+    var deviceOrientation = window.orientation
+    var isPortrait = deviceOrientation % 180 === 0;
+    document.body.className = isPortrait ? 'portrait' : 'landscape';
+}
 
-}*/
