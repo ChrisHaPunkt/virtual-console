@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('NodeServer:server');
 var http = require('http');
+var userManagment = require('./sources/UserManagment.js');
 
 /**
  * Get port from environment and store in f.
