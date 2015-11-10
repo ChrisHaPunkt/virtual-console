@@ -18,10 +18,6 @@ var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6}
 
 
 
-function vibrate(milliseconds){
-    window.navigator.vibrate(milliseconds);
-}
-
 
 
 function getMotionData(rnd){
@@ -34,12 +30,7 @@ function getMotionData(rnd){
         var rotationBeta   = event.rotationRate.beta; //rotation um karthesische Y-Achse (drehen)
         var rotationGamma   = event.rotationRate.gamma; //rotation um karthesische Z-Achse (kippen links, rechts)
 
-
-
         var interval = event.interval;
-
-
-
 
         if(typeof(rnd) != "undefined"){
             accelerationX = accelerationX.toFixed(rnd);
@@ -50,49 +41,27 @@ function getMotionData(rnd){
             rotationGamma =rotationGamma.toFixed(rnd);
         }
 
-        $('#x').html('Beschleunigung in X-Richtung:' + accelerationX);
-        $('#y').html('Beschleunigung in Y-Richtung:' + accelerationY);
-        $('#z').html('Beschleunigung in Z-Richtung:' + accelerationZ);
-
-        $('#a').html('Rotation in Alpha:' + rotationAlpha);
-        $('#b').html('Rotation in Beta:' + rotationBeta);
-        $('#c').html('Rotation in Gamma:' + rotationGamma);
-
-        $('#i').html('Rotation in Gamma:' + interval);
-
-
-        /*
-
-
         var motion = {
             accelerationX: accelerationX,
-            rotationBeta: accelerationY,
-            rotationGamma: accelerationZ,
+            accelerationY: accelerationY,
+            accelerationZ: accelerationZ,
             rotationAlpha: rotationAlpha,
             rotationBeta: rotationBeta,
             rotationGamma: rotationGamma,
             interval: interval
-        };
+        }
         return motion;
-        */
     }
 }
 
-getMotionData(2);
-
-
-
-
-
-
-
-
+function vibrate(milliseconds){
+    window.navigator.vibrate(milliseconds);
+}
 
 function getUserAudioVideo(){
     /*
      VIDEO AND AUDIO CAPTURING WITH getUserMedia()
      */
-
     navigator.getUserMedia = (navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
@@ -127,48 +96,28 @@ function getUserAudioVideo(){
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 function getBatteryStatus() {
     navigator.getBattery().then(function (battery) {
-        BatteryStatus
-        {
+
             var batteryChargingState = battery.charging;
             var batteryLevel = battery.level;
             var batteryChargingTime = battery.chargingTime;
             var batteryDischargingTime = battery.dischargingTime;
 
             battery.addEventListener('chargingchange', function () {
-                $('#batteryChargingState').html("Battery charging? " + (battery.charging ? "Yes" : "No"));
                 batteryChargingState = battery.charging;
             });
             battery.addEventListener('levelchange', function () {
-                $('#batteryLevel').html("Battery level: " + battery.level * 100 + "%");
                 batteryLevel = battery.level;
             });
             battery.addEventListener('chargingtimechange', function () {
-                $('#batteryChargingTime').html("Battery charging time: " + battery.chargingTime + " seconds");
                 batteryChargingTime = battery.chargingTime;
             });
             battery.addEventListener('dischargingtimechange', function () {
-                $('#batteryDischargingTime').html("Battery discharging time: " + battery.dischargingTime + " seconds");
                 batteryDischargingTime = battery.dischargingTime;
             });
-        }
     });
 }
-
 
 function getDeviceOrientation(){
     var deviceOrientation = window.orientation
