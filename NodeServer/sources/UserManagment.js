@@ -5,16 +5,24 @@
 var database = require('./Database.js')("mongodb://localhost:27017/M113");
 
 module.exports = function(){
+
+    var userList = [];
+    //SendUser
+
+
     var publicSection = {
 
-        registerUser:function(name, password){   //Dummy function
-           //todo
+        getSocketID:function(user) {
+
+        },
+
+        registerUser:function(socketID, name, password) {   //Dummy function
             //User = {name:name, password:password};
             //database.insert("userData", User);
         },
 
-        authenticateUser:function(name, password){
-            query = { name:name, password:password};
+        authenticateUser:function(name, password) {
+            query = { name:name, password:password };
             var onSuccess = function(){console.log("Login successfuly");};
             database.query("userData", query, onSuccess);
 
@@ -22,7 +30,7 @@ module.exports = function(){
 
         setUserData:function(){},
         getUserData:function(){}
-    }
+    };
     return publicSection;
 
 };
