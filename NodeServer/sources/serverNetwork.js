@@ -9,7 +9,9 @@ var http = require('http');
 var app = 0;
 var port = 0;
 var clients = {};
+var frontent = 0;
 var callback;
+var util = require('util');
 
 // start webserver and socket
 var startListening = function () {
@@ -17,7 +19,7 @@ var startListening = function () {
     try {
 
         io.listen(server);
-        console.log('serverNetwork | Server listening on port ' + server.address().port);
+        util.log('serverNetwork | Server listening on port ' + server.address().port);
 
     } catch (e) {
 
@@ -28,6 +30,18 @@ var startListening = function () {
         // new client connects
         addClient(socket);
         callback.onNewClient(socket.id);
+
+        // frontend connected
+        socket.on('frontendInit', function(data){
+            frontent = socket;
+            util.log('serverNetwork | Frontend Connected!');
+            sendToFrontend('frontendData','hello frontend!');
+        });
+
+        // frontend sends message
+        socket.on('frontendMessage', function (data) {
+
+        });
 
         // client login
         socket.on('login', function (data) {
@@ -53,26 +67,26 @@ var startListening = function () {
 // client handling functions
 var addClient = function (socket) {
     clients[socket.id] = {id: socket.id, socket: socket, loggedIn: false};
-    console.log('serverNetwork | added client with id ' + socket.id);
+    util.log('serverNetwork | added client with id ' + socket.id);
 };
 var getClient = function (id) {
     if (clients.hasOwnProperty(id)) {
         return clients[id];
     } else {
-        console.error('serverNetwork | no client with id ' + id);
+        util.error('serverNetwork | no client with id ' + id);
         return null;
     }
 };
 var deleteClient = function (id) {
     if (clients.hasOwnProperty(id)) {
         if (clients[id].socket.connected) {
-            console.log('serverNetwork | closing socket to client with id ' + id);
+            util.log('serverNetwork | closing socket to client with id ' + id);
             io.sockets.connected[id].disconnect();
         }
         delete clients[id];
-        console.log('serverNetwork | deleted client with id ' + id);
+        util.log('serverNetwork | deleted client with id ' + id);
     } else {
-        console.error('serverNetwork | no client with id ' + id + '. Cannot delete');
+        util.error('serverNetwork | no client with id ' + id + '. Cannot delete');
     }
 };
 
@@ -81,7 +95,12 @@ var sendToClient = function (id, messageType, message) {
     if (clients.hasOwnProperty(id)) {
         clients[id].socket.emit(messageType, message);
     } else {
-        console.error('serverNetwork | no client with id ' + id + '. Cannot send message');
+        util.error('serverNetwork | no client with id ' + id + '. Cannot send message');
+    }
+};
+var sendToFrontend = function(messageType, message){
+    if (frontent != 0){
+        frontent.emit(messageType,message);
     }
 };
 var broadcastMessage = function (message) {
@@ -99,12 +118,12 @@ module.exports = {
     },
     start: function () {
         if (server == 0) {
-            console.error('serverNetwork | Please set app first.');
+            util.error('serverNetwork | Please set app first.');
         } else if (callback == 0) {
-            console.error('serverNetwork | Please set callback first.');
+            util.error('serverNetwork | Please set callback first.');
         } else {
             startListening();
-            //console.log('serverNetwork | Server network module started.');
+            //util.log('serverNetwork | Server network module started.');
         }
         return this;
     },
@@ -116,6 +135,9 @@ module.exports = {
     },
     sendToClient: function (id, messageType, msg) {
         sendToClient(id, messageType, msg);
+    },
+    sendToFrontend: function (messageType, msg) {
+        sendToFrontend(messageType,msg);
     },
     broadcastMessage: function (message) {
         broadcastMessage(message);
