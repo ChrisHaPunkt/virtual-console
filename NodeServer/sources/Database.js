@@ -21,14 +21,14 @@ module.exports = function(dbURL){
             }
 
         });
-    }
+    };
 
     ///////////////////////
     //Close database connection
     ///////////////////////
     closeDB = function(){
         db.close();
-    }
+    };
 
     ///////////////////////
     //Public
@@ -62,6 +62,6 @@ module.exports = function(dbURL){
                 });
             });
         }
-    }
+    };
     return publicSection;
-}
+};

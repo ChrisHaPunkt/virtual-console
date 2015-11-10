@@ -11,12 +11,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var frontendRoute = require('./routes/frontendRoute');
 var controllerDemo = require('./routes/controllerDemo');
-
 var app = module.exports.app = express();
-var userManagment = require('./UserManagment.js');
 
-
-userManagment().addUser("Klaus", "Test");
 
 
 // view engine setup
