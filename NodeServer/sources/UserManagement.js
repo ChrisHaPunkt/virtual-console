@@ -2,7 +2,7 @@
  * Created by dennis on 29.10.15.
  */
 
-var database = require('./Database.js')("mongodb://localhost:27017/M113");
+var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
 
 module.exports = function(){
 
