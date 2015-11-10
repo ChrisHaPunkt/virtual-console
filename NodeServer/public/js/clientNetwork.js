@@ -19,15 +19,6 @@ var cn = (function () {
         socket.on('broadcast', function (message) {
             callback.onMessage('broadcast', message);
         });
-        socket.on('login', function (message) {
-            callback.onLogin(message);
-        });
-        socket.on('anonymousLogin', function (message) {
-            callback.onLogin(message);
-        });
-        socket.on('register', function (message) {
-            callback.onRegister(message);
-        });
     };
 
     // public interface
@@ -35,17 +26,8 @@ var cn = (function () {
         if (io !== 'undefined') {
             init(inCallback);
             return {
-                sendData: function (data) {
-                    socket.emit('message', data);
-                },
-                sendLogin: function (username, password) {
-                    socket.emit('login', {username: username, password: password});
-                },
-                sendAnonymousLogin: function(){
-                    socket.emit('anonymousLogin');
-                },
-                sendRegistration: function (username, password){
-                    socket.emit('register', {username: username, password: password});
+                sendData: function (type, data) {
+                    socket.emit(type, data);
                 }
             };
         } else {
