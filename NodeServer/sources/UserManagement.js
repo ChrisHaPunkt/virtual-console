@@ -6,24 +6,50 @@ var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
 
 module.exports = function(){
 
-    var userList = [];
-    //SendUser
-
-
     var publicSection = {
 
-        getSocketID:function(user) {
+
+        /**************************************
+         * Register a user
+         **************************************/
+        registerUser:function(name, password, callback) {
+            var User = {name:name, password:password};
+
+
+
+            var authCallback = function(authState){
+                if (authState == false) {
+                    database.remove("userData", User);
+                    database.insert("userData", User);
+                }
+            };
+
+            this.authenticateUser(name, password, authCallback);
+
 
         },
 
-        registerUser:function(socketID, name, password) {   //Dummy function
-            //User = {name:name, password:password};
-            //database.insert("userData", User);
-        },
 
-        authenticateUser:function(name, password) {
-            query = { name:name, password:password };
-            var onSuccess = function(){console.log("Login successfuly");};
+        /********************************************
+         * Authenticate user
+         ********************************************/
+        authenticateUser:function(name, password, callback) {
+            var query = { name:name, password:password };
+
+
+            var onSuccess = function(data){
+                var returnState = false;
+                if (data.length == 1){
+                    returnState = true;
+                    console.log("Login successfully!");
+                } else if (data.length == 0) {
+                    console.log("Unknown User/Password!");
+                } else {
+                    console.log("Login error!");
+                }
+                callback(returnState);
+            };
+
             database.query("userData", query, onSuccess);
 
         },

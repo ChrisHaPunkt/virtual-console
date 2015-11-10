@@ -16,7 +16,9 @@ var frontendRoute = require('./routes/frontendRoute');
 var controllerDemo = require('./routes/controllerDemo');
 var app = module.exports.app = express();
 
-userManagement.authenticateUser("testw","test");
+
+userManagement.registerUser("testw", "test");
+userManagement.authenticateUser("testw","test", function(userState){ console.log(userState)} );
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
