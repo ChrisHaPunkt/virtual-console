@@ -16,10 +16,6 @@ var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Const
 var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
 var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6}
 
-
-
-
-
 function getMotionData(rnd){
     window.ondevicemotion = function(event) {
         var accelerationX = event.acceleration.x; //hoch, runter
@@ -131,8 +127,6 @@ function getBatteryStatus() {
     });
     return BatteryStatus;
 }
-
-
 
 function getDeviceOrientation(){
     var deviceOrientation = window.orientation
