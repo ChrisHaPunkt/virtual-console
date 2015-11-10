@@ -97,14 +97,20 @@ function getUserAudioVideo(){
 }
 
 function getBatteryStatus() {
+    var BatteryStatus = {
+        batteryChargingState: batteryChargingState,
+        batteryLevel: batteryLevel,
+        batteryChargingTime:batteryChargingTime,
+        batteryDischargingTime:batteryDischargingTime
+    }
     navigator.getBattery().then(function (battery) {
 
             var batteryChargingState = battery.charging;
             var batteryLevel = battery.level;
             var batteryChargingTime = battery.chargingTime;
             var batteryDischargingTime = battery.dischargingTime;
-
-            battery.addEventListener('chargingchange', function () {
+        //EVENTS
+           /* battery.addEventListener('chargingchange', function () {
                 batteryChargingState = battery.charging;
             });
             battery.addEventListener('levelchange', function () {
@@ -115,13 +121,23 @@ function getBatteryStatus() {
             });
             battery.addEventListener('dischargingtimechange', function () {
                 batteryDischargingTime = battery.dischargingTime;
-            });
+            });*/
+        BatteryStatus.batteryChargingState= batteryChargingState;
+        BatteryStatus.batteryLevel= batteryLevel;
+        BatteryStatus.batteryChargingTime= batteryChargingTime;
+        BatteryStatus.batteryDischargingTime= batteryDischargingTime;
+
+        return BatteryStatus;
     });
+    return BatteryStatus;
 }
+
+
 
 function getDeviceOrientation(){
     var deviceOrientation = window.orientation
     var isPortrait = deviceOrientation % 180 === 0;
     document.body.className = isPortrait ? 'portrait' : 'landscape';
+    return document.body.className;
 }
 
