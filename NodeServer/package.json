@@ -19,6 +19,7 @@
     "has-binary-data":"latest",
     "ms":"latest",
     "socket.io-client": "latest",
-    "socket.io-parser": "latest"
+    "socket.io-parser": "latest",
+    "mongodb":"latest"
   }
 }

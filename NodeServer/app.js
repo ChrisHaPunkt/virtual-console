@@ -6,13 +6,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var util = require('util');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var frontendRoute = require('./routes/frontendRoute');
 var controllerDemo = require('./routes/controllerDemo');
-
 var app = module.exports.app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

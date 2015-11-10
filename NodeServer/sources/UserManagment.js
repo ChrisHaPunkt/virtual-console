@@ -2,30 +2,35 @@
  * Created by dennis on 29.10.15.
  */
 
+var database = require('./Database.js')("mongodb://localhost:27017/M113");
 
+module.exports = function(){
 
-function UserManagment(){
-    this.database = new database("mongodb://localhost:27017/M113");
-    this.userCollection = "userData";
+    var userList = [];
+    //SendUser
+
 
     var publicSection = {
-        addUser:function(name, password){
-            User = {name:name, password:password};
-            database.insert(this.userCollection, User);
+
+        getSocketID:function(user) {
+
         },
 
+        registerUser:function(socketID, name, password) {   //Dummy function
+            //User = {name:name, password:password};
+            //database.insert("userData", User);
+        },
 
-        authenticateUser:function(name, password){
-            query = { name:name, password:password};
+        authenticateUser:function(name, password) {
+            query = { name:name, password:password };
             var onSuccess = function(){console.log("Login successfuly");};
             database.query("userData", query, onSuccess);
 
         },
 
-
         setUserData:function(){},
         getUserData:function(){}
-    }
+    };
     return publicSection;
 
-}
+};
