@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('NodeServer:server');
 var http = require('http');
-var userManagment = require('./sources/UserManagment.js');
+var userManagment = require('../sources/UserManagment.js');
+var util = require('util');
 
 /**
  * Get port from environment and store in f.
@@ -38,7 +39,7 @@ server.on('listening', onListening);
 var network = require('./../sources/serverNetwork');
 network.init(server, {
     onNewClient: function (id) {
-        console.log('www | a user id ' + id + ' connected');
+        util.log('www | a user id ' + id + ' connected');
         network.broadcastMessage('A new user joined us! ID: ' + id);
         network.sendToClient(id, 'message', 'Your Client ID is: ' + id);
     },
@@ -47,11 +48,12 @@ network.init(server, {
         return true;
     },
     onDisconnect: function (id) {
-        console.log('www | a user id ' + id + ' disconnected');
+        util.log('www | a user id ' + id + ' disconnected');
         network.broadcastMessage('A user left us! ID: ' + id);
     },
     onMessage: function (id, data) {
-        console.log('www | a user id ' + id + ' sended a message: ' + data);
+
+        util.log('www | a user id ' + id + ' sended a message: ' + data);
         network.broadcastMessage('User ID ' + id + ': ' + data);
         network.sendToFrontend('frontendData',data);
     }
