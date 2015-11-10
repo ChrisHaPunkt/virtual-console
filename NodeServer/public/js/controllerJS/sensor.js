@@ -128,6 +128,13 @@ function getBatteryStatus() {
     return BatteryStatus;
 }
 
+var battery = getBatteryStatus()
+$('#batteryChargingState').html("Battery charging? " + (battery.batteryChargingState));
+$('#batteryLevel').html("Battery level: " + battery.batteryLevel * 100 + "%");
+$('#batteryChargingTime').html("Battery charging time: " + battery.batteryChargingTime + " seconds");
+$('#batteryDischargingTime').html("Battery discharging time: " + battery.batteryDischargingTime + " seconds");
+
+
 function getDeviceOrientation(){
     var deviceOrientation = window.orientation
     var isPortrait = deviceOrientation % 180 === 0;
@@ -135,3 +142,5 @@ function getDeviceOrientation(){
     return document.body.className;
 }
 
+ var Orientation = getDeviceOrientation();
+$('#x').html("Orientation: " + (Orientation));
