@@ -38,7 +38,18 @@ server.on('listening', onListening);
  * This starts the socket server and user management
  */
 
-sessionHandling.startHandling(server);
+sessionHandling.init(server, {
+    onNewUser: function(name){
+        util.log('www | new user ' + name);
+    },
+    onUserDisconnects: function(name){
+        util.log('www | user disconnected ' + name);
+    },
+    onMessage: function(name,message){
+        util.log('www | user ' + name + ' says: ' + message);
+        sessionHandling.sendToFrontend('frontendData',{clientName:name,message:message});
+    }
+}).start();
 
 /**
  * Normalize a port into a number, string, or false.

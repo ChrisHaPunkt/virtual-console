@@ -31,6 +31,9 @@ var startListening = function () {
         addClient(socket);
         callback.onNewClient(socket.id);
 
+        util.log('serverNetwork | a user id ' + socket.id + ' connected');
+        sendToClient(socket.id, 'message', 'Your Client ID is: ' + socket.id);
+
         // frontend connected
         socket.on('frontendInit', function(data){
             frontent = socket;
@@ -43,6 +46,12 @@ var startListening = function () {
 
         });
 
+        // client registers
+        socket.on('register', function(data){
+            var registerResult = callback.onRegister(socket.id,data.username, data.password);
+            sendToClient(socket.id,'register', registerResult);
+        });
+
         // client login
         socket.on('login', function (data) {
             // call callback method and parse return value
@@ -51,22 +60,34 @@ var startListening = function () {
             sendToClient(socket.id, 'login', loginResult);
         });
 
+        // client anonymous login
+        socket.on('anonymousLogin', function(){
+            var loginResult = callback.onAnonymousLogin(socket.id);
+            sendToClient(socket.id, 'anonymousLogin', loginResult);
+        });
+
         // client sends message
         socket.on('message', function (data) {
             callback.onMessage(socket.id, data);
+
+            util.log('serverNetwork | a user id ' + socket.id + ' sended a message: ' + data);
+            broadcastMessage('User ID ' + socket.id + ': ' + data);
         });
 
         // client disconnects
         socket.on('disconnect', function () {
             callback.onDisconnect(socket.id);
             deleteClient(socket.id);
+
+            util.log('serverNetwork | a user id ' + socket.id + ' disconnected');
+            broadcastMessage('A user left us! ID: ' + socket.id);
         });
     });
 };
 
 // client handling functions
 var addClient = function (socket) {
-    clients[socket.id] = {id: socket.id, socket: socket, loggedIn: false};
+    clients[socket.id] = {id: socket.id, socket: socket};
     util.log('serverNetwork | added client with id ' + socket.id);
 };
 var getClient = function (id) {
@@ -111,8 +132,8 @@ var broadcastMessage = function (message) {
 
 // exports
 module.exports = {
-    init: function (serverInstance, inCallback) {
-        server = serverInstance;
+    init: function (inServer, inCallback) {
+        server = inServer;
         callback = inCallback;
         return this;
     },
