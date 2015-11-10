@@ -21,7 +21,13 @@ var cn = (function () {
         });
         socket.on('login', function (message) {
             callback.onLogin(message);
-        })
+        });
+        socket.on('anonymousLogin', function (message) {
+            callback.onLogin(message);
+        });
+        socket.on('register', function (message) {
+            callback.onRegister(message);
+        });
     };
 
     // public interface
@@ -34,6 +40,12 @@ var cn = (function () {
                 },
                 sendLogin: function (username, password) {
                     socket.emit('login', {username: username, password: password});
+                },
+                sendAnonymousLogin: function(){
+                    socket.emit('anonymousLogin');
+                },
+                sendRegistration: function (username, password){
+                    socket.emit('register', {username: username, password: password});
                 }
             };
         } else {

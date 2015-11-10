@@ -7,9 +7,13 @@ $('.myButton').mouseup(buttonwasreleased);
 var socket = cn({
     onMessage: function (type, msg) {
         // do anything you want with server messages
+    },
+    onLogin: function (message) {
+        console.log('login result from sever ' , message);
     }
 });
 
+socket.sendAnonymousLogin();
 
 function buttonwaspressed(button){
     socket.sendData($(this).attr('id') + 'ist gedrückt worden');
