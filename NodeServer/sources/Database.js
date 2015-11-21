@@ -5,7 +5,6 @@ var MongoClient = require('mongodb').MongoClient;
 
 module.exports = function(dbURL){
     this.dbURL = dbURL;
-   /// this.db = undefined;
 
     ///////////////////////
     //Connect to database

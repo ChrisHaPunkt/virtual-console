@@ -15,18 +15,16 @@ module.exports = function(){
         registerUser:function(name, password, callback) {
             var User = {name:name, password:password};
 
+            var registerCallback = function(authState){
 
-
-            var authCallback = function(authState){
+                //Only register a new user when he is unique
                 if (authState == false) {
                     database.remove("userData", User);
                     database.insert("userData", User);
                 }
             };
 
-            this.authenticateUser(name, password, authCallback);
-
-
+            this.authenticateUser(name, password, registerCallback);
         },
 
 
