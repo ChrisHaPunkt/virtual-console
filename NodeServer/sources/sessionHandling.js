@@ -90,9 +90,9 @@ var startNetworkServer = function (server) {
             removeUserById(id);
             callback.onUserDisconnects(getUserIdByName(id));
         },
-        onMessage: function (id, data) {
+        onMessage: function (id, type, data) {
             if(isLoggedIn(id)) {
-                callback.onMessage(getUserIdByName(id), data);
+                callback.onMessage(getUserIdByName(id), type, data);
             }else{
                 util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
             }

@@ -45,9 +45,10 @@ sessionHandling.init(server, {
     onUserDisconnects: function(name){
         util.log('www | user disconnected ' + name);
     },
-    onMessage: function(name,message){
+    onMessage: function(name,type,message){
         util.log('www | user ' + name + ' says: ' + message);
-        sessionHandling.sendToFrontend('frontendData',{clientName:name,message:message});
+        // TODO message type specified by client is directly passed to frontend
+        sessionHandling.sendToFrontend(type,{clientName:name,message:message});
     }
 }).start();
 

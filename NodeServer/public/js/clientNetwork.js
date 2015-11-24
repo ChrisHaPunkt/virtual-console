@@ -14,10 +14,10 @@ var cn = (function () {
         callback = inCallback;
 
         socket.on('message', function (message) {
-            callback.onMessage('message', message);
+            callback.onMessage(message.type, message.data);
         });
         socket.on('broadcast', function (message) {
-            callback.onMessage('broadcast', message);
+            callback.onMessage(message.type, message.data);
         });
         socket.on('login', function (message) {
             callback.onLogin(message);
@@ -36,7 +36,7 @@ var cn = (function () {
             init(inCallback);
             return {
                 sendData: function (type, data) {
-                    socket.emit(type, data);
+                    socket.emit('message', {type:type, data:data});
                 },
                 sendLogin: function (username, password) {
                     socket.emit('login', {username: username, password: password});
