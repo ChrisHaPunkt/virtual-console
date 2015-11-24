@@ -40,6 +40,10 @@ var removeUserById = function (id) {
     }
 };
 
+var getUserById = function (id) {
+    return activeUsers[id];
+};
+
 var getUserIdByName = function (userName) {
     for (var tmpUserId in activeUsers) {
         if (activeUsers.hasOwnProperty(tmpUserId)) {
@@ -59,10 +63,10 @@ var startNetworkServer = function (server) {
         onRegister: function (id,username,password) {
             userManagement.registerUser(username,password,function(result){
                 if(result){
-                    return true;
+                    return {result:true,username:username};
                 }else{
-                    network.sendToClient(id,'register',false);
-                    return false;
+                    //network.sendToClient(id,'register',false);
+                    return {result:true,username:username};
                 }
             });
             return true;
@@ -87,12 +91,12 @@ var startNetworkServer = function (server) {
             return {result:true,username:tmpUserName};
         },
         onDisconnect: function (id) {
+            callback.onUserDisconnects(getUserById(id).userName);
             removeUserById(id);
-            callback.onUserDisconnects(getUserIdByName(id));
         },
         onMessage: function (id, type, data) {
             if(isLoggedIn(id)) {
-                callback.onMessage(getUserIdByName(id), type, data);
+                callback.onMessage(getUserById(id).userName, type, data);
             }else{
                 util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
             }

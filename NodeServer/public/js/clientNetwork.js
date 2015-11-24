@@ -20,13 +20,13 @@ var cn = (function () {
             callback.onMessage(message.type, message.data);
         });
         socket.on('login', function (message) {
-            callback.onLogin(message);
+            callback.onLogin(message.result, message.username);
         });
         socket.on('anonymousLogin', function (message) {
-            callback.onAnonymousLogin(message);
+            callback.onAnonymousLogin(message.result, message.username);
         });
         socket.on('register', function (message) {
-            callback.onRegister(message);
+            callback.onRegister(message.result, message.username);
         })
     };
 
