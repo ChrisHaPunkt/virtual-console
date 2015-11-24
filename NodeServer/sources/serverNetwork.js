@@ -32,13 +32,13 @@ var startListening = function () {
         callback.onNewClient(socket.id);
 
         util.log('serverNetwork | a user id ' + socket.id + ' connected');
-        sendToClient(socket.id, 'message', {type:'welcome', data:'Your Client ID is: ' + socket.id});
+        sendToClient(socket.id, 'message', {type: 'welcome', data: 'Your Client ID is: ' + socket.id});
 
         // frontend connected
-        socket.on('frontendInit', function(message){
+        socket.on('frontendInit', function (message) {
             frontent = socket;
             util.log('serverNetwork | Frontend Connected!');
-            sendToFrontend('frontendData','hello frontend!');
+            sendToFrontend('frontendData', 'hello frontend!');
         });
 
         // frontend sends message
@@ -47,9 +47,9 @@ var startListening = function () {
         });
 
         // client registers
-        socket.on('register', function(message){
-            var registerResult = callback.onRegister(socket.id,message.username, message.password);
-            sendToClient(socket.id,'register', registerResult);
+        socket.on('register', function (message) {
+            var registerResult = callback.onRegister(socket.id, message.username, message.password);
+            sendToClient(socket.id, 'register', registerResult);
         });
 
         // client login
@@ -61,7 +61,7 @@ var startListening = function () {
         });
 
         // client anonymous login
-        socket.on('anonymousLogin', function(){
+        socket.on('anonymousLogin', function () {
             var loginResult = callback.onAnonymousLogin(socket.id);
             sendToClient(socket.id, 'anonymousLogin', loginResult);
         });
@@ -71,7 +71,7 @@ var startListening = function () {
             callback.onMessage(socket.id, message.type, message.data);
 
             util.log('serverNetwork | a user id ' + socket.id + ' sended a message with type ' + message.type + ' : ' + message.data);
-            broadcastMessage('User ID ' + socket.id + ': ' + message.data);
+            broadcastMessage({type: 'userMessage', data: 'User ID ' + socket.id + ': ' + message.data});
         });
 
         // client disconnects
@@ -80,7 +80,7 @@ var startListening = function () {
             deleteClient(socket.id);
 
             util.log('serverNetwork | a user id ' + socket.id + ' disconnected');
-            broadcastMessage('A user left us! ID: ' + socket.id);
+            broadcastMessage({type: 'userDisconnected', data: 'A user left us! ID: ' + socket.id});
         });
     });
 };
@@ -119,15 +119,13 @@ var sendToClient = function (id, socketEventType, message) {
         util.error('serverNetwork | no client with id ' + id + '. Cannot send message');
     }
 };
-var sendToFrontend = function(socketEventType, message){
-    if (frontent != 0){
-        frontent.emit(socketEventType,message);
+var sendToFrontend = function (socketEventType, message) {
+    if (frontent != 0) {
+        frontent.emit(socketEventType, message);
     }
 };
 var broadcastMessage = function (message) {
-    if (typeof message === 'string') {
-        io.emit('broadcast', message);
-    }
+    io.emit('broadcast', message);
 };
 
 // exports
@@ -155,12 +153,12 @@ module.exports = {
         deleteClient(id);
     },
     sendToClient: function (id, messageType, data) {
-        sendToClient(id, 'message', {type:messageType, data:data});
+        sendToClient(id, 'message', {type: messageType, data: data});
     },
     sendToFrontend: function (messageType, data) {
-        sendToFrontend('frontendMessage', {type:messageType, data:data});
+        sendToFrontend('frontendMessage', {type: messageType, data: data});
     },
     broadcastMessage: function (messageType, data) {
-        broadcastMessage('broadcast', {type:messageType, data:data});
+        broadcastMessage('broadcast', {type: messageType, data: data});
     }
 };
