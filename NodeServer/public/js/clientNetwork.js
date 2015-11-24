@@ -25,6 +25,9 @@ var cn = (function () {
         socket.on('anonymousLogin', function (message) {
             callback.onAnonymousLogin(message);
         });
+        socket.on('register', function (message) {
+            callback.onRegister(message);
+        })
     };
 
     // public interface
@@ -40,6 +43,9 @@ var cn = (function () {
                 },
                 sendAnonymousLogin: function () {
                     socket.emit('anonymousLogin');
+                },
+                register: function (username, password) {
+                    socket.emit('register', {username: username, password: password});
                 }
             };
         } else {
