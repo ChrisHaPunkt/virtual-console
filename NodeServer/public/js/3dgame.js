@@ -76,9 +76,9 @@ var GameHandler = {
                 this.gameObjects[cubeId].rotate.z = 0;
             } else {
                 this.gameObjects[cubeId].rotate.status = true;
-                this.gameObjects[cubeId].rotate.x = (paramsXYZ.x) ? paramsXYZ.x : this.gameObjects[cubeId].rotate.x;
-                this.gameObjects[cubeId].rotate.y = (paramsXYZ.y) ? paramsXYZ.y : this.gameObjects[cubeId].rotate.y;
-                this.gameObjects[cubeId].rotate.z = (paramsXYZ.z) ? paramsXYZ.z : this.gameObjects[cubeId].rotate.z;
+                this.gameObjects[cubeId].rotate.x = (paramsXYZ.x)  ? paramsXYZ.x / 1000: this.gameObjects[cubeId].rotate.x;
+                this.gameObjects[cubeId].rotate.y = (paramsXYZ.y)  ? paramsXYZ.y / 1000: this.gameObjects[cubeId].rotate.y;
+                this.gameObjects[cubeId].rotate.z = (paramsXYZ.z)  ? paramsXYZ.z / 1000: this.gameObjects[cubeId].rotate.z;
             }
         },
         /**

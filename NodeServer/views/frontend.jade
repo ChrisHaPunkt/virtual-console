@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  h1= title
+  h1(class='globalTitle')= title
+
   div(id='3d', class='threeDContainer')
   div(id='content')
   script(src='/socket.io/socket.io.js')

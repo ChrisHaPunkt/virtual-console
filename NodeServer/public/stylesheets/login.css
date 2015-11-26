@@ -4,7 +4,10 @@
     background-attachment: fixed; /* fix background gradient */
     height: 100%; /* fix sticky footer */
 }
-
+.login-border{
+    border: 2px solid grey;
+    border-radius: 9px;
+}
 #login-body #header{
     padding-top: 200px;
     color: #fff;
@@ -56,7 +59,7 @@
 #login-form {
     width: 22em;
     margin: 2em auto 2em;
-    padding: 0;
+    padding: 1em;
 }
 
 #login-form fieldset {
@@ -97,7 +100,7 @@
     opacity: 1;
 }
 
-#login-form input[type="submit"] {
+#login-form button {
     width: auto;
     min-width: 25px;
     background-color: rgba(240,240,240,.9);

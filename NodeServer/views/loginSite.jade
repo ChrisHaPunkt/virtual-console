@@ -10,19 +10,21 @@ block content
                     a(href='http://enable-javascript.com/', target='_blank', rel='noreferrer') activate JavaScript
                     |  and reload.
         .content
-            header#header
-                h1=title
-            form#login-form(method='post', name='login')
-                fieldset
-                    p.groupTop
-                        input#input-user(type='text', name='user', placeholder='User', value='', autofocus='', autocomplete='on', autocapitalize='off', autocorrect='off')
-                        img#user-icon(src='img/user.svg', alt='')
-                    p.groupBottom
-                        input#input-password(type='password', name='password', value='', placeholder='Password', autocomplete='on', autocapitalize='off', autocorrect='off')
-                        img#password-icon(src='img/password.svg', alt='')
-                    button#login.login(name='submit', value='login', onclick="event.preventDefault(); sendLogin();")
-                    button#register.login(type='submit', name='submit', value='register')
-                    button#anonymous.login(type='submit', name='submit', value='anonymous')
+            div
+                header#header
+                    h1=title
+                form#login-form(method='post', name='login',class='login-border')
+                    fieldset
+                        p.groupTop
+                            input#input-user(type='text', name='user', placeholder='User', value='', autofocus='', autocomplete='on', autocapitalize='off', autocorrect='off')
+                            img#user-icon(src='img/user.svg', alt='')
+                        p.groupBottom
+                            input#input-password(type='password', name='password', value='', placeholder='Password', autocomplete='on', autocapitalize='off', autocorrect='off')
+                            img#password-icon(src='img/password.svg', alt='')
+                        p.groupButtons
+                            button#login.login(name='submit', value='login', onclick="event.preventDefault(); sendLogin();") Login
+                            button#register.login(type='submit', name='submit', value='register') Register
+                            button#anonymous.login(type='submit', name='submit', value='anonymous') Continue
         footer
             p.info
                 a(href='https://gitlab.homeset.de/fhKiel/M113', target='_blank', rel='noreferrer') M113 - Project
