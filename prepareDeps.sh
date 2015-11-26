@@ -1,6 +1,6 @@
 #!/bin/bash
 cd NodeServer/
-echo "Cleaning up installes modules"
+echo "Cleaning up installed modules"
 rm -rf node_modules/*
 echo "Installing needed dependencies..."
 npm install --silent
