@@ -12,6 +12,7 @@ var userManagement = require('./sources/UserManagement.js')();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var loginSite = require('./routes/loginSite');
 var frontendRoute = require('./routes/frontendRoute');
 var controllerDemo = require('./routes/controllerDemo');
 var app = module.exports.app = express();
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/login', loginSite);
 app.use('/users', users);
 app.use('/frontend', frontendRoute);
 app.use('/controller', controllerDemo);
