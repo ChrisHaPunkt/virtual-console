@@ -10,7 +10,7 @@ window.onload = function () {
     });
 
     socket.on('frontendData', function(data){
-        writeContent(data);
+        writeContent('client ' + data.clientId + ': ' + data.message);
     });
 
     // write to content
