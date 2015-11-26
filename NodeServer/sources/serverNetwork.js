@@ -121,6 +121,7 @@ var sendToClient = function (id, socketEventType, message) {
 };
 var sendToFrontend = function (socketEventType, message) {
     if (frontent != 0) {
+        util.log("serverNetwork: ",socketEventType, " -> ", message);
         frontent.emit(socketEventType, message);
     }
 };

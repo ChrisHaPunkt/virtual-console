@@ -18,7 +18,7 @@ var cn = (function () {
         serverPort = inServerPort;
 
         // open socket connection
-        socket = io.connect(serverUrl + ':' + serverPort);
+        socket = io.connect();//serverUrl + ':' + serverPort);
 
         socket.on('message', function (message) {
             callback.onMessage(message.type, message.data);

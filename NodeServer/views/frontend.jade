@@ -4,7 +4,7 @@ block content
   h1(class='globalTitle')= title
 
   div(id='3d', class='threeDContainer')
-  div(id='content', style='color:grey;font-size:1em')
+  div(id='content', style='color:grey;font-size:1em;max-height:100px;overflow-y: scroll;')
   script(src='/socket.io/socket.io.js')
   script(src='/js/libs/three.min.js')
   script(src='/js/libs/jquery-min.js')
