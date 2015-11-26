@@ -6,12 +6,19 @@ var cn = (function () {
 
     var socket;
     var callback;
+    var serverUrl;
+    var serverPort;
 
     // open socket and set listener
-    var init = function (inCallback) {
+    var init = function (inServerUrl, inServerPort, inCallback) {
 
-        socket = io();
+        // set config parameters
         callback = inCallback;
+        serverUrl = inServerUrl;
+        serverPort = inServerPort;
+
+        // open socket connection
+        socket = io.connect(serverUrl + ':' + serverPort);
 
         socket.on('message', function (message) {
             callback.onMessage(message.type, message.data);
@@ -31,12 +38,28 @@ var cn = (function () {
     };
 
     // public interface
-    return function (inCallback) {
+    return function (inServerUrl, inServerPort, inCallback) {
+
+        // check parameters
+        if (typeof inServerUrl === 'undefined' || typeof inServerUrl !== 'string') {
+            console.error('Server URL is not defined or no string.');
+            return null;
+        }
+        if (typeof inServerPort === 'undefined' || typeof inServerPort !== 'number') {
+            console.error('Server port is not defined or no number.');
+            return null;
+        }
+        if (typeof inCallback === 'undefined' || typeof inCallback !== 'object') {
+            console.error('Server callback is not defined or no object.');
+            return null;
+        }
+
+        // check if socket io library exists
         if (io !== 'undefined') {
-            init(inCallback);
+            init(inServerUrl, inServerPort, inCallback);
             return {
                 sendData: function (type, data) {
-                    socket.emit('message', {type:type, data:data});
+                    socket.emit('message', {type: type, data: data});
                 },
                 sendLogin: function (username, password) {
                     socket.emit('login', {username: username, password: password});
