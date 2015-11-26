@@ -1,17 +1,3 @@
-html, body, div, form, fieldset, p { margin:0; padding:0; border:0; outline:0; font-weight:inherit; font-size:100%; font-family:inherit; vertical-align:baseline; cursor:default; }
-html, body { height:100%; }
-a { border:0; color:#000; text-decoration:none;}
-
-body {
-    background-color: #ffffff;
-    font-weight: normal;
-    font-size: .8em;
-    line-height: 1.6em;
-    font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
-    color: #000;
-    height: auto;
-}
-
 #login-body {
     text-align: center;
     background: #1d2d44; /* Old browsers */
@@ -123,7 +109,6 @@ body {
     min-width: 25px;
     background-color: rgba(240,240,240,.9);
     font-weight: bold;
-    border: 1px solid rgba(190,190,190,.9);
     cursor: pointer;
     background-color: #35537a;
     color: #ddd;
@@ -149,8 +134,8 @@ body {
 /******************************
  * Set icons for the input fields
  ******************************/
-#login-form #user,
-#login-form #password {
+#login-form #input-user,
+#login-form #input-password {
     width: 223px;
     padding-left: 36px;
 }
@@ -175,13 +160,13 @@ body {
 #login-form .groupBottom {
     position: relative;
 }
-#login-form #user{
+#login-form #input-user{
     margin-bottom: 0;
     border-bottom: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
-#login-form #password{
+#login-form #input-password{
     margin-top: 0;
     border-top: 0;
     border-top-right-radius: 0;
@@ -209,8 +194,3 @@ body {
 #login-body p.info a:hover, #login-body p.info a:focus {
     color: #fff;
 }
-
-
-
-
-

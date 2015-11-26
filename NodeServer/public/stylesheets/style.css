@@ -1,8 +1,13 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+html, body, div, form, fieldset, p { margin:0; padding:0; border:0; outline:0; font-weight:inherit; font-size:100%; font-family:inherit; vertical-align:baseline; cursor:default; }
+html, body { height:100%; }
+a { border:0; color:#000; text-decoration:none;}
 
-a {
-  color: #00B7FF;
+body {
+    background-color: #ffffff;
+    font-weight: normal;
+    font-size: .8em;
+    line-height: 1.6em;
+    font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
+    color: #000;
+    height: auto;
 }
