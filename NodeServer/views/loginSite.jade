@@ -2,7 +2,6 @@
    Created by chrisheinrichs on 26.11.15.
 extends layout
 block content
-    h1= title
     div#login-body
         noscript
             #nojavascript
@@ -12,7 +11,7 @@ block content
                     |  and reload.
         .content
             header#header
-                h1 M113 - Project
+                h1=title
             form#login-form(method='post', name='login')
                 fieldset
                     p.groupTop
@@ -21,22 +20,15 @@ block content
                     p.groupBottom
                         input#input-password(type='password', name='password', value='', placeholder='Password', autocomplete='on', autocapitalize='off', autocorrect='off')
                         img#password-icon(src='img/password.svg', alt='')
-                    input#login.login(type='submit', name='submit', value='login')
-                    input#register.login(type='submit', name='submit', value='register')
-                    input#anonymous.login(type='submit', name='submit', value='anonymous')
+                    button#login.login(name='submit', value='login', onclick="event.preventDefault(); sendLogin();")
+                    button#register.login(type='submit', name='submit', value='register')
+                    button#anonymous.login(type='submit', name='submit', value='anonymous')
         footer
             p.info
                 a(href='https://gitlab.homeset.de/fhKiel/M113', target='_blank', rel='noreferrer') M113 - Project
-        script.
-            window.onload = function() {
-                document.getElementById("input-user").oninput = function() {
-                    var inLength = document.getElementById("input-user").value.length;
-                    if (inLength > 0)
-                        console.log();
-                }
-            }
 
 
-        script(src='/socket.io/socket.io.js')
-    script(src='/js/libs/jquery-min.js')
-    script(src='/js/login.js')
+
+script(src='/socket.io/socket.io.js')
+script(src='/js/clientNetwork.js')
+script(src='/js/login.js')
