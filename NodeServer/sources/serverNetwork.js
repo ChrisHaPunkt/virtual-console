@@ -31,42 +31,63 @@ var startListening = function () {
         addClient(socket);
         callback.onNewClient(socket.id);
 
+        util.log('serverNetwork | a user id ' + socket.id + ' connected');
+        sendToClient(socket.id, 'message', {type: 'welcome', data: 'Your Client ID is: ' + socket.id});
+
         // frontend connected
-        socket.on('frontendInit', function(data){
+        socket.on('frontendInit', function (message) {
             frontent = socket;
             util.log('serverNetwork | Frontend Connected!');
-            sendToFrontend('frontendData','hello frontend!');
+            sendToFrontend('frontendData', 'hello frontend!');
         });
 
         // frontend sends message
-        socket.on('frontendMessage', function (data) {
+        socket.on('frontendMessage', function (message) {
+            // TODO implement
+        });
 
+        // client registers
+        socket.on('register', function (message) {
+            var registerResult = callback.onRegister(socket.id, message.username, message.password);
+            sendToClient(socket.id, 'register', registerResult);
         });
 
         // client login
-        socket.on('login', function (data) {
+        socket.on('login', function (message) {
             // call callback method and parse return value
-            var loginResult = callback.onLogin(socket.id, data.username, data.password);
+            var loginResult = callback.onLogin(socket.id, message.username, message.password);
             // send authentication result back to client
             sendToClient(socket.id, 'login', loginResult);
         });
 
+        // client anonymous login
+        socket.on('anonymousLogin', function () {
+            var loginResult = callback.onAnonymousLogin(socket.id);
+            sendToClient(socket.id, 'anonymousLogin', loginResult);
+        });
+
         // client sends message
-        socket.on('message', function (data) {
-            callback.onMessage(socket.id, data);
+        socket.on('message', function (message) {
+            callback.onMessage(socket.id, message.type, message.data);
+
+            util.log('serverNetwork | a user id ' + socket.id + ' sended a message with type ' + message.type + ' : ' + message.data);
+            broadcastMessage({type: 'userMessage', data: 'User ID ' + socket.id + ': ' + message.data});
         });
 
         // client disconnects
         socket.on('disconnect', function () {
             callback.onDisconnect(socket.id);
             deleteClient(socket.id);
+
+            util.log('serverNetwork | a user id ' + socket.id + ' disconnected');
+            broadcastMessage({type: 'userDisconnected', data: 'A user left us! ID: ' + socket.id});
         });
     });
 };
 
 // client handling functions
 var addClient = function (socket) {
-    clients[socket.id] = {id: socket.id, socket: socket, loggedIn: false};
+    clients[socket.id] = {id: socket.id, socket: socket};
     util.log('serverNetwork | added client with id ' + socket.id);
 };
 var getClient = function (id) {
@@ -91,28 +112,26 @@ var deleteClient = function (id) {
 };
 
 // messaging functions
-var sendToClient = function (id, messageType, message) {
+var sendToClient = function (id, socketEventType, message) {
     if (clients.hasOwnProperty(id)) {
-        clients[id].socket.emit(messageType, message);
+        clients[id].socket.emit(socketEventType, message);
     } else {
         util.error('serverNetwork | no client with id ' + id + '. Cannot send message');
     }
 };
-var sendToFrontend = function(messageType, message){
-    if (frontent != 0){
-        frontent.emit(messageType,message);
+var sendToFrontend = function (socketEventType, message) {
+    if (frontent != 0) {
+        frontent.emit(socketEventType, message);
     }
 };
 var broadcastMessage = function (message) {
-    if (typeof message === 'string') {
-        io.emit('broadcast', message);
-    }
+    io.emit('broadcast', message);
 };
 
 // exports
 module.exports = {
-    init: function (serverInstance, inCallback) {
-        server = serverInstance;
+    init: function (inServer, inCallback) {
+        server = inServer;
         callback = inCallback;
         return this;
     },
@@ -133,13 +152,13 @@ module.exports = {
     disconnectClient: function (id) {
         deleteClient(id);
     },
-    sendToClient: function (id, messageType, msg) {
-        sendToClient(id, messageType, msg);
+    sendToClient: function (id, messageType, data) {
+        sendToClient(id, 'message', {type: messageType, data: data});
     },
-    sendToFrontend: function (messageType, msg) {
-        sendToFrontend(messageType,msg);
+    sendToFrontend: function (messageType, data) {
+        sendToFrontend('frontendMessage', {type: messageType, data: data});
     },
-    broadcastMessage: function (message) {
-        broadcastMessage(message);
+    broadcastMessage: function (messageType, data) {
+        broadcastMessage('broadcast', {type: messageType, data: data});
     }
 };

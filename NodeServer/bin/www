@@ -9,6 +9,8 @@ var debug = require('debug')('NodeServer:server');
 var http = require('http');
 var util = require('util');
 
+var sessionHandling = require('../sources/sessionHandling');
+
 /**
  * Get port from environment and store in f.
  */
@@ -31,30 +33,22 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
+ * INIT SESSION OWN HANDLING
  *
- * Initialize own Socket Server
+ * This starts the socket server and user management
  */
 
-var network = require('./../sources/serverNetwork');
-network.init(server, {
-    onNewClient: function (id) {
-        util.log('www | a user id ' + id + ' connected');
-        network.broadcastMessage('A new user joined us! ID: ' + id);
-        network.sendToClient(id, 'message', 'Your Client ID is: ' + id);
+sessionHandling.init(server, {
+    onNewUser: function(name){
+        util.log('www | new user ' + name);
     },
-    onLogin: function (id, username, password) {
-        // TODO check user with authenticator module and return result
-        return true;
+    onUserDisconnects: function(name){
+        util.log('www | user disconnected ' + name);
     },
-    onDisconnect: function (id) {
-        util.log('www | a user id ' + id + ' disconnected');
-        network.broadcastMessage('A user left us! ID: ' + id);
-    },
-    onMessage: function (id, data) {
-
-        util.log('www | a user id ' + id + ' sended a message: ' + data);
-        network.broadcastMessage('User ID ' + id + ': ' + data);
-        network.sendToFrontend('frontendData',data);
+    onMessage: function(name,type,message){
+        util.log('www | user ' + name + ' says: ' + message);
+        // TODO message type specified by client is directly passed to frontend
+        sessionHandling.sendToFrontend(type,{clientName:name,message:message});
     }
 }).start();
 

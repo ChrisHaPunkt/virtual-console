@@ -14,13 +14,19 @@ var cn = (function () {
         callback = inCallback;
 
         socket.on('message', function (message) {
-            callback.onMessage('message', message);
+            callback.onMessage(message.type, message.data);
         });
         socket.on('broadcast', function (message) {
-            callback.onMessage('broadcast', message);
+            callback.onMessage(message.type, message.data);
         });
         socket.on('login', function (message) {
-            callback.onLogin(message);
+            callback.onLogin(message.result, message.username);
+        });
+        socket.on('anonymousLogin', function (message) {
+            callback.onAnonymousLogin(message.result, message.username);
+        });
+        socket.on('register', function (message) {
+            callback.onRegister(message.result, message.username);
         })
     };
 
@@ -29,11 +35,17 @@ var cn = (function () {
         if (io !== 'undefined') {
             init(inCallback);
             return {
-                sendData: function (data) {
-                    socket.emit('message', data);
+                sendData: function (type, data) {
+                    socket.emit('message', {type:type, data:data});
                 },
                 sendLogin: function (username, password) {
                     socket.emit('login', {username: username, password: password});
+                },
+                sendAnonymousLogin: function () {
+                    socket.emit('anonymousLogin');
+                },
+                register: function (username, password) {
+                    socket.emit('register', {username: username, password: password});
                 }
             };
         } else {
