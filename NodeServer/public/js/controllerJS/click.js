@@ -10,10 +10,16 @@ var socket = cn(
     {
         onMessage: function (type, msg) {
             // do anything you want with server messages
-            console.log(type, msg);
+            console.log('incoming message',type, msg);
         },
         onAnonymousLogin: function (result, username) {
-            console.log(result, username);
+            console.log('anonymous login result',result, username);
+        },
+        onLogin: function (result, username) {
+            console.log('login result',result, username);
+        },
+        onRegister: function(result, username){
+            console.log('register result',result,username);
         }
     }
 );

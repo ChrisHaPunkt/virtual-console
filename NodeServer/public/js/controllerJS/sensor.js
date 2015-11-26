@@ -37,7 +37,7 @@ false || !!document.documentMode; // At least IE6}
         rotationBeta:rotationBeta,
         rotationGamma:rotationGamma
     };
-    socket.sendData(MotionData);
+    socket.sendData('motionData',MotionData);
 }
 */
 /*
@@ -62,7 +62,7 @@ function startMotionCapture(){
             rotationBeta:rotationBeta,
             rotationGamma:rotationGamma
         };
-        socket.sendData(MotionData.accelerationX);
+        socket.sendData('motionData',MotionData.accelerationX);
     });
 }
 startMotionCapture();
@@ -93,7 +93,7 @@ function startMotionCapture(){
             rotationBeta:rotationBeta,
             rotationGamma:rotationGamma
         };
-        socket.sendData(MotionData);
+        socket.sendData('motionData',MotionData);
     });
 }
 startMotionCapture();

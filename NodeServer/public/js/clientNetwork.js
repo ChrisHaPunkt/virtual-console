@@ -41,16 +41,16 @@ var cn = (function () {
     return function (inServerUrl, inServerPort, inCallback) {
 
         // check parameters
-        if (typeof inServerUrl === 'undefined' || typeof inServerUrl !== 'string') {
-            console.error('Server URL is not defined or no string.');
+        if (typeof inCallback === 'undefined' || typeof inCallback !== 'object') {
+            console.error('Server callback is not defined or no object.');
             return null;
         }
         if (typeof inServerPort === 'undefined' || typeof inServerPort !== 'number') {
             console.error('Server port is not defined or no number.');
             return null;
         }
-        if (typeof inCallback === 'undefined' || typeof inCallback !== 'object') {
-            console.error('Server callback is not defined or no object.');
+        if (typeof inServerUrl === 'undefined' || typeof inServerUrl !== 'string') {
+            console.error('Server URL is not defined or no string.');
             return null;
         }
 
@@ -59,6 +59,18 @@ var cn = (function () {
             init(inServerUrl, inServerPort, inCallback);
             return {
                 sendData: function (type, data) {
+
+                    // check parameters
+                    if (typeof data === 'undefined') {
+                        console.error('sendData(type,data) | data is not defined or no string.');
+                        return null;
+                    }
+                    if (typeof type === 'undefined' || typeof type !== 'string') {
+                        console.error('sendData(type,data) | type is not defined or no string.');
+                        return null;
+                    }
+
+                    // send message
                     socket.emit('message', {type: type, data: data});
                 },
                 sendLogin: function (username, password) {
@@ -67,12 +79,12 @@ var cn = (function () {
                 sendAnonymousLogin: function () {
                     socket.emit('anonymousLogin');
                 },
-                register: function (username, password) {
+                sendRegister: function (username, password) {
                     socket.emit('register', {username: username, password: password});
                 }
             };
         } else {
-            console.error('Please include socket.io client module. http://socket.io/download/');
+            console.error('Please include socket.io client module. src="/socket.io/socket.io.js"');
             return null;
         }
     };
