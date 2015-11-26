@@ -72,7 +72,7 @@ var cn = (function () {
                 }
             };
         } else {
-            console.error('Please include socket.io client module. http://socket.io/download/');
+            console.error('Please include socket.io client module. src="/socket.io/socket.io.js"');
             return null;
         }
     };
