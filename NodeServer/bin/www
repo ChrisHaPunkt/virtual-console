@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('NodeServer:server');
 var http = require('http');
-var userManagment = require('../sources/UserManagment.js');
 var util = require('util');
 
 /**
