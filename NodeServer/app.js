@@ -8,11 +8,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('util');
 
+var userManagement = require('./sources/UserManagement.js')();
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var frontendRoute = require('./routes/frontendRoute');
 var controllerDemo = require('./routes/controllerDemo');
 var app = module.exports.app = express();
+
+userManagement.authenticateUser("testw","test");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

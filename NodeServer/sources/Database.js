@@ -5,15 +5,13 @@ var MongoClient = require('mongodb').MongoClient;
 
 module.exports = function(dbURL){
     this.dbURL = dbURL;
-    this.db = undefined;
 
     ///////////////////////
     //Connect to database
     ///////////////////////
-    openDB = function(onSuccess){
+    var openDB = function(onSuccess){
         MongoClient.connect(dbURL, function(error, db) {
             if(error == null){
-                this.db = db;
                 onSuccess(db);
                 console.log("Connected to server!");
             } else {
@@ -26,40 +24,74 @@ module.exports = function(dbURL){
     ///////////////////////
     //Close database connection
     ///////////////////////
-    closeDB = function(){
+   var closeDB = function(db){
         db.close();
     };
 
     ///////////////////////
     //Public
     ///////////////////////
-    publicSection = {
-        insert:function(collection, data) {
-            openDB(function(db) {
-                var userCollection = db.collection(collection);
+    var publicSection = {
 
-                //Insert into the collection
-                userCollection.insertOne(
-                    data,
-                    function (error, doc) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        else {
-                            console.log("Add to DB: " + data);
-                        }
-                        closeDB();
-                });
+        /***************************************
+         * Remove data from the collection
+         ***************************************/
+        remove:function(collection, query) {
+
+            var dbID = undefined;
+            var removeCallback = function(err, results) {
+                closeDB(dbID);
+            };
+
+            openDB(function(db) {
+                dbID = db;
+                var userCollection = db.collection(collection);
+                userCollection.deleteMany(query, removeCallback);
+            });
+
+        },
+
+
+        /*************************************
+         * Insert into Database
+         *************************************/
+        insert:function(collection, data) {
+            var dbID = undefined;
+            console.log(data);
+
+            var insertCallback = function(error, doc) {
+                if (error) {
+                    console.log(error);
+                } else {
+
+                    console.log("Add to DB: ", data);
+                }
+                closeDB(dbID);
+            };
+
+            //Insert into database
+            openDB(function(db) {
+                dbID = db;
+                var userCollection = db.collection(collection);
+                userCollection.insertOne(data, insertCallback);
             });
         },
 
+
+        /****************************************
+         * Database query
+         ***************************************/
         query:function(collection, query, onSuccess) {
+            var dbID = undefined;
+            var queryCallback = function(err, docs){
+                onSuccess(docs);
+                closeDB(dbID);
+            };
+
             openDB(function(db) {
+                dbID = db;
                 var userCollection = db.collection(collection);
-                userCollection.find(query).toArray(function(err, docs){
-                    onSuccess(docs);
-                    closeDB();
-                });
+                userCollection.find(query).toArray(queryCallback);
             });
         }
     };
