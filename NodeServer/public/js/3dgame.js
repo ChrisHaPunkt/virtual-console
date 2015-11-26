@@ -1,6 +1,10 @@
 /**
  * Created by chrisheinrichs on 05.11.15.
  */
+var ROTATE = {
+    CONTINOUSLY: 1,
+    RELATIVE: 2
+};
 var GameHandler = {
 
         domContainer: $("#3d"),
@@ -30,9 +34,9 @@ var GameHandler = {
             newObj.cube = this.createCube();
             newObj.rotate = {
                 status: false,
-                x:0,
-                y:0,
-                z:0
+                x: 0,
+                y: 0,
+                z: 0
             };
 
             if (this.gameObjects.length != 0) {
@@ -63,12 +67,11 @@ var GameHandler = {
         },
 
         adjustCubeSize: function (cubeId, paramsXYZ) {
-            this.gameObjects[cubeId].cube.scale.x = (paramsXYZ.x) ? paramsXYZ.x : this.gameObjects[cubeId].cube.scale.x;
-            this.gameObjects[cubeId].cube.scale.y = (paramsXYZ.y) ? paramsXYZ.y : this.gameObjects[cubeId].cube.scale.y;
-            this.gameObjects[cubeId].cube.scale.z = (paramsXYZ.z) ? paramsXYZ.z : this.gameObjects[cubeId].cube.scale.z;
+            this.gameObjects[cubeId].cube.scale.x = (paramsXYZ.x) ? paramsXYZ.x / 100 : this.gameObjects[cubeId].cube.scale.x;
+            this.gameObjects[cubeId].cube.scale.y = (paramsXYZ.y) ? paramsXYZ.y / 100 : this.gameObjects[cubeId].cube.scale.y;
+            this.gameObjects[cubeId].cube.scale.z = (paramsXYZ.z) ? paramsXYZ.z / 100 : this.gameObjects[cubeId].cube.scale.z;
         },
-        setRotationRelative: function (cubeId, paramsXYZ) {
-
+        setRotationParams: function (paramsXYZ, cubeId) {
             if (paramsXYZ.x == 0 && paramsXYZ.y == 0 && paramsXYZ.z == 0) {
                 this.gameObjects[cubeId].rotate.status = false;
                 this.gameObjects[cubeId].rotate.x = 0;
@@ -76,10 +79,26 @@ var GameHandler = {
                 this.gameObjects[cubeId].rotate.z = 0;
             } else {
                 this.gameObjects[cubeId].rotate.status = true;
-                this.gameObjects[cubeId].rotate.x = (paramsXYZ.x)  ? paramsXYZ.x / 1000: this.gameObjects[cubeId].rotate.x;
-                this.gameObjects[cubeId].rotate.y = (paramsXYZ.y)  ? paramsXYZ.y / 1000: this.gameObjects[cubeId].rotate.y;
-                this.gameObjects[cubeId].rotate.z = (paramsXYZ.z)  ? paramsXYZ.z / 1000: this.gameObjects[cubeId].rotate.z;
+                if (this.gameObjects[cubeId].rotate.type == ROTATE.CONTINOUSLY) {
+
+                    this.gameObjects[cubeId].rotate.x = (paramsXYZ.x) ? paramsXYZ.x / 1000 : this.gameObjects[cubeId].rotate.x;
+                    this.gameObjects[cubeId].rotate.y = (paramsXYZ.y) ? paramsXYZ.y / 1000 : this.gameObjects[cubeId].rotate.y;
+                    this.gameObjects[cubeId].rotate.z = (paramsXYZ.z) ? paramsXYZ.z / 1000 : this.gameObjects[cubeId].rotate.z;
+                } else if (this.gameObjects[cubeId].rotate.type == ROTATE.RELATIVE) {
+
+                    this.gameObjects[cubeId].rotate.x = (paramsXYZ.x) ? (paramsXYZ.x / 1000 ) + this.gameObjects[cubeId].rotate.x : this.gameObjects[cubeId].rotate.x;
+                    this.gameObjects[cubeId].rotate.y = (paramsXYZ.y) ? (paramsXYZ.y / 1000 ) + this.gameObjects[cubeId].rotate.y : this.gameObjects[cubeId].rotate.y;
+                    this.gameObjects[cubeId].rotate.z = (paramsXYZ.z) ? (paramsXYZ.z / 1000 ) + this.gameObjects[cubeId].rotate.z : this.gameObjects[cubeId].rotate.z;
+                }
             }
+        },
+        setRotationContinously: function (cubeId, paramsXYZ) {
+            this.gameObjects[cubeId].rotate.type = ROTATE.CONTINOUSLY;
+            this.setRotationParams(paramsXYZ, cubeId);
+        },
+        setRotationRelative: function (cubeId, paramsXYZ) {
+            this.gameObjects[cubeId].rotate.type = ROTATE.RELATIVE;
+            this.setRotationParams(paramsXYZ, cubeId);
         },
         /**
          * Renderloop
@@ -92,9 +111,15 @@ var GameHandler = {
             $.each(this.gameObjects, function (index, elem) {
                 if (elem.rotate.status) {
 
-                    elem.cube.rotation.x += elem.rotate.x;
-                    elem.cube.rotation.y += elem.rotate.y;
-                    elem.cube.rotation.z += elem.rotate.z;
+                    if (elem.rotate.type == ROTATE.CONTINOUSLY) {
+                        elem.cube.rotation.x += elem.rotate.x;
+                        elem.cube.rotation.y += elem.rotate.y;
+                        elem.cube.rotation.z += elem.rotate.z;
+                    } else if (elem.rotate.type == ROTATE.RELATIVE) {
+                        elem.cube.rotation.x = elem.rotate.x;
+                        elem.cube.rotation.y = elem.rotate.y;
+                        elem.cube.rotation.z = elem.rotate.z;
+                    }
                 } else {
                     //
                 }
