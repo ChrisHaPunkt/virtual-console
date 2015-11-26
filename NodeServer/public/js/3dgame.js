@@ -145,3 +145,5 @@ GameHandler.initRenderer();
 GameHandler.addNewGameObj();
 GameHandler.initCameraPosition(1000);
 GameHandler.render();
+
+GameHandler.setRotationContinously(0,{x:0,y:10,z:0});
