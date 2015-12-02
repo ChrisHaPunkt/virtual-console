@@ -16,6 +16,11 @@ window.onload = function () {
     socket.on('frontendMessage', function(data){
         console.log("on.FrontendMessage: ",data);
         writeContent('client ' + data.data.clientName + ': ' + data.data.message);
+        var a = 1*Math.random();
+        var b = 1*Math.random();
+        var c = 1*Math.random();
+        GameHandler.adjustCubeSize(0,{x:a,y:b,z:c});
+
     });
 
     // write to content
@@ -27,3 +32,4 @@ window.onload = function () {
     };
 
 }();
+
