@@ -18,7 +18,7 @@ window.onload = function () {
         writeContent('client ' + data.data.clientName + ': ' + data.data.message);
         var a = 1*Math.random();
         var b = 1*Math.random();
-        var c = 1*Math.random();
+        var c = Math.random();
         GameHandler.adjustCubeSize(0,{x:a,y:b,z:c});
 
     });
