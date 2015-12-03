@@ -1,11 +1,14 @@
 /**
  * Created by chrisheinrichs on 05.11.15.
  */
-var ROTATE = {
-    CONTINOUSLY: 1,
-    RELATIVE: 2
-};
-var GameHandler = {
+
+define(['jquery', 'three'], function ($, THREE) {
+
+    var ROTATE = {
+        CONTINOUSLY: 1,
+        RELATIVE: 2
+    };
+    var GameHandler = {
 
         domContainer: $("#3d"),
 
@@ -138,12 +141,16 @@ var GameHandler = {
         }
 
 
-    }
-    ;
+    };
 
-GameHandler.initRenderer();
-GameHandler.addNewGameObj();
-GameHandler.initCameraPosition(1000);
-GameHandler.render();
+    GameHandler.initRenderer();
+    GameHandler.addNewGameObj();
+    GameHandler.initCameraPosition(1000);
+    GameHandler.render();
 
-GameHandler.setRotationContinously(0,{x:0,y:10,z:0});
+    GameHandler.setRotationContinously(0, {x: 0, y: 10, z: 0});
+
+    // return public interface of the require module
+    return GameHandler;
+
+});
