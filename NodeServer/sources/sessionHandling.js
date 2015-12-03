@@ -134,7 +134,7 @@ module.exports = {
     getUserData: function(name,data){
         //TODO get userdata from usermanagement
     },
-    sendToFrontend: function(type, message){
-        network.sendToFrontend(type,message);
+    sendToFrontend: function(clientName, messageType, message){
+        network.sendToFrontend(messageType,{clientName:clientName,message:message});
     }
 };

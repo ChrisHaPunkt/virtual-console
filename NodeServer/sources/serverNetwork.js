@@ -37,23 +37,23 @@ var startListening = function () {
         addClient(socket);
         callback.onNewClient(socket.id);
 
-        if(debug)util.log('serverNetwork | a user id ' + socket.id + ' connected');
-        if(debug)exports.sendToClient(socket.id, 'welcome', 'Your Client ID is: ' + socket.id);
+        if (debug)util.log('serverNetwork | a user id ' + socket.id + ' connected');
+        if (debug)exports.sendToClient(socket.id, 'welcome', 'Your Client ID is: ' + socket.id);
 
         // frontend connected
         socket.on('frontendInit', function (message) {
             frontend = socket;
             callback.onFrontendConnected();
 
-            if(debug)util.log('serverNetwork | Frontend Connected!');
-            if(debug)exports.sendToFrontend('welcome','Hello Frontend');
+            if (debug)util.log('serverNetwork | Frontend Connected!');
+            if (debug)exports.sendToFrontend('welcome', 'Hello Frontend');
         });
 
         // frontend sends message
         socket.on('frontendMessage', function (message) {
             callback.onFrontendMessage(message.type, message.data);
 
-            if(debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
+            if (debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
         });
 
         // client registers
@@ -85,8 +85,8 @@ var startListening = function () {
             // call callback method
             callback.onMessage(socket.id, message.type, message.data);
 
-            if(debug)util.log('serverNetwork | a user id ' + socket.id + ' sended a message with type ' + message.type + ' : ' + message.data);
-            if(debug)broadcastMessage({type: 'userMessage', data: 'User ID ' + socket.id + ': ' + message.data});
+            if (debug)util.log('serverNetwork | a user id ' + socket.id + ' sended a message with type ' + message.type + ' : ' + message.data);
+            if (debug)broadcastMessage({type: 'userMessage', data: 'User ID ' + socket.id + ': ' + message.data});
         });
 
         // client disconnects
@@ -94,8 +94,7 @@ var startListening = function () {
             callback.onDisconnect(socket.id);
             deleteClient(socket.id);
 
-            if(debug)util.log('serverNetwork | a user id ' + socket.id + ' disconnected');
-            if(debug)broadcastMessage({type: 'userDisconnected', data: 'A user left us! ID: ' + socket.id});
+            if (debug)util.log('serverNetwork | a user id ' + socket.id + ' disconnected');
         });
     });
 };
@@ -105,7 +104,7 @@ var startListening = function () {
  * */
 var addClient = function (socket) {
     clients[socket.id] = {id: socket.id, socket: socket};
-    if(debug)util.log('serverNetwork | added client with id ' + socket.id);
+    if (debug)util.log('serverNetwork | added client with id ' + socket.id);
 };
 var getClient = function (id) {
     if (clients.hasOwnProperty(id)) {
@@ -118,11 +117,11 @@ var getClient = function (id) {
 var deleteClient = function (id) {
     if (clients.hasOwnProperty(id)) {
         if (clients[id].socket.connected) {
-            if(debug)util.log('serverNetwork | closing socket to client with id ' + id);
+            if (debug)util.log('serverNetwork | closing socket to client with id ' + id);
             io.sockets.connected[id].disconnect();
         }
         delete clients[id];
-        if(debug)util.log('serverNetwork | deleted client with id ' + id);
+        if (debug)util.log('serverNetwork | deleted client with id ' + id);
         return true;
     } else {
         console.error('serverNetwork | no client with id ' + id + '. Cannot delete');
@@ -155,7 +154,10 @@ var sendToFrontend = function (socketEventType, message) {
 };
 // broadcasts a message to all connected clients
 var broadcastMessage = function (message) {
-    if (typeof clients === "object" && clients.length > 0) {
+    if (typeof clients !== 'object') {
+        console.error('Internal Error. Client store is no object.');
+        return false;
+    } else if (Object.keys(clients).length > 0) {
         io.emit('broadcast', message);
         return true;
     } else {
