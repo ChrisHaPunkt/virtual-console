@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET client listing. */
 router.get('/', function(req, res, next) {
-    res.render('loginSite', { title: 'LoginSite' });
+    res.render('index', { title: 'LoginSite' });
 });
 
 module.exports = router;

@@ -1,36 +1,30 @@
-//
-   Created by michaelschleiss on 29.10.15.
+//- Created by michaelschleiss on 29.10.15
 
-//- controllerDemo.jade
-doctype html
-html
-   head
-      link(rel='stylesheet', href='/stylesheets/style.css')
-      link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
-      script(src="/js/libs/jquery-min.js")
-   body
-      div(class='myButton', id='btn-A')
-         span(class = 'buttonName') A
-      div(class='myButton', id='btn-B')
-         span(class = 'buttonName') B
+link(rel='stylesheet', href='/stylesheets/style.css')
+link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
 
-      div(id='a')
-      div(id='b')
-      div(id='c')
+div(class='myButton', id='btn-A')
+    span(class = 'buttonName') A
+div(class='myButton', id='btn-B')
+    span(class = 'buttonName') B
 
-      div(id='x')
-      div(id='y')
-      div(id='z')
+div(id='a')
+div(id='b')
+div(id='c')
 
-      div(id='i')
-      div(id='batteryChargingState1') bat1
-      div(id='batteryLevel1')  bat2
-      div(id='batteryChargingTime1') bat3
-      div(id='batteryDischargingTime1') bat4
+div(id='x')
+div(id='y')
+div(id='z')
 
-      video(id='camera-stream' controls autoplay)
+div(id='i')
+div(id='batteryChargingState1') bat1
+div(id='batteryLevel1')  bat2
+div(id='batteryChargingTime1') bat3
+div(id='batteryDischargingTime1') bat4
 
-   script(src='/socket.io/socket.io.js')
-   script(src='/js/clientNetwork.js')
-   script(type='text/javascript' src='/js/controllerJS/click.js')
-   script(type='text/javascript' src='/js/controllerJS/sensor.js')
+video(id='camera-stream' controls autoplay)
+
+script(src='/socket.io/socket.io.js')
+script(src='/js/clientNetwork.js')
+script(type='text/javascript' src='/js/controllerJS/click.js')
+script(type='text/javascript' src='/js/controllerJS/sensor.js')
