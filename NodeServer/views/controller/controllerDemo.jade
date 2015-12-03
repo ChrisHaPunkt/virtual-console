@@ -9,10 +9,14 @@ html
       link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
       script(src="/js/libs/jquery-min.js")
    body
-      div(class='myButton', id='btn-A')
-         span(class = 'buttonName') A
-      div(class='myButton', id='btn-B')
-         span(class = 'buttonName') B
+      div(id='leftContent')
+         div(id='leftContentEncap')
+            div(id='btn-left')
+      div(id='rightContent')
+         div(id='rightContentEncap')
+            div(id='btn-right')
+    input(type='checkbox' value ='acceleration')
+
 
    script(src='/socket.io/socket.io.js')
    script(src='/js/clientNetwork.js')
