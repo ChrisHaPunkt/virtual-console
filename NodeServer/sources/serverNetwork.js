@@ -15,14 +15,13 @@ var http = require('http');
 var app = 0;
 var port = 0;
 var clients = {};
-var frontent = 0;
+var frontend = 0;
 var callback;
 var util = require('util');
-var debug = false;
+var debug = true;
 
-// start webserver and socket
+// start webserver and socket - function is called via public start method. see module exports at the end of this file
 var startListening = function () {
-    // TODO dont create own http server, but use the one from /bin/www file
     try {
         io.listen(server);
         util.log('serverNetwork | Server listening on port ' + server.address().port);
@@ -30,7 +29,9 @@ var startListening = function () {
         console.error(e);
     }
 
-
+    /**
+     * SOCKET EVENT LISTENER
+     * */
     io.sockets.on('connection', function (socket) {
         // new client connects
         addClient(socket);
@@ -41,7 +42,7 @@ var startListening = function () {
 
         // frontend connected
         socket.on('frontendInit', function (message) {
-            frontent = socket;
+            frontend = socket;
             callback.onFrontendConnected();
 
             if(debug)util.log('serverNetwork | Frontend Connected!');
@@ -99,7 +100,9 @@ var startListening = function () {
     });
 };
 
-// client handling functions
+/**
+ * INTERNAL CLIENT HANDLING FUNCTIONS
+ * */
 var addClient = function (socket) {
     clients[socket.id] = {id: socket.id, socket: socket};
     if(debug)util.log('serverNetwork | added client with id ' + socket.id);
@@ -127,7 +130,10 @@ var deleteClient = function (id) {
     }
 };
 
-// messaging functions
+/**
+ * INTERNAL MESSAGING FUNCTIONS
+ * */
+// sends message to single client
 var sendToClient = function (id, socketEventType, message) {
     if (clients.hasOwnProperty(id)) {
         clients[id].socket.emit(socketEventType, message);
@@ -137,15 +143,17 @@ var sendToClient = function (id, socketEventType, message) {
         return false;
     }
 };
+// sends a message to the frontend
 var sendToFrontend = function (socketEventType, message) {
-    if (frontent != 0) {
-        frontent.emit(socketEventType, message);
+    if (frontend != 0) {
+        frontend.emit(socketEventType, message);
         return true;
     } else {
         console.error('serverNetwork | no frontend connected. Cannot send message.');
         return false;
     }
 };
+// broadcasts a message to all connected clients
 var broadcastMessage = function (message) {
     if (typeof clients === "object" && clients.length > 0) {
         io.emit('broadcast', message);
@@ -156,13 +164,17 @@ var broadcastMessage = function (message) {
     }
 };
 
-// export object
+/**
+ * EXPORT OBJECT / PUBLIC INTERFACE
+ * */
 var exports = {
+    // sets initial setting
     init: function (inServer, inCallback) {
         server = inServer;
         callback = inCallback;
         return this;
     },
+    // starts the socket server
     start: function () {
         if (server == 0) {
             util.error('serverNetwork | Please set app first.');
@@ -194,6 +206,5 @@ var exports = {
         return broadcastMessage('broadcast', {type: messageType, data: data});
     }
 };
-
 // exporting the actual object
 module.exports = exports;
