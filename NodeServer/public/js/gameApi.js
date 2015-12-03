@@ -10,17 +10,22 @@ gameApi = {
         INFO: 2,
         DEBUG: 3
     },
+    controllerTemplates: {
+        DEMO: 4,
+        NEW: 5,
+        MODERN: 6
+    },
+    BUTTON: {
+        UP: 7,
+        DOWN: 8
+    },
     logLevel: null,
     socket: null,
     pageLogContent: null,
     frontendConnectionOutbound: null,
     frontendConnection: null,
     frontendInboundMessage: null,
-    controllerTemplates: {
-        DEMO: 1,
-        NEW: 2,
-        MODERN: 3
-    },
+    controller: null,
     init: function () {
 
         /**
@@ -32,12 +37,13 @@ gameApi = {
             this.logLevel = this.log.DEBUG;
 
         /**
-         * Emit data back to server (eg. Controlelr Template)
+         * Emit data back to server (eg. Controller Template)
          */
         var that = this;
+
         var backboundObj = {
             msg: "hi",
-            controllerTemplate: that.controllerTemplates.DEMO
+            controllerTemplate: this.controller === null ? this.controllerTemplates.DEMO: this.controller
         };
         this.socket.on('connect', function () {
             that.socket.emit('frontendInit', backboundObj);
