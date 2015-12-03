@@ -177,9 +177,9 @@ var exports = {
     // starts the socket server
     start: function () {
         if (server == 0) {
-            util.error('serverNetwork | Please set app first.');
+            console.error('serverNetwork | Please set app first.');
         } else if (callback == 0) {
-            util.error('serverNetwork | Please set callback first.');
+            console.error('serverNetwork | Please set callback first.');
         } else {
             startListening();
             //util.log('serverNetwork | Server network module started.');
