@@ -5,8 +5,5 @@ block content
 
   div(id='3d', class='threeDContainer')
   div(id='content', style='color:grey;font-size:1em;max-height:100px;overflow-y: scroll;')
-  script(src='/socket.io/socket.io.js')
-  script(src='/js/libs/three.min.js')
-  script(src='/js/libs/jquery-min.js')
-  script(src='/js/frontend.js')
-  script(src='/js/3dgame.js')
+  // Load Require JS
+  script(data-main='js/frontend.js', src='/js/libs/require.js')
