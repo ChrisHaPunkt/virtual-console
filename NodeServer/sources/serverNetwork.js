@@ -38,7 +38,7 @@ var startListening = function () {
         socket.on('frontendInit', function (message) {
             frontent = socket;
             util.log('serverNetwork | Frontend Connected!');
-            sendToFrontend('frontendData', 'hello frontend!');
+            sendToFrontend('frontendConnection', 'hello frontend');
         });
 
         // frontend sends message

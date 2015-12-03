@@ -1,6 +1,11 @@
 /**
  * Created by chrisheinrichs on 05.11.15.
  */
+
+
+
+
+
 var ROTATE = {
     CONTINOUSLY: 1,
     RELATIVE: 2
