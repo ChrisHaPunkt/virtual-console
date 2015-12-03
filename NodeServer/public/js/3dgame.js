@@ -3,14 +3,44 @@
  */
 
 
+/**
+ * ------------- ApiInitialization Part -------------
+ */
+gameApi.frontendInboundMessage = function (controllerData) {
+    console.log("on.FrontendInboundMessage: ", controllerData);
+    var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
+    gameApi.addLogMessage('client', controllerData.data.clientName + ': ' + msgDetails);
 
 
+    if (controllerData.type == "button") {
 
-var ROTATE = {
-    CONTINOUSLY: 1,
-    RELATIVE: 2
+        var a = 200 * Math.random();
+        var b = 200 * Math.random();
+        var c = 200 * Math.random();
+
+        GameHandler.adjustCubeSize(0, {x: a, y: b, z: c});
+    }
 };
-var GameHandler = {
+gameApi.frontendConnection = function (connInfoObj) {
+    console.log("on.FrontendData: ", connInfoObj);
+    gameApi.addLogMessage('conn', connInfoObj + " " + gameApi.socket.id);
+};
+
+gameApi.logLevel = gameApi.log.DEBUG;
+
+var socketHandle = gameApi.init();
+if (socketHandle !== -1) {
+    // Game API Initialised
+
+
+    /**
+     * ------------- Gamedefinition Part -------------
+     */
+    var ROTATE = {
+        CONTINOUSLY: 1,
+        RELATIVE: 2
+    };
+    var GameHandler = {
 
         domContainer: $("#3d"),
 
@@ -143,12 +173,12 @@ var GameHandler = {
         }
 
 
-    }
-    ;
+    };
 
-GameHandler.initRenderer();
-GameHandler.addNewGameObj();
-GameHandler.initCameraPosition(1000);
-GameHandler.render();
+    GameHandler.initRenderer();
+    GameHandler.addNewGameObj();
+    GameHandler.initCameraPosition(1000);
+    GameHandler.render();
 
-GameHandler.setRotationContinously(0,{x:0,y:10,z:0});
+    GameHandler.setRotationContinously(0, {x: 0, y: 10, z: 0});
+}

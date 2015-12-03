@@ -37,12 +37,14 @@ var startListening = function () {
         // frontend connected
         socket.on('frontendInit', function (message) {
             frontent = socket;
-            util.log('serverNetwork | Frontend Connected!');
+            util.log('serverNetwork | Frontend Connected! | Msg: ' + message.msg);
+            // TODO set Controller Template
+            // mesage.controllerTemplate
             sendToFrontend('frontendConnection', 'hello frontend');
         });
 
         // frontend sends message
-        socket.on('frontendMessage', function (message) {
+        socket.on('frontendOutboundMessage', function (message) {
             // TODO implement
         });
 
@@ -157,7 +159,7 @@ module.exports = {
         sendToClient(id, 'message', {type: messageType, data: data});
     },
     sendToFrontend: function (messageType, data) {
-        sendToFrontend('frontendMessage', {type: messageType, data: data});
+        sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
     },
     broadcastMessage: function (messageType, data) {
         broadcastMessage('broadcast', {type: messageType, data: data});
