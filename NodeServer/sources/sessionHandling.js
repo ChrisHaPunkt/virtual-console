@@ -100,6 +100,12 @@ var startNetworkServer = function (server) {
             }else{
                 util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
             }
+        },
+        onFrontendConnected: function(){
+
+        },
+        onFrontendMessage: function(type, message){
+
         }
     }).start();
 };
