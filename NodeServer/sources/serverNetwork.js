@@ -37,13 +37,14 @@ var startListening = function () {
         // frontend connected
         socket.on('frontendInit', function (message) {
             frontent = socket;
+            //callback.onFrontendConnected();
             util.log('serverNetwork | Frontend Connected!');
             sendToFrontend('frontendData', 'hello frontend!');
         });
 
         // frontend sends message
         socket.on('frontendMessage', function (message) {
-            // TODO implement
+            //callback.onFrontendMessage(message.type, message.data);
         });
 
         // client registers
@@ -106,8 +107,10 @@ var deleteClient = function (id) {
         }
         delete clients[id];
         util.log('serverNetwork | deleted client with id ' + id);
+        return true;
     } else {
         util.error('serverNetwork | no client with id ' + id + '. Cannot delete');
+        return false;
     }
 };
 
@@ -115,18 +118,28 @@ var deleteClient = function (id) {
 var sendToClient = function (id, socketEventType, message) {
     if (clients.hasOwnProperty(id)) {
         clients[id].socket.emit(socketEventType, message);
+        return true;
     } else {
         util.error('serverNetwork | no client with id ' + id + '. Cannot send message');
+        return false;
     }
 };
 var sendToFrontend = function (socketEventType, message) {
     if (frontent != 0) {
         util.log("serverNetwork: ",socketEventType, " -> ", message);
         frontent.emit(socketEventType, message);
+        return true;
+    }else{
+        return false;
     }
 };
 var broadcastMessage = function (message) {
-    io.emit('broadcast', message);
+    if (typeof clients === "object" && clients.length > 0) {
+        io.emit('broadcast', message);
+        return true;
+    }else{
+        return false;
+    }
 };
 
 // exports
@@ -148,18 +161,22 @@ module.exports = {
         return this;
     },
     getClientList: function () {
-        return clients;
+        if (typeof clients === "object" && clients.length > 0) {
+            return clients;
+        }else{
+            return false;
+        }
     },
     disconnectClient: function (id) {
-        deleteClient(id);
+        return deleteClient(id);
     },
     sendToClient: function (id, messageType, data) {
-        sendToClient(id, 'message', {type: messageType, data: data});
+        return sendToClient(id, 'message', {type: messageType, data: data});
     },
     sendToFrontend: function (messageType, data) {
-        sendToFrontend('frontendMessage', {type: messageType, data: data});
+        return sendToFrontend('frontendMessage', {type: messageType, data: data});
     },
     broadcastMessage: function (messageType, data) {
-        broadcastMessage('broadcast', {type: messageType, data: data});
+        return broadcastMessage('broadcast', {type: messageType, data: data});
     }
 };
