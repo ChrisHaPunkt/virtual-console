@@ -202,6 +202,13 @@ var exports = {
         return sendToClient(id, 'message', {type: messageType, data: data});
     },
     sendToFrontend: function (messageType, data) {
+        console.log("asd" + messageType);
+        //TODO: FixUp
+        //Der MessageType wird auf GameApi Seite noch unterschieden. Siehe https://gitlab.homeset.de/fhKiel/M113/wikis/GameApiDescription
+        if (messageType === "frontendConnection") {
+            return sendToFrontend('frontendConnection', data);
+
+        }
         return sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
     },
     broadcastMessage: function (messageType, data) {
