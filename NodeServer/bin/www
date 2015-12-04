@@ -47,8 +47,7 @@ sessionHandling.init(server, {
     },
     onMessage: function(name,type,message){
         util.log('www | user ' + name + ' says: ' + message);
-        // TODO message type specified by client is directly passed to frontend
-        sessionHandling.sendToFrontend(type,{clientName:name,message:message});
+        sessionHandling.sendToFrontend(name,type,message);
     }
 }).start();
 

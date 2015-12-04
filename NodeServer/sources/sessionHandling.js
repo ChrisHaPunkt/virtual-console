@@ -11,14 +11,78 @@ var server = 0;
 var callback = 0;
 var currentAnonymousUserId = 0;
 
+/**
+ * FUNCTION TO START THE UNDERLYING SERVER-NETWORK
+ * function is called via public start method. see module exports at the end of this file
+ * */
+var startNetworkServer = function (server) {
+    network.init(server, {
+        onNewClient: function (id) {
+            addUser(id);
+        },
+        // incoming register request is passed down to userManagement and result is returned
+        onRegister: function (id, username, password) {
+            userManagement.registerUser(username, password, function (result) {
+                if (result) {
+                    return {result: true, username: username};
+                } else {
+                    return {result: true, username: username};
+                }
+            });
+            return true;
+        },
+        // incoming login request is passed down to userManagement and result is returned
+        onLogin: function (id, username, password) {
+            userManagement.authenticateUser(username, password, function (result) {
+                if (result) {
+                    setUserName(id, username);
+                    setUserStatus(id, true, true);
+                    callback.onNewUser(username);
+                    return {result: true, username: username};
+                } else {
+                    return {result: false, username: username};
+                }
+            });
+        },
+        // incoming anonymousLogin request - a username is generated and returned
+        onAnonymousLogin: function (id) {
+            var tmpUserName = "User_" + ++currentAnonymousUserId;
+            setUserName(id, tmpUserName);
+            setUserStatus(id, true, false);
+            callback.onNewUser(tmpUserName);
+            return {result: true, username: tmpUserName};
+        },
+        onDisconnect: function (id) {
+            callback.onUserDisconnects(getUserById(id).userName);
+            removeUserById(id);
+        },
+        onMessage: function (id, type, data) {
+            if (isLoggedIn(id)) {
+                callback.onMessage(getUserById(id).userName, type, data);
+            } else {
+                console.error('sessionHandler | user id ' + id + ' sent message without being authenticated.');
+            }
+        },
+        onFrontendConnected: function () {
+
+        },
+        onFrontendMessage: function (type, message) {
+
+        }
+    }).start();
+};
+
+/**
+ * INTERNAL USER HANDLING FUNCTIONS
+ * */
 var addUser = function (id) {
-    activeUsers[id] = {socketId: id, userName: 0, isLoggedIn:false, isAuthenticated:false};
+    activeUsers[id] = {socketId: id, userName: 0, isLoggedIn: false, isAuthenticated: false};
 };
 
 var setUserName = function (id, userName) {
     activeUsers[id].userName = userName;
 };
-var setUserStatus = function(id,login,auth){
+var setUserStatus = function (id, login, auth) {
     activeUsers[id].isLoggedIn = login;
     activeUsers[id].isAuthenticated = auth;
 };
@@ -55,57 +119,10 @@ var getUserIdByName = function (userName) {
     return false;
 };
 
-var startNetworkServer = function (server) {
-    network.init(server, {
-        onNewClient: function (id) {
-            addUser(id);
-        },
-        onRegister: function (id,username,password) {
-            userManagement.registerUser(username,password,function(result){
-                if(result){
-                    return {result:true,username:username};
-                }else{
-                    //network.sendToClient(id,'register',false);
-                    return {result:true,username:username};
-                }
-            });
-            return true;
-        },
-        onLogin: function (id, username, password) {
-            userManagement.authenticateUser(username,password,function(result){
-                if(result){
-                    setUserName(id,username);
-                    setUserStatus(id,true,true);
-                    callback.onNewUser(username);
-                    return {result:true,username:username};
-                }else{
-                    return {result:false,username:username};
-                }
-            });
-        },
-        onAnonymousLogin: function(id){
-            var tmpUserName = "User_"+ ++currentAnonymousUserId;
-            setUserName(id, tmpUserName);
-            setUserStatus(id,true,false);
-            callback.onNewUser(tmpUserName);
-            return {result:true,username:tmpUserName};
-        },
-        onDisconnect: function (id) {
-            callback.onUserDisconnects(getUserById(id).userName);
-            removeUserById(id);
-        },
-        onMessage: function (id, type, data) {
-            if(isLoggedIn(id)) {
-                callback.onMessage(getUserById(id).userName, type, data);
-            }else{
-                util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
-            }
-        }
-    }).start();
-};
-
-// exports
-module.exports = {
+/**
+ * EXPORT OBJECT / PUBLIC INTERFACE
+ * */
+var exports = {
     init: function (inServer, inCallback) {
         server = inServer;
         callback = inCallback;
@@ -115,20 +132,22 @@ module.exports = {
         startNetworkServer(server);
         return this;
     },
-    sendToUser: function(name,type,message){
-        network.sendToClient(getUserIdByName(name),type,message);
+    sendToUser: function (name, type, message) {
+        network.sendToClient(getUserIdByName(name), type, message);
     },
     removeUser: function (name) {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));
     },
-    setUserData: function(name,data){
+    setUserData: function (name, data) {
         //TODO set userdata in usermanagement
     },
-    getUserData: function(name,data){
+    getUserData: function (name, data) {
         //TODO get userdata from usermanagement
     },
-    sendToFrontend: function(type, message){
-        network.sendToFrontend(type,message);
+    sendToFrontend: function (clientName, messageType, message) {
+        network.sendToFrontend(messageType, {clientName: clientName, message: message});
     }
 };
+// exporting the actual object
+module.exports = exports;
