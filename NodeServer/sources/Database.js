@@ -79,6 +79,22 @@ module.exports = function(dbURL){
 
 
         /****************************************
+         * Update a database entry
+         ***************************************/
+        update:function(collection, filter, data, callback){
+
+
+
+            //Open connection and update the entry specified by the filter object
+            openDB(function(db) {
+                dbID = db;
+                var userCollection = db.collection(collection);
+                userCollection.updateOne(filter, { $set: data }, callback);
+            });
+        },
+
+
+        /****************************************
          * Database query
          ***************************************/
         query:function(collection, query, onSuccess) {

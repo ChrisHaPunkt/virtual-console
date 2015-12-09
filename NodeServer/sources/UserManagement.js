@@ -6,6 +6,9 @@ var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
 
 module.exports = function(){
 
+
+
+
     var publicSection = {
 
 
@@ -19,7 +22,6 @@ module.exports = function(){
 
                 //Only register a new user when he is unique
                 if (authState == false) {
-                    database.remove("userData", User);
                     database.insert("userData", User);
                 }
             };
@@ -29,11 +31,10 @@ module.exports = function(){
 
 
         /********************************************
-         * Authenticate user
+         * Authenticate a user
          ********************************************/
         authenticateUser:function(name, password, callback) {
             var query = { name:name, password:password };
-
 
             var onSuccess = function(data){
                 var returnState = false;
@@ -52,7 +53,17 @@ module.exports = function(){
 
         },
 
-        setUserData:function(){},
+
+        /********************************************
+         * Authenticate a user
+         ********************************************/
+        setUserData:function(userName, data, onSuccess){
+
+
+
+        },
+
+        
         getUserData:function(){}
     };
     return publicSection;
