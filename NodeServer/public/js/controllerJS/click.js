@@ -19,7 +19,6 @@ define(['jquery'], function($){
 
     return {
         setSocket : function (_socket) {
-            console.log("socket set");
             socket = _socket;
         }
     };

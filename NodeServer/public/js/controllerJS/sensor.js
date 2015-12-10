@@ -173,11 +173,6 @@ define(['jquery'], function ($) {
     return {
         setSocket: function (_socket) {
             socket = _socket;
-        },
-        startMotionCapture: function(){
-            if (socket != null){
-                startMotionCapture();
-            }
         }
         // add more if needed
     }

@@ -7,11 +7,6 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
 
-    console.log(click);
-    console.log(cn);
-    console.log(sensor);
-    console.log($);
-
     var serverURL = "127.0.0.1";
     var serverPort = 5222;
 
@@ -34,18 +29,19 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             }
         }
     );
+
+    // TODO proper login handling
+    socket.sendAnonymousLogin();
+
+    /*
     $.('#buttonContinue').click(function(){
     });
     var sendLogin = function () {
         socket.sendLogin();
     };
+    */
 
     // passing socket instance to modules
     click.setSocket(socket);
     sensor.setSocket(socket);
-
-    // start sensor MotionCapture - EXAMPLE
-    sensor.startMotionCapture();
-
-
 });
