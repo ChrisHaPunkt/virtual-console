@@ -1,30 +1,29 @@
-//- Created by michaelschleiss on 29.10.15
+//
+   Created by michaelschleiss on 29.10.15.
 
-link(rel='stylesheet', href='/stylesheets/style.css')
-link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
+//- controllerDemo.jade
+doctype html
+html
+   head
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
+      script(src="/js/libs/jquery-min.js")
+   body
+      div(id='Container')
+         label(id='lblCheckboxAcc' for='chkAcc') Acceleration
+            input(type='checkbox' id='chkAcc' class='chkSensors' value ='Acceleration')
+         input(type='checkbox' id='chkRot' class='chkSensors' value ='Rotation')
+         div(id='leftContent' text='Acceleration')
+            div(id='leftContentEncap')
+               div(id='btn-left')
+         div(id='rightContent')
+            div(id='rightContentEncap')
+               div(id='btn-right')
+         div(id='checkboxesBottom')
+            input(type='checkbox' id='chkBat' class='chkSensors' value ='Battery')
+            input(type='checkbox' id='chkVid' class='chkSensors' value ='Audio')
 
-div(class='myButton', id='A')
-    span(class = 'buttonName') A
-div(class='myButton', id='B')
-    span(class = 'buttonName') B
-
-div(id='a')
-div(id='b')
-div(id='c')
-
-div(id='x')
-div(id='y')
-div(id='z')
-
-div(id='i')
-div(id='batteryChargingState1') bat1
-div(id='batteryLevel1')  bat2
-div(id='batteryChargingTime1') bat3
-div(id='batteryDischargingTime1') bat4
-
-video(id='camera-stream' controls autoplay)
-
-script(src='/socket.io/socket.io.js')
-script(src='/js/clientNetwork.js')
-script(type='text/javascript' src='/js/controllerJS/click.js')
-script(type='text/javascript' src='/js/controllerJS/sensor.js')
+   script(src='/socket.io/socket.io.js')
+   script(src='/js/clientNetwork.js')
+   script(type='text/javascript' src='/js/controllerJS/click.js')
+   script(type='text/javascript' src='/js/controllerJS/sensor.js')

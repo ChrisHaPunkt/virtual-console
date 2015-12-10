@@ -6,86 +6,38 @@
 
  */
 
-/*
- function getBrowserByFeature(){
- var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
- // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
- var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
- var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
- // At least Safari 3+: "[object HTMLElementConstructor]"
- var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
- var isIE = /*@cc_on!@*/
-false || !!document.documentMode; // At least IE6}
 
 
-/*window.ondevicemotion = function  (event) {
-    var accelerationX = event.acceleration.x; //hoch, runter
-    var accelerationY = event.acceleration.y; //hoch, runter
-    var accelerationZ = event.acceleration.z; //vor, zurück
-
-    var rotationAlpha = event.rotationRate.alpha; //rotation um karthesische X-Achse (kippen vor, zurück)
-    var rotationBeta = event.rotationRate.beta; //rotation um karthesische Y-Achse (drehen)
-    var rotationGamma = event.rotationRate.gamma; //rotation um karthesische Z-Achse (kippen links, rechts)
-
-    var interval = event.interval;
-
-    var MotionData ={
-        accelerationX:accelerationX,
-        accelerationY:accelerationY,
-        accelerationZ:accelerationZ,
-        rotationAlpha:rotationAlpha,
-        rotationBeta:rotationBeta,
-        rotationGamma:rotationGamma
-    };
-    socket.sendData('motionData',MotionData);
-}
-*/
-/*
-function startMotionCapture(){
-    window.addEventListener('devicemotion', function onDeviceMoved(event){
-    //window.ondevicemotion = function  (event) {
-        var accelerationX = event.acceleration.x; //hoch, runter
-        var accelerationY = event.acceleration.y; //hoch, runter
-        var accelerationZ = event.acceleration.z; //vor, zurück
-
-        var rotationAlpha = event.rotationRate.alpha; //rotation um karthesische X-Achse (kippen vor, zurück)
-        var rotationBeta = event.rotationRate.beta; //rotation um karthesische Y-Achse (drehen)
-        var rotationGamma = event.rotationRate.gamma; //rotation um karthesische Z-Achse (kippen links, rechts)
-
-        var interval = event.interval;
-
-        var MotionData ={
-            accelerationX:accelerationX,
-            accelerationY:accelerationY,
-            accelerationZ:accelerationZ,
-            rotationAlpha:rotationAlpha,
-            rotationBeta:rotationBeta,
-            rotationGamma:rotationGamma
-        };
-        socket.sendData('motionData',MotionData.accelerationX);
-    });
-}
-startMotionCapture();
-*/
-
-
-
-
-
-function startMotionCapture(){
+function startMotionCapture(minMotion, minRotation){
     window.addEventListener('devicemotion', function  (event){
         //window.ondevicemotion = function  (event) {
         var accelerationX = event.acceleration.x; //hoch, runter
         var accelerationY = event.acceleration.y; //hoch, runter
         var accelerationZ = event.acceleration.z; //vor, zurück
 
+        if(accelerationX == null)
+            {accelerationX = 0;}
+        if (accelerationY == null)
+            {accelerationY = 0;}
+        if (accelerationZ == null)
+         {accelerationZ = 0;}
+
+
         var rotationAlpha = event.rotationRate.alpha; //rotation um karthesische X-Achse (kippen vor, zurück)
         var rotationBeta = event.rotationRate.beta; //rotation um karthesische Y-Achse (drehen)
         var rotationGamma = event.rotationRate.gamma; //rotation um karthesische Z-Achse (kippen links, rechts)
 
+        if (rotationAlpha == null)
+            {rotationAlpha = 0;}
+        if (rotationBeta == null)
+            {rotationBeta = 0;}
+        if (rotationGamma == null)
+            {rotationGamma = 0;}
+
         var interval = event.interval;
 
         var MotionData ={
+
             accelerationX:accelerationX,
             accelerationY:accelerationY,
             accelerationZ:accelerationZ,
@@ -93,10 +45,53 @@ function startMotionCapture(){
             rotationBeta:rotationBeta,
             rotationGamma:rotationGamma
         };
-        socket.sendData('motionData',MotionData);
+/*
+        if (MotionData.accelerationX > minMotion || MotionData.accelerationY > minMotion || MotionData.accelerationZ > minMotion ||
+            MotionData.rotationAlpha > minRotation || MotionData.rotationBeta > minRotation || MotionData.rotationGamma > minRotation) {
+            var checkAcc = $('#chkAcc').prop('checked');
+            if (checkAcc==true) {
+                socket.sendData("motionData", MotionData);
+            }
+        }
+
+
+ */
+         var AccelerationData ={
+         accelerationX:accelerationX,
+         accelerationY:accelerationY,
+         accelerationZ:accelerationZ,
+         };
+         var RotationData ={
+         rotationAlpha:rotationAlpha,
+         rotationBeta:rotationBeta,
+         rotationGamma:rotationGamma
+         };
+
+
+
+
+        if (MotionData.accelerationX > minMotion || MotionData.accelerationY > minMotion || MotionData.accelerationZ > minMotion ||
+            MotionData.accelerationX < -minMotion || MotionData.accelerationY < -minMotion || MotionData.accelerationZ < -minMotion) {
+            var checkAcc = $('#chkAcc').prop('checked');
+            if (checkAcc==true) {
+                socket.sendData("accelerationData",AccelerationData);
+            }
+        }
+        if (MotionData.rotationAlpha > minRotation || MotionData.rotationBeta > minRotation || MotionData.rotationGamma > minRotation ||
+            MotionData.rotationAlpha < -minRotation || MotionData.rotationBeta < -minRotation || MotionData.rotationGamma < -minRotation
+        ) {
+            var checkRot = $('#chkRot').prop('checked');
+            if (checkRot==true) {
+                socket.sendData("rotationData",RotationData);
+            }
+        }
+
+
     });
 }
-startMotionCapture();
+
+
+startMotionCapture(0.3, 6);
 
 function vibrate(milliseconds) {
     window.navigator.vibrate(milliseconds);
@@ -139,27 +134,27 @@ function getUserAudioVideo() {
         alert('Sorry, your browser does not support getUserMedia');
     }
 }
-/*
+
 navigator.getBattery().then(function (battery) {
     var batteryChargingState = battery.charging;
     var batteryLevel = battery.level;
     var batteryChargingTime = battery.chargingTime;
     var batteryDischargingTime = battery.dischargingTime;
 
-     battery.addEventListener('chargingchange', function () {
-     batteryChargingState = battery.charging;
-     });
-     battery.addEventListener('levelchange', function () {
-     batteryLevel = battery.level;
-     });
-     battery.addEventListener('chargingtimechange', function () {
-     batteryChargingTime = battery.chargingTime;
-     });
-     battery.addEventListener('dischargingtimechange', function () {
-     batteryDischargingTime = battery.dischargingTime;
-     });
+    battery.addEventListener('chargingchange', function () {
+        batteryChargingState = battery.charging;
+    });
+    battery.addEventListener('levelchange', function () {
+        batteryLevel = battery.level;
+    });
+    battery.addEventListener('chargingtimechange', function () {
+        batteryChargingTime = battery.chargingTime;
+    });
+    battery.addEventListener('dischargingtimechange', function () {
+        batteryDischargingTime = battery.dischargingTime;
+    });
 });
-*/
+
 
 function getDeviceOrientation() {
     var deviceOrientation = window.orientation
