@@ -3,57 +3,92 @@
  */
 
 var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
+//var database = require('./Database.js')("mongodb://localhost/M113");
 
 module.exports = function(){
+    var debug = true;
 
     var publicSection = {
-
 
         /**************************************
          * Register a user
          **************************************/
         registerUser:function(name, password, callback) {
-            var User = {name:name, password:password};
+            var User = { name:name, password:password };
+            var query = { name:name };
 
-            var registerCallback = function(authState){
-
+            var registerCallback = function(state, data){
                 //Only register a new user when he is unique
-                if (authState == false) {
-                    database.remove("userData", User);
-                    database.insert("userData", User);
+                if (state && data.length == 0) {
+                    database.insert("userData", User, callback);
+                } else {
+                    callback(false, "User already exist!");
                 }
             };
 
-            this.authenticateUser(name, password, registerCallback);
+            database.query("userData", query, registerCallback);
         },
 
 
         /********************************************
-         * Authenticate user
+         * Authenticate a user
          ********************************************/
         authenticateUser:function(name, password, callback) {
             var query = { name:name, password:password };
 
-
-            var onSuccess = function(data){
+            var onSuccess = function(state, data) {
                 var returnState = false;
-                if (data.length == 1){
+                var returnMsg = "";
+                if (state && data.length == 1) {
+                    returnMsg = "Login successfully!";
                     returnState = true;
-                    console.log("Login successfully!");
-                } else if (data.length == 0) {
-                    console.log("Unknown User/Password!");
+                } else if (state && data.length == 0) {
+                    returnMsg = "Login failed!";
                 } else {
-                    console.log("Login error!");
+                    returnMsg = "Database error: Found to many users! (" + data +")";
                 }
-                callback(returnState);
+
+                if (debug) console.log("UserManagement | " + returnMsg);
+                callback(returnState, returnMsg);
             };
-
             database.query("userData", query, onSuccess);
-
         },
 
-        setUserData:function(){},
-        getUserData:function(){}
+
+        /********************************************
+         * Set user data
+         ********************************************/
+        setUserData:function(userName, data, onSuccess) {
+            var query = { name:userName };
+
+            var callback = function(state, msg){
+                //The user exist
+                if (state == true && msg[0]){
+                    console.log(msg[0]);
+                    msg[0]["data"] = data;
+                    database.update("userData", query, msg[0]);
+                }
+            };
+            database.query("userData", query, callback);
+        },
+
+
+        /********************************************
+         * Get user data
+         ********************************************/
+        getUserData:function(userName, onSuccess){
+            var query = { name:userName };
+
+            var queryCallback = function(state, msg){
+                //The user exist
+                if (state && msg[0]){
+                    onSuccess(true, msg[0].data);
+                } else {
+                    onSuccess(false, msg);
+                }
+            };
+            database.query("userData", query, queryCallback);
+        }
     };
     return publicSection;
 

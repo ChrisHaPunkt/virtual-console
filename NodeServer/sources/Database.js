@@ -4,67 +4,79 @@
 var MongoClient = require('mongodb').MongoClient;
 
 module.exports = function(dbURL){
+    var debug = true;
     this.dbURL = dbURL;
 
-    ///////////////////////
-    //Connect to database
-    ///////////////////////
+    /***************************************
+     * Connect to database
+     ***************************************/
     var openDB = function(onSuccess){
         MongoClient.connect(dbURL, function(error, db) {
-            if(error == null){
-                onSuccess(db);
-                console.log("Connected to server!");
-            } else {
+            if(error){
                 console.log(error);
+            } else {
+                if (debug) console.log("Connected to Database!");
+                onSuccess(db);
             }
 
         });
     };
 
-    ///////////////////////
-    //Close database connection
-    ///////////////////////
-   var closeDB = function(db){
+
+    /***************************************
+     * Close database connection
+     ***************************************/
+    var closeDB = function(db){
+        if (debug) console.log("Disconnected from Database!");
         db.close();
     };
 
-    ///////////////////////
-    //Public
-    ///////////////////////
+
+    /***************************************
+     * Public section
+     ***************************************/
     var publicSection = {
 
         /***************************************
-         * Remove data from the collection
+         * Remove all elements, which are selected by the filter object, from the database.
          ***************************************/
-        remove:function(collection, query) {
-
+        remove:function(collection, filter, callback) {
             var dbID = undefined;
-            var removeCallback = function(err, results) {
+            if (!callback) callback = function(){};
+
+            var removeCallback = function(error, doc) {
+                if (error) {
+                    if (debug) console.log(error);
+                    callback(false, error);
+                } else {
+                    if (debug) console.log("Database | Remove from DB: ", filter);
+                    callback(true, doc);
+                }
                 closeDB(dbID);
             };
 
             openDB(function(db) {
                 dbID = db;
                 var userCollection = db.collection(collection);
-                userCollection.deleteMany(query, removeCallback);
+                userCollection.deleteMany(filter, removeCallback);
             });
-
         },
 
 
         /*************************************
-         * Insert into Database
+         * Insert a element into the database
          *************************************/
-        insert:function(collection, data) {
+        insert:function(collection, data, callback) {
             var dbID = undefined;
-            console.log(data);
+            if (!callback) callback = function(){};
 
             var insertCallback = function(error, doc) {
                 if (error) {
-                    console.log(error);
+                    if (debug) console.log(error);
+                    callback(false, error);
                 } else {
-
-                    console.log("Add to DB: ", data);
+                    if (debug) console.log("Database | Add to DB: ", data);
+                    callback(true, doc);
                 }
                 closeDB(dbID);
             };
@@ -79,12 +91,47 @@ module.exports = function(dbURL){
 
 
         /****************************************
+         * Update a database element
+         ***************************************/
+        update:function(collection, filter, data, callback){
+            var dbID = undefined;
+            if (!callback) callback = function(){};
+
+            var updateCallback = function(error, doc) {
+                if (error) {
+                    if (debug) console.log(error);
+                    callback(false, error);
+                } else {
+                    if (debug) console.log("Database | Update element: ", data);
+                    callback(true, doc);
+                }
+                closeDB(dbID);
+            };
+
+            //Open a connection and update the entry specified by the filter object
+            openDB(function(db) {
+                dbID = db;
+                var userCollection = db.collection(collection);
+                userCollection.updateOne(filter, { $set: data }, updateCallback);
+            });
+        },
+
+
+        /****************************************
          * Database query
          ***************************************/
-        query:function(collection, query, onSuccess) {
+        query:function(collection, query, callback) {
             var dbID = undefined;
-            var queryCallback = function(err, docs){
-                onSuccess(docs);
+            if (!callback) callback = function(){};
+
+            var queryCallback = function(error, doc){
+                if (error) {
+                    if (debug) console.log(error);
+                    callback(false, error);
+                } else {
+                    if (debug) console.log("Database | Query successfully!");
+                    callback(true, doc);
+                }
                 closeDB(dbID);
             };
 

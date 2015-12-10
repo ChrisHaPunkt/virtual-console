@@ -119,6 +119,57 @@ var getUserIdByName = function (userName) {
     return false;
 };
 
+var startNetworkServer = function (server) {
+    network.init(server, {
+        onNewClient: function (id) {
+            addUser(id);
+        },
+        onRegister: function (id,username,password, _callback) {
+            userManagement.registerUser(username,password,function(result){
+                if(result){
+                    _callback({result:true,username:username});
+                }else{
+                    //network.sendToClient(id,'register',false);
+                    _callback({result:true,username:username});
+                }
+            });
+            return true;
+        },
+        onLogin: function (id, username, password, _callback) {
+            userManagement.authenticateUser(username,password,function(result, info){
+
+                if(result){
+                    setUserName(id,username);
+                    setUserStatus(id,true,true);
+                    callback.onNewUser(username);
+                    _callback({result:true,username:username});
+                }else{
+                    _callback({result:false,username:username});
+                }
+
+            });
+        },
+        onAnonymousLogin: function(id){
+            var tmpUserName = "User_"+ ++currentAnonymousUserId;
+            setUserName(id, tmpUserName);
+            setUserStatus(id,true,false);
+            callback.onNewUser(tmpUserName);
+            return {result:true,username:tmpUserName};
+        },
+        onDisconnect: function (id) {
+            callback.onUserDisconnects(getUserById(id).userName);
+            removeUserById(id);
+        },
+        onMessage: function (id, type, data) {
+            if(isLoggedIn(id)) {
+                callback.onMessage(getUserById(id).userName, type, data);
+            }else{
+                util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
+            }
+        }
+    }).start();
+};
+
 /**
  * EXPORT OBJECT / PUBLIC INTERFACE
  * */
