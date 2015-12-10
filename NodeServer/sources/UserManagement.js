@@ -2,8 +2,8 @@
  * Created by dennis on 29.10.15.
  */
 
-//var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
-var database = require('./Database.js')("mongodb://localhost/M113");
+var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
+//var database = require('./Database.js')("mongodb://localhost/M113");
 
 module.exports = function(){
     var debug = true;
@@ -18,9 +18,9 @@ module.exports = function(){
             var User = { name:name, password:password };
             var query = { name:name };
 
-            var registerCallback = function(state){
+            var registerCallback = function(state, data){
                 //Only register a new user when he is unique
-                if (state == 0) {
+                if (state && data.length == 0) {
                     database.insert("userData", User, callback);
                 } else {
                     callback(false, "User already exist!");
@@ -37,17 +37,16 @@ module.exports = function(){
         authenticateUser:function(name, password, callback) {
             var query = { name:name, password:password };
 
-            var onSuccess = function(data) {
+            var onSuccess = function(state, data) {
                 var returnState = false;
                 var returnMsg = "";
-
-                if (data.length == 1) {
+                if (state && data.length == 1) {
                     returnMsg = "Login successfully!";
                     returnState = true;
-                } else if (data.length == 0) {
+                } else if (state && data.length == 0) {
                     returnMsg = "Login failed!";
                 } else {
-                    returnMsg = "Database error: Found to many users!";
+                    returnMsg = "Database error: Found to many users! (" + data +")";
                 }
 
                 if (debug) console.log("UserManagement | " + returnMsg);
@@ -83,7 +82,7 @@ module.exports = function(){
 
             var queryCallback = function(state, msg){
                 //The user exist
-                if (state == true && msg[0]){
+                if (state && msg[0]){
                     onSuccess(true, msg[0].data);
                 } else {
                     onSuccess(false, msg);
