@@ -23,6 +23,10 @@ var socket = cn(serverURL, serverPort, {
     onLogin: function (type, msg) {
         // do anything you want with server messages
         console.log(type, msg);
+    },
+    onRegister: function (type, msg) {
+        // do anything you want with server messages
+        console.log(type, msg);
     }
 });
 

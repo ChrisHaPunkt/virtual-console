@@ -48,16 +48,18 @@ var startListening = function () {
 
         // client registers
         socket.on('register', function (message) {
-            var registerResult = callback.onRegister(socket.id, message.username, message.password);
-            sendToClient(socket.id, 'register', registerResult);
+            var registerResult = callback.onRegister(socket.id, message.username, message.password, function(registerResult){
+                sendToClient(socket.id, 'register', registerResult);
+            });
         });
 
         // client login
         socket.on('login', function (message) {
             // call callback method and parse return value
-            var loginResult = callback.onLogin(socket.id, message.username, message.password);
-            // send authentication result back to client
-            sendToClient(socket.id, 'login', loginResult);
+            callback.onLogin(socket.id, message.username, message.password, function(loginResult){
+                // send authentication result back to client
+                sendToClient(socket.id, 'login', loginResult);
+            });
         });
 
         // client anonymous login

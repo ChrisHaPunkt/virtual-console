@@ -8,7 +8,6 @@ var database = require('./Database.js')("mongodb://84.200.213.85:5223/M113");
 module.exports = function(){
     var debug = true;
 
-
     var publicSection = {
 
         /**************************************

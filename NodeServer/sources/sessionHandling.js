@@ -60,27 +60,29 @@ var startNetworkServer = function (server) {
         onNewClient: function (id) {
             addUser(id);
         },
-        onRegister: function (id,username,password) {
+        onRegister: function (id,username,password, _callback) {
             userManagement.registerUser(username,password,function(result){
                 if(result){
-                    return {result:true,username:username};
+                    _callback({result:true,username:username});
                 }else{
                     //network.sendToClient(id,'register',false);
-                    return {result:true,username:username};
+                    _callback({result:true,username:username});
                 }
             });
             return true;
         },
-        onLogin: function (id, username, password) {
-            userManagement.authenticateUser(username,password,function(result){
+        onLogin: function (id, username, password, _callback) {
+            userManagement.authenticateUser(username,password,function(result, info){
+
                 if(result){
                     setUserName(id,username);
                     setUserStatus(id,true,true);
                     callback.onNewUser(username);
-                    return {result:true,username:username};
+                    _callback({result:true,username:username});
                 }else{
-                    return {result:false,username:username};
+                    _callback({result:false,username:username});
                 }
+
             });
         },
         onAnonymousLogin: function(id){
