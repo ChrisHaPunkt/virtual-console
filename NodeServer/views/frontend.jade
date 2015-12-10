@@ -1,12 +1,11 @@
-extends layout
+extends frontendLayout
 
 block content
-  h1(class='globalTitle')= title
+    h1(class='globalTitle')= title
 
-  div(id='3d', class='threeDContainer')
-  div(id='content', style='color:grey;font-size:1em;max-height:100px;overflow-y: scroll;')
-  script(src='/socket.io/socket.io.js')
-  script(src='/js/libs/three.min.js')
-  script(src='/js/libs/jquery-min.js')
-  script(src='/js/frontend.js')
-  script(src='/js/3dgame.js')
+    div(id='3d', class='threeDContainer')
+block log
+    div(id='log')
+
+    // Load Require JS
+    script(data-main='js/head.js', src='/js/libs/require.js')

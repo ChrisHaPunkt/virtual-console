@@ -139,7 +139,7 @@ function getUserAudioVideo() {
         alert('Sorry, your browser does not support getUserMedia');
     }
 }
-
+/*
 navigator.getBattery().then(function (battery) {
     var batteryChargingState = battery.charging;
     var batteryLevel = battery.level;
@@ -159,7 +159,7 @@ navigator.getBattery().then(function (battery) {
      batteryDischargingTime = battery.dischargingTime;
      });
 });
-
+*/
 
 function getDeviceOrientation() {
     var deviceOrientation = window.orientation

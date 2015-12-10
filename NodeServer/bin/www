@@ -41,14 +41,14 @@ server.on('listening', onListening);
 sessionHandling.init(server, {
     onNewUser: function(name){
         util.log('www | new user ' + name);
+        sessionHandling.sendToFrontend(name,'newUserConnection','new connected');
     },
     onUserDisconnects: function(name){
         util.log('www | user disconnected ' + name);
     },
     onMessage: function(name,type,message){
         util.log('www | user ' + name + ' says: ' + message);
-        // TODO message type specified by client is directly passed to frontend
-        sessionHandling.sendToFrontend(type,{clientName:name,message:message});
+        sessionHandling.sendToFrontend(name,type,message);
     }
 }).start();
 
