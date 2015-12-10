@@ -2,91 +2,95 @@
  * Created by hannes on 25.10.2015.
  */
 
-var cn = (function () {
+define(['/socket.io/socket.io.js'], function(io) {
 
-    var socket;
-    var callback;
-    var serverUrl;
-    var serverPort;
+    var cn = (function () {
 
-    // open socket and set listener
-    var init = function (inServerUrl, inServerPort, inCallback) {
+        var socket;
+        var callback;
+        var serverUrl;
+        var serverPort;
 
-        // set config parameters
-        callback = inCallback;
-        serverUrl = inServerUrl;
-        serverPort = inServerPort;
+        // open socket and set listener
+        var init = function (inServerUrl, inServerPort, inCallback) {
 
-        // open socket connection
-        socket = io.connect();//serverUrl + ':' + serverPort);
+            // set config parameters
+            callback = inCallback;
+            serverUrl = inServerUrl;
+            serverPort = inServerPort;
 
-        socket.on('message', function (message) {
-            callback.onMessage(message.type, message.data);
-        });
-        socket.on('broadcast', function (message) {
-            callback.onMessage(message.type, message.data);
-        });
-        socket.on('login', function (message) {
-            callback.onLogin(message.result, message.username);
-        });
-        socket.on('anonymousLogin', function (message) {
-            callback.onAnonymousLogin(message.result, message.username);
-        });
-        socket.on('register', function (message) {
-            callback.onRegister(message.result, message.username);
-        })
-    };
+            // open socket connection
+            socket = io.connect();//serverUrl + ':' + serverPort);
 
-    // public interface
-    return function (inServerUrl, inServerPort, inCallback) {
+            socket.on('message', function (message) {
+                callback.onMessage(message.type, message.data);
+            });
+            socket.on('broadcast', function (message) {
+                callback.onMessage(message.type, message.data);
+            });
+            socket.on('login', function (message) {
+                callback.onLogin(message.result, message.username);
+            });
+            socket.on('anonymousLogin', function (message) {
+                callback.onAnonymousLogin(message.result, message.username);
+            });
+            socket.on('register', function (message) {
+                callback.onRegister(message.result, message.username);
+            })
+        };
 
-        // check parameters
-        if (typeof inCallback === 'undefined' || typeof inCallback !== 'object') {
-            console.error('Server callback is not defined or no object.');
-            return null;
-        }
-        if (typeof inServerPort === 'undefined' || typeof inServerPort !== 'number') {
-            console.error('Server port is not defined or no number.');
-            return null;
-        }
-        if (typeof inServerUrl === 'undefined' || typeof inServerUrl !== 'string') {
-            console.error('Server URL is not defined or no string.');
-            return null;
-        }
+        // public interface
+        return function (inServerUrl, inServerPort, inCallback) {
 
-        // check if socket io library exists
-        if (io !== 'undefined') {
-            init(inServerUrl, inServerPort, inCallback);
-            return {
-                sendData: function (type, data) {
+            // check parameters
+            if (typeof inCallback === 'undefined' || typeof inCallback !== 'object') {
+                console.error('Server callback is not defined or no object.');
+                return null;
+            }
+            if (typeof inServerPort === 'undefined' || typeof inServerPort !== 'number') {
+                console.error('Server port is not defined or no number.');
+                return null;
+            }
+            if (typeof inServerUrl === 'undefined' || typeof inServerUrl !== 'string') {
+                console.error('Server URL is not defined or no string.');
+                return null;
+            }
 
-                    // check parameters
-                    if (typeof data === 'undefined') {
-                        console.error('sendData(type,data) | data is not defined or no string.');
-                        return null;
+            // check if socket io library exists
+            if (io !== 'undefined') {
+                init(inServerUrl, inServerPort, inCallback);
+                return {
+                    sendData: function (type, data) {
+
+                        // check parameters
+                        if (typeof data === 'undefined') {
+                            console.error('sendData(type,data) | data is not defined or no string.');
+                            return null;
+                        }
+                        if (typeof type === 'undefined' || typeof type !== 'string') {
+                            console.error('sendData(type,data) | type is not defined or no string.');
+                            return null;
+                        }
+
+                        // send message
+                        socket.emit('message', {type: type, data: data});
+                    },
+                    sendLogin: function (username, password) {
+                        socket.emit('login', {username: username, password: password});
+                    },
+                    sendAnonymousLogin: function () {
+                        socket.emit('anonymousLogin');
+                    },
+                    sendRegister: function (username, password) {
+                        socket.emit('register', {username: username, password: password});
                     }
-                    if (typeof type === 'undefined' || typeof type !== 'string') {
-                        console.error('sendData(type,data) | type is not defined or no string.');
-                        return null;
-                    }
+                };
+            } else {
+                console.error('Please include socket.io client module. src="/socket.io/socket.io.js"');
+                return null;
+            }
+        };
 
-                    // send message
-                    socket.emit('message', {type: type, data: data});
-                },
-                sendLogin: function (username, password) {
-                    socket.emit('login', {username: username, password: password});
-                },
-                sendAnonymousLogin: function () {
-                    socket.emit('anonymousLogin');
-                },
-                sendRegister: function (username, password) {
-                    socket.emit('register', {username: username, password: password});
-                }
-            };
-        } else {
-            console.error('Please include socket.io client module. src="/socket.io/socket.io.js"');
-            return null;
-        }
-    };
-
-}());
+    }());
+    return cn;
+});
