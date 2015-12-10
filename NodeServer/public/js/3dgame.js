@@ -3,52 +3,52 @@
  */
 
 
-/**
- * ------------- ApiInitialization Part -------------
- */
-/**
- * Handle new COntroller Data
- * @param controllerData
- */
-gameApi.frontendInboundMessage = function (controllerData) {
-    console.log("on.FrontendInboundMessage: ", controllerData);
-    var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
-    gameApi.addLogMessage('client', controllerData.data.clientName + ': ' + msgDetails);
 
+define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
 
-    if (controllerData.type == "button" && controllerData.data.message === gameApi.BUTTON.DOWN) {
-
-        var a = 200 * Math.random();
-        var b = 200 * Math.random();
-        var c = 200 * Math.random();
-
-        GameHandler.adjustCubeSize(0, {x: a, y: b, z: c});
-    }
-};
-/**
- * Local Game Initialization
- * @param connInfoObj
- */
-gameApi.frontendConnection = function (connInfoObj) {
-    console.log("on.FrontendData: ", connInfoObj);
-    gameApi.addLogMessage('conn', connInfoObj + " " + gameApi.socket.id);
-};
-
-/**
- *
- * @type {number}
- */
-gameApi.logLevel = gameApi.log.DEBUG;
-gameApi.controller = gameApi.controllerTemplates.MODERN;
-
-var socketHandle = gameApi.init();
-if (socketHandle !== -1) {
-    // Game API Initialised
-
+console.log($);
 
     /**
-     * ------------- Gamedefinition Part -------------
+     * ------------- ApiInitialization Part -------------
      */
+    /**
+     * Handle new Controller Data
+     * @param controllerData
+     */
+    gameApi.frontendInboundMessage = function (controllerData) {
+        console.log("on.FrontendInboundMessage: ", controllerData);
+        var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
+        gameApi.addLogMessage('client', controllerData.data.clientName + ': ' + msgDetails);
+
+
+        if (controllerData.type == "button" && controllerData.data.message === gameApi.BUTTON.DOWN) {
+
+            var a = 200 * Math.random();
+            var b = 200 * Math.random();
+            var c = 200 * Math.random();
+
+            GameHandler.adjustCubeSize(0, {x: a, y: b, z: c});
+        }
+    };
+    /**
+     * Local Game Initialization
+     * @param connInfoObj
+     */
+    gameApi.frontendConnection = function (connInfoObj) {
+        console.log("on.FrontendData: ", connInfoObj);
+        gameApi.addLogMessage('conn', connInfoObj + " " + gameApi.socket.id);
+    };
+
+    /**
+     *
+     * @type {number}
+     */
+    gameApi.logLevel = gameApi.log.DEBUG;
+    gameApi.controller = gameApi.controllerTemplates.MODERN;
+    var socketHandle = gameApi.init();
+    if (socketHandle !== -1) {
+
+
     var ROTATE = {
         CONTINOUSLY: 1,
         RELATIVE: 2
@@ -184,7 +184,7 @@ if (socketHandle !== -1) {
             var material = new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: true});
             return new THREE.Mesh(geometry, material);
         }
-
+    }
 
     };
 
@@ -194,4 +194,8 @@ if (socketHandle !== -1) {
     GameHandler.render();
 
     GameHandler.setRotationContinously(0, {x: 0, y: 10, z: 0});
-}
+
+    // return public interface of the require module
+    return GameHandler;
+
+});

@@ -41,6 +41,7 @@ server.on('listening', onListening);
 sessionHandling.init(server, {
     onNewUser: function(name){
         util.log('www | new user ' + name);
+        sessionHandling.sendToFrontend(name,'userConnection','new connected');
     },
     onUserDisconnects: function(name){
         util.log('www | user disconnected ' + name);

@@ -7,8 +7,5 @@ block content
 block log
     div(id='log')
 
-    script(src='/socket.io/socket.io.js')
-    script(src='/js/libs/three.min.js')
-    script(src='/js/libs/jquery-min.js')
-    script(src='/js/gameApi.js')
-    script(src='/js/3dgame.js')
+    // Load Require JS
+    script(data-main='js/head.js', src='/js/libs/require.js')
