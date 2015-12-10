@@ -34,18 +34,18 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             }
         }
     );
-
     $.('#buttonContinue').click(function(){
-
-
-
     });
-
-    click.setSocket(socket);
-
-    sendLogin = function () {
+    var sendLogin = function () {
         socket.sendLogin();
     };
+
+    // passing socket instance to modules
+    click.setSocket(socket);
+    sensor.setSocket(socket);
+
+    // start sensor MotionCapture - EXAMPLE
+    sensor.startMotionCapture();
 
 
 });

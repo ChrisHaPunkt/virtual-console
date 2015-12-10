@@ -5,7 +5,9 @@
  ACCELERATION AND ROTATION
 
  */
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
+
+    var socket = null; // local socket reference to call send methods
 
     function startMotionCapture(minMotion, minRotation) {
         window.addEventListener('devicemotion', function (event) {
@@ -138,27 +140,26 @@ define(['jquery'], function($) {
         }
     }
 
-    /*
-     navigator.getBattery().then(function (battery) {
-     var batteryChargingState = battery.charging;
-     var batteryLevel = battery.level;
-     var batteryChargingTime = battery.chargingTime;
-     var batteryDischargingTime = battery.dischargingTime;
 
-     battery.addEventListener('chargingchange', function () {
-     batteryChargingState = battery.charging;
-     });
-     battery.addEventListener('levelchange', function () {
-     batteryLevel = battery.level;
-     });
-     battery.addEventListener('chargingtimechange', function () {
-     batteryChargingTime = battery.chargingTime;
-     });
-     battery.addEventListener('dischargingtimechange', function () {
-     batteryDischargingTime = battery.dischargingTime;
-     });
-     });
-     */
+    navigator.getBattery().then(function (battery) {
+        var batteryChargingState = battery.charging;
+        var batteryLevel = battery.level;
+        var batteryChargingTime = battery.chargingTime;
+        var batteryDischargingTime = battery.dischargingTime;
+
+        battery.addEventListener('chargingchange', function () {
+            batteryChargingState = battery.charging;
+        });
+        battery.addEventListener('levelchange', function () {
+            batteryLevel = battery.level;
+        });
+        battery.addEventListener('chargingtimechange', function () {
+            batteryChargingTime = battery.chargingTime;
+        });
+        battery.addEventListener('dischargingtimechange', function () {
+            batteryDischargingTime = battery.dischargingTime;
+        });
+    });
 
 
     function getDeviceOrientation() {
@@ -166,5 +167,18 @@ define(['jquery'], function($) {
         var isPortrait = deviceOrientation % 180 === 0;
         document.body.className = isPortrait ? 'portrait' : 'landscape';
         return document.body.className;
+    }
+
+    // return object with public functions of the require module
+    return {
+        setSocket: function (_socket) {
+            socket = _socket;
+        },
+        startMotionCapture: function(){
+            if (socket != null){
+                startMotionCapture();
+            }
+        }
+        // add more if needed
     }
 });
