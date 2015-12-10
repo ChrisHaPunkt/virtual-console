@@ -27,9 +27,9 @@ var socket = cn(
 socket.sendAnonymousLogin();
 
 function buttonwaspressed(button) {
-    socket.sendData('button', $(this).attr('id') + 'ist gedrückt worden');
+    socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 8} );
 }
 
 function buttonwasreleased() {
-    socket.sendData('button', $(this).attr('id') + "ist losgelesassen worden");
+    socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 7} );
 }
