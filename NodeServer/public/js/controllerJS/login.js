@@ -5,43 +5,47 @@ define("jquery", [], function () {
     return jQuery.noConflict();
 });
 
-require(['click', 'clientNetwork', 'sensor', 'jquery'], function(click, cn, sensor, $) {
-
-    var socket = undefined;
+require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
 
     console.log(click);
     console.log(cn);
     console.log(sensor);
     console.log($);
 
-    sendLogin = function () {
-        socket = cn(
-            'http://127.0.0.1',
-            5222,
-            {
-                onMessage: function (type, msg) {
-                    // do anything you want with server messages
-                    console.log(type, msg);
-                },
-                onAnonymousLogin: function (result, username) {
-                    console.log(result, username);
-                },
-                onLogin: function (type, msg) {
-                    // do anything you want with server messages
-                    console.log(type, msg);
-                }
+    var serverURL = "127.0.0.1";
+    var serverPort = 5222;
+
+    var socket = cn(serverURL, serverPort,
+        {
+            onMessage: function (type, msg) {
+                // do anything you want with server messages
+                console.log(type, msg);
+            },
+            onAnonymousLogin: function (result, username) {
+                console.log(result, username);
+            },
+            onLogin: function (type, msg) {
+                // do anything you want with server messages
+                console.log(type, msg);
+            },
+            onRegister: function (type, msg) {
+                // do anything you want with server messages
+                console.log(type, msg);
             }
-        );
-        click.setSocket(socket);
+        }
+    );
+
+    $.('#buttonContinue').click(function(){
+
+
+
+    });
+
+    click.setSocket(socket);
+
+    sendLogin = function () {
         socket.sendLogin();
     };
 
 
-    window.onload = function () {
-        document.getElementById("input-user").oninput = function () {
-            var inLength = document.getElementById("input-user").value.length;
-            if (inLength > 0)
-                console.log();
-        }
-    }
 });
