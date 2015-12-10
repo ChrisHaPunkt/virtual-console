@@ -9,6 +9,10 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function(click, cn, sens
 
     var socket = undefined;
 
+    console.log(click);
+    console.log(cn);
+    console.log(sensor);
+    console.log($);
 
     sendLogin = function () {
         socket = cn(
@@ -28,6 +32,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function(click, cn, sens
                 }
             }
         );
+        click.setSocket(socket);
         socket.sendLogin();
     };
 
