@@ -37,7 +37,6 @@ function startMotionCapture(minMotion, minRotation){
         var interval = event.interval;
 
         var MotionData ={
-
             accelerationX:accelerationX,
             accelerationY:accelerationY,
             accelerationZ:accelerationZ,
@@ -45,7 +44,9 @@ function startMotionCapture(minMotion, minRotation){
             rotationBeta:rotationBeta,
             rotationGamma:rotationGamma
         };
-/*
+
+
+        /*
         if (MotionData.accelerationX > minMotion || MotionData.accelerationY > minMotion || MotionData.accelerationZ > minMotion ||
             MotionData.rotationAlpha > minRotation || MotionData.rotationBeta > minRotation || MotionData.rotationGamma > minRotation) {
             var checkAcc = $('#chkAcc').prop('checked');
@@ -67,9 +68,6 @@ function startMotionCapture(minMotion, minRotation){
          rotationGamma:rotationGamma
          };
 
-
-
-
         if (MotionData.accelerationX > minMotion || MotionData.accelerationY > minMotion || MotionData.accelerationZ > minMotion ||
             MotionData.accelerationX < -minMotion || MotionData.accelerationY < -minMotion || MotionData.accelerationZ < -minMotion) {
             var checkAcc = $('#chkAcc').prop('checked');
@@ -89,23 +87,38 @@ function startMotionCapture(minMotion, minRotation){
 
     });
 }
-
-
 startMotionCapture(0.3, 6);
+
+
 
 function vibrate(milliseconds) {
     window.navigator.vibrate(milliseconds);
 }
 
-function getUserAudioVideo() {
-    /*
-     VIDEO AND AUDIO CAPTURING WITH getUserMedia()
-     */
+
+/*
+ VIDEO AND AUDIO CAPTURING WITH getUserMedia()
+ */
+const START = true;
+const STOP = false;
+
+$('#chkVid').change(function() {
+    var checkVideo = $('#chkVid').prop('checked');
+    if (checkVideo==true) {
+        getUserAudioVideo(START);
+        $('#lblCheckboxVid').css("color", "red");
+    }
+    if (checkVideo==false) {
+        getUserAudioVideo(STOP)
+        $('#lblCheckboxVid').css("color", "white");
+    }
+});
+
+function getUserAudioVideo(status) {
     navigator.getUserMedia = (navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia);
-
     // Check that the browser supports getUserMedia.
     // If it doesn't show an alert, otherwise continue.
     if (navigator.getUserMedia) {
@@ -123,6 +136,9 @@ function getUserAudioVideo() {
                 // Create an object URL for the video stream and use this
                 // to set the video source.
                 vid.src = window.URL.createObjectURL(localMediaStream);
+                if(status==false){
+                    vid.pause();
+        }
             },
             // Error Callback
             function (err) {
@@ -134,6 +150,9 @@ function getUserAudioVideo() {
         alert('Sorry, your browser does not support getUserMedia');
     }
 }
+
+
+
 
 navigator.getBattery().then(function (battery) {
     var batteryChargingState = battery.charging;
