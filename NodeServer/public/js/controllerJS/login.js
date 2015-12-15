@@ -5,43 +5,71 @@ define("jquery", [], function () {
     return jQuery.noConflict();
 });
 
+
+
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
 
+    /////////////////////////////////////
+    //Define onclick listener
+    /////////////////////////////////////
+    var sendAnonymousLogin = function(){
+        //event.preventDefault();
+        socket.sendAnonymousLogin();
+    };
+
+    var sendRegister = function(){
+        //event.preventDefault();
+        socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);
+    };
+    var sendLogin = function(){
+        //event.preventDefault();
+        socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);
+    };
+
+
+    document.getElementById("anonymous").addEventListener("click", sendAnonymousLogin);
+    document.getElementById("register").addEventListener("click", sendRegister);
+    document.getElementById("login").addEventListener("click", sendLogin);
+
+
+
+    ////////////////////////////////////
+    //Open socket
+    ////////////////////////////////////
     var serverURL = "127.0.0.1";
     var serverPort = 5222;
 
-    var socket = cn(serverURL, serverPort,
-        {
-            onMessage: function (type, msg) {
-                // do anything you want with server messages
-                console.log(type, msg);
-            },
-            onAnonymousLogin: function (result, username) {
-                console.log(result, username);
-            },
-            onLogin: function (type, msg) {
-                // do anything you want with server messages
-                console.log(type, msg);
-            },
-            onRegister: function (type, msg) {
-                // do anything you want with server messages
-                console.log(type, msg);
-            }
+    var resHandler = {
+        onMessage: function (type, msg) {
+            // do anything you want with server messages
+            console.log(type, msg);
+        },
+        onAnonymousLogin: function (result, username) {
+            console.log(result, username);
+        },
+        onLogin: function (type, msg) {
+            // do anything you want with server messages
+            console.log(type, msg);
+        },
+        onRegister: function (type, msg) {
+            // do anything you want with server messages
+            console.log(type, msg);
         }
-    );
-
-    // TODO proper login handling
-    socket.sendAnonymousLogin();
-
-    /*
-    $.('#buttonContinue').click(function(){
-    });
-    var sendLogin = function () {
-        socket.sendLogin();
     };
-    */
 
+    var socket = cn(serverURL, serverPort,resHandler);
+
+
+
+
+    ///////////////////////////////////////
     // passing socket instance to modules
+    ///////////////////////////////////////
     click.setSocket(socket);
     sensor.setSocket(socket);
+
+
+
+
+
 });

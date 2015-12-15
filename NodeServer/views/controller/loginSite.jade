@@ -23,9 +23,9 @@ block content
                             input#input-password(type='password', name='password', value='', placeholder='Password', autocomplete='on', autocapitalize='off', autocorrect='off')
                             img#password-icon(src='img/password.svg', alt='')
                         div()
-                            button#login.login(name='submit', value='login', onclick="event.preventDefault(); socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);") Login
-                            button#register.login(type='submit', name='submit', value='register', onclick="event.preventDefault(); socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);") Register
-                            button#anonymous.login(type='submit', name='submit', value='anonymous', onclick="event.preventDefault(); socket.sendAnonymousLogin()") Continue
+                            button#login.login(name='submit', value='login') Login
+                            button#register.login(name='submit', value='register') Register
+                            button#anonymous.login(name='submit', value='anonymous') Continue
         footer
             p.info
                 a(href='https://gitlab.homeset.de/fhKiel/M113', target='_blank', rel='noreferrer') M113 - Project
