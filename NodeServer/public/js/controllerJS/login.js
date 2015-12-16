@@ -6,33 +6,7 @@ define("jquery", [], function () {
 });
 
 
-
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
-
-    /////////////////////////////////////
-    //Define onclick listener
-    /////////////////////////////////////
-    var sendAnonymousLogin = function(){
-        //event.preventDefault();
-        socket.sendAnonymousLogin();
-    };
-
-    var sendRegister = function(){
-        //event.preventDefault();
-        socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);
-    };
-    var sendLogin = function(){
-        //event.preventDefault();
-        socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);
-    };
-
-
-    document.getElementById("anonymous").addEventListener("click", sendAnonymousLogin);
-    document.getElementById("register").addEventListener("click", sendRegister);
-    document.getElementById("login").addEventListener("click", sendLogin);
-
-
-
     ////////////////////////////////////
     //Open socket
     ////////////////////////////////////
@@ -56,9 +30,30 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
         }
     };
-
     var socket = cn(serverURL, serverPort,resHandler);
 
+
+
+    /////////////////////////////////////
+    //Define onclick listener
+    /////////////////////////////////////
+    var sendAnonymousLogin = function(){
+        //event.preventDefault();
+        socket.sendAnonymousLogin();
+    };
+
+    var sendRegister = function(){
+        //event.preventDefault();
+        socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);
+    };
+    var sendLogin = function(){
+        //event.preventDefault();
+        socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);
+    };
+
+    document.getElementById("anonymous").addEventListener("click", sendAnonymousLogin);
+    document.getElementById("register").addEventListener("click", sendRegister);
+    document.getElementById("login").addEventListener("click", sendLogin);
 
 
 
@@ -67,9 +62,4 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     ///////////////////////////////////////
     click.setSocket(socket);
     sensor.setSocket(socket);
-
-
-
-
-
 });
