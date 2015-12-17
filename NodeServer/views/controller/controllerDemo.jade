@@ -12,7 +12,8 @@ html
       div(id='Container')
          label(id='lblCheckboxAcc' for='chkAcc') Acceleration
             input(type='checkbox' id='chkAcc' class='chkSensors' value ='Acceleration')
-         input(type='checkbox' id='chkRot' class='chkSensors' value ='Rotation')
+         label(id='lblCheckboxRot' for='chkRot') Rotation
+            input(type='checkbox' id='chkRot' class='chkSensors' value ='Rotation')
          div(id='leftContent' text='Acceleration')
             div(id='leftContentEncap')
                div(id='btn-left', class='myButton')
@@ -20,8 +21,10 @@ html
             div(id='rightContentEncap')
                div(id='btn-right', class='myButton')
          div(id='checkboxesBottom')
-            input(type='checkbox' id='chkBat' class='chkSensors' value ='Battery')
-            input(type='checkbox' id='chkVid' class='chkSensors' value ='Audio')
+            label(id='lblCheckboxBat' for='chkBat') Battery
+               input(type='checkbox' id='chkBat' class='chkSensors' value ='Battery')
+            label(id='lblCheckboxVid' for='chkVid') Audio/Video
+               input(type='checkbox' id='chkVid' class='chkSensors' value ='Audio')
 
    script(data-main='js/controllerJS/login.js', src='js/libs/require.js')
 

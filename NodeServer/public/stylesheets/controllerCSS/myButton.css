@@ -41,29 +41,27 @@ body{
 	width:100%;
 }
 
-
-
-#chkAcc{
-
-
-}
-#chkRot{
+#lblCheckboxRot{
 	position:absolute;
 	left:90%;
 	top:10%;
-
- }
-#chkBat{
+	color:white;
+	border: 1px solid white;
+}
+#lblCheckboxBat{
 	position:absolute;
 	left:10%;
 	top:90%;
-  }
-#chkVid{
+	color:white;
+	border: 1px solid white;
+}
+#lblCheckboxVid{
 	position:absolute;
 	left:90%;
 	top:90%;
-   }
-
+	color:white;
+	border: 1px solid white;
+}
 #lblCheckboxAcc{
 	position:absolute;
 	left:10%;
@@ -71,7 +69,6 @@ body{
 	color:white;
 	border: 1px solid white;
 }
-
 .chkSensors{
 	color:white;
 }
