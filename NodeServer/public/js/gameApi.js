@@ -69,7 +69,7 @@ define(['/socket.io/socket.io.js'], function (io) {
             if (this.logLevel == this.log.DEBUG)
                 this.addLogMessage("init", "Game Api successfully Initialized");
 
-            return this.socket;
+            return this;
         },
 
         // write to logcontent

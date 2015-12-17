@@ -124,6 +124,12 @@ var startNetworkServer = function (server) {
         onNewClient: function (id) {
             addUser(id);
         },
+        onFrontendConnected: function(){
+
+        },
+        onFrontendOutboundMessage: function(){
+
+        },
         onRegister: function (id,username,password, _callback) {
             userManagement.registerUser(username,password,function(result){
                 if(result){

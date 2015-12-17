@@ -49,6 +49,14 @@ sessionHandling.init(server, {
     onMessage: function(name,type,message){
         util.log('www | user ' + name + ' says: ' + message);
         sessionHandling.sendToFrontend(name,type,message);
+    },
+
+    onFrontendConnected: function () {
+        callback.onFrontendConnected();
+    },
+
+    onFrontendOutboundMessage: function () {
+        callback.onFrontendOutboundMessage();
     }
 }).start();
 
