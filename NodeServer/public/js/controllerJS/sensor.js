@@ -92,10 +92,24 @@ define(['jquery'], function ($) {
 
 
     });
+        window.addEventListener('deviceorientation', handleOrientation);
+
+        function handleOrientation(event) {
+            var orientationBeta = event.beta;  // In degree in the range [-180,180]
+            var orientationGamma = event.gamma; // In degree in the range [-90,90]
+            var orientationAlpha = event.alpha; // In degree in the range [-90,90]
+
+            var OrientationData ={
+                orientationBeta:orientationBeta,
+                orientationGamma:orientationGamma,
+                orientationAlpha:orientationAlpha
+            };
+            socket.sendData("orientationData",OrientationData);
+        }
 }
 
 
-    startMotionCapture(0.3, 6);
+    startMotionCapture(0.3, 0);
 
     function vibrate(milliseconds) {
         window.navigator.vibrate(milliseconds);

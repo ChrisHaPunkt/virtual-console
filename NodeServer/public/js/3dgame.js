@@ -22,19 +22,31 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
             gameApi.addLogMessage('client', controllerData.data.clientName + ': ' + msgDetails);
 
 
-            if (controllerData.type == "button") {
+            switch(controllerData.type) {
+                case "button":
+                    if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
 
-                if (controllerEvent.buttonName == 'A' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                        var a = 200 * Math.random();
+                        var b = 200 * Math.random();
+                        var c = 200 * Math.random();
 
-                    var a = 200 * Math.random();
-                    var b = 200 * Math.random();
-                    var c = 200 * Math.random();
+                        GameHandler.adjustCubeSize(0, {x: a, y: b, z: c});
+                        //GameHandler.setRotationRelative(0,{x:a,y:b,z:c});
+                    }
+                    else if (controllerEvent.buttonName == 'btn-right' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
 
-                    GameHandler.adjustCubeSize(0, {x: a, y: b, z: c});
-                }
-            } else if (controllerEvent.buttonName == 'B' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    }
+                    break;
+                case "accelerationData":
 
+                    break;
+                case "orientationData":
+                    GameHandler.setRotationRelative(0,{x:controllerEvent.orientationAlpha,y:controllerEvent.orientationBeta,z:controllerEvent.orientationGamma})
+                    break;
+                default:
+                    break;
             }
+
         };
         /**
          * Local Game Initialization
