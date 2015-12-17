@@ -18,16 +18,16 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             // do anything you want with server messages
             console.log(type, msg);
         },
-        onAnonymousLogin: function (result, username) {
-            console.log(result, username);
+        onAnonymousLogin: function (data) {
+            console.log(data);
         },
-        onLogin: function (type, msg) {
+        onLogin: function (data) {
             // do anything you want with server messages
-            console.log(type, msg);
+            console.log(data);
         },
-        onRegister: function (type, msg) {
+        onRegister: function (data) {
             // do anything you want with server messages
-            console.log(type, msg);
+            console.log(data);
         }
     };
     var socket = cn(serverURL, serverPort, resHandler);

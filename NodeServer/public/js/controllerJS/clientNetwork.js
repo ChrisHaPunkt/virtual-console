@@ -29,13 +29,13 @@ define(['/socket.io/socket.io.js'], function(io) {
                 callback.onMessage(message.type, message.data);
             });
             socket.on('login', function (message) {
-                callback.onLogin(message.result, message.username);
+                callback.onLogin(message);
             });
             socket.on('anonymousLogin', function (message) {
-                callback.onAnonymousLogin(message.result, message.username);
+                callback.onAnonymousLogin(message);
             });
             socket.on('register', function (message) {
-                callback.onRegister(message.result, message.username);
+                callback.onRegister(message);
             })
         };
 

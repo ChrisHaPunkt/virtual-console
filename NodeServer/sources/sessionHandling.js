@@ -23,18 +23,19 @@ var startNetworkServer = function (server) {
         },
         // incoming register request is passed down to userManagement and callback from network is called on result
         onRegister: function (id, username, password, _callback) {
-            userManagement.registerUser(username, password, function (result) {
+            userManagement.registerUser(username, password, function (userManagementResult, msg) {
 
-                if (result) {
+                if (userManagementResult) {
                     _callback({
-                        result: true,
-                        username: username
+                        result: userManagementResult,
+                        username: username,
+                        message: msg
                     });
                 } else {
-                    //network.sendToClient(id,'register',false);
                     _callback({
-                        result: false,
-                        username: username
+                        result: userManagementResult,
+                        username: username,
+                        message: msg
                     });
                 }
             });
@@ -50,16 +51,16 @@ var startNetworkServer = function (server) {
                     callback.onNewUser(username);
 
                     _callback({
-                        result: true,
-                        username: username
-
+                        result: userManagementResult,
+                        username: username,
+                        message: msg
                     });
                 } else {
 
                     _callback({
-                        result: false,
-                        username: username
-
+                        result: userManagementResult,
+                        username: username,
+                        message: msg
                     });
                 }
 
