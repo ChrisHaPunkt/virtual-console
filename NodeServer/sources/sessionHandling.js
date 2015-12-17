@@ -33,7 +33,7 @@ var startNetworkServer = function (server) {
                 } else {
                     //network.sendToClient(id,'register',false);
                     _callback({
-                        result: true,
+                        result: false,
                         username: username
                     });
                 }
