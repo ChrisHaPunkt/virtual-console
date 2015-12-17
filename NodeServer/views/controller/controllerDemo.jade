@@ -1,30 +1,25 @@
-//
-   Created by michaelschleiss on 29.10.15.
-
-//- controllerDemo.jade
+//- Created by michaelschleiss on 29.10.15
 doctype html
 html
-   head
-      link(rel='stylesheet', href='/stylesheets/style.css')
-      link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
-      script(src="/js/libs/jquery.js")
-   body
-      div(id='Container')
-         label(id='lblCheckboxAcc' for='chkAcc') Acceleration
-            input(type='checkbox' id='chkAcc' class='chkSensors' value ='Acceleration')
-         label(id='lblCheckboxRot' for='chkRot') Rotation
-            input(type='checkbox' id='chkRot' class='chkSensors' value ='Rotation')
-         div(id='leftContent' text='Acceleration')
-            div(id='leftContentEncap')
-               div(id='btn-left', class='myButton')
-         div(id='rightContent')
-            div(id='rightContentEncap')
-               div(id='btn-right', class='myButton')
-         div(id='checkboxesBottom')
-            label(id='lblCheckboxBat' for='chkBat') Battery
-               input(type='checkbox' id='chkBat' class='chkSensors' value ='Battery')
-            label(id='lblCheckboxVid' for='chkVid') Audio/Video
-               input(type='checkbox' id='chkVid' class='chkSensors' value ='Audio')
+    head
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/controllerCSS/controllerMichael.css')
+        script(src="/js/libs/jquery.js")
+    body
 
-   script(data-main='js/controllerJS/login.js', src='js/libs/require.js')
-
+        div(class='myButton', id='A')
+            span(class = 'buttonName') A
+        div(class='myButton', id='B')
+            span(class = 'buttonName') B
+        div(id='a')
+        div(id='b')
+        div(id='c')
+        div(id='x')
+        div(id='y')
+        div(id='z')
+        div(id='i')
+        div(id='batteryChargingState1') bat1
+        div(id='batteryLevel1')  bat2
+        div(id='batteryChargingTime1') bat3
+        div(id='batteryDischargingTime1') bat4
+        video(id='camera-stream' controls autoplay)

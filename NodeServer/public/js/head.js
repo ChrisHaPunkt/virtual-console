@@ -21,12 +21,13 @@ requirejs.config({
         }
     }
 });
-
+var GameHandler = null, gameApi = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["3dgame"], function (game) {
-
+require(["3dgame", "gameApi"], function (game, api) {
+    gameApi = api;
+    GameHandler = game;
     console.log(game);
 
 });

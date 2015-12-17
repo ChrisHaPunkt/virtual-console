@@ -1,0 +1,30 @@
+//
+   Created by michaelschleiss on 29.10.15.
+
+//- controllerDemo.jade
+doctype html
+html
+   head
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='stylesheet', href='/stylesheets/controllerCSS/myButton.css')
+      script(src="/js/libs/jquery.js")
+   body
+      div(id='Container')
+         label(id='lblCheckboxAcc' for='chkAcc') Acceleration
+            input(type='checkbox' id='chkAcc' class='chkSensors' value ='Acceleration')
+         label(id='lblCheckboxRot' for='chkRot') Rotation
+            input(type='checkbox' id='chkRot' class='chkSensors' value ='Rotation')
+         div(id='leftContent' text='Acceleration')
+            div(id='leftContentEncap')
+               div(id='btn-left', class='myButton')
+         div(id='rightContent')
+            div(id='rightContentEncap')
+               div(id='btn-right', class='myButton')
+         div(id='checkboxesBottom')
+            label(id='lblCheckboxBat' for='chkBat') Battery
+               input(type='checkbox' id='chkBat' class='chkSensors' value ='Battery')
+            label(id='lblCheckboxVid' for='chkVid') Audio/Video
+               input(type='checkbox' id='chkVid' class='chkSensors' value ='Audio')
+
+   script(data-main='js/controllerJS/login.js', src='js/libs/require.js')
+
