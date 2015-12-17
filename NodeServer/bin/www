@@ -49,9 +49,20 @@ sessionHandling.init(server, {
     onMessage: function(name,type,message){
         util.log('www | user ' + name + ' says: ' + message);
         sessionHandling.sendToFrontend(name,type,message);
+    },
+
+    onFrontendConnected: function () {
+        callback.onFrontendConnected();
+    },
+
+    onFrontendOutboundMessage: function (type, data) {
+        util.log("onFrontendOutboundMessage", type, data);
+        if(type == 'setControllerTemplate') {
+            app.set('chosenControllerTemplate',  data);
+            util.log("Set new Gamecontroller Template -> " + data);
+        }
     }
 }).start();
-
 /**
  * Normalize a port into a number, string, or false.
  */

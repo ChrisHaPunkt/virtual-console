@@ -1,6 +1,6 @@
 define(['/socket.io/socket.io.js'], function (io) {
 
-    gameApi = {
+  var  gameApi = {
 
         /**
          * ID of the log containing DOM-Element

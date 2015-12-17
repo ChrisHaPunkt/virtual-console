@@ -54,7 +54,7 @@ var startListening = function () {
 
         // frontend sends message
         socket.on('frontendOutboundMessage', function (message) {
-            callback.onFrontendMessage(message.type, message.data, function(result){
+            callback.onFrontendOutboundMessage(message.type, message.data, function(result){
                 // callback from session handling - not needed atm
             });
             if (debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
