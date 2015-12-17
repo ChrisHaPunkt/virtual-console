@@ -20,6 +20,7 @@
     "ms":"latest",
     "socket.io-client": "latest",
     "socket.io-parser": "latest",
-    "mongodb":"2.0.49"
+    "mongodb":"2.0.49",
+    "requirejs":"latest"
   }
 }

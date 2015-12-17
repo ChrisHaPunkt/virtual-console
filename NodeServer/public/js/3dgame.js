@@ -46,7 +46,7 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
      * @type {number}
      */
     gameApi.logLevel = gameApi.log.DEBUG;
-    gameApi.controller = gameApi.controllerTemplates.DEMO;
+    gameApi.controller = gameApi.controllerTemplates.MODERN;
 
     var gameInstance = gameApi.init();
 

@@ -1,6 +1,6 @@
 define(['/socket.io/socket.io.js'], function (io) {
 
-    gameApi = {
+  var  gameApi = {
 
         /**
          * ID of the log containing DOM-Element
@@ -69,7 +69,7 @@ define(['/socket.io/socket.io.js'], function (io) {
             if (this.logLevel == this.log.DEBUG)
                 this.addLogMessage("init", "Game Api successfully Initialized");
 
-            return this;
+            return this.socket;
         },
 
         // write to logcontent
