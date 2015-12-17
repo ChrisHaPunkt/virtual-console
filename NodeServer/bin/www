@@ -55,11 +55,15 @@ sessionHandling.init(server, {
         callback.onFrontendConnected();
     },
 
-    onFrontendOutboundMessage: function () {
-        callback.onFrontendOutboundMessage();
+    onFrontendOutboundMessage: function (type, data) {
+        util.log("onFrontendOutboundMessage", type, data);
+        if(type == 'setControllerTemplate') {
+            choosenGameTemplate = data;
+            util.log("Set new Gamecontroller Template -> " + data);
+        }
     }
 }).start();
-
+var choosenGameTemplate = null;
 /**
  * Normalize a port into a number, string, or false.
  */

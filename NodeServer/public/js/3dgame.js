@@ -38,7 +38,7 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
         console.log("on.FrontendData: ", connInfoObj);
         gameApi.addLogMessage('conn', connInfoObj + " " + gameApi.socket.id);
 
-        this.emit('frontendOutboundMessage', {type: 'controllerTemplate', data: gameApi.controller});
+        this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
     };
 
     /**
