@@ -17,58 +17,80 @@ var currentAnonymousUserId = 0;
  * */
 var startNetworkServer = function (server) {
     network.init(server, {
-        onNewClient: function (id) {
+        onNewClient: function (id, _callback) {
             addUser(id);
+            _callback(true);
         },
-        // incoming register request is passed down to userManagement and result is returned
-        onRegister: function (id, username, password) {
+        // incoming register request is passed down to userManagement and callback from network is called on result
+        onRegister: function (id, username, password, _callback) {
             userManagement.registerUser(username, password, function (result) {
-                console.log("ResOnregister:", result);
+
                 if (result) {
-                    return {result: true, username: username};
+                    _callback({
+                        result: true,
+                        username: username
+                    });
                 } else {
-                    return {result: false, username: username};
+                    //network.sendToClient(id,'register',false);
+                    _callback({
+                        result: true,
+                        username: username
+                    });
                 }
             });
-            return true;
+
         },
-        // incoming login request is passed down to userManagement and result is returned
-        onLogin: function (id, username, password) {
-            userManagement.authenticateUser(username, password, function (result) {
-                if (result) {
+        // incoming login request is passed down to userManagement and callback from network is called on result
+        onLogin: function (id, username, password, _callback) {
+            userManagement.authenticateUser(username, password, function (userManagementResult, msg) {
+
+                if (userManagementResult) {
                     setUserName(id, username);
                     setUserStatus(id, true, true);
                     callback.onNewUser(username);
-                    return {result: true, username: username};
+
+                    _callback({
+                        result: true,
+                        username: username
+
+                    });
                 } else {
-                    return {result: false, username: username};
+
+                    _callback({
+                        result: false,
+                        username: username
+
+                    });
                 }
+
             });
         },
         // incoming anonymousLogin request - a username is generated and returned
-        onAnonymousLogin: function (id) {
+        onAnonymousLogin: function (id, _callback) {
             var tmpUserName = "User_" + ++currentAnonymousUserId;
             setUserName(id, tmpUserName);
             setUserStatus(id, true, false);
             callback.onNewUser(tmpUserName);
-            return {result: true, username: tmpUserName};
+
+            _callback({
+                result: true,
+                username: tmpUserName
+            });
+
         },
-        onDisconnect: function (id) {
+        onDisconnect: function (id, _callback) {
             callback.onUserDisconnects(getUserById(id).userName);
             removeUserById(id);
+            _callback(true);
         },
-        onMessage: function (id, type, data) {
+        onMessage: function (id, type, data, _callback) {
             if (isLoggedIn(id)) {
                 callback.onMessage(getUserById(id).userName, type, data);
+                _callback(true);
             } else {
-                console.error('sessionHandler | user id ' + id + ' sent message without being authenticated.');
+                _callback(false);
+                util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
             }
-        },
-        onFrontendConnected: function () {
-
-        },
-        onFrontendMessage: function (type, message) {
-
         }
     }).start();
 };
@@ -118,57 +140,6 @@ var getUserIdByName = function (userName) {
         }
     }
     return false;
-};
-
-var startNetworkServer = function (server) {
-    network.init(server, {
-        onNewClient: function (id) {
-            addUser(id);
-        },
-        onRegister: function (id,username,password, _callback) {
-            userManagement.registerUser(username,password,function(result){
-                if(result){
-                    _callback({result:true,username:username});
-                }else{
-                    //network.sendToClient(id,'register',false);
-                    _callback({result:true,username:username});
-                }
-            });
-            return true;
-        },
-        onLogin: function (id, username, password, _callback) {
-            userManagement.authenticateUser(username,password,function(result, info){
-
-                if(result){
-                    setUserName(id,username);
-                    setUserStatus(id,true,true);
-                    callback.onNewUser(username);
-                    _callback({result:true,username:username});
-                }else{
-                    _callback({result:false,username:username});
-                }
-
-            });
-        },
-        onAnonymousLogin: function(id){
-            var tmpUserName = "User_"+ ++currentAnonymousUserId;
-            setUserName(id, tmpUserName);
-            setUserStatus(id,true,false);
-            callback.onNewUser(tmpUserName);
-            return {result:true,username:tmpUserName};
-        },
-        onDisconnect: function (id) {
-            callback.onUserDisconnects(getUserById(id).userName);
-            removeUserById(id);
-        },
-        onMessage: function (id, type, data) {
-            if(isLoggedIn(id)) {
-                callback.onMessage(getUserById(id).userName, type, data);
-            }else{
-                util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
-            }
-        }
-    }).start();
 };
 
 /**

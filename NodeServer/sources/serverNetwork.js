@@ -33,68 +33,74 @@ var startListening = function () {
      * SOCKET EVENT LISTENER
      * */
     io.sockets.on('connection', function (socket) {
+
         // new client connects
         addClient(socket);
-        callback.onNewClient(socket.id);
-
+        callback.onNewClient(socket.id, function(result){
+            // callback from session handling - not needed atm
+        });
         if (debug)util.log('serverNetwork | a user id ' + socket.id + ' connected');
         if (debug)exports.sendToClient(socket.id, 'welcome', 'Your Client ID is: ' + socket.id);
 
         // frontend connected
         socket.on('frontendInit', function (message) {
             frontend = socket;
-            callback.onFrontendConnected();
-
+            callback.onFrontendConnected(function (result) {
+                // callback from session handling - not needed atm
+            });
             if (debug)util.log('serverNetwork | Frontend Connected!');
             if (debug)exports.sendToFrontend('frontendConnection', 'Hello Frontend');
         });
 
         // frontend sends message
         socket.on('frontendOutboundMessage', function (message) {
-            callback.onFrontendMessage(message.type, message.data);
-
+            callback.onFrontendMessage(message.type, message.data, function(result){
+                // callback from session handling - not needed atm
+            });
             if (debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
         });
 
         // client registers
         socket.on('register', function (message) {
-           callback.onRegister(socket.id, message.username, message.password, function(registerResult){
-               console.log("RegResult: " , registerResult);
-                sendToClient(socket.id, 'register', registerResult);
+            callback.onRegister(socket.id, message.username, message.password, function (result) {
+                if(debug)util.log('serverNetwork | Register result from sessionHandling', result);
+                sendToClient(socket.id, 'register', result);
             });
         });
 
         // client login
         socket.on('login', function (message) {
             // call callback method and parse return value
-            callback.onLogin(socket.id, message.username, message.password, function(loginResult){
+            callback.onLogin(socket.id, message.username, message.password, function (result) {
                 // send authentication result back to client
-                sendToClient(socket.id, 'login', loginResult);
+                sendToClient(socket.id, 'login', result);
             });
         });
 
         // client anonymous login
         socket.on('anonymousLogin', function () {
             // call callback method and get return value
-            var loginResult = callback.onAnonymousLogin(socket.id);
-            // send anonymous login result back to client
-            sendToClient(socket.id, 'anonymousLogin', loginResult);
+            callback.onAnonymousLogin(socket.id, function(result){
+                // send anonymous login result back to client
+                sendToClient(socket.id, 'anonymousLogin', result);
+            });
         });
 
         // client sends message
         socket.on('message', function (message) {
             // call callback method
-            callback.onMessage(socket.id, message.type, message.data);
-
+            callback.onMessage(socket.id, message.type, message.data, function(result){
+                // callback from session handling - not needed atm
+            });
             if (debug)util.log('serverNetwork | a user id ' + socket.id + ' sended a message with type ' + message.type + ' : ' + message.data);
-            if (debug)broadcastMessage({type: 'userMessage', data: 'User ID ' + socket.id + ': ' + message.data});
         });
 
         // client disconnects
         socket.on('disconnect', function () {
-            callback.onDisconnect(socket.id);
+            callback.onDisconnect(socket.id, function(result){
+                // callback from session handling - not needed atm
+            });
             deleteClient(socket.id);
-
             if (debug)util.log('serverNetwork | a user id ' + socket.id + ' disconnected');
         });
     });
