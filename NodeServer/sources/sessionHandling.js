@@ -23,10 +23,11 @@ var startNetworkServer = function (server) {
         // incoming register request is passed down to userManagement and result is returned
         onRegister: function (id, username, password) {
             userManagement.registerUser(username, password, function (result) {
+                console.log("ResOnregister:", result);
                 if (result) {
                     return {result: true, username: username};
                 } else {
-                    return {result: true, username: username};
+                    return {result: false, username: username};
                 }
             });
             return true;

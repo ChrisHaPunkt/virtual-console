@@ -30,7 +30,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
         }
     };
-    var socket = cn(serverURL, serverPort,resHandler);
+    var socket = cn(serverURL, serverPort, resHandler);
 
 
 

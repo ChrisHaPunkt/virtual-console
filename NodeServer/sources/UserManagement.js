@@ -21,12 +21,21 @@ module.exports = function(){
                 //Only register a new user when he is unique
                 if (state && data.length == 0) {
                     database.insert("userData", User, callback);
+
                 } else {
+
                     callback(false, "User already exist!");
                 }
             };
 
-            database.query("userData", query, registerCallback);
+            if (name.length == 0 || password.length == 0){
+                callback(false, "User name or password is empty!");
+                console.log(name.length, password.length);
+
+            } else {
+                database.query("userData", query, registerCallback);
+            }
+
         },
 
 

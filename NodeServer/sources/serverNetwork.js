@@ -58,7 +58,8 @@ var startListening = function () {
 
         // client registers
         socket.on('register', function (message) {
-            var registerResult = callback.onRegister(socket.id, message.username, message.password, function(registerResult){
+           callback.onRegister(socket.id, message.username, message.password, function(registerResult){
+               console.log("RegResult: " , registerResult);
                 sendToClient(socket.id, 'register', registerResult);
             });
         });
