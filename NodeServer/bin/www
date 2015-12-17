@@ -52,7 +52,7 @@ sessionHandling.init(server, {
     },
 
     onFrontendConnected: function () {
-        callback.onFrontendConnected();
+        util.log('www | frontend connected ');
     },
 
     onFrontendOutboundMessage: function (type, data) {

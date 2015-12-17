@@ -21,13 +21,11 @@ router.get('/', function (req, res, next) {
             controller = "controller/" + "controllerDemo";
             break;
         case gameController.MODERN:
-            controller = "controller/" + "controllerModern";
-            break;
-        case gameController.NEW:
             controller = "controller/" + "controllerMichael";
             break;
         default:
-            controller = "controller/" + "controllerModern";
+            controller = "controller/" + "controllerDemo";
+            break;
     }
 
     res.render(controller, function (err, htmlControllerContent) {

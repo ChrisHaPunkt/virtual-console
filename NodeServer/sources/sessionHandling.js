@@ -92,6 +92,12 @@ var startNetworkServer = function (server) {
                 _callback(false);
                 util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
             }
+        },
+        onFrontendConnected: function () {
+            callback.onFrontendConnected();
+        },
+        onFrontendOutboundMessage: function (type, message) {
+            callback.onFrontendOutboundMessage(type, message);
         }
     }).start();
 };
