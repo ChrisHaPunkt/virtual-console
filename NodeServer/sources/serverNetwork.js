@@ -51,7 +51,7 @@ var startListening = function () {
 
         // frontend sends message
         socket.on('frontendOutboundMessage', function (message) {
-            callback.onFrontendMessage(message.type, message.data);
+            callback.onFrontendOutboundMessage(message.type, message.data);
 
             if (debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
         });

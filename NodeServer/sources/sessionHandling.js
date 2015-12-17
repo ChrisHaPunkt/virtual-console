@@ -124,46 +124,52 @@ var startNetworkServer = function (server) {
         onNewClient: function (id) {
             addUser(id);
         },
-        onRegister: function (id,username,password, _callback) {
-            userManagement.registerUser(username,password,function(result){
-                if(result){
-                    _callback({result:true,username:username});
-                }else{
+        onFrontendConnected: function () {
+
+        },
+        onFrontendOutboundMessage: function (type, data) {
+            callback.onFrontendOutboundMessage (type, data);
+        },
+        onRegister: function (id, username, password, _callback) {
+            userManagement.registerUser(username, password, function (result) {
+                if (result) {
+                    _callback({result: true, username: username});
+                } else {
                     //network.sendToClient(id,'register',false);
-                    _callback({result:true,username:username});
+                    _callback({result: true, username: username});
                 }
             });
             return true;
         },
         onLogin: function (id, username, password, _callback) {
-            userManagement.authenticateUser(username,password,function(result, info){
+            userManagement.authenticateUser(username, password, function (result, info) {
 
-                if(result){
-                    setUserName(id,username);
-                    setUserStatus(id,true,true);
+                if (result) {
+                    setUserName(id, username);
+                    setUserStatus(id, true, true);
                     callback.onNewUser(username);
-                    _callback({result:true,username:username});
-                }else{
-                    _callback({result:false,username:username});
+                    _callback({result: true, username: username});
+                } else {
+                    _callback({result: false, username: username});
                 }
 
             });
         },
-        onAnonymousLogin: function(id){
-            var tmpUserName = "User_"+ ++currentAnonymousUserId;
+        onAnonymousLogin: function (id) {
+            var tmpUserName = "User_" + ++currentAnonymousUserId;
             setUserName(id, tmpUserName);
-            setUserStatus(id,true,false);
+            setUserStatus(id, true, false);
             callback.onNewUser(tmpUserName);
-            return {result:true,username:tmpUserName};
+            return {result: true, username: tmpUserName};
         },
         onDisconnect: function (id) {
             callback.onUserDisconnects(getUserById(id).userName);
             removeUserById(id);
         },
         onMessage: function (id, type, data) {
-            if(isLoggedIn(id)) {
+            if (isLoggedIn(id)) {
                 callback.onMessage(getUserById(id).userName, type, data);
-            }else{
+            } else {
                 util.error('sessionHandler | user id ' + id + ' send message without being authenticated.');
             }
         }
