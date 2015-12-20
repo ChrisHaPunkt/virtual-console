@@ -5,4 +5,5 @@ rm -rf node_modules/*
 echo "Installing needed dependencies..."
 npm install --silent
 cd ../
+
 exit 0
