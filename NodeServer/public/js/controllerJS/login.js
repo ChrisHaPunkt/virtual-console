@@ -8,6 +8,31 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
     ////////////////////////////////////
+    //Setting Visibility of Logint and Controller
+    ////////////////////////////////////
+    var loginDiv = $('#login-body');
+    var contentDiv = $('#content-body');
+
+    var hideLogin = function(){
+        //loginDiv.hide();
+        loginDiv.slideUp();
+    };
+    var hideContent = function(){
+        contentDiv.hide();
+    };
+    var showLogin = function(){
+        loginDiv.show();
+    };
+    var showContent = function(){
+        contentDiv.show();
+    };
+
+    hideContent();
+    showLogin();
+
+
+
+    ////////////////////////////////////
     //Open socket
     ////////////////////////////////////
     var serverURL = "127.0.0.1";
@@ -19,10 +44,21 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
         },
         onAnonymousLogin: function (data) {
+            if(data.result){
+                hideLogin();
+                showContent();
+            }else{
+                // false login
+            }
             console.log(data);
         },
         onLogin: function (data) {
-            // do anything you want with server messages
+            if(data.result){
+                hideLogin();
+                showContent();
+            }else{
+                // false login
+            }
             console.log(data);
         },
         onRegister: function (data) {
