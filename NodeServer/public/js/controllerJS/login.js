@@ -92,21 +92,36 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
         var pid = simulateFunction();
         console.log("add " + pid);
     });
-
     window.simulateArray = [];
     var simulateCount = 0;
     var simulateFunction = function () {
 
+        var i = 0;
         var pid = window.setInterval(function () {
-            var OrientationData = {
-                orientationBeta: Math.random() * (100 - (-100)) + (-100),
-                orientationGamma: Math.random() * (100 - (-100)) + (-100),
-                orientationAlpha: Math.random() * (100 - (-100)) + (-100),
-                timestamp: Date.now()
-            };
 
-            socket.sendData("orientationData", OrientationData);
+            if (i % 2 == 0) {
+                i++;
+
+                var OrientationData = {
+                    orientationBeta: Math.random() * (100 - (-100)) + (-100),
+                    orientationGamma: Math.random() * (100 - (-100)) + (-100),
+                    orientationAlpha: Math.random() * (100 - (-100)) + (-100),
+                    timestamp: Date.now()
+                };
+
+                socket.sendData("orientationData", OrientationData);
+
+            } else {
+
+                i = 0;
+                socket.sendData('button', {erweitert                    buttonName: 'btn-left', buttonState: 7,
+                    timestamp: Date.now()
+                });
+            }
+
         }, 1000);
+
+
         simulateCount++;
         $("#simulateBtn").html("Simulate " + simulateCount);
         window.simulateArray.push(pid);
