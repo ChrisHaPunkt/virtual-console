@@ -2,10 +2,10 @@
  * Created by chrisheinrichs on 05.11.15.
  */
 
+var frontChart = null;
 
-
-define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
-
+define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Chart) {
+        console.log(Chart);
         /**
          * ------------- ApiInitialization Part -------------
          */
@@ -16,16 +16,28 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          */
         gameApi.logLevel = gameApi.log.INFO;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
+        gameApi.performanceMonitor = false;
 
-
-
+    var chart = null;
         /**
          * Handle new Controller Data
          * @param controllerData
          */
         gameApi.frontendInboundMessage = function (controllerData) {
+
             var controllerEvent = controllerData.data.message;
-            gameApi.addLogMessage(gameApi.log.DEBUG,"on.FrontendInboundMessage" , controllerData);
+            if (gameApi.performanceMonitor) {
+                var timestamp = Date.now();
+                var chart = gameApi.chart.chartObj;
+                console.log("Delay: " + (timestamp - controllerEvent.timestamp) + " ms");
+                if(chart.datasets[0].points.length > 30){
+                    //cleanup first points for a sliding view
+                    chart.removeData();
+                }
+                chart.addData([(timestamp - controllerEvent.timestamp)],(timestamp - controllerEvent.timestamp) + " ms");
+            }
+
+            gameApi.addLogMessage(gameApi.log.DEBUG, "on.FrontendInboundMessage", controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
             gameApi.addLogMessage(gameApi.log.DEBUG, 'client', controllerData.data.clientName + ': ' + msgDetails);
 
@@ -50,8 +62,6 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
 
                     break;
                 case "orientationData":
-                    var timestamp = Date.now();
-                    console.log("Delay: " +  (timestamp - controllerEvent.timestamp)  + " ms");
 
                     GameHandler.setRotationRelative(0, {
                         x: controllerEvent.orientationAlpha,
@@ -72,6 +82,8 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
             gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
 
             this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+
+
         };
 
         var gameInstance = gameApi.init();
@@ -93,10 +105,13 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
 
                 gameObjects: [],
 
-                changeControllerTemplate: function(newControllerTemplate){
-                    gameApi.addLogMessage(gameApi.log.INFO, "GameApi", "Switch Controller Layout To: "+ newControllerTemplate);
+                changeControllerTemplate: function (newControllerTemplate) {
+                    gameApi.addLogMessage(gameApi.log.INFO, "GameApi", "Switch Controller Layout To: " + newControllerTemplate);
                     gameApi.controller = newControllerTemplate;
-                    gameApi.socket.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+                    gameApi.socket.emit('frontendOutboundMessage', {
+                        type: 'setControllerTemplate',
+                        data: gameApi.controller
+                    });
                 },
 
                 /** Creating and configuring the renderer (plate)

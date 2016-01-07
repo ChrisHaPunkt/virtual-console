@@ -1,6 +1,6 @@
 define(['/socket.io/socket.io.js'], function (io) {
 
-  var  gameApi = {
+    var gameApi = {
 
         /**
          * ID of the log containing DOM-Element
@@ -23,11 +23,13 @@ define(['/socket.io/socket.io.js'], function (io) {
         },
         logLevel: null,
         socket: null,
+        performanceMonitor: false,
         pageLogContent: null,
         frontendConnectionOutbound: null,
         frontendConnection: null,
         frontendInboundMessage: null,
         controller: null,
+        chart: {},
         init: function () {
 
             /**
@@ -75,12 +77,12 @@ define(['/socket.io/socket.io.js'], function (io) {
         // write to logcontent
         addLogMessage: function (level, type, msg) {
             var pageLogContent = document.getElementById(this.logContainer);
-            if(this.logLevel === this.log.DEBUG){
+            if (this.logLevel === this.log.DEBUG) {
                 console.log(this.log.DEBUG + type + ": " + msg);
-                if(level === this.log.INFO){
+                if (level === this.log.INFO) {
                     pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
                 }
-            }else if(this.logLevel === this.log.INFO && level === this.log.INFO){
+            } else if (this.logLevel === this.log.INFO && level === this.log.INFO) {
                 console.log(this.log.DEBUG + type + ": " + msg);
                 pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }

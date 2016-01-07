@@ -10,11 +10,13 @@ define(['jquery'], function($){
     $('.myButton').mouseup(buttonwasreleased);
 
     function buttonwaspressed(button) {
-        socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 8} );
+        socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 8,
+            timestamp: Date.now()} );
     }
 
     function buttonwasreleased() {
-        socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 7} );
+        socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 7,
+            timestamp: Date.now()} );
     }
 
     return {

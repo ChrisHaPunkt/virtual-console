@@ -19,10 +19,11 @@
 }
 #chart{
     color: grey;
+    display: none;
     font-size: 1em;
     max-height: 100px;
     overflow-y: auto;
-    padding: 5px;
+    padding: 3px 5px 3px 5px;
     width: 96%;
     border: 2px solid grey;
     border-radius: 2em;

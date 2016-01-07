@@ -50,7 +50,8 @@ define(['jquery'], function ($) {
                 accelerationZ: accelerationZ,
                 rotationAlpha: rotationAlpha,
                 rotationBeta: rotationBeta,
-                rotationGamma: rotationGamma
+                rotationGamma: rotationGamma,
+                timestamp: Date.now()
             };
             /*
              if (MotionData.accelerationX > minMotion || MotionData.accelerationY > minMotion || MotionData.accelerationZ > minMotion ||
@@ -67,11 +68,13 @@ define(['jquery'], function ($) {
                 accelerationX: accelerationX,
                 accelerationY: accelerationY,
                 accelerationZ: accelerationZ,
+                timestamp: Date.now()
             };
             var RotationData = {
                 rotationAlpha: rotationAlpha,
                 rotationBeta: rotationBeta,
-                rotationGamma: rotationGamma
+                rotationGamma: rotationGamma,
+                timestamp: Date.now()
             };
 
 
@@ -197,7 +200,7 @@ define(['jquery'], function ($) {
 
 
     function getDeviceOrientation() {
-        var deviceOrientation = window.orientation
+        var deviceOrientation = window.orientation;
         var isPortrait = deviceOrientation % 180 === 0;
         document.body.className = isPortrait ? 'portrait' : 'landscape';
         return document.body.className;

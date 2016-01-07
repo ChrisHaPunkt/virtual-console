@@ -13,7 +13,8 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
-        "three": "libs/three"
+        "three": "libs/three",
+        "Chart": "libs/Chart.min"
     },
     shim: {
         three: {
@@ -21,18 +22,50 @@ requirejs.config({
         }
     }
 });
-var GameHandler = null, gameApi = null;
+var GameHandler = null, gameApi = null, frontChart = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["3dgame", "gameApi", "jquery", "/js/lib/Chart.min.js"], function (game, api, $, Chart) {
+require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
-    console.log(game);
+    $('#monitorBtn').click(function () {
+        $('#chart').show();
+        gameApi.performanceMonitor = true;
+        var data = {
+            labels: [0],
+            datasets: [{
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [0]
+            }]
+        };
+        gameApi.chart.data = data;
+        //render Chart
+        // Get context with jQuery - using jQuery's .get() method.
+        var ctx = $("#myChart").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        frontChart = new Chart(ctx).Line(data, {
+            maintainAspectRatio: false,
+            responsive: true
+        });
+        gameApi.chart.chartObj = frontChart;
+        console.log("+Chart");
 
-    // Get context with jQuery - using jQuery's .get() method.
-    var ctx = $("#myChart").get(0).getContext("2d");
-// This will get the first returned node in the jQuery collection.
-    var myNewChart = new Chart(ctx);
+
+
+
+    });
+
+    if(gameApi.performanceMonitor){
+        $('#monitorBtn').trigger("click");
+    }else{
+
+    }
+
 
 });
