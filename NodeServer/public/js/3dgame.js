@@ -51,11 +51,14 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
 
                     break;
                 case "orientationData":
+                    var timestamp = Date.now();
+                    console.log("Delay: " +  (timestamp - controllerEvent.timestamp)  + " ms");
+
                     GameHandler.setRotationRelative(0, {
                         x: controllerEvent.orientationAlpha,
                         y: controllerEvent.orientationBeta,
                         z: controllerEvent.orientationGamma
-                    })
+                    });
                     break;
                 default:
                     break;
