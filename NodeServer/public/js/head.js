@@ -25,7 +25,7 @@ var GameHandler = null, gameApi = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["3dgame", "gameApi", "jquery"], function (game, api, $) {
+require(["3dgame", "gameApi", "jquery", "/js/lib/Chart.min.js"], function (game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
     console.log(game);
