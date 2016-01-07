@@ -114,7 +114,8 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             } else {
 
                 i = 0;
-                socket.sendData('button', {erweitert                    buttonName: 'btn-left', buttonState: 7,
+                socket.sendData('button', {
+                    buttonName: 'btn-left', buttonState: 7,
                     timestamp: Date.now()
                 });
             }
