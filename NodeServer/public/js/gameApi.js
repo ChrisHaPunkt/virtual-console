@@ -67,18 +67,22 @@ define(['/socket.io/socket.io.js'], function (io) {
             else return -1;
 
             if (this.logLevel == this.log.DEBUG)
-                this.addLogMessage("init", "Game Api successfully Initialized");
+                this.addLogMessage(this.log.INFO, "init", "Game Api successfully Initialized");
 
             return this.socket;
         },
 
         // write to logcontent
-        addLogMessage: function (type, msg) {
+        addLogMessage: function (level, type, msg) {
             var pageLogContent = document.getElementById(this.logContainer);
-            if (this.logLevel === this.log.DEBUG) {
-                if (typeof msg === 'string') {
+            if(this.logLevel === this.log.DEBUG){
+                console.log(this.log.DEBUG + type + ": " + msg);
+                if(level === this.log.INFO){
                     pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
                 }
+            }else if(this.logLevel === this.log.INFO && level === this.log.INFO){
+                console.log(this.log.DEBUG + type + ": " + msg);
+                pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }
         }
 

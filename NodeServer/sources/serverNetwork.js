@@ -18,7 +18,7 @@ var clients = {};
 var frontend = 0;
 var callback;
 var util = require('util');
-var debug = true;
+var debug = false;
 
 // start webserver and socket - function is called via public start method. see module exports at the end of this file
 var startListening = function () {
@@ -49,7 +49,8 @@ var startListening = function () {
                 // callback from session handling - not needed atm
             });
             if (debug)util.log('serverNetwork | Frontend Connected!');
-            if (debug)exports.sendToFrontend('frontendConnection', 'Hello Frontend');
+            // server -> frontend handshake
+            exports.sendToFrontend('frontendConnection', 'Hello Frontend');
         });
 
         // frontend sends message

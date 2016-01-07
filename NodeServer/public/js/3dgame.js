@@ -6,8 +6,6 @@
 
 define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
 
-        console.log($);
-
         /**
          * ------------- ApiInitialization Part -------------
          */
@@ -16,8 +14,9 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          *
          * @type {number}
          */
-        gameApi.logLevel = gameApi.log.DEBUG;
+        gameApi.logLevel = gameApi.log.INFO;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
+        var debug = false;
 
 
         /**
@@ -26,9 +25,9 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          */
         gameApi.frontendInboundMessage = function (controllerData) {
             var controllerEvent = controllerData.data.message;
-            console.log("on.FrontendInboundMessage: ", controllerData);
+            if(debug)console.log("on.FrontendInboundMessage: ", controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
-            gameApi.addLogMessage('client', controllerData.data.clientName + ': ' + msgDetails);
+            gameApi.addLogMessage(gameApi.log.DEBUG, 'client', controllerData.data.clientName + ': ' + msgDetails);
 
 
             switch (controllerData.type) {
@@ -55,7 +54,7 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
                         x: controllerEvent.orientationAlpha,
                         y: controllerEvent.orientationBeta,
                         z: controllerEvent.orientationGamma
-                    })
+                    });
                     break;
                 default:
                     break;
@@ -67,8 +66,8 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          * @param connInfoObj
          */
         gameApi.frontendConnection = function (connInfoObj) {
-            console.log("on.FrontendData: ", connInfoObj);
-            gameApi.addLogMessage('conn', connInfoObj + " " + gameApi.socket.id);
+            if(debug)console.log("on.FrontendData: ", connInfoObj);
+            gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
 
             this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
         };
@@ -93,7 +92,7 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
                 gameObjects: [],
 
                 changeControllerTemplate: function(newControllerTemplate){
-                    gameApi.addLogMessage("GameApi", "Switch Controller Layout To: "+ newControllerTemplate);
+                    gameApi.addLogMessage(gameApi.log.INFO, "GameApi", "Switch Controller Layout To: "+ newControllerTemplate);
                     gameApi.controller = newControllerTemplate;
                     gameApi.socket.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
                 },
@@ -222,7 +221,6 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
             }
 
         }
-        ;
 
         GameHandler.initRenderer();
         GameHandler.addNewGameObj();
