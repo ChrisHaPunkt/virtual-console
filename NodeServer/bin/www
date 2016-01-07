@@ -40,26 +40,26 @@ server.on('listening', onListening);
 
 sessionHandling.init(server, {
     onNewUser: function(name){
-        util.log('www | new user ' + name);
+        //util.log('www | new user ' + name);
         sessionHandling.sendToFrontend(name,'newUserConnection','new connected');
     },
     onUserDisconnects: function(name){
-        util.log('www | user disconnected ' + name);
+        //util.log('www | user disconnected ' + name);
     },
     onMessage: function(name,type,message){
-        util.log('www | user ' + name + ' says: ' + message);
+        //util.log('www | user ' + name + ' says: ' + message);
         sessionHandling.sendToFrontend(name,type,message);
     },
 
     onFrontendConnected: function () {
-        util.log('www | frontend connected ');
+        //util.log('www | frontend connected ');
     },
 
     onFrontendOutboundMessage: function (type, data) {
-        util.log("onFrontendOutboundMessage", type, data);
+        //util.log("onFrontendOutboundMessage", type, data);
         if(type == 'setControllerTemplate') {
             app.set('chosenControllerTemplate',  data);
-            util.log("Set new Gamecontroller Template -> " + data);
+            //util.log("Set new Gamecontroller Template -> " + data);
         }
     }
 }).start();
