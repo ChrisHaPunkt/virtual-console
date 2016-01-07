@@ -25,7 +25,7 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          */
         gameApi.frontendInboundMessage = function (controllerData) {
             var controllerEvent = controllerData.data.message;
-            console.log("on.FrontendInboundMessage: ", controllerData);
+            gameApi.addLogMessage(gameApi.log.DEBUG,"on.FrontendInboundMessage" , controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
             gameApi.addLogMessage(gameApi.log.DEBUG, 'client', controllerData.data.clientName + ': ' + msgDetails);
 
@@ -69,7 +69,6 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          * @param connInfoObj
          */
         gameApi.frontendConnection = function (connInfoObj) {
-            if(debug)console.log("on.FrontendData: ", connInfoObj);
             gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
 
             this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
