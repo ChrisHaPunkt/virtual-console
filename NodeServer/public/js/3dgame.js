@@ -18,7 +18,6 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
         gameApi.controller = gameApi.controllerTemplates.MODERN;
         gameApi.performanceMonitor = false;
 
-    var chart = null;
         /**
          * Handle new Controller Data
          * @param controllerData
@@ -26,7 +25,8 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
         gameApi.frontendInboundMessage = function (controllerData) {
 
             var controllerEvent = controllerData.data.message;
-            if (gameApi.performanceMonitor) {
+            console.log(controllerData.type);
+            if (gameApi.performanceMonitor && (controllerData.type == "button" || controllerData.type == "accelerationData" || controllerData.type == "orientationData")) {
                 var timestamp = Date.now();
                 var chart = gameApi.chart.chartObj;
                 console.log("Delay: " + (timestamp - controllerEvent.timestamp) + " ms");

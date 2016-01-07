@@ -61,10 +61,8 @@ require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart)
 
     });
 
-    if(gameApi.performanceMonitor){
+    if(gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined"){
         $('#monitorBtn').trigger("click");
-    }else{
-
     }
 
 
