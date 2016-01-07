@@ -2,10 +2,13 @@ extends frontendLayout
 
 block content
     h1(class='globalTitle')= title
+        button Performance Monitor
 
     div(id='3d', class='threeDContainer')
 block log
     div(id='log')
+    div(id='chart')
+        canvas(id='myChart' style='width:98%;max-height:94px')
 
     // Load Require JS
     script(data-main='js/head.js', src='/js/libs/require.js')

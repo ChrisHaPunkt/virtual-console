@@ -17,6 +17,18 @@
     margin-left: 2%;
     margin-right: 2%;
 }
+#chart{
+    color: grey;
+    font-size: 1em;
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 5px;
+    width: 96%;
+    border: 2px solid grey;
+    border-radius: 2em;
+    margin-left: 2%;
+    margin-right: 2%;
+}
 body{
     height: 98%;
 }

@@ -25,9 +25,14 @@ var GameHandler = null, gameApi = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["3dgame", "gameApi"], function (game, api) {
+require(["3dgame", "gameApi", "jquery"], function (game, api, $) {
     gameApi = api;
     GameHandler = game;
     console.log(game);
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var ctx = $("#myChart").get(0).getContext("2d");
+// This will get the first returned node in the jQuery collection.
+    var myNewChart = new Chart(ctx);
 
 });
