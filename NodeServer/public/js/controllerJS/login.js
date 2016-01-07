@@ -13,23 +13,22 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     var loginDiv = $('#login-body');
     var contentDiv = $('#content-body');
 
-    var hideLogin = function(){
+    var hideLogin = function () {
         //loginDiv.hide();
         loginDiv.slideUp();
     };
-    var hideContent = function(){
+    var hideContent = function () {
         contentDiv.hide();
     };
-    var showLogin = function(){
+    var showLogin = function () {
         loginDiv.show();
     };
-    var showContent = function(){
+    var showContent = function () {
         contentDiv.show();
     };
 
     hideContent();
     showLogin();
-
 
 
     ////////////////////////////////////
@@ -44,19 +43,19 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
         },
         onAnonymousLogin: function (data) {
-            if(data.result){
+            if (data.result) {
                 hideLogin();
                 showContent();
-            }else{
+            } else {
                 // false login
             }
             console.log(data);
         },
         onLogin: function (data) {
-            if(data.result){
+            if (data.result) {
                 hideLogin();
                 showContent();
-            }else{
+            } else {
                 // false login
             }
             console.log(data);
@@ -69,20 +68,19 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     var socket = cn(serverURL, serverPort, resHandler);
 
 
-
     /////////////////////////////////////
     //Define onclick listener
     /////////////////////////////////////
-    var sendAnonymousLogin = function(){
+    var sendAnonymousLogin = function () {
         //event.preventDefault();
         socket.sendAnonymousLogin();
     };
 
-    var sendRegister = function(){
+    var sendRegister = function () {
         //event.preventDefault();
         socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);
     };
-    var sendLogin = function(){
+    var sendLogin = function () {
         //event.preventDefault();
         socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);
     };
@@ -90,7 +88,30 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     document.getElementById("anonymous").addEventListener("click", sendAnonymousLogin);
     document.getElementById("register").addEventListener("click", sendRegister);
     document.getElementById("login").addEventListener("click", sendLogin);
+    $("#simulateBtn").click(function () {
+        var pid = simulateFunction();
+        console.log("add " + pid);
+    });
 
+    window.simulateArray = [];
+    var simulateCount = 0;
+    var simulateFunction = function () {
+
+        var pid = window.setInterval(function () {
+            var OrientationData = {
+                orientationBeta: Math.random() * (100 - (-100)) + (-100),
+                orientationGamma: Math.random() * (100 - (-100)) + (-100),
+                orientationAlpha: Math.random() * (100 - (-100)) + (-100),
+                timestamp: Date.now()
+            };
+
+            socket.sendData("orientationData", OrientationData);
+        }, 1000);
+        simulateCount++;
+        $("#simulateBtn").html("Simulate " + simulateCount);
+        window.simulateArray.push(pid);
+        return pid;
+    };
 
 
     ///////////////////////////////////////
