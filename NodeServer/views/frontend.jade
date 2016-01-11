@@ -1,9 +1,7 @@
 extends frontendLayout
 
 block content
-    h1(class='globalTitle')= title
-        button(id='monitorBtn') Performance Monitor show/reset
-
+    h1(class='globalTitle' id='monitorBtn' style='cursor:pointer' title='Click for Performance Monitor')= title
     div(id='3d', class='threeDContainer')
 block log
     div(id='chart')

@@ -1,2 +1,6 @@
 NodeServer/node_modules/*
+Documentation/*.log
+Documentation/*.aux
+Documentation/*.out
+Documentation/*.gz*
 .idea

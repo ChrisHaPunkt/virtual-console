@@ -14,7 +14,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
          *
          * @type {number}
          */
-        gameApi.logLevel = gameApi.log.INFO;
+        gameApi.logLevel = gameApi.log.DEBUG;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
         gameApi.performanceMonitor = false;
 
