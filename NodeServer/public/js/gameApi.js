@@ -77,12 +77,15 @@ define(['/socket.io/socket.io.js'], function (io) {
         // write to logcontent
         addLogMessage: function (level, type, msg) {
             var pageLogContent = document.getElementById(this.logContainer);
-            if (this.logLevel === this.log.DEBUG) {
+            // if log level is DEBUG log everything
+            if(this.logLevel === this.log.DEBUG){
                 console.log(this.log.DEBUG + type + ": " + msg);
-                if (level === this.log.INFO) {
+                // additional log INFO levels to UI
+                if(level === this.log.INFO){
                     pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
                 }
-            } else if (this.logLevel === this.log.INFO && level === this.log.INFO) {
+            // if log level is INFO just log INFO logs
+            }else if(this.logLevel === this.log.INFO && level === this.log.INFO){
                 console.log(this.log.DEBUG + type + ": " + msg);
                 pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }

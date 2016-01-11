@@ -39,7 +39,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
 
             gameApi.addLogMessage(gameApi.log.DEBUG, "on.FrontendInboundMessage", controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
-            gameApi.addLogMessage(gameApi.log.DEBUG, 'client', controllerData.data.clientName + ': ' + msgDetails);
+            gameApi.addLogMessage(gameApi.log.INFO, 'client', controllerData.data.clientName + ': ' + msgDetails);
 
 
             switch (controllerData.type) {
@@ -62,6 +62,8 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
 
                     break;
                 case "orientationData":
+                    var timestamp = Date.now();
+                    gameApi.addLogMessage(gameApi.log.DEBUG, "Delay",  (timestamp - controllerEvent.timestamp)  + " ms");
 
                     GameHandler.setRotationRelative(0, {
                         x: controllerEvent.orientationAlpha,
