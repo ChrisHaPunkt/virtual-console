@@ -41,10 +41,11 @@ server.on('listening', onListening);
 sessionHandling.init(server, {
     onNewUser: function(name){
         //util.log('www | new user ' + name);
-        sessionHandling.sendToFrontend(name,'newUserConnection','new connected');
+        sessionHandling.sendToFrontend(name,'userConnection','connected');
     },
     onUserDisconnects: function(name){
         //util.log('www | user disconnected ' + name);
+        sessionHandling.sendToFrontend(name,'userConnection','disconnected');
     },
     onMessage: function(name,type,message){
         //util.log('www | user ' + name + ' says: ' + message);

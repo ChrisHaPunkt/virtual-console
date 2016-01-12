@@ -14,9 +14,8 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          *
          * @type {number}
          */
-        gameApi.logLevel = gameApi.log.DEBUG;
+        gameApi.logLevel = gameApi.log.INFO;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
-
 
 
         /**
@@ -24,13 +23,17 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
          * @param controllerData
          */
         gameApi.frontendInboundMessage = function (controllerData) {
+            console.log("123", controllerData);
             var controllerEvent = controllerData.data.message;
-            gameApi.addLogMessage(gameApi.log.DEBUG,"on.FrontendInboundMessage" , controllerData);
+            gameApi.addLogMessage(gameApi.log.DEBUG, "on.FrontendInboundMessage", controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
-            gameApi.addLogMessage(gameApi.log.INFO, 'client', controllerData.data.clientName + ': ' + msgDetails);
+            gameApi.addLogMessage(gameApi.log.DEBUG, 'client', controllerData.data.clientName + ': ' + msgDetails);
 
 
             switch (controllerData.type) {
+                case "userConnection":
+                    gameApi.addLogMessage(gameApi.log.INFO, 'client', "Client " + controllerData.data.clientName + ' ' + controllerData.data.message);
+                    break;
                 case "button":
                     if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
 
@@ -51,7 +54,7 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
                     break;
                 case "orientationData":
                     var timestamp = Date.now();
-                    gameApi.addLogMessage(gameApi.log.DEBUG, "Delay",  (timestamp - controllerEvent.timestamp)  + " ms");
+                    gameApi.addLogMessage(gameApi.log.DEBUG, "Delay", (timestamp - controllerEvent.timestamp) + " ms");
 
                     GameHandler.setRotationRelative(0, {
                         x: controllerEvent.orientationAlpha,
@@ -93,10 +96,13 @@ define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
 
                 gameObjects: [],
 
-                changeControllerTemplate: function(newControllerTemplate){
-                    gameApi.addLogMessage(gameApi.log.INFO, "GameApi", "Switch Controller Layout To: "+ newControllerTemplate);
+                changeControllerTemplate: function (newControllerTemplate) {
+                    gameApi.addLogMessage(gameApi.log.INFO, "GameApi", "Switch Controller Layout To: " + newControllerTemplate);
                     gameApi.controller = newControllerTemplate;
-                    gameApi.socket.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+                    gameApi.socket.emit('frontendOutboundMessage', {
+                        type: 'setControllerTemplate',
+                        data: gameApi.controller
+                    });
                 },
 
                 /** Creating and configuring the renderer (plate)
