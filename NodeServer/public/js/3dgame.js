@@ -2,10 +2,10 @@
  * Created by chrisheinrichs on 05.11.15.
  */
 
-var frontChart = null;
 
-define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Chart) {
-        console.log(Chart);
+
+define(['jquery', 'three', 'gameApi'], function ($, THREE, gameApi) {
+
         /**
          * ------------- ApiInitialization Part -------------
          */
@@ -14,34 +14,26 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
          *
          * @type {number}
          */
-        gameApi.logLevel = gameApi.log.DEBUG;
+        gameApi.logLevel = gameApi.log.INFO;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
-        gameApi.performanceMonitor = false;
+
 
         /**
          * Handle new Controller Data
          * @param controllerData
          */
         gameApi.frontendInboundMessage = function (controllerData) {
-
+            console.log("123", controllerData);
             var controllerEvent = controllerData.data.message;
-            if (gameApi.performanceMonitor && (controllerData.type == "button" || controllerData.type == "accelerationData" || controllerData.type == "orientationData")) {
-                var timestamp = Date.now();
-                var chart = gameApi.chart.chartObj;
-                console.log("Delay: " + (timestamp - controllerEvent.timestamp) + " ms");
-                if(chart.datasets[0].points.length > 30){
-                    //cleanup first points for a sliding view
-                    chart.removeData();
-                }
-                chart.addData([(timestamp - controllerEvent.timestamp)],(timestamp - controllerEvent.timestamp) + " ms");
-            }
-
             gameApi.addLogMessage(gameApi.log.DEBUG, "on.FrontendInboundMessage", controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
             gameApi.addLogMessage(gameApi.log.DEBUG, 'client', controllerData.data.clientName + ': ' + msgDetails);
 
 
             switch (controllerData.type) {
+                case "userConnection":
+                    gameApi.addLogMessage(gameApi.log.INFO, 'client', "Client " + controllerData.data.clientName + ' ' + controllerData.data.message);
+                    break;
                 case "button":
                     if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
 
@@ -61,7 +53,8 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
 
                     break;
                 case "orientationData":
-                    gameApi.addLogMessage(gameApi.log.DEBUG, "Delay",  (timestamp - controllerEvent.timestamp)  + " ms");
+                    var timestamp = Date.now();
+                    gameApi.addLogMessage(gameApi.log.DEBUG, "Delay", (timestamp - controllerEvent.timestamp) + " ms");
 
                     GameHandler.setRotationRelative(0, {
                         x: controllerEvent.orientationAlpha,
@@ -82,8 +75,6 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
             gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
 
             this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
-
-
         };
 
         var gameInstance = gameApi.init();
