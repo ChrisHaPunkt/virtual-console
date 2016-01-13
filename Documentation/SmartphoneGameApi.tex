@@ -55,7 +55,7 @@
 \usepackage{color}
 \usepackage{float}
 
-\title{Developing an easy-to-use API for user input via Mobile Device}
+\title{Smartphonecontroller Javascript-GameAPI}
 
 %>>>> The author is responsible for formatting the 
 %  author list and their institutions.  Use  \skiplinehalf 
@@ -111,7 +111,7 @@ Aufgaben sind in Redmine erfasst und Personen zugewiesen. Ein wöchentliches per
 \begin{table}
 	\label{table:distribution of tasks}
 	\centering
-		\caption{Matrix der Aufgabenverteilung}
+		\caption{Matrix distribution of tasks}
 		\begin{tabular}{| L{2.6cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} |}
 		\hline
 		\rowcolor{blau}
@@ -119,8 +119,8 @@ Aufgaben sind in Redmine erfasst und Personen zugewiesen. Ein wöchentliches per
 		Recherche 		& X & X	& X	& X	& X	\\\hline
 		Konzept 		& X & X	& X	& X	& X	\\\hline
 		Serverdesign	& 	& X & 	& X	& X \\\hline
-		Networking		& 	& X	& 	&	& X	\\\hline
-		GameAPI 		& 	&	&	&	& X	\\\hline
+		Networking		& 	& X	& 	& X	& X	\\\hline
+		GameAPI 		& 	& X	&	&	& X	\\\hline
 		DemoGame 		& X	&	&	&	& X	\\\hline
 		ClientFrontend 	& X	&	& X	&	&	\\\hline
 		ClientBackend 	& X	&	& X	&	&	\\\hline
@@ -164,10 +164,11 @@ Die Drohnen sind vorkonfiguriert in der Konfigurationsdatei des Kismet-Servers, 
 \subsection{Server and Networking}
 Die beim Kismet-Server auflaufenden Daten müssen noch für die Verarbeitung in eine zentrale Datenbank exportiert werden. Dafür wurde ein eigener Kismet-Client entwickelt. Dieser registriert sich bei dem Kismet-Server und bekommt die Daten zugeschickt, sobald diese am Server anfallen. Diese Daten werden in der Mongo-Datenbank gespeichert. Das Programm ist in drei Pakete untergliedert:
 
-\paragraph{Client-Paket}\mbox{}\\
+\paragraph{Structure and usage of express routing}\mbox{}\\
 Das Client Paket beinhaltet die main Methode und initialisiert sowohl die Datenquelle als auch die Verbindung zum Kismet-Server. Des weiteren kümmert es sich um die Weitergabe der Daten von dem KismetClient an die Datenquelle.
 
-\paragraph{Datasource-Paket}\mbox{}\\
+\paragraph{Managing of clients}\mbox{}\\
+AUth//Register/Ananymous
 Die Datenquelle kümmert sich um das persistente Speichern der Daten. Hierfür wurde die MongoDB ausgewählt. Diese lässt sich einfach einrichten und mit Java verwenden. Außerdem kann sie über Webtechnologien leicht angesprochen werden. Dies ist wichtig für die  spätere Auswertung der Daten, welche über Webtechnologien erfolgen soll. Die Datenquelle ist nicht an eine bestimmte Datenbank gebunden. Die Klasse muss lediglich das Datasource-Interface einbinden. Wie mit den Daten umgegangen wird, ist für den Client nicht wichtig und wird von der Klasse verwaltet. 
 
 \paragraph{KismetClient-Paket}\mbox{}\\
@@ -203,7 +204,7 @@ Das KismetClient-Paket beinhaltet die Kommunikation mit dem Kismet-Server. Für 
 \end{table}
 
 
-\subsection{Smartphone Client and Login}
+\subsection{Frontend Client and Login}
 Zur Live-Evaluation der vom Kismet Client in die Datenbank geschriebenen Daten, wurde eine Webanwendung mit Hilfe des Webframeworks Meteor\footnote{https://www.meteor.com/} geschrieben. \\
 Die Anwendung wertet die vom Kismet Client bereitgestellten Messdaten reaktiv aus und lässt sich in einem Standard Webbrowser anzeigen. 
 Zur Ermittlung der Position eines Gerätes werden die gemessenen Signalstärken für jedes Gerät von den unterschiedlichen Drohnen miteinander verglichen. Dabei wird der gleitende Mittelwert zur dritten Periode pro Drohne berechnet (siehe Abbildung \ref{eqn:middle}), um mögliche Schwankungen in den Messungen zu behandeln. Wobei x\raise0.5ex\hbox{d}(t) für den Messwert zum Zeitpunkt t an Drogne d steht.
@@ -216,6 +217,15 @@ Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeic
 \caption{Gleitender Mittelwert zur dritten Periode}
 \label{eqn:middle}
 \end{figure}
+
+\subsubsection{Client Connections}
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+\subsubsection{Eventlisteners}
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+\subsubsection{Object Preparations}
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+\subsubsection{Styles}
+
 
 \subsection{GameAPI}
 Zur Live-Evaluation der vom Kismet Client in die Datenbank geschriebenen Daten, wurde eine Webanwendung mit Hilfe des Webframeworks Meteor\footnote{https://www.meteor.com/} geschrieben. \\
@@ -296,22 +306,6 @@ Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät en
 
 \subsection{Limitations}
 \subsubsection{1. Test}
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Aufbau}\mbox{}\\
-Die Drohne und das Smartphone wurden auf dämpfenden Platten positioniert. Auf dem Gerät war die App zur Traffic-Generierung aktiviert. In Abständen von 50 cm, 100 cm und 200 cm wurden Messungen durchgeführt.
-
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=\textwidth]{./images/Messung1Aufbau.jpg}
-		\caption{Aufbau 1. Test Störungsfreier Raum}
-		\label{fig:test1}
-\end{minipage}
-\end{figure}
 
 \paragraph{Ergebnis}\mbox{}\\
 Selbst auf kurzer Distanz ist eine Differenz von ca. 10 dBm zwischen den Messpunkten zu sehen. Dies ermöglicht eine Ortsbestimmung auf kurzer Distanz, was beim nächsten Test ebenfalls zu sehen ist.
