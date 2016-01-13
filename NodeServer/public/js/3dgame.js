@@ -14,7 +14,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
          *
          * @type {number}
          */
-        gameApi.logLevel = gameApi.log.DEBUG;
+        gameApi.logLevel = gameApi.log.INFO;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
         gameApi.performanceMonitor = false;
 
@@ -42,6 +42,9 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
 
 
             switch (controllerData.type) {
+                case "userConnection":
+                    gameApi.addLogMessage(gameApi.log.INFO, 'client', "Client " + controllerData.data.clientName + ' ' + controllerData.data.message);
+                    break;
                 case "button":
                     if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
 
