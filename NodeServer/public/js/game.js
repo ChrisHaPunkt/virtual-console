@@ -39,8 +39,6 @@ define([
           },
 
           create: function() {
-               var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-               logo.anchor.setTo(0.5, 0.5);
                game.add.image(0, 0, "road");
                game.physics.startSystem(Phaser.Physics.ARCADE);
                carGroup = game.add.group();
@@ -48,13 +46,28 @@ define([
                targetGroup = game.add.group();
 
                //ADD OBSTACLES
+              game.time.events.loop(obstacleDelay, function(){
+                  for(var i = 0; i < 4; i++){
+                      if(game.rnd.between(0, 1) == 1){
+                          var obstacle = new Obstacle(game, i);
+                          game.add.existing(obstacle);
+                          obstacleGroup.add(obstacle);
+                      }
+                      else{
+
+                      }
+                  }
+              });
           },
           update: function(){
-               game.physics.arcade.collide(carGroup, obstacleGroup, function(){
-                    game.state.start("PlayGame");
+               game.physics.arcade.collide(carGroup, obstacleGroup, function(c,t){
+                   c.destroy();
+                   t.destroy();
+                   console.log('bla');
                });
                game.physics.arcade.collide(carGroup, targetGroup, function(c, t){
                     t.destroy();
+                   gameApi.broadcastMessage('vibrate');
                });
           }
      };
@@ -166,7 +179,23 @@ define([
          cars[carsToUser[clientName]].destroy();
          cars[carsToUser[clientName]] = null;
      };
+    var Obstacle = function (game, lane) {
+        var position = game.rnd.between(0, 1) + 2 * lane;
+        Phaser.Sprite.call(this, game, game.width * (position + 1) / 8 - 40, -20, "obstacle");
+        game.physics.enable(this, Phaser.Physics.ARCADE);
+        this.anchor.set(0.5);
+        this.tint = carColors[Math.floor(position / 2)];
+    };
 
+    Obstacle.prototype = Object.create(Phaser.Sprite.prototype);
+    Obstacle.prototype.constructor = Obstacle;
+
+    Obstacle.prototype.update = function() {
+        this.body.velocity.y = obstacleSpeed;
+        if(this.y > game.height){
+            this.destroy();
+        }
+    };
 
 
      /**

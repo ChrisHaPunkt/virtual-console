@@ -1,6 +1,15 @@
 var game;
 
+var cars = [];
+var carColors = [0xff0000, 0x0000ff, 0x00ff00, 0xffff00];
+var carTurnSpeed = 250;
 
+var carGroup;
+var obstacleGroup;
+var targetGroup;
+
+var obstacleSpeed = 150;
+var obstacleDelay = 1400;
 
 window.onload = function() {
 	game = new Phaser.Game(640, 480, Phaser.AUTO, "");
@@ -54,8 +63,10 @@ playGame.prototype = {
           });
 	},
      update: function(){
-          game.physics.arcade.collide(carGroup, obstacleGroup, function(){
-               game.state.start("PlayGame");
+          game.physics.arcade.collide(carGroup, obstacleGroup, function(c,t){
+               t.destroy();
+               c.destroy();
+               console.log('arsch')
           });
           game.physics.arcade.collide(carGroup, targetGroup, function(c, t){
                t.destroy();
