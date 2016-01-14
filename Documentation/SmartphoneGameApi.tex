@@ -79,7 +79,7 @@ University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
   \maketitle 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{abstract}
-%%%% Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 \end{abstract}
 
 %>>>> Include a list of keywords after the abstract 
@@ -105,7 +105,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \section{Methods}
 \subsection{Project Management}
 Die Verteilung der Aufgaben ist in Tabelle \ref{table:distribution of tasks} aufgestellt.
-Aufgaben sind in Redmine erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität. 
+Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
 
 \definecolor{blau}{HTML}{217AA2}
 \begin{table}
@@ -125,15 +125,16 @@ Aufgaben sind in Redmine erfasst und Personen zugewiesen. Ein wöchentliches per
 		ClientFrontend 	& X	&	& X	&	&	\\\hline
 		ClientBackend 	& X	&	& X	&	&	\\\hline
 		Database 	    & 	&	&	& X	& 	\\\hline
-		Login 		    & 	& 	& 	& X	& 	\\\hline
+		LoginHandling   & 	& 	& 	& X	& 	\\\hline
+		Poster          & 	& 	& 	& 	& 	\\\hline
+		Documentation   & 	& 	& 	& 	& X \\\hline
 		Projektmgmt. 	&	&	&	& 	& X	\\\hline
 	\end{tabular} 
 \end{table}
 
 \subsection{Technologies}
 \subsubsection{NodeJS}
-Kismet ist eine frei erhältliche Anwendung zum passiven Abfangen von WiFi Paketen. Es fängt Pakete ab und liest deren Header Informationen aus. Dafür schaltet Kismet die WiFi Karte auf \enquote{RF monitoring}. Dadurch kann auch \enquote{management traffic} abgefangen werden, was dazu führt, dass auch versteckte WiFi Netzwerke gefunden werden können \cite{kismetIntro}. Kismet kann mit sogenannten Drohnen betrieben werden. Dies können Klienten mit WiFi Karten sein, die nach Paketen scannen und die gewonnenen Informationen an einen Kismet-Server weiter leiten. So können zum Beispiel in einen Raum mehrere Drohnen verteilt werden, sodass über die gemessene Signalstärke der Pakete ein Rückschluss auf die Position des Ursprungs der Pakete getroffen werden kann. Ein solcher Systemaufbau ist in Abbildung \ref{fig:sysArch} abgebildet.
-
+Was ist NodeJS, Warum genutzt
 \begin{figure}[h!]
 	\centering
 		\fbox{\includegraphics[width=12cm]{./images/FrontendInit.png}}
@@ -144,8 +145,7 @@ Kismet ist eine frei erhältliche Anwendung zum passiven Abfangen von WiFi Paket
 Die Berechnung der Signalstärke wird nicht durch Kismet vorgenommen, sondern geschieht intern in der jeweiligen Netzwerkkarte. Es wird bei den Raspberry Pi ein LOGILINK WL0084B WiFi-USB-Stick verwendet. Die Dämpfung kann bei verschieden Netzwerkkarten stark abweichen. Deshalb ist es erforderlich, dass im Versuchsaufbau nur gleiche Netzwerkkarten verwendet werden.
 
 \subsubsection{HTML 5}
-Docker ist ein Werkzeug, dass Unterstützung beim Deploymentprozess von verschiedener Software bietet. Eine Möglichkeit, Software-Abhänigkeiten zusammenzufassen und einheitlich mit der Software auszuliefern, können weiterhin virtuelle Maschinen (VMs) sein. Diese VMs, die dann die Software und sämtliche Abhänigkeiten enthalten, können dann verteilt und ausgeführt werden. Einen ähnlichen Ansatz bietet die Docker Software. Jedoch ist das Ziel dieser Software nicht, komplette VMs herzustellen, sondern kleinere leichtgewichtige Container.
-
+Was kann HTML5, was nutzen wir für HTML 5 Features
 \begin{figure}[h!]
 	\centering
 		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
@@ -153,23 +153,37 @@ Docker ist ein Werkzeug, dass Unterstützung beim Deploymentprozess von verschie
 		\label{fig:dockerVM}
 \end{figure}
 
-Diese Container basieren auf dem Konzept der Linux-Container (LXC) und teilen sich den Kernel der Host-Maschine. Daher benötigen die Container keine eigenen Betriebssysteme, welche bei paravirtuallisierten VMs mehrere Gigabyte Speicher in Anspruch nehmen können. Des Weiteren können sich Docker Container weitere Bibliotheken teilen, was wiederum Speicher und Rechenzeit einspart. Allerdings ist es nicht unbedingt einfach und eingängig Linux-Container zu konfigurieren und einzurichten. Diesen Teil übernimmt die Docker-Software. Darüber hinaus ist es mit Docker und dem zur Verfügung gestellten Software-Repository (Docker-Hub) schnell möglich, generierte Container als "Images" anderen Nutzern zur Verfügung zu stellen und zu verteilen.
-
+\subsubsection{Jacascript}
+Was kann Javascript, ECMA 6
+\begin{figure}[h!]
+	\centering
+		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
+\subsubsection{MongoDB}
+Was kann MongoDB, Warum MongoDB
+\begin{figure}[h!]
+	\centering
+		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
 \subsubsection{Hardware}
-Als Kismet-Server dient ein übliches Notebook mit dem Betriebssystem Ubuntu. Als Drohnen werden Raspberry Pis (Model B) verwendet. Diese sind mit Wi-Fi USB-Sticks "LOGILINK WL0084B" bestückt. So wird sichergestellt, dass die Berechnung der Dämpfung bei allen Drohnen gleich ist.
-Die Raspberry Pis sind über ihre LAN-Schnittstelle mit einem Switch verbunden, mit dem auch das Notebook verbunden ist. Durch einen DHCP Server auf dem Ubuntu Laptop werden die IPs automatisch verteilt und eine Verbindung kann hergestellt werden.
+Smartphone Controller, Platformunabhängig Node Server
 
-Die Drohnen sind vorkonfiguriert in der Konfigurationsdatei des Kismet-Servers, eine Verbindung wird direkt beim Starten aufgebaut.
+%
+% -----------------Implementation-------------------------
+%
+
 \section{Implementation}
 \subsection{Server and Networking}
-Die beim Kismet-Server auflaufenden Daten müssen noch für die Verarbeitung in eine zentrale Datenbank exportiert werden. Dafür wurde ein eigener Kismet-Client entwickelt. Dieser registriert sich bei dem Kismet-Server und bekommt die Daten zugeschickt, sobald diese am Server anfallen. Diese Daten werden in der Mongo-Datenbank gespeichert. Das Programm ist in drei Pakete untergliedert:
-
+\paragraph{Aufbau des Gesamtpakets}
+Diagramm, und Beschreibung des Aufbaus, Schnittstelle zum Frontend, Unterschiede unserer "Frontends" (logisch)
 \paragraph{Structure and usage of express routing}\mbox{}\\
-Das Client Paket beinhaltet die main Methode und initialisiert sowohl die Datenquelle als auch die Verbindung zum Kismet-Server. Des weiteren kümmert es sich um die Weitergabe der Daten von dem KismetClient an die Datenquelle.
-
+Beschreibung des Ruoting, Methodenlistings und Beispiele
 \paragraph{Managing of clients}\mbox{}\\
 AUth//Register/Ananymous
-Die Datenquelle kümmert sich um das persistente Speichern der Daten. Hierfür wurde die MongoDB ausgewählt. Diese lässt sich einfach einrichten und mit Java verwenden. Außerdem kann sie über Webtechnologien leicht angesprochen werden. Dies ist wichtig für die  spätere Auswertung der Daten, welche über Webtechnologien erfolgen soll. Die Datenquelle ist nicht an eine bestimmte Datenbank gebunden. Die Klasse muss lediglich das Datasource-Interface einbinden. Wie mit den Daten umgegangen wird, ist für den Client nicht wichtig und wird von der Klasse verwaltet. 
 
 \paragraph{KismetClient-Paket}\mbox{}\\
 Das KismetClient-Paket beinhaltet die Kommunikation mit dem Kismet-Server. Für die Kommunikation mit dem Server müssen die benötigten Protokolle mit den gewünschten Feldern bei diesem registriert werden. Danach werden automatisch Veränderungen an den Client gesendet und dieser muss diese auf Event-Basis auffangen und verarbeiten. Für die von uns benötigten Informationen, nutzt der Client die beiden Protokolle \enquote{SOURCE} und \enquote{CLISRC}. Die benötigten Felder werden in den Tabellen \ref{tab:src} und \ref{tab:cli} aufgezeigt.
