@@ -123,7 +123,6 @@ define(['jquery'], function ($) {
         window.navigator.vibrate(milliseconds);
     }
 
-
     /*
      VIDEO AND AUDIO CAPTURING WITH getUserMedia()
      */
@@ -210,7 +209,8 @@ define(['jquery'], function ($) {
     return {
         setSocket: function (_socket) {
             socket = _socket;
-        }
+        },
         // add more if needed
+        vibrate: vibrate
     }
 });

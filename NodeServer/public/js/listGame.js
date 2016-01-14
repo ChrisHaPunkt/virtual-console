@@ -34,48 +34,65 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             case "userConnection":
                 gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
 
-                if(message === 'connected') {
+                if (message === 'connected') {
                     initUserContainer(clientName);
-                }else if (message === 'disconnected'){
+                } else if (message === 'disconnected') {
                     breakUserContainer(clientName);
                 }
                 break;
             case "button":
-                addLine(clientName,'BUTTON | ' + message.buttonName + ' | ' + message.buttonState);
+                addLine(clientName, 'BUTTON | ' + message.buttonName + ' | ' + message.buttonState);
                 break;
             case "accelerationData":
 
                 break;
             case "orientationData":
-                addLine(clientName,'ORIENTATION | ' + message.orientationAlpha + ' | ' + message.orientationBeta + ' | ' + message.orientationGamma);
+                addLine(clientName, 'ORIENTATION | ' + message.orientationAlpha + ' | ' + message.orientationBeta + ' | ' + message.orientationGamma);
                 break;
             default:
                 break;
         }
     };
 
-    var initUserContainer = function(name){
-        domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
+    var initUserContainer = function (name) {
+        //  domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
+
+        var genColor = "#44c767";
+
+        var newDivContainer = $("<div>", {
+            id: name,
+            class: "user-container"
+        }).click(function () {
+            console.log("Send to User");
+            gameApi.sendToUser($(this).attr('id'), 'vibrate');
+        }).append('<div class="user-name"><button style="background-color: ' + genColor + ';" class="myButton">' + name + '</button></div><div class="user-messages"><ul class="messages"></ul></div>');
+        domContainer.append(
+            newDivContainer
+        );
         addLine(name, 'Hello ' + name);
-        gameApi.sendToUser(name, 'Hello ' + name);
+
     };
-    var breakUserContainer = function(name){
-        $('#'+name).remove();
+    $(".user-container").on('click', function () {
+        console.log("Send to User");
+        gameApi.sendToUser($(this).attr('id'), 'vibrate');
+    });
+    var breakUserContainer = function (name) {
+        $('#' + name).remove();
     };
 
-    var addLine = function(username, line){
+    var addLine = function (username, line) {
 
-        var div = $('#'+username);
+        var div = $('#' + username);
         var list = div.find('.messages');
         var listElements = list.find('li');
 
         // remove top element if max messages reached
-        if(listElements.length > 10){
-            listElements[0].remove();
+        if (listElements.length > 10) {
+            listElements[10].remove();
         }
 
         // add new line
-        list.append('<li>> ' + line + '</li>');
+        list.prepend('<li>> ' + line + '</li>');
 
     };
 
@@ -88,8 +105,12 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
      * EXPORTs
      * */
     return {
-        start:function(){run = true;},
-        stop:function(){run = false;}
+        start: function () {
+            run = true;
+        },
+        stop: function () {
+            run = false;
+        }
     };
 
 });
