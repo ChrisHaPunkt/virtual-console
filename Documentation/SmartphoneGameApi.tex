@@ -188,122 +188,21 @@ Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt e
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
 
+\subsection{API Beschreibung}
+Hier wird die API Beschrieben!
 
+\section{ToDo}
 
+\paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
-
-
-
-\section{Results}\label{result}
-\subsection{Measurements}
-
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Structure}\mbox{}\\
-Im Masterlabor wurde die ersten Probemessung durchgeführt, um zu testen, ob eine Positionsbestimmung durch Vergleichen der Dämpfungswerte überhaupt möglich ist. Dazu wurden zwei Drohnen an verschiedenen Enden des Raumes platziert. Bei der Messung wurde eine App benutzt die sekündlich einen Broadcast nach Access Point durchführt. Dadurch wird traffic generiert, der nötig ist, damit die Drohnen genug Pakete abfangen.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-\centering
-		\includegraphics[height=5cm]{./images/FrontendInit.png}
-		\caption{Probemessung}
-		\label{fig:probeMessung}
-\end{minipage}
-\end{figure}
-
-\paragraph{Ablauf der Messung}\mbox{}\\
-Anschließend wurde die in Abbildung \ref{fig:probeMessung} zur erkennende Strecke mit einem Smartphone abgelaufen. Beim Abgehen der Strecke wurde nach circa jedem Meter eine kurze Zeit verweilt, damit ein aussagekräftigeres Ergebnis erzielt werden konnte.
-
-\paragraph{Results}\mbox{}\\
-Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät entfernt und welcher es sich nähert.\\
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\includegraphics[height=5cm]{./images/FrontendInit.png}
-\caption{Berechnungen zum Ergebnis}
-\label{fig:tablleMessung}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=\textwidth]{./images/FrontendInit.png}
-		\caption{Ergebnis der Probemessung}
-		\label{fig:test1}
-\end{minipage}
-\end{figure}
-
-\subsection{Limitations}
-\subsubsection{1. Test}
-
-\paragraph{Ergebnis}\mbox{}\\
-Selbst auf kurzer Distanz ist eine Differenz von ca. 10 dBm zwischen den Messpunkten zu sehen. Dies ermöglicht eine Ortsbestimmung auf kurzer Distanz, was beim nächsten Test ebenfalls zu sehen ist.
-
-\begin{table}[H]
-\centering
-	\begin{tabular}{ | p{2.5cm} | l | l | l | }
-		\hline 
-		Entfernung	& 50 cm	& 100 cm	& 200 cm	\\ \hline
-		Durchschnittliche Dämpfung & -62,22 dBm	& -75,45 dBm	& -82,52 dBm \\
-		\hline
-	\end{tabular}
-	\caption{Ergebnisse des 1. Tests im störungsfreien Raum}
-	\label{tab:probeTab}
-\end{table}
-
-\subsubsection{2. Test}\label{testNr2}
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Aufbau}\mbox{}\\
-Um zu ermitteln, wie genau der Vergleich von Dämpfungswerten für die Positionsermittlung benutzt werden kann, wurden zwei Kismet-Drohnen in 12 Meter Abstand voneinander aufgestellt. Diese waren über einen Switch mit dem Kismet-Server verbunden. Alle 120 cm wurde ein Messpunkt festgelegt. Dies entsprach der Größe einer Bodenplatte im störungsfreien Raum und wurde deshalb als Distanz gewählt.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=\textwidth]{./images/FrontendInit.png}
-		\caption{Aufbau 2. Test Störungsfreier Raum}
-		\label{fig:test2}
-\end{minipage}
-\end{figure}
-
-\paragraph{Ablauf der Messung}\mbox{}\\
-Ein Smartphone wurde auf den entsprechenden Messpunkt gelegt. WiFi war auf dem Gerät eingeschaltet und die App zur Traffic-Generierung war aktiv. Es wurden pro Messpunkt circa 100 Messwerte aufgenommen, damit eine aussagekräftiges Ergebnis erzielt werden konnte und kurzzeitige Störungen abgefangen werden konnten.
-
-\paragraph{Ergebnis}\mbox{}\\
-Wie schon bei der ersten Probemessung ist eine deutliche Tendenz zu erkennen. Bei der Drohne, von der sich das Smartphone entfernte, nahm die Dämpfung zu. Bei der anderen Drohne nahm sie ab. Die aufgenommen Dämpfungswerte sind bei circa 480 cm gleich groß (siehe Diagramm \ref{fig:480} im Anhang). Dies ist 120 cm von der eigentlichen Mitte entfernt. Somit besteht eine Messungenauigkeit von 120 cm.
-
-\subsection{Realistische Messung}
-\paragraph{Aufbau}\mbox{}\\
-Der Aufbau der Messung war der gleiche wie in der 2. Messung im störungsfreien Raum (siehe \ref{testNr2}). Dieses mal fand die Messung allerdings in einem einfachen Flur der FH-Kiel statt und war somit nicht vor Störungen geschützt.
-
-\paragraph{Ablauf der Messung}\mbox{}\\
-Ein Smartphone wurde an den einzelnen Messpunkten platziert. Das WiFi war auf dem Gerät aktiviert. Allerdings war das Gerät mit keinem WiFi-Netzwerk verbunden um die realen Umstände in einer Discothek nachempfinden zu können. Da von Anfang an festgestellt wurde, dass deutlich weniger Pakete abgefangen wurden, wurde die Dauer der Messung an jedem Messpunkt auf 2 Minuten festgesetzt.
-
-\paragraph{Ergebnis}\mbox{}\\
-Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden. 
-
+\paragraph{Begrenzung der gesendeten Pakete}
 
 \section{Conclusion}
-Eine passive Ortung von WiFi-Geräten anhand der Signalstärke ist möglich. Eine Installation einer zusätzlichen Anwendung auf den zu ortenden Geräten ist nicht notwendig. Es ist zu beachten, dass durch die starken Schwankungen in der Signalstärke nur eine  Positionsbestimmung auf 1,2 Meter möglich ist (siehe Diagramm \ref{fig:480} im Anhang).
-\\
-Ein weiteres Forschungsfeld ist die zeitliche Genauigkeit der bestimmten Position. Da nur unregelmäßig und nicht vorhersagbar Daten eingehen ist eine Echtzeitortung nicht trivial und bedarf weiterer Untersuchung.
-Die in dieser Arbeit vorgestellte Technologie eignet sich für die Raum bezogene Ortung von Geräten. 
-\\
-Rechtliche Rahmenbedingen sind bei der vorgestellten Positionsbestimmung einzuhalten. Es ist zu klären, in wie weit die MAC-Adresse eines Gerätes unter Datenschutzbestimmungen fällt.
-\\
-In einer zukünftigen Weiterentwicklung kann versucht werden die genaue Position des Gerätes über Triangulation zu bestimmen. Es ist möglich aus den erfassten Daten die Position zu berechnen, solange es mindestens drei Messtationen gibt. Einige Schwierigkeiten dabei sind zum Beispiel Objekte im Messbereich, Wände sowie Personen. Diese verändern die Signalstärken und müssen im Algorithmus berücksichtigt werden. Dies führt zu einer weiteren nicht einfach zu lösenden Problemstellung welche die Aufstellung des Algorithmus abdeckt. \linebreak
-\linebreak
-Im Weiteren kann die Positionsbestimmung über eine Fingerprint-Map durchgeführt werden. Hierbei ist ein genaueres Ergebnis zu erwarten als bei der Berechnung mittels der Triangulation. Dies liegt an der leichteren Berücksichtigung von starren Objekten in dem Messgebiet. Der Nachteil liegt in der vorherigen Aufstellung der Karte. Für diese muss das Gebiet vermessen worden sein, um eine Datenbank mit Signalstärken aufzustellen. 
-\linebreak
-Eine weitere Erforschung sollte beide Ansätze in Betracht ziehen und kombinieren, um die genaue Position des Nutzers bestimmen zu können.
+Alles super. Die erste Million ist nah!
 
 
-\newpage
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% References %%%%%
 \bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
@@ -311,47 +210,5 @@ Eine weitere Erforschung sollte beide Ansätze in Betracht ziehen und kombiniere
 
 \newpage
 \appendix
-\section{Outlook} \label{subsection:Einlasskontrolle}
-\subsection{Anforderungsanalyse}
-Die Einlasskontrolle ist in Meteor entwickelt. Eine Anforderungsanlyse mit Diskothekenbesitzern ergab folgende Anforderungen:
-
-\begin{itemize}
-\item Gäste können sich auf eine Gästeliste über eine Micro-Event-Page setzen (bereits existent in einer Java-Anwendung)
-\item Gäste bekommen bei der Anmeldung auf der Gästeliste eine E-Mail mit einem QR-Code zugesendet
-\item Gäste werden in einer Liste für jedes Event angezeigt
-\item In der Liste können Gäste durch anklicken eingechecked werden
-\item Gäste können alternativ über einen QR-Code-Scanner eingechecked werden
-\item Checkins werden in einem Diagramm zusammengefasst
-\end{itemize}
-\subsection{Konzept und Implementierung}
-Als Framework wird Meteor eingesetzt. Über eine API wird bei jeder Anmeldung von einem Gast auf der Gästeliste der Gast an die Meteor-Anwendung übertragen.
-Bei einem Checkin wird der neue Status von der Meteoranwendung an die bestehende Java-Anwendung übertragen.
-\\
-Der an den Gast via E-mail gesendete QR-Code enthält eine per Java generierte einmalige ID (UUID), welche mit der Gast-Anmeldung für ein Event verknüpft ist.
-\\
-Für den Scanvorgang wird das Framework jsqrcode in Meteor eingebunden. Der Eventhandler qrScanner.on('scan') wird jede Sekunde gefeuert. In der Callback-Funktion wird die Variable messages zurückgegeben. Ist diese nicht null, enthält sie den Wert des QR-Codes, welcher zum Checkin verwendet wird.
-
-
-\subsection{Ausblick}
-Die Einlasskontrolle kann wie folgt mit dem Indoor-Tracking verbunden werden, um Personen in einem Raum zu orten:
-\begin{enumerate}
-\item Eine Person wird über einen QR-Code erkannt.
-\item Das stärkste Signal von Smartphone (MAC) wird erkannt.
-\item Die MAC-Addrese wird der Person zugeordnet.
-\item Das Smartphone beziehungsweise die Person wird im Raum erkannt.
-\end{enumerate}
-
-\section{Ergebnisse der Messungen im störungsfreien Raum}\label{testAnhang}
-Hier sind die Messergebnisse des 2. Tests aus dem störungsfreien Raum zu sehen. Es ist zu beobachten, dass sich die Linien der beiden Drohnen annähern und dann wieder auseinander driften. Beim Diagramm \ref{fig:480} sind die Dämpfungswerte etwa gleich groß, was auf einen Messungenauigkeit von 1,2 Metern schließen lässt, da der eigentliche Mittelpunkt bei 600 cm liegt.
-
-\begin{figure}[H]
-	\centering
-	%	\fbox{\includegraphics[width=16cm]{./images/120cm.png}}
-		\caption{Messergebnis beim 120 cm}
-		\label{fig:120}
-\end{figure}
-
-
-
 
 \end{document} 
