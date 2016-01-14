@@ -57,6 +57,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
     var initUserContainer = function(name){
         domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
         addLine(name, 'Hello ' + name);
+        gameApi.sendToUser(name, 'Hello ' + name);
     };
     var breakUserContainer = function(name){
         $('#'+name).remove();
