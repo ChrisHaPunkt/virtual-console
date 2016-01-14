@@ -54,6 +54,40 @@
 \usepackage{xcolor,colortbl}
 \usepackage{color}
 \usepackage{float}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+   language=JavaScript,
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
 
 \title{Smartphonecontroller Javascript-GameAPI}
 
@@ -102,16 +136,16 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \\
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 
-\section{Methods}
+\section{Methodik}
 \subsection{Projektmanagement}
 Die Verteilung der Aufgaben ist in Tabelle \ref{table:distribution of tasks} aufgestellt.
 Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
 \paragraph{GitLab}
-Das Projket wurde auf einem eigenen GitLab gehostet und den Projektmitgliedern zur Verfügung gestellt. Die Issues des Systems wurden genutzt um Aufgaben zu Verteilung und zu dokumentieren.\\
+Das Projekt wurde auf einem eigenen GitLab gehostet und den Projektmitgliedern zur Verfügung gestellt. Die Issues des Systems wurden genutzt um Aufgaben zu Verteilung und zu dokumentieren.\\
 Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt möglichst flexibel zu halten. Der Master-Branch diente als Release-Branch, in den regelmäßig die Änderungen per Merge Request eingetragen und getestet wurden.
 \definecolor{blau}{HTML}{217AA2}
 \begin{table}
-	\label{table:distribution of tasks}
+	\label{table:Aufgabenverteilung}
 	\centering
 		\caption{Matrix distribution of tasks}
 		\begin{tabular}{| L{2.6cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} |}
@@ -180,9 +214,18 @@ Smartphone Controller, Platformunabhängig Node Server
 
 \section{Implementation}
 
+\begin{figure}[h!]
+	\centering
+        \begin{lstlisting}[language=JavaScript,caption=Javascript Example]
+           var a = 24;
+           console.log(a);
+        \end{lstlisting}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
+
 \subsection{User Management}
 Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im "UserManagement" bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
-
 
 \subsection{Database}
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
@@ -195,7 +238,135 @@ Hier wird die API Beschrieben!
 
 \paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
-\paragraph{Begrenzung der gesendeten Pakete}
+
+\subsection{GameAPI}
+Zur Live-Evaluation der vom Kismet Client in die Datenbank geschriebenen Daten, wurde eine Webanwendung mit Hilfe des Webframeworks Meteor\footnote{https://www.meteor.com/} geschrieben. \\
+Die Anwendung wertet die vom Kismet Client bereitgestellten Messdaten reaktiv aus und lässt sich in einem Standard Webbrowser anzeigen.
+Zur Ermittlung der Position eines Gerätes werden die gemessenen Signalstärken für jedes Gerät von den unterschiedlichen Drohnen miteinander verglichen. Dabei wird der gleitende Mittelwert zur dritten Periode pro Drohne berechnet (siehe Abbildung \ref{eqn:middle}), um mögliche Schwankungen in den Messungen zu behandeln. Wobei x\raise0.5ex\hbox{d}(t) für den Messwert zum Zeitpunkt t an Drogne d steht.
+\\Da die Experimente ergeben haben, dass der gemessene dbm-Wert für ein Gerät geringer wird, je weiter man sich von der Quelle entfernt, kann so ermittelt werden, an welcher Drohne sich ein Gerät am nähesten befindet. \\
+Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeichnet die Drohne, und damit auch die Position, an der ein Gerät am nähesten ist. Anschließend kann gezählt werden, an welcher Drohne sich wie viele Geräte befinden. Mit Hilfe dieser Anwendung lässt sich das Ausgangsproblem lösen. Platziert man an jeder Bar in der Einrichtung eine Drohne, kann diese Anwendung erkennen, wie viele Personen sich an den unterschiedlichen Bars befinden und darauf reagieren, indem auf einem Fernseher Ermäßigungen für eine weniger besuchte Bar angeboten werden.
+\begin{figure}
+\begin{equation}
+  \boxed{{ m }_{ MA }^{ d }(t) = \frac { 1 }{ 3 } \sum _{ i=0 }^{ 2 }{ { x }^{ d }(t-i) }}
+\end{equation}
+\caption{Gleitender Mittelwert zur dritten Periode}
+\label{eqn:middle}
+\end{figure}
+
+\subsection{Demonstration}
+\subsubsection{Preparations}
+\begin{enumerate}
+ \item Ein Computer ist als Kismet-Server sowie als Meteor Server konfiguriert.
+ \item Die Raspberry Pis, die als Kismet Drohnen konfiguriert sind, werden an die entsprechenden Positionen platziert, an denen die Anzahl der Geräte gemessen werden soll. Im Anwendungsfall dieses Projekts wird eine Drohne jeweils an einer Bar platziert. 
+ \item Die Drohnen werden per LAN - Kabel an das Netzwerk verbunden, in dem sich auch der Kismet-Server befindet.
+\end{enumerate}
+\subsubsection{Start applications}
+\begin{enumerate}
+ \item Der Kismet-Server wird mit dem Befehl \emph{sudo kismet} über den Terminal gestartet.
+ \item Die Meteor Anwendung wird mit dem Befehl \emph{meteor} über den Terminal gestartet. Die Mongo Datenbank wird dabei automatisch mit gestartet.
+ \item Der Kismet Client wird mit Hilfe des Java Archives gestartet. Als Parameter können beim Start über den Terminal die IP - Adressen und Ports des Kismet-Servers und der Mongo Datenbank übergeben werden, sollten diese von den Standardkonfigurationen abweichen.
+\end{enumerate}
+\subsubsection{Running}
+\begin{enumerate}
+ \item Der Kismet-Server gibt im Terminal Statusnachrichten zu den Drohnen und gefundenen Netzwerken aus.
+ \item Die Meteor Anwendung kann über einen Browser aufgerufen werden. \emph{[IPDesMeteorServers]:3000}
+ \item Die Mongo Datenbank kann über den Befehl \emph{meteor mongo} im Terminal aufgerufen werden.
+ \item Der Kismet Client gibt im Terminal Statusnachrichten zu den Informationen, die gespeichert werden aus.
+\end{enumerate}
+
+\section{Results}\label{result}
+\subsection{Lasttestmessung}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Struktur}\mbox{}\\
+Der Versuchsaufbau wurde in direkter Nähe des WLAN Hotspots erstellt, um eine möglichst ideale Signalstärke zu erreichen. Der Versuchsaufbau besteht
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\centering
+		\includegraphics[height=5cm]{./images/LasttestDiagramm.png}
+		\caption{Probemessung}
+		\label{fig:probeMessung}
+\end{minipage}
+\end{figure}
+
+\paragraph{Ablauf der Messung}\mbox{}\\
+Anschließend wurde die in Abbildung \ref{fig:probeMessung} zur erkennende Strecke mit einem Smartphone abgelaufen. Beim Abgehen der Strecke wurde nach circa jedem Meter eine kurze Zeit verweilt, damit ein aussagekräftigeres Ergebnis erzielt werden konnte.
+
+\paragraph{Results}\mbox{}\\
+Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät entfernt und welcher es sich nähert.\\
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\includegraphics[height=5cm]{./images/FrontendInit.png}
+\caption{Berechnungen zum Ergebnis}
+\label{fig:tablleMessung}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=\textwidth]{./images/FrontendInit.png}
+		\caption{Ergebnis der Probemessung}
+		\label{fig:test1}
+\end{minipage}
+\end{figure}
+
+\subsection{Limitations}
+\subsubsection{1. Test}
+
+\paragraph{Ergebnis}\mbox{}\\
+Selbst auf kurzer Distanz ist eine Differenz von ca. 10 dBm zwischen den Messpunkten zu sehen. Dies ermöglicht eine Ortsbestimmung auf kurzer Distanz, was beim nächsten Test ebenfalls zu sehen ist.
+
+\begin{table}[H]
+\centering
+	\begin{tabular}{ | p{2.5cm} | l | l | l | }
+		\hline 
+		Entfernung	& 50 cm	& 100 cm	& 200 cm	\\ \hline
+		Durchschnittliche Dämpfung & -62,22 dBm	& -75,45 dBm	& -82,52 dBm \\
+		\hline
+	\end{tabular}
+	\caption{Ergebnisse des 1. Tests im störungsfreien Raum}
+	\label{tab:probeTab}
+\end{table}
+
+\subsubsection{2. Test}\label{testNr2}
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Aufbau}\mbox{}\\
+Um zu ermitteln, wie genau der Vergleich von Dämpfungswerten für die Positionsermittlung benutzt werden kann, wurden zwei Kismet-Drohnen in 12 Meter Abstand voneinander aufgestellt. Diese waren über einen Switch mit dem Kismet-Server verbunden. Alle 120 cm wurde ein Messpunkt festgelegt. Dies entsprach der Größe einer Bodenplatte im störungsfreien Raum und wurde deshalb als Distanz gewählt.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=\textwidth]{./images/FrontendInit.png}
+		\caption{Aufbau 2. Test Störungsfreier Raum}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
+
+\paragraph{Ablauf der Messung}\mbox{}\\
+Ein Smartphone wurde auf den entsprechenden Messpunkt gelegt. WiFi war auf dem Gerät eingeschaltet und die App zur Traffic-Generierung war aktiv. Es wurden pro Messpunkt circa 100 Messwerte aufgenommen, damit eine aussagekräftiges Ergebnis erzielt werden konnte und kurzzeitige Störungen abgefangen werden konnten.
+
+\paragraph{Ergebnis}\mbox{}\\
+Wie schon bei der ersten Probemessung ist eine deutliche Tendenz zu erkennen. Bei der Drohne, von der sich das Smartphone entfernte, nahm die Dämpfung zu. Bei der anderen Drohne nahm sie ab. Die aufgenommen Dämpfungswerte sind bei circa 480 cm gleich groß (siehe Diagramm \ref{fig:480} im Anhang). Dies ist 120 cm von der eigentlichen Mitte entfernt. Somit besteht eine Messungenauigkeit von 120 cm.
+
+\subsection{Realistische Messung}
+\paragraph{Aufbau}\mbox{}\\
+Der Aufbau der Messung war der gleiche wie in der 2. Messung im störungsfreien Raum (siehe \ref{testNr2}). Dieses mal fand die Messung allerdings in einem einfachen Flur der FH-Kiel statt und war somit nicht vor Störungen geschützt.
+
+\paragraph{Ablauf der Messung}\mbox{}\\
+Ein Smartphone wurde an den einzelnen Messpunkten platziert. Das WiFi war auf dem Gerät aktiviert. Allerdings war das Gerät mit keinem WiFi-Netzwerk verbunden um die realen Umstände in einer Discothek nachempfinden zu können. Da von Anfang an festgestellt wurde, dass deutlich weniger Pakete abgefangen wurden, wurde die Dauer der Messung an jedem Messpunkt auf 2 Minuten festgesetzt.
+
+\paragraph{Ergebnis}\mbox{}\\
+Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden. 
+
 
 
 
