@@ -147,7 +147,7 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 \begin{table}
 	\label{table:Aufgabenverteilung}
 	\centering
-		\caption{Matrix distribution of tasks}
+		\caption{Matrix der Aufgabenverteilung}
 		\begin{tabular}{| L{2.6cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} |}
 		\hline
 		\rowcolor{blau}
@@ -212,7 +212,7 @@ Smartphone Controller, Platformunabhängig Node Server
 % -----------------Implementation-------------------------
 %
 
-\section{Implementation}
+\section{Implementierung}
 
 \begin{figure}[h!]
 	\centering
@@ -227,24 +227,11 @@ Smartphone Controller, Platformunabhängig Node Server
 \subsection{User Management}
 Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im "UserManagement" bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
 
-\subsection{Database}
+\subsection{Datenbank}
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
-
-\subsection{API Beschreibung}
-Hier wird die API Beschrieben!
-
-\section{Ausblick}
-
-\paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
-
-
-\subsection{GameAPI}
-Zur Live-Evaluation der vom Kismet Client in die Datenbank geschriebenen Daten, wurde eine Webanwendung mit Hilfe des Webframeworks Meteor\footnote{https://www.meteor.com/} geschrieben. \\
-Die Anwendung wertet die vom Kismet Client bereitgestellten Messdaten reaktiv aus und lässt sich in einem Standard Webbrowser anzeigen.
-Zur Ermittlung der Position eines Gerätes werden die gemessenen Signalstärken für jedes Gerät von den unterschiedlichen Drohnen miteinander verglichen. Dabei wird der gleitende Mittelwert zur dritten Periode pro Drohne berechnet (siehe Abbildung \ref{eqn:middle}), um mögliche Schwankungen in den Messungen zu behandeln. Wobei x\raise0.5ex\hbox{d}(t) für den Messwert zum Zeitpunkt t an Drogne d steht.
-\\Da die Experimente ergeben haben, dass der gemessene dbm-Wert für ein Gerät geringer wird, je weiter man sich von der Quelle entfernt, kann so ermittelt werden, an welcher Drohne sich ein Gerät am nähesten befindet. \\
-Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeichnet die Drohne, und damit auch die Position, an der ein Gerät am nähesten ist. Anschließend kann gezählt werden, an welcher Drohne sich wie viele Geräte befinden. Mit Hilfe dieser Anwendung lässt sich das Ausgangsproblem lösen. Platziert man an jeder Bar in der Einrichtung eine Drohne, kann diese Anwendung erkennen, wie viele Personen sich an den unterschiedlichen Bars befinden und darauf reagieren, indem auf einem Fernseher Ermäßigungen für eine weniger besuchte Bar angeboten werden.
+\subsection{Beschreibung der GameAPI}
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 \begin{figure}
 \begin{equation}
   \boxed{{ m }_{ MA }^{ d }(t) = \frac { 1 }{ 3 } \sum _{ i=0 }^{ 2 }{ { x }^{ d }(t-i) }}
@@ -257,7 +244,7 @@ Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeic
 \subsubsection{Preparations}
 \begin{enumerate}
  \item Ein Computer ist als Kismet-Server sowie als Meteor Server konfiguriert.
- \item Die Raspberry Pis, die als Kismet Drohnen konfiguriert sind, werden an die entsprechenden Positionen platziert, an denen die Anzahl der Geräte gemessen werden soll. Im Anwendungsfall dieses Projekts wird eine Drohne jeweils an einer Bar platziert. 
+ \item Die Raspberry Pis, die als Kismet Drohnen konfiguriert sind, werden an die entsprechenden Positionen platziert, an denen die Anzahl der Geräte gemessen werden soll. Im Anwendungsfall dieses Projekts wird eine Drohne jeweils an einer Bar platziert.
  \item Die Drohnen werden per LAN - Kabel an das Netzwerk verbunden, in dem sich auch der Kismet-Server befindet.
 \end{enumerate}
 \subsubsection{Start applications}
@@ -274,30 +261,28 @@ Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeic
  \item Der Kismet Client gibt im Terminal Statusnachrichten zu den Informationen, die gespeichert werden aus.
 \end{enumerate}
 
-\section{Results}\label{result}
-\subsection{Lasttestmessung}
-
-
+\subsection{Lasttestmessung}\label{Lasttestmessung}
+Zeitstempel Problem
 \begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
-\paragraph{Struktur}\mbox{}\\
+\paragraph{Aufbau}
 Der Versuchsaufbau wurde in direkter Nähe des WLAN Hotspots erstellt, um eine möglichst ideale Signalstärke zu erreichen. Der Versuchsaufbau besteht
-\end{minipage}
 \hfill
-\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-\centering
-		\includegraphics[height=5cm]{./images/LasttestDiagramm.png}
-		\caption{Probemessung}
-		\label{fig:probeMessung}
-\end{minipage}
-\end{figure}
 
+\subsection{Durchführung}\mbox{}\\
 \paragraph{Ablauf der Messung}\mbox{}\\
 Anschließend wurde die in Abbildung \ref{fig:probeMessung} zur erkennende Strecke mit einem Smartphone abgelaufen. Beim Abgehen der Strecke wurde nach circa jedem Meter eine kurze Zeit verweilt, damit ein aussagekräftigeres Ergebnis erzielt werden konnte.
 
-\paragraph{Results}\mbox{}\\
+\paragraph{Ergebisse}\mbox{}\\
+
+\centering
+		\includegraphics[width=15cm]{./images/LasttestDiagramm.png}
+		\caption{Probemessung}
+		\label{fig:probeMessung}
+\end{figure}
+
+
 Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät entfernt und welcher es sich nähert.\\
 
 \begin{figure}[H]
@@ -370,6 +355,10 @@ Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht
 
 
 
+
+\section{Ausblick}
+
+\paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
 \paragraph{Disable touch zoom auf dem Client Gerät}
 
