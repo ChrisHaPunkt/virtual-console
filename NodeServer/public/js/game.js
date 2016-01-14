@@ -9,6 +9,7 @@ define([
      //preamble
      var game;
      var cars = [];
+     var carsToUser = {};
      var carColors = [0xff0000, 0x0000ff, 0x00ff00, 0xffff00];
      var carTurnSpeed = 250;
 
@@ -45,20 +46,6 @@ define([
                carGroup = game.add.group();
                obstacleGroup = game.add.group();
                targetGroup = game.add.group();
-               for(var i = 0; i < 3; i++){
-                    cars[i] = game.add.sprite(0, game.height - 80, "car");
-                    cars[i].number = i;
-                    cars[i].positions = [(640/8 - 40)*(i*4+1), (640/8 - 40)*(i*4+1)+80];
-                    cars[i].anchor.set(0.5);
-                    cars[i].tint = carColors[i];
-                    cars[i].canMove = true;
-                    cars[i].side = 0;
-                    cars[i].x = cars[i].positions[0];
-                    game.physics.enable(cars[i], Phaser.Physics.ARCADE);
-                    cars[i].body.allowRotation = false;
-                    cars[i].body.moves = false;
-                    carGroup.add(cars[i]);
-               }
 
                //ADD OBSTACLES
           },
@@ -117,13 +104,14 @@ define([
                     gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
 
                     if (message === 'connected') {
-                         initUserContainer(clientName);
+                        addCarIfPossible(clientName);
                     } else if (message === 'disconnected') {
-                         breakUserContainer(clientName);
+                        removeCar(clientName);
                     }
                     break;
                case "button":
-                    moveCar(1);
+                    moveCar(carsToUser[clientName]);
+                   console.log(clientName);
                     break;
                case "accelerationData":
 
@@ -136,27 +124,47 @@ define([
           }
      };
 
-     var initUserContainer = function (name) {
-          //  domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
+     var addCarIfPossible = function (clientName) {
+         if(!cars[0]){
+             newCar(0);
+             carsToUser[clientName] = 0;
 
-          var genColor = "#44c767";
-
-          var newDivContainer = $("<div>", {
-               id: name,
-               class: "user-container"
-          }).click(function () {
-               console.log("Send to User");
-               gameApi.sendToUser($(this).attr('id'), 'vibrate');
-          }).append('<div class="user-name"><button style="background-color: ' + genColor + ';" class="myButton">' + name + '</button></div><div class="user-messages"><ul class="messages"></ul></div>');
-          domContainer.append(
-              newDivContainer
-          );
-          addLine(name, 'Hello ' + name);
+         }
+         else if(!cars[1]){
+             newCar(1);
+             carsToUser[clientName] = 1;
+         }
+         else if(!cars[2]){
+             newCar(2);
+             carsToUser[clientName] = 2;
+         }
+         else if(!cars[3]){
+             newCar(3);
+             carsToUser[clientName] = 3;
+         }
+         else {
+             //TODO: send message to User that game is full
+         }
 
      };
 
-     var breakUserContainer = function (name) {
-
+     var newCar = function (i) {
+        cars[i] = game.add.sprite(0, game.height - 80, "car");
+        cars[i].number = i;
+        cars[i].positions = [(640/8 - 40)*(i*4+1), (640/8 - 40)*(i*4+1)+80];
+        cars[i].anchor.set(0.5);
+        cars[i].tint = carColors[i];
+        cars[i].canMove = true;
+        cars[i].side = 0;
+        cars[i].x = cars[i].positions[0];
+        game.physics.enable(cars[i], Phaser.Physics.ARCADE);
+        cars[i].body.allowRotation = false;
+        cars[i].body.moves = false;
+        carGroup.add(cars[i]);
+    };
+     var removeCar = function (clientName) {
+         cars[carsToUser[clientName]].destroy();
+         cars[carsToUser[clientName]] = null;
      };
 
 
