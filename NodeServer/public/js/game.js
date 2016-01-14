@@ -1,7 +1,9 @@
+define(['jquery', 'gameApi', 'phaser'], function ($, gameApi, phaser) {
+
 var game;
 
 var cars = [];
-var carColors = [0xff0000, 0x0000ff, 0x00ff00, 0xffff00];
+var carColors = [0xff0000, 0x0000ff, 0x000000];
 var carTurnSpeed = 250;
 
 var carGroup;
@@ -11,7 +13,53 @@ var targetGroup;
 var obstacleSpeed = 150;
 var obstacleDelay = 1400;
 
-window.onload = function() {
+     gameApi.logLevel = gameApi.log.INFO;
+     gameApi.controller = gameApi.controllerTemplates.MODERN;
+
+     /**
+      * HANDSHAKE
+      * */
+     gameApi.frontendConnection = function (connInfoObj) {
+          gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
+          this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+     };
+
+     /**
+      * INCOMING DATA HANDLING
+      * */
+     gameApi.frontendInboundMessage = function (data) {
+
+          var clientName = data.data.clientName;
+          var message = data.data.message;
+
+          //console.log(data);
+
+          switch (data.type) {
+               case "userConnection":
+                    gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
+
+                    if (message === 'connected') {
+                         //erstelle auto
+                    } else if (message === 'disconnected') {
+                        //lösche auto
+                    }
+                    break;
+               case "button":
+                    //bewege auto
+                  console.log('button')
+               case "accelerationData":
+                    //nichts
+                    break;
+               case "orientationData":
+                    //nichts
+                    break;
+               default:
+                    break;
+          }
+     };
+
+
+     window.onload = function() {
 	game = new Phaser.Game(640, 480, Phaser.AUTO, "");
      game.state.add("PlayGame",playGame);
      game.state.start("PlayGame");
@@ -61,6 +109,8 @@ playGame.prototype = {
                     }
                }
           });
+
+
 	},
      update: function(){
           game.physics.arcade.collide(carGroup, obstacleGroup, function(){
@@ -129,3 +179,7 @@ Target.prototype.update = function() {
 		game.state.start("PlayGame");
 	}
 };
+return {
+
+};
+});

@@ -264,5 +264,4 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
         return GameHandler;
 
     }
-)
-;
+);

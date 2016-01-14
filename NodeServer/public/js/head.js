@@ -14,7 +14,8 @@ define("jquery", [], function () {
 requirejs.config({
     paths: {
         "three": "libs/three",
-        "Chart": "libs/Chart.min"
+        "Chart": "libs/Chart.min",
+        "phaser": "libs/phaser"
     },
     shim: {
         three: {
@@ -26,7 +27,7 @@ var GameHandler = null, gameApi = null, frontChart = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
+require(["listGame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
     $('#monitorBtn').click(function () {
