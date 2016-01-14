@@ -56,3 +56,14 @@ body{
     position:relative;
     top:1px;
 }
+#qrcode {
+
+    background-color: white;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+    border: 1em solid white;
+}

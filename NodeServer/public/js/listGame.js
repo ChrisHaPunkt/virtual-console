@@ -1,7 +1,7 @@
 /**
  * Created by hannes on 12.01.2016.
  */
-define(['jquery', 'gameApi'], function ($, gameApi) {
+define(['jquery', 'gameApi', 'libs/qrcode.min'], function ($, gameApi, qrcode) {
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.MODERN;
 
@@ -99,7 +99,26 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
     /**
      * GAME INIT
      * */
-    var gameInstance = gameApi.init();
+    var gameSocketInstance = gameApi.init();
+
+    //generate QRCode
+
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: ""+gameSocketInstance.io.uri,
+        width: 128,
+        height: 128
+    });
+    //click listener for hiding qrcode
+    var qrcode_hidden = false;
+    $("#qrcode").on('click', function () {
+        if(qrcode_hidden) {
+            $(this).css('opacity', 1);
+            qrcode_hidden = false;
+        }else{
+            $(this).css('opacity', 0);
+            qrcode_hidden = true;
+        }
+    });
 
     /**
      * EXPORTs
