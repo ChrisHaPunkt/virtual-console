@@ -88,17 +88,6 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
 
 
         };
-       /**
-         * Ausgehende Nachrichten an Client
-         * @param connInfoObj
-         */
-        gameApi.frontendConnection = function (message) {
-            gameApi.addLogMessage(gameApi.log.INFO, 'frontendOutboundMessage', message + " " + gameApi.socket.id);
-
-            this.emit('frontendOutboundMessage', {type: 'initVibration', data: message});
-
-
-        };
 
         var gameInstance = gameApi.init();
 
@@ -264,4 +253,5 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
         return GameHandler;
 
     }
-);
+)
+;

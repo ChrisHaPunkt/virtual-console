@@ -28,7 +28,6 @@ define(['/socket.io/socket.io.js'], function (io) {
         frontendConnectionOutbound: null,
         frontendConnection: null,
         frontendInboundMessage: null,
-        frontendOutboundMessage: null,
         controller: null,
         chart: {},
         init: function () {
@@ -59,14 +58,6 @@ define(['/socket.io/socket.io.js'], function (io) {
              */
             if (this.frontendConnection !== null)
                 this.socket.on('frontendConnection', this.frontendConnection);
-            else
-                return -1;
-
-            /**
-             * Local (Game-)Initialisation
-             */
-            if (this.frontendOutboundMessage !== null)
-                this.socket.emit('frontendOutboundMessage', this.frontendOutboundMessage);
             else
                 return -1;
 

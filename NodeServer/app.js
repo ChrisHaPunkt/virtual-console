@@ -10,7 +10,6 @@ var util = require('util');
 
 var routes = require('./routes/index');
 var frontendRoute = require('./routes/frontendRoute');
-var carsRoute = require('./routes/carsRoute');
 var app = module.exports.app = express();
 
 // view engine setup
@@ -27,7 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/game', frontendRoute);
-app.use('/cars', carsRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
