@@ -41,10 +41,11 @@ server.on('listening', onListening);
 sessionHandling.init(server, {
     onNewUser: function(name){
         //util.log('www | new user ' + name);
-        sessionHandling.sendToFrontend(name,'newUserConnection','new connected');
+        sessionHandling.sendToFrontend(name,'userConnection','connected');
     },
     onUserDisconnects: function(name){
         //util.log('www | user disconnected ' + name);
+        sessionHandling.sendToFrontend(name,'userConnection','disconnected');
     },
     onMessage: function(name,type,message){
         //util.log('www | user ' + name + ' says: ' + message);
@@ -56,10 +57,14 @@ sessionHandling.init(server, {
     },
 
     onFrontendOutboundMessage: function (type, data) {
-        //util.log("onFrontendOutboundMessage", type, data);
+        util.log("onFrontendOutboundMessage", type, data);
         if(type == 'setControllerTemplate') {
             app.set('chosenControllerTemplate',  data);
             //util.log("Set new Gamecontroller Template -> " + data);
+        }else if(type == 'messageToClient'){
+            sessionHandling.sendToUser(data.username, data.data);
+        }else if(type == 'messageToAllClients'){
+            sessionHandling.broadcastMessage(data.data);
         }
     }
 }).start();
