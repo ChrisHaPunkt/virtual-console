@@ -6,8 +6,8 @@ define(['jquery'], function($){
 
     var socket;
 
-    $('.myButton').mousedown(buttonwaspressed);
-    $('.myButton').mouseup(buttonwasreleased);
+    $('.myButton').click(buttonwaspressed);
+
 
     function buttonwaspressed(button) {
         socket.sendData('button', {buttonName: $(this).attr('id'), buttonState: 8,
