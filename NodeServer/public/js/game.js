@@ -1,6 +1,6 @@
 define([
-     'phaser'
-], function (Phaser) {
+     'phaser', 'gameApi'
+], function (Phaser, gameApi) {
      'use strict';
 
      function Game() {
@@ -45,7 +45,7 @@ define([
                carGroup = game.add.group();
                obstacleGroup = game.add.group();
                targetGroup = game.add.group();
-               for(var i = 0; i < 4; i++){
+               for(var i = 0; i < 3; i++){
                     cars[i] = game.add.sprite(0, game.height - 80, "car");
                     cars[i].number = i;
                     cars[i].positions = [(640/8 - 40)*(i*4+1), (640/8 - 40)*(i*4+1)+80];
@@ -59,7 +59,7 @@ define([
                     cars[i].body.moves = false;
                     carGroup.add(cars[i]);
                }
-               game.input.onDown.add(moveCar);
+
                //ADD OBSTACLES
           },
           update: function(){
@@ -71,8 +71,8 @@ define([
                });
           }
      };
-     function moveCar(e){
-          var carToMove = Math.floor(e.position.x / (game.width / 4));
+     function moveCar(carToMove){
+
           if(cars[carToMove].canMove){
                cars[carToMove].canMove = false;
                var steerTween = game.add.tween(cars[carToMove]).to({
@@ -94,6 +94,77 @@ define([
      }
 
 
+     /**
+      * HANDSHAKE
+      * */
+     gameApi.frontendConnection = function (connInfoObj) {
+          gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
+          this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+     };
+
+     /**
+      * INCOMING DATA HANDLING
+      * */
+     gameApi.frontendInboundMessage = function (data) {
+
+          var clientName = data.data.clientName;
+          var message = data.data.message;
+
+          //console.log(data);
+
+          switch (data.type) {
+               case "userConnection":
+                    gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
+
+                    if (message === 'connected') {
+                         initUserContainer(clientName);
+                    } else if (message === 'disconnected') {
+                         breakUserContainer(clientName);
+                    }
+                    break;
+               case "button":
+                    moveCar(1);
+                    break;
+               case "accelerationData":
+
+                    break;
+               case "orientationData":
+                    addLine(clientName, 'ORIENTATION | ' + message.orientationAlpha + ' | ' + message.orientationBeta + ' | ' + message.orientationGamma);
+                    break;
+               default:
+                    break;
+          }
+     };
+
+     var initUserContainer = function (name) {
+          //  domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
+
+          var genColor = "#44c767";
+
+          var newDivContainer = $("<div>", {
+               id: name,
+               class: "user-container"
+          }).click(function () {
+               console.log("Send to User");
+               gameApi.sendToUser($(this).attr('id'), 'vibrate');
+          }).append('<div class="user-name"><button style="background-color: ' + genColor + ';" class="myButton">' + name + '</button></div><div class="user-messages"><ul class="messages"></ul></div>');
+          domContainer.append(
+              newDivContainer
+          );
+          addLine(name, 'Hello ' + name);
+
+     };
+
+     var breakUserContainer = function (name) {
+
+     };
+
+
+
+     /**
+      * GAME INIT
+      * */
+     var gameSocketInstance = gameApi.init();
 
      return Game;
 });
