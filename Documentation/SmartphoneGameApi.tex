@@ -248,18 +248,10 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
  \item Die Drohnen werden per LAN - Kabel an das Netzwerk verbunden, in dem sich auch der Kismet-Server befindet.
 \end{enumerate}
 \subsubsection{Start applications}
-\begin{enumerate}
- \item Der Kismet-Server wird mit dem Befehl \emph{sudo kismet} über den Terminal gestartet.
- \item Die Meteor Anwendung wird mit dem Befehl \emph{meteor} über den Terminal gestartet. Die Mongo Datenbank wird dabei automatisch mit gestartet.
- \item Der Kismet Client wird mit Hilfe des Java Archives gestartet. Als Parameter können beim Start über den Terminal die IP - Adressen und Ports des Kismet-Servers und der Mongo Datenbank übergeben werden, sollten diese von den Standardkonfigurationen abweichen.
-\end{enumerate}
+
+
 \subsubsection{Running}
-\begin{enumerate}
- \item Der Kismet-Server gibt im Terminal Statusnachrichten zu den Drohnen und gefundenen Netzwerken aus.
- \item Die Meteor Anwendung kann über einen Browser aufgerufen werden. \emph{[IPDesMeteorServers]:3000}
- \item Die Mongo Datenbank kann über den Befehl \emph{meteor mongo} im Terminal aufgerufen werden.
- \item Der Kismet Client gibt im Terminal Statusnachrichten zu den Informationen, die gespeichert werden aus.
-\end{enumerate}
+
 
 \subsection{Lasttestmessung}\label{Lasttestmessung}
 Zeitstempel Problem
@@ -355,12 +347,21 @@ Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht
 
 
 
+\section{Ausblick}
+
+\paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
+
 
 \section{Ausblick}
 
 \paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
 \paragraph{Disable touch zoom auf dem Client Gerät}
+Beim wiederholten Klicken auf die Buttons der Client-Seite auf den Geräten wird unter Umständen in die Webseite gezoomt. Dies muss unterbunden werden um ein ungewolltes Verhalten zu unterbinden.
+
+
+\paragraph{Begrenzung der gesendeten Sensor Daten}
+Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden.
 
 
 
