@@ -89,6 +89,23 @@ define(['/socket.io/socket.io.js'], function (io) {
                 console.log(type + ": " + msg);
                 pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }
+        },
+
+        sendToServer : function(messageType, message){
+            if(this.socket != null){
+                this.socket.emit('frontendOutboundMessage', {type:messageType, data:message});
+            }
+        },
+
+        sendToUser : function(name, message){
+            var msg = {};
+            msg.data = message;
+            msg.username = name;
+            this.sendToServer('messageToClient', msg);
+        },
+
+        broadcastMessage : function(message){
+            this.sendToServer('messageToAllClients',message);
         }
 
     };
