@@ -89,7 +89,7 @@
    captionpos=b
 }
 
-\title{Smartphonecontroller Javascript-GameAPI}
+\title{Mobiledevice controllerAPI} %% TODO: Chris, Hannes, Micha, Dennis, Ron
 
 %>>>> The author is responsible for formatting the 
 %  author list and their institutions.  Use  \skiplinehalf 
@@ -112,15 +112,15 @@ University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
   \begin{document} 
   \maketitle 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\begin{abstract}
+\begin{abstract} %% TODO: Micha
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 \end{abstract}
 
 %>>>> Include a list of keywords after the abstract 
-\keywords{Smartphone, JavaScript, HTML5, Nodejs, API}
+\keywords{Mobile, Smartphone, JavaScript, HTML5, Nodejs, API}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Einleitung}
+\section{Einleitung} %% TODO: Hannes
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
 
 \subsection{Problemstellung}
@@ -136,7 +136,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \\
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 
-\section{Methodik}
+\section{Methodik} %% TODO: Chris
 \subsection{Projektmanagement}
 Die Verteilung der Aufgaben ist in Tabelle \ref{table:distribution of tasks} aufgestellt.
 Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
@@ -168,7 +168,7 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 	\end{tabular} 
 \end{table}
 
-\subsection{Technologies}
+\subsection{Technologies} %% TODO: Dennis
 \subsubsection{NodeJS}
 Was ist NodeJS, Warum genutzt
 \begin{figure}[h!]
@@ -189,8 +189,18 @@ Was kann HTML5, was nutzen wir für HTML 5 Features
 		\label{fig:dockerVM}
 \end{figure}
 
-\subsubsection{Jacascript}
+\subsubsection{Javascript}
 Was kann Javascript, ECMA 6
+\begin{figure}[h!]
+	\centering
+		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
+\subsubsection{JS-Libraries}
+\paragraph{jquery.js}
+\paragraph{require.js}
+\paragraph{socket.io}
 \begin{figure}[h!]
 	\centering
 		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
@@ -224,19 +234,22 @@ Smartphone Controller, Platformunabhängig Node Server
 		\label{fig:dockerVM}
 \end{figure}
 
-\subsection{User Management}
+\subsection{User Management} %% TODO: Dennis
 Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im "UserManagement" bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
 
-\subsection{Datenbank}
+\subsection{Datenbank} %% TODO: Dennis
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
-\subsection{Server und Netzwerk}
+\subsection{Server und Netzwerk} %% TODO: Hannes
 \subsubsection{Routing}
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 \subsubsection{Events}
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
-\subsection{Beschreibung der GameAPI}
+\subsection{Smartphone Frontend}
+\paragraph{Client-JS} %%TODO: Ron
+
+\subsection{Beschreibung der GameAPI} %% TODO Micha
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 \begin{figure}
 \begin{equation}
@@ -246,7 +259,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \label{eqn:middle}
 \end{figure}
 
-\subsection{Demonstration}
+\subsection{Demonstration} %% TODO: Chris
 \subsubsection{Preparations}
 \begin{enumerate}
  \item Ein Computer ist als Kismet-Server sowie als Meteor Server konfiguriert.
@@ -255,11 +268,12 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \end{enumerate}
 \subsubsection{Start applications}
 
-
 \subsubsection{Running}
 
 
-\subsection{Lasttestmessung}\label{Lasttestmessung}
+
+
+\subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
 Zeitstempel Problem
 \begin{figure}[H]
 \vspace{0pt}
@@ -279,7 +293,6 @@ Anschließend wurde die in Abbildung \ref{fig:probeMessung} zur erkennende Strec
 		\caption{Probemessung}
 		\label{fig:probeMessung}
 \end{figure}
-
 
 Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät entfernt und welcher es sich nähert.\\
 
@@ -348,30 +361,26 @@ Der Aufbau der Messung war der gleiche wie in der 2. Messung im störungsfreien 
 Ein Smartphone wurde an den einzelnen Messpunkten platziert. Das WiFi war auf dem Gerät aktiviert. Allerdings war das Gerät mit keinem WiFi-Netzwerk verbunden um die realen Umstände in einer Discothek nachempfinden zu können. Da von Anfang an festgestellt wurde, dass deutlich weniger Pakete abgefangen wurden, wurde die Dauer der Messung an jedem Messpunkt auf 2 Minuten festgesetzt.
 
 \paragraph{Ergebnis}\mbox{}\\
-Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden. 
+Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden.
 
-
-
-
+%%
+%%
+%%
 \section{Ausblick}
 
-\paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
+\paragraph{QRCode} %% TODO: Micha
+    Busstop sinnvoll, gameApi.printQRCode()
+\paragraph{Glättung der Sensor Werte}  %% TODO: Dennis
+Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
-
-\section{Ausblick}
-
-\paragraph{Glättung der Sensor Werte} Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
-
-\paragraph{Disable touch zoom auf dem Client Gerät}
+\paragraph{Disable touch zoom auf dem Client Gerät} %% TODO: Dennis
 Beim wiederholten Klicken auf die Buttons der Client-Seite auf den Geräten wird unter Umständen in die Webseite gezoomt. Dies muss unterbunden werden um ein ungewolltes Verhalten zu unterbinden.
 
-
-\paragraph{Begrenzung der gesendeten Sensor Daten}
+\paragraph{Begrenzung der gesendeten Sensor Daten} %%TODO: Dennis
 Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden.
 
 
-
-\section{Conclusion}
+\section{Conclusion} %% TODO: Chris
 Alles super. Die erste Million ist nah!
 
 
