@@ -28,6 +28,7 @@ a {
 
 body {
     height: 93%;
+    background-attachment: fixed;
     background: #1d2d44; /* Old browsers */
     background: -moz-linear-gradient(top, #35537a 0%, #1d2d44 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #35537a), color-stop(100%, #1d2d44)); /* Chrome,Safari4+ */

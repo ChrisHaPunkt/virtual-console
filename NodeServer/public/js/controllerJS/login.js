@@ -25,10 +25,6 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
-        window.setTimeout(function(){
-
-            window.scrollTo(0,1);
-        }, 2000)
 
     };
 
