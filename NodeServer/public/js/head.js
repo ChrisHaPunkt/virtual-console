@@ -15,7 +15,8 @@ requirejs.config({
     paths: {
         "three": "libs/three",
         "Chart": "libs/Chart.min",
-        "phaser": 'libs/phaser'
+        "phaser": 'libs/phaser',
+        "carsGame": 'games/CarsGame/carsGame'
     },
     shim: {
         three: {
@@ -30,7 +31,7 @@ var GameHandler = null, gameApi = null, frontChart = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["phaser", "game", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
+require(["phaser", "carsGame", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
     $('#monitorBtn').click(function () {
@@ -68,8 +69,8 @@ require(["phaser", "game", "gameApi", "jquery", "Chart"], function (Phaser, game
     if(gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined"){
         $('#monitorBtn').trigger("click");
     }
-    var game = new game();
-    game.start();
+    var game2 = new game();
+    game2.start();
 
 
 

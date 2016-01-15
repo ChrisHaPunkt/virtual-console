@@ -24,18 +24,18 @@ define([
           constructor: Game,
 
           start: function() {
-                    game = new Phaser.Game(640, 480, Phaser.AUTO, '', {
+                    game = new Phaser.Game(640, 480, Phaser.AUTO, 'carsGame', {
                     preload: this.preload,
                     create: this.create
                });
           },
 
           preload: function() {
-               game.load.image('logo', 'js/2cars/car.png');
-               game.load.image("road", "js/2cars/road.png");
-               game.load.image("target", "js/2cars/target.png");
-               game.load.image("car", "js/2cars/car.png");
-               game.load.image("obstacle", "js/2cars/obstacle.png");
+               game.load.image('logo', '/js/games/CarsGame/2cars/car.png');
+               game.load.image("road", "/js/games/CarsGame/2cars/road.png");
+               game.load.image("target", "/js/games/CarsGame/2cars/target.png");
+               game.load.image("car", "/js/games/CarsGame/2cars/car.png");
+               game.load.image("obstacle", "/js/games/CarsGame/2cars/obstacle.png");
           },
 
           create: function() {

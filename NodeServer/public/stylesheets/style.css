@@ -54,8 +54,11 @@ html {
     border-radius: 2em;
     margin-left: 2%;
     margin-right: 2%;
-}
 
+}
+.threeDContainer canvas {
+    margin: auto;
+}
 .content {
     color: grey;
 }
