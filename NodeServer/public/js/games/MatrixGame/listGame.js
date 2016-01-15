@@ -1,7 +1,7 @@
 /**
  * Created by hannes on 12.01.2016.
  */
-define(['jquery', 'gameApi', 'libs/qrcode.min'], function ($, gameApi, qrcode) {
+define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrcode) {
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.MODERN;
 

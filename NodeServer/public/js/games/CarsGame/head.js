@@ -13,10 +13,11 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
-        "three": "libs/three",
-        "Chart": "libs/Chart.min",
-        "phaser": 'libs/phaser',
-        "carsGame": 'games/CarsGame/carsGame'
+        "three": "../../libs/three",
+        "Chart": "../../libs/Chart.min",
+        "phaser": '../../libs/phaser',
+        "carsGame": 'carsGame',
+        "gameApi":'/js/gameApi'
     },
     shim: {
         three: {
