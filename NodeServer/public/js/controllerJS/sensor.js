@@ -109,10 +109,9 @@ define(['jquery'], function ($) {
                 orientationAlpha: orientationAlpha
             };
             //TODO: Orientationdata != Accelrometer ??
-            var checkAcc = $('#chkAcc').prop('checked');
-            if (checkAcc == true) {
+            if ($('#chkRot').prop('checked'))
                 socket.sendData("orientationData", OrientationData);
-            }
+
         }
     }
 

@@ -44,7 +44,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
 
             //vibrate
-            sensor.vibrate(1000);
+            sensor.vibrate(500);
         },
         onAnonymousLogin: function (data) {
             if (data.result) {
