@@ -10,6 +10,7 @@ body{
 	border-style: solid;
 	border-width: 12em 12em 12em 0;
 	border-color: transparent #6dc1d6 transparent transparent;
+	box-shadow: 15px 0px 16px -9px;
 }
 
 #btn-right{
@@ -20,6 +21,7 @@ body{
 	border-style: solid;
 	border-width: 12em 0 12em 12em;
 	border-color: transparent transparent transparent #6dc1d6;
+	box-shadow: -15px 0 16px -9px;
 }
 
 #leftContent{
