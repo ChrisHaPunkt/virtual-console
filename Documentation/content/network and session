@@ -1,0 +1,26 @@
+\section{Network}
+The network connectivity is the foundation of the whole application. All the clients and the server frontend connect to the server via web sockets.
+
+\subsection{socket.io}
+To manage the WebSocket connections the library socket.io by Guillermo Rauch is used. It wraps the WebSocket API specification and provides an easy to use interface to the WebSockets on client and server side. Besides it adds some failover strategies to use other protocols in case WebSocket are not supported by either client or server.
+On the node server the packages 'http' and 'socket.io' are required. First to create a HTTP Server and second to upgrade the connection to a WebSocket and manage the communication. This is done by using message events which can be emitted and listened to much like typical node events. A standalone build of socket.io-client is exposed automatically by the socket.io server as /socket.io/socket.io.js which can than be used directly on the client.
+\url{https://davidwalsh.name/websocket}
+
+\subsection{Server Network handling}
+The application architecture consists of a central node server, one front end for running the custom application and undefined number of clients. Both, the front end and the clients connect to the server via WebSockets as client. Therefore they are using the socket.io.js library provided by the server.
+Every client is managed by the server as known client on the network WebSocket layer. This means a reference to each client's WebSocket is saved to a list of known clients upon its connection and deleted when the client disconnects. Through this it is possible to manage each client connection individually, distinguish incoming messages and contact each single client.
+On this level basic socket events for connection establishment, user management (register, login) and messaging are already implemented. Depending on the type of incoming message different functions of the next layer are called. By this the Socket events are not passed to the next layer to encapsulate the socket logic completely within the network module.
+Within the socket event system every message related to a specific event has been predefined in its structure (ANHANG?!). This allows the definition of a self defined 'type' flag only for message with the event-type 'message' making it easier for further applications to introduce their own message types independent of the socket events.
+Another important aspect is the way the sockets are opened at the client side. As JavaScript does not support real cross-page persistence for variables and objects a once opened WebSocket connection is closed when another link is loaded or the page is reloaded. But as the clients are designed more or less as single page applications this issue doesn't have to become an obstacle.
+In addition the server network module offers several methods for managing and messaging the clients. Most of this methods require the specific Socket ID to identify the individual client.
+\url{http://stackoverflow.com/questions/7709289/how-to-pass-javascript-object-from-one-page-to-other}
+\url{http://tavendo.com/blog/post/websocket-persistent-connections/}
+
+\section{Session}
+The next layer on top of the network is the session handling layer. Here the connection between temporary socket connections and user information is made. This means a client has to log in after the socket connection is established.
+Any incoming login request is passed to the underlying user management module to check the credentials. If the authentication is successful the user is saved to a list of active users and its username is passed to the next layer. Only after this the client is allowed to send further messages to the server. Any other requests will be denied until the user has authenticated.
+Upon disconnect the user session is deleted and a message is passed to the upper layers to inform of the users leaving. All other messages beside those necessary for the user management are passed directly to the upper layers.
+A login necessarily means a prior registration which is also handled by the user management module in the same manner as the login. But to make the authentication not such a big barrier it is also possible to login anonymously without an existing user account. In this case the session handling will assign a random user name to the socket session.
+As already mentioned the socket connections cannot be kept over several page-loads which has an direct influence to the session handling. This means that either the session will also be terminated once the socket is closed or other mechanism like a http session need to be used. Due to the simplicity of the clients the easier approach of sessions bound to the socket connections was chosen.
+
+\subsection{User management}
