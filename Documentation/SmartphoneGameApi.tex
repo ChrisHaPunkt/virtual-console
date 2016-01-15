@@ -54,9 +54,43 @@
 \usepackage{xcolor,colortbl}
 \usepackage{color}
 \usepackage{float}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
 
-\title{Smartphonecontroller Javascript-GameAPI}
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
 
+\lstset{
+   language=JavaScript,
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+
+\title{Mobiledevice controllerAPI} %% TODO: Chris, Hannes, Micha, Dennis, Ron
+%% TODO: Chris Untertitel
 %>>>> The author is responsible for formatting the 
 %  author list and their institutions.  Use  \skiplinehalf 
 %  to separate author list from addresses and between each address.
@@ -64,7 +98,7 @@
 %  can be indicated with a superscript in italics, 
 %  which is easily obtained with \supit{}.
 
-\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (918740), Michael Schleiss (918825), Christian Heinrichs (919020), Dennis Hofmann (919285)
+\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (915449), Michael Schleiss (923739)), Dennis Hofmann (919285), Christian Heinrichs (919020
 \skiplinehalf
 University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
 }
@@ -78,18 +112,18 @@ University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
   \begin{document} 
   \maketitle 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\begin{abstract}
-%%%% Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+\begin{abstract} %% TODO: Micha
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 \end{abstract}
 
 %>>>> Include a list of keywords after the abstract 
-\keywords{Smartphone, JavaScript, HTML5, Nodejs, API}
+\keywords{Mobile, Smartphone, JavaScript, HTML5, Nodejs, API}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
+\section{Einleitung} %% TODO: Hannes
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
 
-\subsection{Problem Statement}
+\subsection{Problemstellung}
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 \begin{figure}[h!]
 	\centering
@@ -102,16 +136,19 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \\
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 
-\section{Methods}
-\subsection{Project Management}
+\section{Methodik} %% TODO: Chris
+\subsection{Projektmanagement}
 Die Verteilung der Aufgaben ist in Tabelle \ref{table:distribution of tasks} aufgestellt.
-Aufgaben sind in Redmine erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität. 
-
+Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
+\paragraph{GitLab}
+Das Projekt wurde auf einem eigenen GitLab gehostet und den Projektmitgliedern zur Verfügung gestellt. Die Issues des Systems wurden genutzt um Aufgaben zu verteilen und zu dokumentieren.
+\\
+Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt möglichst flexibel zu halten. Der Master-Branch diente als Release-Branch, in den regelmäßig die Änderungen per Merge Request eingetragen und getestet wurden.
 \definecolor{blau}{HTML}{217AA2}
 \begin{table}
-	\label{table:distribution of tasks}
+	\label{table:Aufgabenverteilung}
 	\centering
-		\caption{Matrix distribution of tasks}
+		\caption{Matrix der Aufgabenverteilung}
 		\begin{tabular}{| L{2.6cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} |}
 		\hline
 		\rowcolor{blau}
@@ -125,15 +162,16 @@ Aufgaben sind in Redmine erfasst und Personen zugewiesen. Ein wöchentliches per
 		ClientFrontend 	& X	&	& X	&	&	\\\hline
 		ClientBackend 	& X	&	& X	&	&	\\\hline
 		Database 	    & 	&	&	& X	& 	\\\hline
-		Login 		    & 	& 	& 	& X	& 	\\\hline
+		LoginHandling   & 	& 	& 	& X	& 	\\\hline
+		Poster          & 	& 	& 	& 	& 	\\\hline
+		Documentation   & 	& 	& 	& 	& X \\\hline
 		Projektmgmt. 	&	&	&	& 	& X	\\\hline
 	\end{tabular} 
 \end{table}
 
-\subsection{Technologies}
+\subsection{Technologies} %% TODO: Dennis
 \subsubsection{NodeJS}
-Kismet ist eine frei erhältliche Anwendung zum passiven Abfangen von WiFi Paketen. Es fängt Pakete ab und liest deren Header Informationen aus. Dafür schaltet Kismet die WiFi Karte auf \enquote{RF monitoring}. Dadurch kann auch \enquote{management traffic} abgefangen werden, was dazu führt, dass auch versteckte WiFi Netzwerke gefunden werden können \cite{kismetIntro}. Kismet kann mit sogenannten Drohnen betrieben werden. Dies können Klienten mit WiFi Karten sein, die nach Paketen scannen und die gewonnenen Informationen an einen Kismet-Server weiter leiten. So können zum Beispiel in einen Raum mehrere Drohnen verteilt werden, sodass über die gemessene Signalstärke der Pakete ein Rückschluss auf die Position des Ursprungs der Pakete getroffen werden kann. Ein solcher Systemaufbau ist in Abbildung \ref{fig:sysArch} abgebildet.
-
+Was ist NodeJS, Warum genutzt
 \begin{figure}[h!]
 	\centering
 		\fbox{\includegraphics[width=12cm]{./images/FrontendInit.png}}
@@ -144,8 +182,7 @@ Kismet ist eine frei erhältliche Anwendung zum passiven Abfangen von WiFi Paket
 Die Berechnung der Signalstärke wird nicht durch Kismet vorgenommen, sondern geschieht intern in der jeweiligen Netzwerkkarte. Es wird bei den Raspberry Pi ein LOGILINK WL0084B WiFi-USB-Stick verwendet. Die Dämpfung kann bei verschieden Netzwerkkarten stark abweichen. Deshalb ist es erforderlich, dass im Versuchsaufbau nur gleiche Netzwerkkarten verwendet werden.
 
 \subsubsection{HTML 5}
-Docker ist ein Werkzeug, dass Unterstützung beim Deploymentprozess von verschiedener Software bietet. Eine Möglichkeit, Software-Abhänigkeiten zusammenzufassen und einheitlich mit der Software auszuliefern, können weiterhin virtuelle Maschinen (VMs) sein. Diese VMs, die dann die Software und sämtliche Abhänigkeiten enthalten, können dann verteilt und ausgeführt werden. Einen ähnlichen Ansatz bietet die Docker Software. Jedoch ist das Ziel dieser Software nicht, komplette VMs herzustellen, sondern kleinere leichtgewichtige Container.
-
+Was kann HTML5, was nutzen wir für HTML 5 Features
 \begin{figure}[h!]
 	\centering
 		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
@@ -153,63 +190,69 @@ Docker ist ein Werkzeug, dass Unterstützung beim Deploymentprozess von verschie
 		\label{fig:dockerVM}
 \end{figure}
 
-Diese Container basieren auf dem Konzept der Linux-Container (LXC) und teilen sich den Kernel der Host-Maschine. Daher benötigen die Container keine eigenen Betriebssysteme, welche bei paravirtuallisierten VMs mehrere Gigabyte Speicher in Anspruch nehmen können. Des Weiteren können sich Docker Container weitere Bibliotheken teilen, was wiederum Speicher und Rechenzeit einspart. Allerdings ist es nicht unbedingt einfach und eingängig Linux-Container zu konfigurieren und einzurichten. Diesen Teil übernimmt die Docker-Software. Darüber hinaus ist es mit Docker und dem zur Verfügung gestellten Software-Repository (Docker-Hub) schnell möglich, generierte Container als "Images" anderen Nutzern zur Verfügung zu stellen und zu verteilen.
-
+\subsubsection{Javascript}
+Was kann Javascript, ECMA 6
+\begin{figure}[h!]
+	\centering
+		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
+\subsubsection{JS-Libraries}
+\paragraph{jquery.js}
+\paragraph{require.js}
+\paragraph{socket.io}
+\begin{figure}[h!]
+	\centering
+		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
+\subsubsection{MongoDB}
+Was kann MongoDB, Warum MongoDB
+\begin{figure}[h!]
+	\centering
+		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
 \subsubsection{Hardware}
-Als Kismet-Server dient ein übliches Notebook mit dem Betriebssystem Ubuntu. Als Drohnen werden Raspberry Pis (Model B) verwendet. Diese sind mit Wi-Fi USB-Sticks "LOGILINK WL0084B" bestückt. So wird sichergestellt, dass die Berechnung der Dämpfung bei allen Drohnen gleich ist.
-Die Raspberry Pis sind über ihre LAN-Schnittstelle mit einem Switch verbunden, mit dem auch das Notebook verbunden ist. Durch einen DHCP Server auf dem Ubuntu Laptop werden die IPs automatisch verteilt und eine Verbindung kann hergestellt werden.
+Smartphone Controller, Platformunabhängig Node Server
 
-Die Drohnen sind vorkonfiguriert in der Konfigurationsdatei des Kismet-Servers, eine Verbindung wird direkt beim Starten aufgebaut.
-\section{Implementation}
-\subsection{Server and Networking}
-Die beim Kismet-Server auflaufenden Daten müssen noch für die Verarbeitung in eine zentrale Datenbank exportiert werden. Dafür wurde ein eigener Kismet-Client entwickelt. Dieser registriert sich bei dem Kismet-Server und bekommt die Daten zugeschickt, sobald diese am Server anfallen. Diese Daten werden in der Mongo-Datenbank gespeichert. Das Programm ist in drei Pakete untergliedert:
+%
+% -----------------Implementation-------------------------
+%
 
-\paragraph{Structure and usage of express routing}\mbox{}\\
-Das Client Paket beinhaltet die main Methode und initialisiert sowohl die Datenquelle als auch die Verbindung zum Kismet-Server. Des weiteren kümmert es sich um die Weitergabe der Daten von dem KismetClient an die Datenquelle.
+\section{Implementierung}
 
-\paragraph{Managing of clients}\mbox{}\\
-AUth//Register/Ananymous
-Die Datenquelle kümmert sich um das persistente Speichern der Daten. Hierfür wurde die MongoDB ausgewählt. Diese lässt sich einfach einrichten und mit Java verwenden. Außerdem kann sie über Webtechnologien leicht angesprochen werden. Dies ist wichtig für die  spätere Auswertung der Daten, welche über Webtechnologien erfolgen soll. Die Datenquelle ist nicht an eine bestimmte Datenbank gebunden. Die Klasse muss lediglich das Datasource-Interface einbinden. Wie mit den Daten umgegangen wird, ist für den Client nicht wichtig und wird von der Klasse verwaltet. 
-
-\paragraph{KismetClient-Paket}\mbox{}\\
-Das KismetClient-Paket beinhaltet die Kommunikation mit dem Kismet-Server. Für die Kommunikation mit dem Server müssen die benötigten Protokolle mit den gewünschten Feldern bei diesem registriert werden. Danach werden automatisch Veränderungen an den Client gesendet und dieser muss diese auf Event-Basis auffangen und verarbeiten. Für die von uns benötigten Informationen, nutzt der Client die beiden Protokolle \enquote{SOURCE} und \enquote{CLISRC}. Die benötigten Felder werden in den Tabellen \ref{tab:src} und \ref{tab:cli} aufgezeigt.
-
-
-\begin{table}[!h]
+\begin{figure}[h!]
 	\centering
-	\begin{tabular}{ | p{.2\textwidth} | p{.5\textwidth} | }
-		\hline 
-		\rowcolor{blau} \multicolumn{2}{l|}{\textcolor{white}{\textbf{SOURCE}}}  \\ \hline
-		uuid & Die eindeutige ID der Quelle \\ \hline
-		username & Der Name der Quelle \\
-		\hline
-	\end{tabular}
-	\caption{Benötigte Felder des SOURCE Protokolls}
-	\label{tab:src}
-\end{table}
+        \begin{lstlisting}[language=JavaScript,caption=Javascript Example]
+           var a = 24;
+           console.log(a);
+        \end{lstlisting}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
 
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{ | p{.2\textwidth} | p{.5\textwidth} | }
-		\hline
-		\rowcolor{blau} \multicolumn{2}{l|}{\textcolor{white}{\textbf{CLISRC}}}  \\ \hline
-		mac & Die MAC-Adresse des gefundenen Gerätes \\ \hline
-		uuid & Die ID der Quelle, welche das Gerät gesehen hat \\ \hline
-		lasttime & Timestamp der Sichtung \\ \hline
-		signal\_dbm & Signalstärke des Geräts in DBM \\
-		\hline
-	\end{tabular}
-	\caption{Benötigte Felder des CLISRC Protokolls}
-	\label{tab:cli}
-\end{table}
+\subsection{User Management} %% TODO: Dennis
+Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im "UserManagement" bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
 
+\subsection{Datenbank} %% TODO: Dennis
+Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
-\subsection{Frontend Client and Login}
-Zur Live-Evaluation der vom Kismet Client in die Datenbank geschriebenen Daten, wurde eine Webanwendung mit Hilfe des Webframeworks Meteor\footnote{https://www.meteor.com/} geschrieben. \\
-Die Anwendung wertet die vom Kismet Client bereitgestellten Messdaten reaktiv aus und lässt sich in einem Standard Webbrowser anzeigen. 
-Zur Ermittlung der Position eines Gerätes werden die gemessenen Signalstärken für jedes Gerät von den unterschiedlichen Drohnen miteinander verglichen. Dabei wird der gleitende Mittelwert zur dritten Periode pro Drohne berechnet (siehe Abbildung \ref{eqn:middle}), um mögliche Schwankungen in den Messungen zu behandeln. Wobei x\raise0.5ex\hbox{d}(t) für den Messwert zum Zeitpunkt t an Drogne d steht.
-\\Da die Experimente ergeben haben, dass der gemessene dbm-Wert für ein Gerät geringer wird, je weiter man sich von der Quelle entfernt, kann so ermittelt werden, an welcher Drohne sich ein Gerät am nähesten befindet. \\
-Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeichnet die Drohne, und damit auch die Position, an der ein Gerät am nähesten ist. Anschließend kann gezählt werden, an welcher Drohne sich wie viele Geräte befinden. Mit Hilfe dieser Anwendung lässt sich das Ausgangsproblem lösen. Platziert man an jeder Bar in der Einrichtung eine Drohne, kann diese Anwendung erkennen, wie viele Personen sich an den unterschiedlichen Bars befinden und darauf reagieren, indem auf einem Fernseher Ermäßigungen für eine weniger besuchte Bar angeboten werden.
+\subsection{Server und Netzwerk} %% TODO: Hannes
+\subsubsection{Routing}
+Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
+\subsubsection{Events}
+Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
+
+\subsection{Smartphone Frontend}
+\paragraph{Template} %% TODO: Ron
+\paragraph{Client-JS} %% TODO: Ron
+
+\subsection{Beschreibung der GameAPI} %% TODO Micha
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 \begin{figure}
 \begin{equation}
   \boxed{{ m }_{ MA }^{ d }(t) = \frac { 1 }{ 3 } \sum _{ i=0 }^{ 2 }{ { x }^{ d }(t-i) }}
@@ -218,74 +261,39 @@ Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeic
 \label{eqn:middle}
 \end{figure}
 
-\subsubsection{Client Connections}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-\subsubsection{Eventlisteners}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-\subsubsection{Object Preparations}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-\subsubsection{Styles}
-
-
-\subsection{GameAPI}
-Zur Live-Evaluation der vom Kismet Client in die Datenbank geschriebenen Daten, wurde eine Webanwendung mit Hilfe des Webframeworks Meteor\footnote{https://www.meteor.com/} geschrieben. \\
-Die Anwendung wertet die vom Kismet Client bereitgestellten Messdaten reaktiv aus und lässt sich in einem Standard Webbrowser anzeigen.
-Zur Ermittlung der Position eines Gerätes werden die gemessenen Signalstärken für jedes Gerät von den unterschiedlichen Drohnen miteinander verglichen. Dabei wird der gleitende Mittelwert zur dritten Periode pro Drohne berechnet (siehe Abbildung \ref{eqn:middle}), um mögliche Schwankungen in den Messungen zu behandeln. Wobei x\raise0.5ex\hbox{d}(t) für den Messwert zum Zeitpunkt t an Drogne d steht.
-\\Da die Experimente ergeben haben, dass der gemessene dbm-Wert für ein Gerät geringer wird, je weiter man sich von der Quelle entfernt, kann so ermittelt werden, an welcher Drohne sich ein Gerät am nähesten befindet. \\
-Die berechneten Mittelwerte werden verglichen und der höchste Mittelwert bezeichnet die Drohne, und damit auch die Position, an der ein Gerät am nähesten ist. Anschließend kann gezählt werden, an welcher Drohne sich wie viele Geräte befinden. Mit Hilfe dieser Anwendung lässt sich das Ausgangsproblem lösen. Platziert man an jeder Bar in der Einrichtung eine Drohne, kann diese Anwendung erkennen, wie viele Personen sich an den unterschiedlichen Bars befinden und darauf reagieren, indem auf einem Fernseher Ermäßigungen für eine weniger besuchte Bar angeboten werden.
-\begin{figure}
-\begin{equation}
-  \boxed{{ m }_{ MA }^{ d }(t) = \frac { 1 }{ 3 } \sum _{ i=0 }^{ 2 }{ { x }^{ d }(t-i) }}
-\end{equation}
-\caption{Gleitender Mittelwert zur dritten Periode}
-\label{eqn:middle}
-\end{figure}
-
-\subsection{Demonstration}
-\subsubsection{Preparations}
+\subsection{Demonstration} %% TODO: Chris
+\subsubsection{Vorbereitung}
 \begin{enumerate}
  \item Ein Computer ist als Kismet-Server sowie als Meteor Server konfiguriert.
- \item Die Raspberry Pis, die als Kismet Drohnen konfiguriert sind, werden an die entsprechenden Positionen platziert, an denen die Anzahl der Geräte gemessen werden soll. Im Anwendungsfall dieses Projekts wird eine Drohne jeweils an einer Bar platziert. 
+ \item Die Raspberry Pis, die als Kismet Drohnen konfiguriert sind, werden an die entsprechenden Positionen platziert, an denen die Anzahl der Geräte gemessen werden soll. Im Anwendungsfall dieses Projekts wird eine Drohne jeweils an einer Bar platziert.
  \item Die Drohnen werden per LAN - Kabel an das Netzwerk verbunden, in dem sich auch der Kismet-Server befindet.
 \end{enumerate}
 \subsubsection{Start applications}
-\begin{enumerate}
- \item Der Kismet-Server wird mit dem Befehl \emph{sudo kismet} über den Terminal gestartet.
- \item Die Meteor Anwendung wird mit dem Befehl \emph{meteor} über den Terminal gestartet. Die Mongo Datenbank wird dabei automatisch mit gestartet.
- \item Der Kismet Client wird mit Hilfe des Java Archives gestartet. Als Parameter können beim Start über den Terminal die IP - Adressen und Ports des Kismet-Servers und der Mongo Datenbank übergeben werden, sollten diese von den Standardkonfigurationen abweichen.
-\end{enumerate}
-\subsubsection{Running}
-\begin{enumerate}
- \item Der Kismet-Server gibt im Terminal Statusnachrichten zu den Drohnen und gefundenen Netzwerken aus.
- \item Die Meteor Anwendung kann über einen Browser aufgerufen werden. \emph{[IPDesMeteorServers]:3000}
- \item Die Mongo Datenbank kann über den Befehl \emph{meteor mongo} im Terminal aufgerufen werden.
- \item Der Kismet Client gibt im Terminal Statusnachrichten zu den Informationen, die gespeichert werden aus.
-\end{enumerate}
 
-\section{Results}\label{result}
-\subsection{Measurements}
+\subsubsection{Durchführung}
 
 
+\subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
+Zeitstempel Problem
 \begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
-\paragraph{Structure}\mbox{}\\
-Im Masterlabor wurde die ersten Probemessung durchgeführt, um zu testen, ob eine Positionsbestimmung durch Vergleichen der Dämpfungswerte überhaupt möglich ist. Dazu wurden zwei Drohnen an verschiedenen Enden des Raumes platziert. Bei der Messung wurde eine App benutzt die sekündlich einen Broadcast nach Access Point durchführt. Dadurch wird traffic generiert, der nötig ist, damit die Drohnen genug Pakete abfangen.
-\end{minipage}
+\paragraph{Aufbau}
+Der Versuchsaufbau wurde in direkter Nähe des WLAN Hotspots erstellt, um eine möglichst ideale Signalstärke zu erreichen. Der Versuchsaufbau besteht
 \hfill
-\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-\centering
-		\includegraphics[height=5cm]{./images/FrontendInit.png}
-		\caption{Probemessung}
-		\label{fig:probeMessung}
-\end{minipage}
-\end{figure}
 
+\subsection{Durchführung}\mbox{}\\
 \paragraph{Ablauf der Messung}\mbox{}\\
 Anschließend wurde die in Abbildung \ref{fig:probeMessung} zur erkennende Strecke mit einem Smartphone abgelaufen. Beim Abgehen der Strecke wurde nach circa jedem Meter eine kurze Zeit verweilt, damit ein aussagekräftigeres Ergebnis erzielt werden konnte.
 
-\paragraph{Results}\mbox{}\\
+\paragraph{Ergebisse}\mbox{}\\
+
+\centering
+		\includegraphics[width=15cm]{./images/LasttestDiagramm.png}
+		\caption{Probemessung}
+		\label{fig:probeMessung}
+\end{figure}
+
 Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät entfernt und welcher es sich nähert.\\
 
 \begin{figure}[H]
@@ -353,25 +361,31 @@ Der Aufbau der Messung war der gleiche wie in der 2. Messung im störungsfreien 
 Ein Smartphone wurde an den einzelnen Messpunkten platziert. Das WiFi war auf dem Gerät aktiviert. Allerdings war das Gerät mit keinem WiFi-Netzwerk verbunden um die realen Umstände in einer Discothek nachempfinden zu können. Da von Anfang an festgestellt wurde, dass deutlich weniger Pakete abgefangen wurden, wurde die Dauer der Messung an jedem Messpunkt auf 2 Minuten festgesetzt.
 
 \paragraph{Ergebnis}\mbox{}\\
-Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden. 
+Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden.
+
+%%
+%%
+%%
+\section{Ausblick}
+
+\paragraph{QRCode} %% TODO: Micha
+    Busstop sinnvoll, gameApi.printQRCode()
+\paragraph{Glättung der Sensor Werte}  %% TODO: Dennis
+Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
+
+\paragraph{Disable touch zoom auf dem Client Gerät} %% TODO: Dennis
+Beim wiederholten Klicken auf die Buttons der Client-Seite auf den Geräten wird unter Umständen in die Webseite gezoomt. Dies muss unterbunden werden um ein ungewolltes Verhalten zu unterbinden.
+
+\paragraph{Begrenzung der gesendeten Sensor Daten} %%TODO: Dennis
+Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden.
 
 
-\section{Conclusion}
-Eine passive Ortung von WiFi-Geräten anhand der Signalstärke ist möglich. Eine Installation einer zusätzlichen Anwendung auf den zu ortenden Geräten ist nicht notwendig. Es ist zu beachten, dass durch die starken Schwankungen in der Signalstärke nur eine  Positionsbestimmung auf 1,2 Meter möglich ist (siehe Diagramm \ref{fig:480} im Anhang).
-\\
-Ein weiteres Forschungsfeld ist die zeitliche Genauigkeit der bestimmten Position. Da nur unregelmäßig und nicht vorhersagbar Daten eingehen ist eine Echtzeitortung nicht trivial und bedarf weiterer Untersuchung.
-Die in dieser Arbeit vorgestellte Technologie eignet sich für die Raum bezogene Ortung von Geräten. 
-\\
-Rechtliche Rahmenbedingen sind bei der vorgestellten Positionsbestimmung einzuhalten. Es ist zu klären, in wie weit die MAC-Adresse eines Gerätes unter Datenschutzbestimmungen fällt.
-\\
-In einer zukünftigen Weiterentwicklung kann versucht werden die genaue Position des Gerätes über Triangulation zu bestimmen. Es ist möglich aus den erfassten Daten die Position zu berechnen, solange es mindestens drei Messtationen gibt. Einige Schwierigkeiten dabei sind zum Beispiel Objekte im Messbereich, Wände sowie Personen. Diese verändern die Signalstärken und müssen im Algorithmus berücksichtigt werden. Dies führt zu einer weiteren nicht einfach zu lösenden Problemstellung welche die Aufstellung des Algorithmus abdeckt. \linebreak
-\linebreak
-Im Weiteren kann die Positionsbestimmung über eine Fingerprint-Map durchgeführt werden. Hierbei ist ein genaueres Ergebnis zu erwarten als bei der Berechnung mittels der Triangulation. Dies liegt an der leichteren Berücksichtigung von starren Objekten in dem Messgebiet. Der Nachteil liegt in der vorherigen Aufstellung der Karte. Für diese muss das Gebiet vermessen worden sein, um eine Datenbank mit Signalstärken aufzustellen. 
-\linebreak
-Eine weitere Erforschung sollte beide Ansätze in Betracht ziehen und kombinieren, um die genaue Position des Nutzers bestimmen zu können.
+\section{Conclusion} %% TODO: Chris
+Alles super. Die erste Million ist nah!
 
 
-\newpage
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% References %%%%%
 \bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
@@ -379,47 +393,5 @@ Eine weitere Erforschung sollte beide Ansätze in Betracht ziehen und kombiniere
 
 \newpage
 \appendix
-\section{Outlook} \label{subsection:Einlasskontrolle}
-\subsection{Anforderungsanalyse}
-Die Einlasskontrolle ist in Meteor entwickelt. Eine Anforderungsanlyse mit Diskothekenbesitzern ergab folgende Anforderungen:
-
-\begin{itemize}
-\item Gäste können sich auf eine Gästeliste über eine Micro-Event-Page setzen (bereits existent in einer Java-Anwendung)
-\item Gäste bekommen bei der Anmeldung auf der Gästeliste eine E-Mail mit einem QR-Code zugesendet
-\item Gäste werden in einer Liste für jedes Event angezeigt
-\item In der Liste können Gäste durch anklicken eingechecked werden
-\item Gäste können alternativ über einen QR-Code-Scanner eingechecked werden
-\item Checkins werden in einem Diagramm zusammengefasst
-\end{itemize}
-\subsection{Konzept und Implementierung}
-Als Framework wird Meteor eingesetzt. Über eine API wird bei jeder Anmeldung von einem Gast auf der Gästeliste der Gast an die Meteor-Anwendung übertragen.
-Bei einem Checkin wird der neue Status von der Meteoranwendung an die bestehende Java-Anwendung übertragen.
-\\
-Der an den Gast via E-mail gesendete QR-Code enthält eine per Java generierte einmalige ID (UUID), welche mit der Gast-Anmeldung für ein Event verknüpft ist.
-\\
-Für den Scanvorgang wird das Framework jsqrcode in Meteor eingebunden. Der Eventhandler qrScanner.on('scan') wird jede Sekunde gefeuert. In der Callback-Funktion wird die Variable messages zurückgegeben. Ist diese nicht null, enthält sie den Wert des QR-Codes, welcher zum Checkin verwendet wird.
-
-
-\subsection{Ausblick}
-Die Einlasskontrolle kann wie folgt mit dem Indoor-Tracking verbunden werden, um Personen in einem Raum zu orten:
-\begin{enumerate}
-\item Eine Person wird über einen QR-Code erkannt.
-\item Das stärkste Signal von Smartphone (MAC) wird erkannt.
-\item Die MAC-Addrese wird der Person zugeordnet.
-\item Das Smartphone beziehungsweise die Person wird im Raum erkannt.
-\end{enumerate}
-
-\section{Ergebnisse der Messungen im störungsfreien Raum}\label{testAnhang}
-Hier sind die Messergebnisse des 2. Tests aus dem störungsfreien Raum zu sehen. Es ist zu beobachten, dass sich die Linien der beiden Drohnen annähern und dann wieder auseinander driften. Beim Diagramm \ref{fig:480} sind die Dämpfungswerte etwa gleich groß, was auf einen Messungenauigkeit von 1,2 Metern schließen lässt, da der eigentliche Mittelpunkt bei 600 cm liegt.
-
-\begin{figure}[H]
-	\centering
-	%	\fbox{\includegraphics[width=16cm]{./images/120cm.png}}
-		\caption{Messergebnis beim 120 cm}
-		\label{fig:120}
-\end{figure}
-
-
-
 
 \end{document} 
