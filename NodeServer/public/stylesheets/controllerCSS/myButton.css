@@ -12,7 +12,12 @@ body{
 	border-color: transparent #6dc1d6 transparent transparent;
 	box-shadow: 15px 0px 16px -9px;
 }
-
+#btn-left:active{
+	box-shadow: 0 0 0 0;
+}
+#btn-right:active{
+	box-shadow: 0 0 0 0;
+}
 #btn-right{
 	float:left;
 	width: 0px;
