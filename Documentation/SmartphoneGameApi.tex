@@ -27,6 +27,8 @@
 \usepackage[]{graphicx}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{svg}
+\usepackage{amsmath}
 \hypersetup{
     colorlinks,
     linkcolor={black!50!black},
@@ -220,7 +222,7 @@ Was kann MongoDB, Warum MongoDB
 Smartphone Controller, Platformunabhängig Node Server
 
 %
-% -----------------Implementation-------------------------
+% -----------------Implementierung-------------------------
 %
 
 \section{Implementierung}
@@ -234,7 +236,13 @@ Smartphone Controller, Platformunabhängig Node Server
 		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
 		\label{fig:dockerVM}
 \end{figure}
-
+\subsection{Architektur}
+\begin{figure}
+	\centering
+		\fbox{\includegraphics[width=15cm]{./images/arch/M113.png}}
+		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
+		\label{fig:dockerVM}
+\end{figure}
 \subsection{User Management} %% TODO: Dennis
 Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im "UserManagement" bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
 
