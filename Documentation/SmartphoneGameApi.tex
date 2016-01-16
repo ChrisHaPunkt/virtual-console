@@ -21,14 +21,12 @@
 %% \renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
 %  The following command loads a graphics package to include images 
 %  in the document. It may be necessary to specify a DVI driver option,
-%  e.g., [dvips], but that may be inappropriate for some LaTeX 
+\textit{}%  e.g., [dvips], but that may be inappropriate for some LaTeX 
 %  installations. 
 \usepackage{amsmath}
 \usepackage[]{graphicx}
 \usepackage{hyperref}
 \usepackage{listings}
-\usepackage{svg}
-\usepackage{amsmath}
 \hypersetup{
     colorlinks,
     linkcolor={black!50!black},
@@ -140,9 +138,9 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 \section{Methodik} %% TODO: Chris
 \subsection{Projektmanagement}
-Die Verteilung der Aufgaben ist in Tabelle \ref{table:distribution of tasks} aufgestellt.
-Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
-\paragraph{GitLab}
+Das Team besteht aus 5 Projektmitgliedern. Die Verteilung der Aufgaben ist in Tabelle \ref{table:Aufgabenverteilung} aufgestellt.
+Verschiedene Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
+\subsubsection{GitLab}
 Das Projekt wurde auf einem eigenen GitLab gehostet und den Projektmitgliedern zur Verfügung gestellt. Die Issues des Systems wurden genutzt um Aufgaben zu verteilen und zu dokumentieren.
 \\
 Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt möglichst flexibel zu halten. Der Master-Branch diente als Release-Branch, in den regelmäßig die Änderungen per Merge Request eingetragen und getestet wurden.
@@ -157,22 +155,31 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 		\textcolor{white}{\textbf{Aufgabe}} & \textcolor{white}{\textbf{Schleiss}} & \textcolor{white}{\textbf{Grothknopf}} & \textcolor{white}{\textbf{Schiwkowksi}} & \textcolor{white}{\textbf{Hofmann}} & \textcolor{white}{\textbf{Heinrichs}}\\\hline
 		Recherche 		& X & X	& X	& X	& X	\\\hline
 		Konzept 		& X & X	& X	& X	& X	\\\hline
-		Serverdesign	& 	& X & 	& X	& X \\\hline
+		Serverdesign	& 	& X & 	& 	& X \\\hline
 		Networking		& 	& X	& 	& X	& X	\\\hline
 		GameAPI 		& 	& X	&	&	& X	\\\hline
 		DemoGame 		& X	&	&	&	& X	\\\hline
 		ClientFrontend 	& X	&	& X	&	&	\\\hline
 		ClientBackend 	& X	&	& X	&	&	\\\hline
 		Database 	    & 	&	&	& X	& 	\\\hline
-		LoginHandling   & 	& 	& 	& X	& 	\\\hline
 		Poster          & 	& 	& 	& 	& 	\\\hline
 		Documentation   & 	& 	& 	& 	& X \\\hline
 		Projektmgmt. 	&	&	&	& 	& X	\\\hline
-	\end{tabular} 
+	\end{tabular}
 \end{table}
 
 \subsection{Technologies} %% TODO: Dennis
 \subsubsection{NodeJS}
+\hfill
+\begin{figure}
+\begin{minipage}[t]{0.5\textwidth}
+
+\vspace{0pt}
+		\includegraphics[width=\textwidth]{./images/software/1436439824nodejs-logo}
+		\caption{Aufbau 2. Test Störungsfreier Raum}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
 Was ist NodeJS, Warum genutzt
 \begin{figure}[h!]
 	\centering
@@ -227,16 +234,9 @@ Smartphone Controller, Platformunabhängig Node Server
 
 \section{Implementierung}
 
-\begin{figure}[h!]
-	\centering
-        \begin{lstlisting}[language=JavaScript,caption=Javascript Example]
-           var a = 24;
-           console.log(a);
-        \end{lstlisting}
-		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
-		\label{fig:dockerVM}
-\end{figure}
+
 \subsection{Architektur}
+
 \begin{figure}
 	\centering
 		\fbox{\includegraphics[width=15cm]{./images/arch/M113.png}}
@@ -261,25 +261,47 @@ Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallen
 
 \subsection{Beschreibung der GameAPI} %% TODO Micha
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-\begin{figure}
-\begin{equation}
-  \boxed{{ m }_{ MA }^{ d }(t) = \frac { 1 }{ 3 } \sum _{ i=0 }^{ 2 }{ { x }^{ d }(t-i) }}
-\end{equation}
-\caption{Gleitender Mittelwert zur dritten Periode}
-\label{eqn:middle}
-\end{figure}
 
-\subsection{Demonstration} %% TODO: Chris
-\subsubsection{Vorbereitung}
+
+\section{Demonstration} %% TODO: Chris
+\subsection{Vorbereitung}
 \begin{enumerate}
- \item Ein Computer ist als Kismet-Server sowie als Meteor Server konfiguriert.
- \item Die Raspberry Pis, die als Kismet Drohnen konfiguriert sind, werden an die entsprechenden Positionen platziert, an denen die Anzahl der Geräte gemessen werden soll. Im Anwendungsfall dieses Projekts wird eine Drohne jeweils an einer Bar platziert.
- \item Die Drohnen werden per LAN - Kabel an das Netzwerk verbunden, in dem sich auch der Kismet-Server befindet.
+ \item Ein Computer stellt den NodeJS Server.
+ \item Ein weiterer Computer stellt das gewählte Demogame-Frontend auf einem großen Bildschirm dar.
+ \item Mehrere Clients verbinden sich mit ihren mobilen Geräten auf den Server.
 \end{enumerate}
-\subsubsection{Start applications}
+Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einen Skriptaufruf, wie in Listing \ref{lst:installDeps} beschrieben.
+\lstset{
+  numbers=left,
+  stepnumber=5,
+  firstnumber=1,
+  numberfirstline=true
+}
+\begin{figure}[h!]
+	\centering
+        \begin{lstlisting}[language=bash,caption={Installieren der Abhängigkeitenn},label={lst:installDeps}]
+           bash prepareDeps.sh
+        \end{lstlisting}
+\end{figure}
+\subsection{Start der Applikation}
+Der NodeJS Server wird mit dem Befehl wie in Listing \ref{lst:launch} gestartet. Imfolgenden sollte eine Meldung erscheinen welche den Applikationsserver als gestartet meldet. Eine Beispielhafte Meldung in in Listing \ref{lst:launchSuccess} zu sehen.
 
-\subsubsection{Durchführung}
-
+\begin{figure}[h!]
+	\centering
+        \begin{lstlisting}[language=JavaScript,caption={Start der Applikation},label={lst:launch}]
+           node NodeServer/bin/www
+        \end{lstlisting}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+        \begin{lstlisting}[language=JavaScript,caption={Start der Applikation},label={lst:launchSuccess}]
+           16 Jan 14:39:22 serverNetwork | Server listening on port 5222
+        \end{lstlisting}
+\end{figure}
+\subsection{Durchführung}
+Die Clients rufen die Adresse des Servers auf und es wird ihnen eine Login Anzeige dargestellt. Hier wird nun eine Entscheidung getroffen, ob ein Login erstellt, genutzt oder anonym weiter forgefahren werden soll.
+Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche Benutzername im gewählten Demogame angezeigt. \\
+Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen durch. Ein Druck auf einen der Buttons auf einem der Clientgeräte wird als solcher identifiziert und im Frontend dargestellt. Ein anderer Cleint aktivert die Rotationserfassung und die gesendeten Daten erscheinen auf dem Fronend.
 
 \subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
 Zeitstempel Problem
