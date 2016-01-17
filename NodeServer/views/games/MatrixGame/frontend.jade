@@ -1,0 +1,13 @@
+extends ../../frontendLayout
+
+block content
+    h1(class='globalTitle' id='monitorBtn' style='cursor:pointer' title='Click for Performance Monitor')= title
+    div(id='3d', class='threeDContainer')
+    div(id="qrcode")
+block log
+    div(id='chart')
+         canvas(id='myChart' style='max-width:98%;max-height:94px')
+    div(id='log')
+
+    // Load Require JS
+    script(data-main='/js/games/MatrixGame/head.js', src='/js/libs/require.js')

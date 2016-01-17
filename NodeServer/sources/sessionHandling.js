@@ -165,6 +165,9 @@ var exports = {
     sendToUser: function (name, type, message) {
         network.sendToClient(getUserIdByName(name), type, message);
     },
+    broadcastMessage: function(type, data){
+        network.broadcastMessage(type, data)
+    },
     removeUser: function (name) {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));

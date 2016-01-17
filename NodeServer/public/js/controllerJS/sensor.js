@@ -109,10 +109,9 @@ define(['jquery'], function ($) {
                 orientationAlpha: orientationAlpha
             };
             //TODO: Orientationdata != Accelrometer ??
-            var checkAcc = $('#chkAcc').prop('checked');
-            if (checkAcc == true) {
+            if ($('#chkRot').prop('checked'))
                 socket.sendData("orientationData", OrientationData);
-            }
+
         }
     }
 
@@ -122,7 +121,6 @@ define(['jquery'], function ($) {
     function vibrate(milliseconds) {
         window.navigator.vibrate(milliseconds);
     }
-
 
     /*
      VIDEO AND AUDIO CAPTURING WITH getUserMedia()
@@ -210,7 +208,8 @@ define(['jquery'], function ($) {
     return {
         setSocket: function (_socket) {
             socket = _socket;
-        }
+        },
         // add more if needed
+        vibrate: vibrate
     }
 });

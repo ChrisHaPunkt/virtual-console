@@ -3,4 +3,5 @@ Documentation/*.log
 Documentation/*.aux
 Documentation/*.out
 Documentation/*.gz*
+Documentation/SmartphoneGameApi.pdf
 .idea

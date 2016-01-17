@@ -25,6 +25,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
+
     };
 
     hideContent();
@@ -41,11 +42,15 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
         onMessage: function (type, msg) {
             // do anything you want with server messages
             console.log(type, msg);
+
+            //vibrate
+            sensor.vibrate(500);
         },
         onAnonymousLogin: function (data) {
             if (data.result) {
                 hideLogin();
                 showContent();
+
             } else {
                 // false login
             }

@@ -2,10 +2,12 @@ canvas {
     width: 100%;
     height: 100%;
 }
-.globalTitle{
+
+.globalTitle {
     margin-left: 2%;
     color: #d6d6d6;
 }
+
 html, body, div, form, fieldset, p {
     margin: 0;
     padding: 0;
@@ -25,15 +27,16 @@ a {
 }
 
 body {
-    height: 100%;
+    height: 93%;
+    background-attachment: fixed;
     background: #1d2d44; /* Old browsers */
     background: -moz-linear-gradient(top, #35537a 0%, #1d2d44 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#35537a), color-stop(100%,#1d2d44)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #35537a 0%,#1d2d44 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #35537a 0%,#1d2d44 100%); /* Opera11.10+ */
-    background: -ms-linear-gradient(top, #35537a 0%,#1d2d44 100%); /* IE10+ */
-    background: linear-gradient(top, #35537a 0%,#1d2d44 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35537a', endColorstr='#1d2d44',GradientType=0 ); /* IE6-9 */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #35537a), color-stop(100%, #1d2d44)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #35537a 0%, #1d2d44 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #35537a 0%, #1d2d44 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #35537a 0%, #1d2d44 100%); /* IE10+ */
+    background: linear-gradient(top, #35537a 0%, #1d2d44 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#35537a', endColorstr='#1d2d44', GradientType=0); /* IE6-9 */
     font-weight: normal;
     font-size: .8em;
     line-height: 1.6em;
@@ -50,11 +53,61 @@ html {
     height: 80%;
     border: 2px solid grey;
     border-radius: 2em;
-    margin-left:2%;
-    margin-right:2%;
+    margin-left: 2%;
+    margin-right: 2%;
+
+}
+.threeDContainer canvas {
+    margin: auto;
+}
+.content {
+    color: grey;
 }
 
+.user-container {
+    background-color: #000;
+    color: #008800;
+    font-size: small;
+    font-family: Consolas, Arial;
+    border: 2px solid grey;
+    border-radius: 1em;
 
-.content{
-    color:grey;
+    margin: 1.5%;
+    width: 30%;
+    height: 30%;
+
+    float: left;
+    overflow: hidden;
+}
+
+.user-name {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+
+    background-color: grey;
+    color: #000;
+}
+
+.user-messages{
+    height: 90%;
+    
+    overflow: scroll;
+    margin-right: -25px;
+    padding-right: 25px;
+
+    margin-bottom: -25px;
+    padding-bottom: 25px;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 3%;
+    height: 100%;
+
+    left: 2px;
 }

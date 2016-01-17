@@ -38,7 +38,7 @@ define(['/socket.io/socket.io.js'], function (io) {
             this.socket = io.connect();
 
             if (this.logLevel === null)
-                this.logLevel = this.log.DEBUG;
+                this.logLevel = this.log.INFO;
 
             /**
              * Emit data back to server (eg. Controller Template)
@@ -68,7 +68,7 @@ define(['/socket.io/socket.io.js'], function (io) {
                 this.socket.on('frontendInboundMessage', this.frontendInboundMessage);
             else return -1;
 
-            if (this.logLevel == this.log.DEBUG)
+            if (this.logLevel == this.log.INFO)
                 this.addLogMessage(this.log.INFO, "init", "Game Api successfully Initialized");
 
             return this.socket;
@@ -79,16 +79,33 @@ define(['/socket.io/socket.io.js'], function (io) {
             var pageLogContent = document.getElementById(this.logContainer);
             // if log level is DEBUG log everything
             if(this.logLevel === this.log.DEBUG){
-                console.log(this.log.DEBUG + type + ": " + msg);
+                console.log(type + ": " + msg);
                 // additional log INFO levels to UI
                 if(level === this.log.INFO){
                     pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
                 }
             // if log level is INFO just log INFO logs
             }else if(this.logLevel === this.log.INFO && level === this.log.INFO){
-                console.log(this.log.DEBUG + type + ": " + msg);
+                console.log(type + ": " + msg);
                 pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }
+        },
+
+        sendToServer : function(messageType, message){
+            if(this.socket != null){
+                this.socket.emit('frontendOutboundMessage', {type:messageType, data:message});
+            }
+        },
+
+        sendToUser : function(name, message){
+            var msg = {};
+            msg.data = message;
+            msg.username = name;
+            this.sendToServer('messageToClient', msg);
+        },
+
+        broadcastMessage : function(message){
+            this.sendToServer('messageToAllClients',message);
         }
 
     };

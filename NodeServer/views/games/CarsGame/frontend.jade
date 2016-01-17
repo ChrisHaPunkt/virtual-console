@@ -1,0 +1,13 @@
+extends ../../frontendLayout
+
+block content
+    h1(class='globalTitle' id='monitorBtn' style='cursor:pointer' title='Click for Performance Monitor')= title
+    div(id='carsGame', class='threeDContainer')
+    div(id="qrcode")
+block log
+    div(id='chart')
+         canvas(id='myChart' style='max-width:98%;max-height:94px')
+    div(id='log')
+
+    // Load Require JS
+    script(data-main='/js/games/CarsGame/head.js', src='/js/libs/require.js')

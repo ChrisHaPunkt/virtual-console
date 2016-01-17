@@ -13,12 +13,18 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
-        "three": "libs/three",
-        "Chart": "libs/Chart.min"
+        "three": "../../libs/three",
+        "Chart": "../../libs/Chart.min",
+        "phaser": '../../libs/phaser',
+        "carsGame": 'carsGame',
+        "gameApi":'/js/gameApi'
     },
     shim: {
         three: {
             exports: 'THREE'
+        },
+        'phaser': {
+            exports: 'Phaser'
         }
     }
 });
@@ -26,7 +32,7 @@ var GameHandler = null, gameApi = null, frontChart = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
+require(["phaser", "carsGame", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
     $('#monitorBtn').click(function () {
@@ -64,6 +70,9 @@ require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart)
     if(gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined"){
         $('#monitorBtn').trigger("click");
     }
+    var game2 = new game();
+    game2.start();
+
 
 
 });
