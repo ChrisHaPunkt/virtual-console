@@ -56,16 +56,26 @@
 \usepackage{xcolor,colortbl}
 \usepackage{color}
 \usepackage{float}
+
 \definecolor{lightgray}{rgb}{.9,.9,.9}
 \definecolor{darkgray}{rgb}{.4,.4,.4}
 \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+% Farben definieren
+\definecolor{codeGray}{RGB}{240,240,240}
+\definecolor{codeBlack}{RGB}{0,0,0}
+\definecolor{codeRed}{RGB}{221,0,0}
+\definecolor{codeBlue}{rgb}{0,0,187}
+\definecolor{codeYellow}{RGB}{255,128,0}
+\definecolor{codeGreen}{RGB}{0,119,0}
 
+% … und zuweisen
 \lstdefinelanguage{JavaScript}{
   keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
-  keywordstyle=\color{blue}\bfseries,
-  ndkeywords={class, export, boolean, throw, implements, import, this},
-  ndkeywordstyle=\color{darkgray}\bfseries,
-  identifierstyle=\color{black},
+    basicstyle={\small\ttfamily\color{codeGreen}},%
+    commentstyle={\color{codeYellow}},%
+    keywordstyle={\color{codeBlue}},%
+    stringstyle={\color{codeRed}},%
+    identifierstyle={\color{codeBlue}},%
   sensitive=false,
   comment=[l]{//},
   morecomment=[s]{/*}{*/},
@@ -138,7 +148,7 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 \\
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 
-\section{Methodik} %% TODO: Chris
+\section{Methodik}
 \subsection{Projektmanagement}
 Das Team besteht aus 5 Projektmitgliedern. Die Verteilung der Aufgaben ist in Tabelle \ref{table:Aufgabenverteilung} aufgestellt.
 Verschiedene Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöchentliches persönliches Treffen aller Projektmitglieder führt zu einer guten Arbeitsmoral und hohen Effektivität.
@@ -331,15 +341,82 @@ Das \enquote{UserManagement} kümmert sich um die Verwaltung der Nutzer. Dafür 
 \subsection{Datenbank}
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
-\subsection{Smartphone Frontend}
-\paragraph{Template} %% TODO: Ron
-\paragraph{Client-JS} %% TODO: Ron
+\subsection{Mobile - Sensoren und Daten}
+Die Basis aller weiteren Schritte ist das Auslesen der Sensordaten eines geeigneten Gerätes, während der gesamten Entwicklung wurden hierfür Smartphones unterschiedlicher Hersteller und Generationen verwenden. Die Daten wurden auf dem Gerät gemessen, aufbereitet und als gekapselte Datenpakete an den vorgesehenen Empfänger gesandt. Die Datenaufbereitung ist ein wichtiger Schritt, um die Netzwerklast am Knotenpunkt, dem Server, möglichst gering zu halten, da mehrere Geräte gleichzeitig eine Verbindung herstellen und aufrecht erhalten können und dies zu einer Überlast des Empfängers bei unkontrolliertem Sendevolumen führt.\\
+Die von der Applikation genutzten Daten sind im folgenden erläutert.
+\paragraph{Touchbildschirm}
+Die übliche Art der Interaktion mit einem aktuellen Smartphone, die Toucheingabe, darf natürlich nicht außer Acht gelassen werden. Da diese in der Entwicklung äußerst einfach zu implementieren ist, unteranderem über JQuerys .tap(), kann diese Eingabe als trivial angesehen und hier nicht weiter darauf eingegangen werden.
+\paragraph{Rotations- und Beschleunigungssensor}
+Diese Werte bilden den Kern der Applikation und sollen hier näher dargestellt werden:\\
+Die Interaktion über die Bewegung des Smartphones im dreidimensionalen Raum ist intuitiv und gut für jede denkbare Aufgabe geeignet. Die Datenerhebung erfolgt dabei für gewöhnlich durch Differentialkondensatoren und Drei-Achsen-Gyroskope.
+Da die Daten vom Gerät kontinuierlich in festgelegten Intervallen bestimmt werden, können diese auf komfortable Art und Weise ausgelesen werden. Die aufwändigere Arbeit ist die anschließende Verarbeitung und Filterung der Daten. Dies geschieht über ein zu setzendes Event, namentlich das \enquote{devicemotion} -Event, das bei jeder Änderung der Rotation oder Beschleunigung feuert und seine Daten beispielhaft in der Form event.acceleration.x; oder event.accelerationRate.alpha; bereitstellt, ebenso wie das Intervall der gemessenen Daten (in Millisekunden) über event.interval; verwendet werden kann.
+%\begin{figure}[h]
+%  \centering
+%    \includegraphics{images/rotation}
+%     \caption{Rotationsachen dargestellt}
+%\end{figure}
+
+Die Originalversion der Rotation und Berechnungen sind zu finden in den Aufzeichnungen von Damian Gordon\footnote{\url{http://de.slideshare.net/DamianGordon1/3d-robot-movements}}.
+Die Aufbereitung der Daten geschieht über eine Filterung aller leeren und ungültigen Daten, außerdem aller Daten, die darauf schließen lassen, dass keine Bewegung stattfand. Um eine Überlast der Datenverbindung zu verhindern wird eine Mittelung der ausgelesenen Daten als adäquates Mittel angesehen, diese kann über eine festgelegte Anzahl der Werte vorgenommen werden. Da Smartphones allerdings in einem unterschiedlichen Intervall Daten Messen, in der Entwicklung wurde eine Messung im Abstand von 50ms, 100ms und 200ms festgestellt, kann die Mittelung auch über einen gewissen Zeitwert vorgenommen werden.
+
+\paragraph{Ausrichtung des Gerätes}
+Die Orientierung des Gerätes wird als „Portrait“ oder „Landscape“, also vertikale oder horizontale Ausrichtung beschrieben. Diese Daten verwenden dieselbe Technik wie der Beschleunigungssensor und wird beispielsweise in der Bildschirmausrichtung verwendet. So einfach wie das Prinzip ist auch die Verwendung: Die Ausrichtung lässt sich über window.orientation; (in Grad) ausmessen. Ein Wert über 180 beschreibt dabei den Portraitmodus, über 180 den Landscape- oder Landschaftsmodus.
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Bild und Tonaufzeichungen}\mbox{}\\
+Da dies einer der komplexeren Datentypen ist, den man mit dem Handy aufzeichnen kann, empfiehlt sich für die Aufnahme eine leicht benutzbare API. Mit getUserMedia() ist für Bild und Ton nun eine einfache Alternative verfügbar, die Stückweise in die aktuelle Browsergeneration eingefügt wird. Die aktuelle Verfügbarkeit innerhalb der Browser kann auf caniuse.com eingesehen werden und ergibt folgendes Bild:
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \includegraphics[width=8.5cm]{images/caniuseGetUserMedia}
+     \caption{Unterstützung der getUserMedia API auf caniuse.com}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
+
+%\begin{figure}[h]
+%  \centering
+%    \includegraphics{images/legende}
+%     \caption{Legende:}
+%\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Batteriestatus}\mbox{}\\
+Eine weitere Datenquelle ist der aktuelle Ladestatus (aktiv/inaktiv), die Batterieladung in Prozent und die Zeit zu vollständigen Ladung oder Entladung. Dies wird realisiert über die Battery Status API, die aktuell eine ähnliche Browserabdeckung erreicht wie die getUserMedia()-API.\\
+Die Verarbeitung der Daten geschieht hier wie in der Rotations- und Beschleunigungsmessung über EventListener, die jeweils auf die Events chargingchange, levelchange, chargingtimechange und dischargingtimechange reagieren und nach dem Schema battery.level; die gesuchten Daten ausgeben.
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \includegraphics[width=8.5cm]{images/caniuseBatteryStatusAPI}
+     \caption{Unterstützung der Battery Status API auf caniuse.com}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
+
+\paragraph{Vibration}
+Im Gegensatz zu den anderen Daten geht es hierbei nicht um eine Ein-, sondern um eine Ausgabemethode. Die Benachrichtigung über Vibrationen ist in JavaScript denkbar einfach gestaltet, ist aber, ebenso wie die vorherigen APIs, nicht in jedem Browser verfügbar. Der letztliche Aufruf der Funktion geschieht über den Navigator, explizit über window.navigator.vibrate(), wobei die Länge und Art der Vibration angegeben werden kann.
+
+\paragraph{Browserempfehlung}
+Da (noch) nicht alle Browser alle APIs unterstützen, soll hier eine Empfehlung zur Verwendung der oben genannten Funktionalitäten genannt werden. Sowohl auf dem Desktop-Rechner als auch unter Android ist derzeit die aktuelle Version von Firefox (43) am 15.12.2015 erschienen und in der Lage, alle genannten Funktionen und APIs auszuführen.
+
+\subsection{Template} %% TODO: Ron
+\subsection{Client-JS} %% TODO: Ron
 
 \subsection{Beschreibung der GameAPI} %% TODO Micha
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 
 
-\section{Demonstration} %% TODO: Chris
+\section{Demonstration}
 \subsection{Vorbereitung}
 \begin{enumerate}
  \item Ein Computer stellt den NodeJS Server.
