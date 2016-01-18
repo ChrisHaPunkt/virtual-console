@@ -303,37 +303,53 @@ Die Clients rufen die Adresse des Servers auf und es wird ihnen eine Login Anzei
 Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche Benutzername im gewählten Demogame angezeigt. \\
 Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen durch. Ein Druck auf einen der Buttons auf einem der Clientgeräte wird als solcher identifiziert und im Frontend dargestellt. Ein anderer Cleint aktivert die Rotationserfassung und die gesendeten Daten erscheinen auf dem Fronend.
 
-\subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
-Zeitstempel Problem
 
-\paragraph{Test Szenario} Messung der Latenz vom erfassen der Sensordaten bis zur Ausgabe durch das API. Dabei wird vorausgesetzt das von einem Gerät pro Sekunde 50 Pakete an den Server gesendet werden. Dabei soll gezeigt werden wie sich die Leistung des Servers unter der zu Schaltung von Geräten verhält und wie sich die Latenz von der Erfassung bis zur Ausgabe an dem API auswirkt. Das Szenario umfasst das erfassen von CPU Profilen des NoteJS-Servers, des GameFrontends und der Client Applikation und der Latenzmessung zwischen. Die durch die Netzwerk Anbindung anfallende Latenz wurde in diesem Szenario nicht berücksichtigt. Sie ist aufgrund der Geringen Datenmenge vernachlässigbar )
+
+
+
+\subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
+
+
+
+
+
+
+
+
+\subsubsection{Server}
+
+\paragraph{Szenario} 
+Der Server wird nach und nach mit immer mehr Paketen belastet und die CPU-Auslastung ermittelt.
 
 
 \paragraph{Durchführung}
-Mithilfe des node-inspectors \footnote{https://github.com/node-inspector/node-inspector} wurde die nodeJS-Serveranwendung debuggt. Dabei wurden bei verschiedenen Gerätezugschaltungen CPU-Profile erhoben. Die erfassung des CPU-Profils erfolgt dabei 30 Sekunden lang.
+Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrecht erhalten wurden.
 
-\begin{table}
-	\label{table:CPUMesswerte}
-	\centering	
-	\begin{tabular}{| L{2cm} | L{2cm} | L{2cm} |}
-		\hline
-		\rowcolor{blau}
-		\textcolor{white}{\textbf{Geräte Anzahl}} & \textcolor{white}{\textbf{CPU Last in \% (Server)}} & \textcolor{white}{\textbf{CPU Last in \% (Client)}} \\\hline
-		0 	& 0,00	& \\\hline
-		1 	& 0,06 	& \\\hline
-		2 	& 0,14	& \\\hline
-		3 	& 0,18	& \\\hline
-		4 	& 0,23	& \\\hline
-		5 	& 0,30	& \\\hline
-		6 	& 0,31	& \\\hline
-		7 	& 0,44	& \\\hline
-		8 	& 0,49	& \\\hline
-		9 	& 0,55	& \\\hline
-		10 	& 0,54	& \\\hline
-		100 & 3,45	& \\\hline
-	\end{tabular}
-	\caption{CPU Messwerte}
-\end{table}
+
+\paragraph{Ergebnisse}
+
+%\begin{table}
+%	\label{table:CPUMesswerte}
+%	\centering	
+%	\begin{tabular}{| L{2cm} | L{2cm} | L{2cm} |}
+%		\hline
+	%	\rowcolor{blau}
+	%	\textcolor{white}{\textbf{Pakete/sec}} & \textcolor{white}{\textbf{CPU Last in \% (Server)}} & \textcolor{white}{\textbf{CPU Last in \% (Client)}} \\\hline
+%		0 	& 0,00	& \\\hline
+%		1 	& 0,06 	& \\\hline
+%		2 	& 0,14	& \\\hline
+%		3 	& 0,18	& \\\hline
+	%	4 	& 0,23	& \\\hline
+	%	5 	& 0,30	& \\\hline
+	%	6 	& 0,31	& \\\hline
+	%	7 	& 0,44	& \\\hline
+	%	8 	& 0,49	& \\\hline
+	%	9 	& 0,55	& \\\hline
+	%	10 	& 0,54	& \\\hline
+	%	100 & 3,45	& \\\hline
+%	\end{tabular}
+%	\caption{CPU Messwerte}
+%\end{table}
 
 
 \begin{figure}[H]
@@ -341,91 +357,52 @@ Mithilfe des node-inspectors \footnote{https://github.com/node-inspector/node-in
 	\hfill
 	\vspace{0pt}	
 	\centering
-	\includegraphics[width=15cm]{./images/ServerCPU_Utilization.png}
-	\caption{Probemessung}
-	\label{fig:probeMessung}
+	\includegraphics[width=1\textwidth]{./images/ServerLast1.png}
+	\caption{ServerLast1}
+	\label{fig:ServerLast1}
 \end{figure}
-
-
-
-
-
-\subsection{Durchführung}\mbox{}\\
-\paragraph{Ablauf der Messung}\mbox{}\\
-Anschließend wurde die in Abbildung \ref{fig:probeMessung} zur erkennende Strecke mit einem Smartphone abgelaufen. Beim Abgehen der Strecke wurde nach circa jedem Meter eine kurze Zeit verweilt, damit ein aussagekräftigeres Ergebnis erzielt werden konnte.
-
-\paragraph{Ergebisse}\mbox{}\\
-
-
-
-Auf Abbildung \ref{fig:test1} ist zu sehen von welcher Drohne sich das Gerät entfernt und welcher es sich nähert.\\
 
 \begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\includegraphics[height=5cm]{./images/FrontendInit.png}
-\caption{Berechnungen zum Ergebnis}
-\label{fig:tablleMessung}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=\textwidth]{./images/FrontendInit.png}
-		\caption{Ergebnis der Probemessung}
-		\label{fig:test1}
-\end{minipage}
+	\vspace{0pt}
+	\hfill
+	\vspace{0pt}	
+	\centering
+	\includegraphics[width=1\textwidth]{./images/ServerLast2.png}
+	\caption{ServerLast2}
+	\label{fig:ServerLast2}
 \end{figure}
 
-\subsection{Limitations}
-\subsubsection{1. Test}
+Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast1} zeigt Messwerte bei 0 - 10 Paketen und das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 10 - 100 dar. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
 
-\paragraph{Ergebnis}\mbox{}\\
-Selbst auf kurzer Distanz ist eine Differenz von ca. 10 dBm zwischen den Messpunkten zu sehen. Dies ermöglicht eine Ortsbestimmung auf kurzer Distanz, was beim nächsten Test ebenfalls zu sehen ist.
 
-\begin{table}[H]
-\centering
-	\begin{tabular}{ | p{2.5cm} | l | l | l | }
-		\hline 
-		Entfernung	& 50 cm	& 100 cm	& 200 cm	\\ \hline
-		Durchschnittliche Dämpfung & -62,22 dBm	& -75,45 dBm	& -82,52 dBm \\
-		\hline
-	\end{tabular}
-	\caption{Ergebnisse des 1. Tests im störungsfreien Raum}
-	\label{tab:probeTab}
-\end{table}
+\subsubsection{Frontend}
 
-\subsubsection{2. Test}\label{testNr2}
+\paragraph{Test Szenario} Zur Messung der Latenz wird ein Gerät mit dem Server verbunden und jede Sekunde dessen durchschnittliche Latenz vom Senden der Daten auf dem Gerät bis zur Ausgabe dieser durch die API erfasst. Die Auslastung des Servers wird durch das Senden von zusätzlichen Paketen erreicht. Die Senderate wird nach und nach gesteigert um die Maximale Auslastung der API auf dem Testsystem zu ermitteln. Zu beachten ist das auf allen Geräten vergleichbare Zeitstempel vergeben werden um die Ergebnisse nicht zu verfälschen. Die Test werden dabei ohne die Anbindung einer Anwendung an die API durchgeführt. Zu beachten ist, das diese auch Leistung benötigt was die Ergebnisse drastisch verändern kann. Aufgrund des Fokus auf die Entwicklung einer API ohne eine gezielte Anwendung wurde diese nicht berücksichtigt.
+
+
+
+\paragraph{Durchführung}
+Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschnittlichen Latenz pro Sekunde von einem Gerät ermittelt. Während der Messung wurde der Server mit einer Unterschiedlich starken Anzahl an zusätzliche Paketen belastet um eine Höhere Auslastung zu erreichen. Die Werte wurden dabei in einem Abstand von einer Sekunde ermittelt. Zum Erfassen er Daten wurden die Chrome-Entwicklertools verwendet. Es wurden für jede Laststufe Daten über 50 Sekunden erfasst. Der Server und das Frontend liefen bei dem Test auf dem gleichen System.
+
+
+\paragraph{Ergebnisse}
 
 \begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Aufbau}\mbox{}\\
-Um zu ermitteln, wie genau der Vergleich von Dämpfungswerten für die Positionsermittlung benutzt werden kann, wurden zwei Kismet-Drohnen in 12 Meter Abstand voneinander aufgestellt. Diese waren über einen Switch mit dem Kismet-Server verbunden. Alle 120 cm wurde ein Messpunkt festgelegt. Dies entsprach der Größe einer Bodenplatte im störungsfreien Raum und wurde deshalb als Distanz gewählt.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=\textwidth]{./images/FrontendInit.png}
-		\caption{Aufbau 2. Test Störungsfreier Raum}
-		\label{fig:test2}
-\end{minipage}
+	\vspace{0pt}
+	\hfill
+	\vspace{0pt}	
+	\centering
+	\includegraphics[width=1\textwidth]{./images/LatenzMessung.png}
+	\caption{LatenzMessung}
+	\label{fig:LatenzMessung}
 \end{figure}
 
-\paragraph{Ablauf der Messung}\mbox{}\\
-Ein Smartphone wurde auf den entsprechenden Messpunkt gelegt. WiFi war auf dem Gerät eingeschaltet und die App zur Traffic-Generierung war aktiv. Es wurden pro Messpunkt circa 100 Messwerte aufgenommen, damit eine aussagekräftiges Ergebnis erzielt werden konnte und kurzzeitige Störungen abgefangen werden konnten.
+Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden.
 
-\paragraph{Ergebnis}\mbox{}\\
-Wie schon bei der ersten Probemessung ist eine deutliche Tendenz zu erkennen. Bei der Drohne, von der sich das Smartphone entfernte, nahm die Dämpfung zu. Bei der anderen Drohne nahm sie ab. Die aufgenommen Dämpfungswerte sind bei circa 480 cm gleich groß (siehe Diagramm \ref{fig:480} im Anhang). Dies ist 120 cm von der eigentlichen Mitte entfernt. Somit besteht eine Messungenauigkeit von 120 cm.
 
-\subsection{Realistische Messung}
-\paragraph{Aufbau}\mbox{}\\
-Der Aufbau der Messung war der gleiche wie in der 2. Messung im störungsfreien Raum (siehe \ref{testNr2}). Dieses mal fand die Messung allerdings in einem einfachen Flur der FH-Kiel statt und war somit nicht vor Störungen geschützt.
 
-\paragraph{Ablauf der Messung}\mbox{}\\
-Ein Smartphone wurde an den einzelnen Messpunkten platziert. Das WiFi war auf dem Gerät aktiviert. Allerdings war das Gerät mit keinem WiFi-Netzwerk verbunden um die realen Umstände in einer Discothek nachempfinden zu können. Da von Anfang an festgestellt wurde, dass deutlich weniger Pakete abgefangen wurden, wurde die Dauer der Messung an jedem Messpunkt auf 2 Minuten festgesetzt.
 
-\paragraph{Ergebnis}\mbox{}\\
-Zu beobachten war, dass in den 2 Minuten 3-9 Pakete abgefangen wurden. Das macht eine Echtzeit-Bewegungsverfolgung so gut wie unmöglich. Ebenso war die Differenz der gemessenen Dämpfungswerte geringer, was eine Positionierung des Geräts erschwert. Das liegt daran, dass auf dem Flur Strahlen der WiFi-Antenne des Smartphones weniger stark gedämpft wurden.
+
 
 %%
 %%
