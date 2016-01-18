@@ -22,6 +22,7 @@
 %  The following command loads a graphics package to include images 
 %  in the document. It may be necessary to specify a DVI driver option,
 %\textit{}%  e.g., [dvips], but that may be inappropriate for some LaTeX 
+
 %  installations. 
 \usepackage{amsmath}
 \usepackage[]{graphicx}
@@ -51,6 +52,7 @@
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
+\usepackage[export]{adjustbox}
 \usepackage{xcolor,colortbl}
 \usepackage{color}
 \usepackage{float}
@@ -168,63 +170,120 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 	\end{tabular}
 \end{table}
 
-\subsection{Technologies} %% TODO: Dennis
-\subsubsection{NodeJS}
-\hfill
-\begin{figure}
-\begin{minipage}[t]{0.5\textwidth}
-
+\subsection{Technologien} %% TODO: Dennis
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
-		\includegraphics[width=\textwidth]{./images/software/1436439824nodejs-logo}
-		\caption{Aufbau 2. Test Störungsfreier Raum}
+\paragraph{NodeJS}\mbox{}\\
+Was ist NodeJS, Warum genutzt
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/1436439824nodejs-logo}
+		\caption{\url{https://nodejs.org/en/}}
 		\label{fig:test2}
 \end{minipage}
 \end{figure}
-Was ist NodeJS, Warum genutzt
-\begin{figure}[h!]
-	\centering
-		\fbox{\includegraphics[width=12cm]{./images/FrontendInit.png}}
-		\caption{Systemarchitektur WiFi Tracking}
-		\label{fig:sysArch}
-\end{figure}
 
-Die Berechnung der Signalstärke wird nicht durch Kismet vorgenommen, sondern geschieht intern in der jeweiligen Netzwerkkarte. Es wird bei den Raspberry Pi ein LOGILINK WL0084B WiFi-USB-Stick verwendet. Die Dämpfung kann bei verschieden Netzwerkkarten stark abweichen. Deshalb ist es erforderlich, dass im Versuchsaufbau nur gleiche Netzwerkkarten verwendet werden.
-
-\subsubsection{HTML 5}
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{HTML 5}\mbox{}\\
 Was kann HTML5, was nutzen wir für HTML 5 Features
-\begin{figure}[h!]
-	\centering
-		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
-		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
-		\label{fig:dockerVM}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/HTML5_Logo_512}
+		\caption{\url{https://www.w3.org/}}
+		\label{fig:test2}
+\end{minipage}
 \end{figure}
 
-\subsubsection{Javascript}
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Javascript}\mbox{}\\
 Was kann Javascript, ECMA 6
-\begin{figure}[h!]
-	\centering
-		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
-		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
-		\label{fig:dockerVM}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/Unofficial_JavaScript_logo_2}
+		\caption{Inoffizielles Javascript-Logo}
+		\label{fig:test2}
+\end{minipage}
 \end{figure}
+
 \subsubsection{JS-Libraries}
-\paragraph{jquery.js}
-\paragraph{require.js}
-\paragraph{socket.io}
-\begin{figure}[h!]
-	\centering
-		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
-		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
-		\label{fig:dockerVM}
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{jQuery}\mbox{}\\
+jQuery Content
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/jquery}
+		\caption{\url{https://jquery.com/}}
+		\label{fig:test2}
+\end{minipage}
 \end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{require.js}\mbox{}\\
+Require.js Content
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/req_js_logo}
+		\caption{\url{http://requirejs.org/}}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{socket.io}\mbox{}\\
+Socket.io Content
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/socket-io}
+		\caption{\url{http://socket.io/}}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
+
 \subsubsection{MongoDB}
+\hfill
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{MongoDB}\mbox{}\\
 Was kann MongoDB, Warum MongoDB
-\begin{figure}[h!]
-	\centering
-		\fbox{\includegraphics[width=10cm]{./images/FrontendInit.png}}
-		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
-		\label{fig:dockerVM}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+		\includegraphics[width=4cm, right]{./images/software/mongodb-logo}
+		\caption{\url{https://www.mongodb.org/} }
+		\label{fig:test2}
+\end{minipage}
 \end{figure}
+
+
 \subsubsection{Hardware}
 Smartphone Controller, Platformunabhängig Node Server
 
@@ -237,22 +296,39 @@ Smartphone Controller, Platformunabhängig Node Server
 
 \subsection{Architektur}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 		\fbox{\includegraphics[width=15cm]{./images/arch/M113.png}}
 		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
 		\label{fig:dockerVM}
 \end{figure}
-\subsection{User Management} %% TODO: Dennis
-Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im "UserManagement" bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
 
-\subsection{Datenbank} %% TODO: Dennis
-Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
+\subsection{Network}
+Die Netzwerkverbindungen bilden einen wichtigen Bestandteil der Anwendung. Alle Clients und das Server-Frontend bzw. Spiel verbinden sich zum Server via WebSocket.
 
-\subsection{Server und Netzwerk} %% TODO: Hannes
-\subsubsection{Routing}
-Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
-\subsubsection{Events}
+\subsubsection{socket.io}
+Zum Aufbau und Handling der Netzwerkverbindungen wird die Bibliothek socket.io von Guillermo Rauch verwendet. Sie kapselt die WebSocket API Spezifikationen und bietet eine vereinfachte und einfach zu benutzende API zu den WebSockets auf Client und Server-Seite. Außerdem verfügt sie über Failover-Strategien, die das Verwenden von anderen Protokollen vorsehen, für den Fall, dass WebSockets vom Client oder Server nicht unterstützt werden.
+Auf node Server Seite werden die Pakete 'http' und 'socket.io' benötigt. Erstes um einen HTTP-Server zu erstellen und letzteres, um diesen dann zu einer WebSocket Verbindung aufzuwerten und diese dann zu verwalten. Grundlegen wird die Verbindung mit Hilfe von message Events implementiert, welche auf dem jeweiligen Socket ausgelöst und abgehört werden können. Dieses Prinzip ähnelt stark den von node bekannten Events. Eine Client-Version von socket.io wird vom Server automatisch veröffentlich und kann so auf dem Client direkt eingebunden und verwendet werden.
+\url{https://davidwalsh.name/websocket}
+
+\subsubsection{Server Network handling}
+Die Anwendung besteht aus einem zentralen node Server, einem Frontend zur Darstellung des Spiels und eine unbestimmte Anzahl an mobilen Clients. Alle Komponenten stellen jeweils eine Websocket Verbindung zum Server her, dem so jeden Client bekannt ist und er diese verwalten kann. Durch die Verwendung der selbst geschriebenen Module 'gameApi' und 'clientNetwork' werden die Funktionen der Websockets erneut gekapselt und ermöglichen eine sehr einfaches Aufbauen der Verbindung und Verwendung der anwendungs-spezifischen Befehle.\\
+Der Server hält zu jeder Zeit eine Liste aller offenen Socket-Verbindungen, die es ermöglich individuell mit jedem Client und dem Frontend zu kommunizieren. Eingehende Nachrichten können so direkt einem Absender zugeordnet werden, ohne dass dieser seine Identität oder IP-Adresse mitsenden muss.\\
+Auf diesem Level der Kommunikation wurden grundlegende Socket-Events zum Verbindungsaufbau, der Nutzerverwaltung (Registration und Login) sowie dem Verschicken der eigentlichen Nachrichten. Abhängig vom Typ der eingehenden Nachricht werden die Funktionen der nächst-höheren Programmschicht aufgerufen, die diese dem Netzwerk Modul bei der Initialisierung per Callback übergeben hat. Die eigentlichen Socket-Events werden an dieser Stelle nicht weitergegeben, um die technische Socket-Logik komplett im Modul zu kapseln. Die Struktur der einzelnen Nachrichtentypen wurde genau definiert. Besonders im Fall der tatsächlichen Nachtrichten Pakete wurde ein weiteres 'type' Attribut eingefügt, die es dem Spieleentwickler erlaubt unabhängig von den Socket Event Typen eigene Nachrichten-Typen zu definieren, die zwischen Kontroller und Spiel ausgetauscht werden.\\
+Ein weiterer wichtiger Aspekt ist die Art und Weise in der die Socket auf Client-Seite aufgebaut werden. Da JavaScript keine echte Persistenz von Variable und Objekten über den Scope einer HTML-Seite erlaubt, wird jede bestehende Socket-Verbindung abgebrochen sobald die Seite neu oder eine andere geladen wird. Da die Kontroller-Clients ihre Funktionalität jedoch auf eine Oberfläche begrenzen stellt dies kein gravierendes Problem dar.\\
+Zusätzlich bietet das 'serverNetwork' Modul eine Reihe an Funktionen an, mit den Clients und dem Frontend zu kommunizieren und diese zu verwalten. Die meisten dieser Funktion setzen das Adressieren des gewünschten Clients über dessen Socket ID voraus.\\
+\url{http://stackoverflow.com/questions/7709289/how-to-pass-javascript-object-from-one-page-to-other}
+\url{http://tavendo.com/blog/post/websocket-persistent-connections/}
+
+\subsection{Session}
+Die nächste Schicht nach dem Netzwerk stellt auf Server-Seite das Modul 'sessionHandling' dar. Hier werden die noch anonymen Socket-Verbindungen bzw. deren IDs mit tatsächlichen Nutzernamen und der zugrundeliegenden Nutzerverwaltung verknüpft. Dies bedeutet zunächst, dass jeder Client sich zum Benutzen der Anwendung am Server authentifizieren muss. Jede eingehende Login-Anfrage wird da das Modul 'UserManagement' weitergeleitet um die übergebenden Nutzerdaten zu verifizieren. Nach einem erfolgreichen Login werden die Daten des Nutzers in eine Liste aktiver Nutzer gespeichert und sein Nutzername wird an die nächste Schicht weiter gegeben. Alle weiteren Anfragen werden solange abgewiesen, bis sich ein Nutzer authentifiziert hat. Beim Disconnet eines Nutzers wird sein Eintrag aus der Liste gelöscht und es wird ebenfalls eine Nachricht an die nächste Programm-Schicht übergeben. Alle Nachrichten, die tatsächliche Kommunikationsdaten zwischen Clients und dem Spiel beinhalten werden direkt weitergegeben.\\
+Ein Login bedeutet notwendigerweise eine zuvor erfolgte Registrierung, welche ebenfalls vom 'UserManagement' Modul verwaltet wird. Um die Registrierung jedoch nicht zu einer unnötigen Barriere in der Verwendung der Applikation zu machen, ist es ebenfalls möglich sich anonym einzuloggen. In diesem Fall wird der jeweiligen Socket-Verbindung ein zufälliger Nutzername zugewiesen. Der Vorteil eines Nutzerkontos bietet die Möglichkeit für das Spiel, weitere Daten für einen Nutzer Session übergreifend zu speichern.\\
+Wie zuvor bereits angesprochen wurde, können die Socket-Verbindungen nicht über mehrere Seitenaufrufe auf dem Client bestehen bleiben. Dies bedeutet für die Login-Session, dass diese direkt an die bestehende Socket-Verbindung gekoppelt ist und beendet wird, sobald der Socket geschlossen wird.\\
+
+\subsection{User Management}
+Das \enquote{UserManagement} kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im \enquote{UserManagement} bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
+
+\subsection{Datenbank}
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
 \subsection{Smartphone Frontend}
@@ -309,13 +385,6 @@ Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen
 
 \subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
 
-
-
-
-
-
-
-
 \subsubsection{Server}
 
 \paragraph{Szenario} 
@@ -367,18 +436,17 @@ Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-ins
 	\hfill
 	\vspace{0pt}	
 	\centering
-	\includegraphics[width=1\textwidth]{./images/ServerLast2.png}
+	\includegraphics[width=1\textwidth]{./images/ServerLast3.png}
 	\caption{ServerLast2}
 	\label{fig:ServerLast2}
 \end{figure}
 
-Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast1} zeigt Messwerte bei 0 - 10 Paketen und das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 10 - 100 dar. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
+Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast1} zeigt Messwerte bei 0 - 10 Paketen und das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab ca. 3500 Paketen in einem geringerem maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
 
 
 \subsubsection{Frontend}
 
 \paragraph{Test Szenario} Zur Messung der Latenz wird ein Gerät mit dem Server verbunden und jede Sekunde dessen durchschnittliche Latenz vom Senden der Daten auf dem Gerät bis zur Ausgabe dieser durch die API erfasst. Die Auslastung des Servers wird durch das Senden von zusätzlichen Paketen erreicht. Die Senderate wird nach und nach gesteigert um die Maximale Auslastung der API auf dem Testsystem zu ermitteln. Zu beachten ist das auf allen Geräten vergleichbare Zeitstempel vergeben werden um die Ergebnisse nicht zu verfälschen. Die Test werden dabei ohne die Anbindung einer Anwendung an die API durchgeführt. Zu beachten ist, das diese auch Leistung benötigt was die Ergebnisse drastisch verändern kann. Aufgrund des Fokus auf die Entwicklung einer API ohne eine gezielte Anwendung wurde diese nicht berücksichtigt.
-
 
 
 \paragraph{Durchführung}
@@ -397,7 +465,7 @@ Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschn
 	\label{fig:LatenzMessung}
 \end{figure}
 
-Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden.
+Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 Als Pufferzone eingeplant werden.
 
 
 
