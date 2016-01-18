@@ -21,7 +21,7 @@
 %% \renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
 %  The following command loads a graphics package to include images 
 %  in the document. It may be necessary to specify a DVI driver option,
-\textit{}%  e.g., [dvips], but that may be inappropriate for some LaTeX 
+%\textit{}%  e.g., [dvips], but that may be inappropriate for some LaTeX 
 %  installations. 
 \usepackage{amsmath}
 \usepackage[]{graphicx}
@@ -168,7 +168,7 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 	\end{tabular}
 \end{table}
 
-\subsection{Technologies} %% TODO: Dennis
+\subsection{Technologien} %% TODO: Dennis
 \subsubsection{NodeJS}
 \hfill
 \begin{figure}
@@ -249,12 +249,30 @@ Das "UserManagement" kümmert sich um die Verwaltung der Nutzer. Dafür stellt e
 \subsection{Datenbank} %% TODO: Dennis
 Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
-\subsection{Server und Netzwerk} %% TODO: Hannes
-\subsubsection{Routing}
-Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
-\subsubsection{Events}
-Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
+\subsection{Network}
+Die Netzwerkverbindungen bilden einen wichtigen Bestandteil der Anwendung. Alle Clients und das Server-Frontend bzw. Spiel verbinden sich zum Server via WebSocket.
 
+\subsubsection{socket.io}
+Zum Aufbau und Handling der Netzwerkverbindungen wird die Bibliothek socket.io von Guillermo Rauch verwendet. Sie kapselt die WebSocket API Spezifikationen und bietet eine vereinfachte und einfach zu benutzende API zu den WebSockets auf Client und Server-Seite. Außerdem verfügt sie über Failover-Strategien, die das Verwenden von anderen Protokollen vorsehen, für den Fall, dass WebSockets vom Client oder Server nicht unterstützt werden.
+Auf node Server Seite werden die Pakete 'http' und 'socket.io' benötigt. Erstes um einen HTTP-Server zu erstellen und letzteres, um diesen dann zu einer WebSocket Verbindung aufzuwerten und diese dann zu verwalten. Grundlegen wird die Verbindung mit Hilfe von message Events implementiert, welche auf dem jeweiligen Socket ausgelöst und abgehört werden können. Dieses Prinzip ähnelt stark den von node bekannten Events. Eine Client-Version von socket.io wird vom Server automatisch veröffentlich und kann so auf dem Client direkt eingebunden und verwendet werden.
+\url{https://davidwalsh.name/websocket}
+
+\subsubsection{Server Network handling}
+Die Anwendung besteht aus einem zentralen node Server, einem Frontend zur Darstellung des Spiels und eine unbestimmte Anzahl an mobilen Clients. Alle Komponenten stellen jeweils eine Websocket Verbindung zum Server her, dem so jeden Client bekannt ist und er diese verwalten kann. Durch die Verwendung der selbst geschriebenen Module 'gameApi' und 'clientNetwork' werden die Funktionen der Websockets erneut gekapselt und ermöglichen eine sehr einfaches Aufbauen der Verbindung und Verwendung der anwendungs-spezifischen Befehle.
+Der Server hält zu jeder Zeit eine Liste aller offenen Socket-Verbindungen, die es ermöglich individuell mit jedem Client und dem Frontend zu kommunizieren. Eingehende Nachrichten können so direkt einem Absender zugeordnet werden, ohne dass dieser seine Identität oder IP-Adresse mitsenden muss.
+Auf diesem Level der Kommunikation wurden grundlegende Socket-Events zum Verbindungsaufbau, der Nutzerverwaltung (Registration und Login) sowie dem Verschicken der eigentlichen Nachrichten. Abhängig vom Typ der eingehenden Nachricht werden die Funktionen der nächst-höheren Programmschicht aufgerufen, die diese dem Netzwerk Modul bei der Initialisierung per Callback übergeben hat. Die eigentlichen Socket-Events werden an dieser Stelle nicht weitergegeben, um die technische Socket-Logik komplett im Modul zu kapseln. Die Struktur der einzelnen Nachrichtentypen wurde genau definiert. Besonders im Fall der tatsächlichen Nachtrichten Pakete wurde ein weiteres 'type' Attribut eingefügt, die es dem Spieleentwickler erlaubt unabhängig von den Socket Event Typen eigene Nachrichten-Typen zu definieren, die zwischen Kontroller und Spiel ausgetauscht werden.
+Ein weiterer wichtiger Aspekt ist die Art und Weise in der die Socket auf Client-Seite aufgebaut werden. Da JavaScript keine echte Persistenz von Variable und Objekten über den Scope einer HTML-Seite erlaubt, wird jede bestehende Socket-Verbindung abgebrochen sobald die Seite neu oder eine andere geladen wird. Da die Kontroller-Clients ihre Funktionalität jedoch auf eine Oberfläche begrenzen stellt dies kein gravierendes Problem dar.
+Zusätzlich bietet das 'serverNetwork' Modul eine Reihe an Funktionen an, mit den Clients und dem Frontend zu kommunizieren und diese zu verwalten. Die meisten dieser Funktion setzen das Adressieren des gewünschten Clients über dessen Socket ID voraus.
+\url{http://stackoverflow.com/questions/7709289/how-to-pass-javascript-object-from-one-page-to-other}
+\url{http://tavendo.com/blog/post/websocket-persistent-connections/}
+
+\subsection{Session}
+Die nächste Schicht nach dem Netzwerk stellt auf Server-Seite das Modul 'sessionHandling' dar. Hier werden die noch anonymen Socket-Verbindungen bzw. deren IDs mit tatsächlichen Nutzernamen und der zugrundeliegenden Nutzerverwaltung verknüpft. Dies bedeutet zunächst, dass jeder Client sich zum Benutzen der Anwendung am Server authentifizieren muss. Jede eingehende Login-Anfrage wird da das Modul 'UserManagement' weitergeleitet um die übergebenden Nutzerdaten zu verifizieren. Nach einem erfolgreichen Login werden die Daten des Nutzers in eine Liste aktiver Nutzer gespeichert und sein Nutzername wird an die nächste Schicht weiter gegeben. Alle weiteren Anfragen werden solange abgewiesen, bis sich ein Nutzer authentifiziert hat. Beim Disconnet eines Nutzers wird sein Eintrag aus der Liste gelöscht und es wird ebenfalls eine Nachricht an die nächste Programm-Schicht übergeben. Alle Nachrichten, die tatsächliche Kommunikationsdaten zwischen Clients und dem Spiel beinhalten werden direkt weitergegeben.
+Ein Login bedeutet notwendigerweise eine zuvor erfolgte Registrierung, welche ebenfalls vom 'UserManagement' Modul verwaltet wird. Um die Registrierung jedoch nicht zu einer unnötigen Barriere in der Verwendung der Applikation zu machen, ist es ebenfalls möglich sich anonym einzuloggen. In diesem Fall wird der jeweiligen Socket-Verbindung ein zufälliger Nutzername zugewiesen. Der Vorteil eines Nutzerkontos bietet die Möglichkeit für das Spiel, weitere Daten für einen Nutzer Session übergreifend zu speichern.
+Wie zuvor bereits angesprochen wurde, können die Socket-Verbindungen nicht über mehrere Seitenaufrufe auf dem Client bestehen bleiben. Dies bedeutet für die Login-Session, dass diese direkt an die bestehende Socket-Verbindung gekoppelt ist und beendet wird, sobald der Socket geschlossen wird.
+
+\subsection{User management}
+?
 \subsection{Smartphone Frontend}
 \paragraph{Template} %% TODO: Ron
 \paragraph{Client-JS} %% TODO: Ron
