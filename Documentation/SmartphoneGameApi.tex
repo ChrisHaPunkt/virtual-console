@@ -184,50 +184,18 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 \begin{figure}[H]
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
-\paragraph{NodeJS}\mbox{}\\
+\paragraph{NodeJS / Javascript}\mbox{}\\
 Was ist NodeJS, Warum genutzt
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/1436439824nodejs-logo}
-		\caption{\url{https://nodejs.org/en/}}
-		\label{fig:test2}
-\end{minipage}
-\end{figure}
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
 \paragraph{HTML 5}\mbox{}\\
 Was kann HTML5, was nutzen wir für HTML 5 Features
 \end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/HTML5_Logo_512}
-		\caption{\url{https://www.w3.org/}}
-		\label{fig:test2}
-\end{minipage}
 \end{figure}
 
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Javascript}\mbox{}\\
-Was kann Javascript, ECMA 6
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/Unofficial_JavaScript_logo_2}
-		\caption{Inoffizielles Javascript-Logo}
-		\label{fig:test2}
-\end{minipage}
-\end{figure}
-
-\subsubsection{JS-Libraries}
+\subsubsection{Javascript Bibliotheken}
 
 \begin{figure}[H]
 \begin{minipage}[t]{0.4\textwidth}
@@ -238,27 +206,12 @@ jQuery Content
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/jquery}
-		\caption{\url{https://jquery.com/}}
-		\label{fig:test2}
-\end{minipage}
-\end{figure}
-
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
 \paragraph{require.js}\mbox{}\\
 Require.js Content
 \end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/req_js_logo}
-		\caption{\url{http://requirejs.org/}}
-		\label{fig:test2}
-\end{minipage}
 \end{figure}
+
+
 
 
 \begin{figure}[H]
@@ -270,28 +223,11 @@ Socket.io Content
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/socket-io}
-		\caption{\url{http://socket.io/}}
-		\label{fig:test2}
-\end{minipage}
-\end{figure}
-
-\subsubsection{MongoDB}
-\hfill
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
 \paragraph{MongoDB}\mbox{}\\
 Was kann MongoDB, Warum MongoDB
 \end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-		\includegraphics[width=4cm, right]{./images/software/mongodb-logo}
-		\caption{\url{https://www.mongodb.org/} }
-		\label{fig:test2}
-\end{minipage}
 \end{figure}
+
 
 
 \subsubsection{Hardware}
@@ -430,49 +366,101 @@ Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installi
   firstnumber=1,
   numberfirstline=true
 }
-\begin{figure}[h!]
-	\centering
-        \begin{lstlisting}[language=bash,caption={Installieren der Abhängigkeitenn},label={lst:installDeps}]
-           bash prepareDeps.sh
-        \end{lstlisting}
-\end{figure}
-\subsection{Start der Applikation}
-Der NodeJS Server wird mit dem Befehl wie in Listing \ref{lst:launch} gestartet. Imfolgenden sollte eine Meldung erscheinen welche den Applikationsserver als gestartet meldet. Eine Beispielhafte Meldung in in Listing \ref{lst:launchSuccess} zu sehen.
 
-\begin{figure}[h!]
-	\centering
-        \begin{lstlisting}[language=JavaScript,caption={Start der Applikation},label={lst:launch}]
-           node NodeServer/bin/www
-        \end{lstlisting}
-\end{figure}
+\subsection{Start der Applikation}
+Der NodeJS Server wird mit dem Befehl wie in Listing \ref{lst:launchSuccess} gestartet. Imfolgenden sollte eine Meldung erscheinen welche den Applikationsserver als gestartet meldet. Eine Beispielhafte Meldung in in Listing \ref{lst:launchSuccess} zu sehen.
+
 \begin{figure}[h!]
 	\centering
         \begin{lstlisting}[language=JavaScript,caption={Start der Applikation},label={lst:launchSuccess}]
-           16 Jan 14:39:22 serverNetwork | Server listening on port 5222
+            node NodeServer/bin/www
+            16 Jan 14:39:22 serverNetwork | Server listening on port 5222
         \end{lstlisting}
 \end{figure}
-\subsection{Durchführung}
+\subsection{Nutzen einer Demo Applikation}
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Controller Interface}\mbox{}\\
 Die Clients rufen die Adresse des Servers auf und es wird ihnen eine Login Anzeige dargestellt. Hier wird nun eine Entscheidung getroffen, ob ein Login erstellt, genutzt oder anonym weiter fortgefahren werden soll.
-Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche Benutzername im gewählten Demogame angezeigt. \\
+Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche Benutzername im gewählten Demogame angezeigt.
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \includegraphics[width=8.5cm]{images/controllerLayoutModern}
+     \caption{Unterstützung der getUserMedia API auf caniuse.com}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Demo Applikation}\mbox{}\\
 Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen durch. Ein Druck auf einen der Buttons auf einem der Clientgeräte wird als solcher identifiziert und im Frontend dargestellt. Ein anderer Cleint aktivert die Rotationserfassung und die gesendeten Daten erscheinen auf dem Fronend.
 
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \includegraphics[width=8.5cm]{images/demoGames}
+     \caption{Unterstützung der getUserMedia API auf caniuse.com}
+		\label{fig:test2}
+\end{minipage}
+\end{figure}
 
 
 
 
-\subsection{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
 
-\subsubsection{Server}
+
+
+\section{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
+
+\subsection{Server}
 
 \paragraph{Szenario} 
 Der Server wird nach und nach mit immer mehr Paketen belastet und die CPU-Auslastung ermittelt.
 
-
-\paragraph{Durchführung}
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Durchführung}\mbox{}\\
 Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrecht erhalten wurden.
 
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+	\centering
+	\includegraphics[width=1\textwidth]{./images/ServerLast1.png}
+	\caption{ServerLast1}
+	\label{fig:ServerLast1}
+\end{minipage}
+\end{figure}
 
-\paragraph{Ergebnisse}
+\begin{figure}[H]
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Ergebnisse}\mbox{}\\
+Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast1} zeigt Messwerte bei 0 - 10 Paketen und das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab ca. 3500 Paketen in einem geringerem maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+	\centering
+	\includegraphics[width=1\textwidth]{./images/ServerLast3.png}
+	\caption{ServerLast2}
+	\label{fig:ServerLast2}
+\end{minipage}
+\end{figure}
+
 
 %\begin{table}
 %	\label{table:CPUMesswerte}
@@ -497,30 +485,6 @@ Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-ins
 %	\caption{CPU Messwerte}
 %\end{table}
 
-
-\begin{figure}[H]
-	\vspace{0pt}
-	\hfill
-	\vspace{0pt}	
-	\centering
-	\includegraphics[width=1\textwidth]{./images/ServerLast1.png}
-	\caption{ServerLast1}
-	\label{fig:ServerLast1}
-\end{figure}
-
-\begin{figure}[H]
-	\vspace{0pt}
-	\hfill
-	\vspace{0pt}	
-	\centering
-	\includegraphics[width=1\textwidth]{./images/ServerLast3.png}
-	\caption{ServerLast2}
-	\label{fig:ServerLast2}
-\end{figure}
-
-Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast1} zeigt Messwerte bei 0 - 10 Paketen und das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab ca. 3500 Paketen in einem geringerem maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
-
-
 \subsubsection{Frontend}
 
 \paragraph{Test Szenario} Zur Messung der Latenz wird ein Gerät mit dem Server verbunden und jede Sekunde dessen durchschnittliche Latenz vom Senden der Daten auf dem Gerät bis zur Ausgabe dieser durch die API erfasst. Die Auslastung des Servers wird durch das Senden von zusätzlichen Paketen erreicht. Die Senderate wird nach und nach gesteigert um die Maximale Auslastung der API auf dem Testsystem zu ermitteln. Zu beachten ist das auf allen Geräten vergleichbare Zeitstempel vergeben werden um die Ergebnisse nicht zu verfälschen. Die Test werden dabei ohne die Anbindung einer Anwendung an die API durchgeführt. Zu beachten ist, das diese auch Leistung benötigt was die Ergebnisse drastisch verändern kann. Aufgrund des Fokus auf die Entwicklung einer API ohne eine gezielte Anwendung wurde diese nicht berücksichtigt.
@@ -530,23 +494,24 @@ Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Da
 Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschnittlichen Latenz pro Sekunde von einem Gerät ermittelt. Während der Messung wurde der Server mit einer Unterschiedlich starken Anzahl an zusätzliche Paketen belastet um eine Höhere Auslastung zu erreichen. Die Werte wurden dabei in einem Abstand von einer Sekunde ermittelt. Zum Erfassen er Daten wurden die Chrome-Entwicklertools verwendet. Es wurden für jede Laststufe Daten über 50 Sekunden erfasst. Der Server und das Frontend liefen bei dem Test auf dem gleichen System.
 
 
-\paragraph{Ergebnisse}
 
 \begin{figure}[H]
-	\vspace{0pt}
-	\hfill
-	\vspace{0pt}	
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\paragraph{Ergebnisse}\mbox{}\\
+Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 Als Pufferzone eingeplant werden.
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+	\centering
 	\centering
 	\includegraphics[width=1\textwidth]{./images/LatenzMessung.png}
 	\caption{LatenzMessung}
 	\label{fig:LatenzMessung}
+\end{minipage}
 \end{figure}
-
-Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 Als Pufferzone eingeplant werden.
-
-
-
-
 
 
 %%
@@ -558,9 +523,6 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
     Busstop sinnvoll, gameApi.printQRCode()
 \paragraph{Glättung der Sensor Werte}  %% TODO: Dennis
 Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
-
-\paragraph{Disable touch zoom auf dem Client Gerät} %% TODO: Dennis
-Beim wiederholten Klicken auf die Buttons der Client-Seite auf den Geräten wird unter Umständen in die Webseite gezoomt. Dies muss unterbunden werden um ein ungewolltes Verhalten zu unterbinden.
 
 \paragraph{Begrenzung der gesendeten Sensor Daten} %%TODO: Dennis
 Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden.
