@@ -364,8 +364,61 @@ Da (noch) nicht alle Browser alle APIs unterstützen, soll hier eine Empfehlung 
 \subsection{Client-JS} %% TODO: Ron
 
 \subsection{Beschreibung der GameAPI} %% TODO Micha
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
+\begin{figure}[h!]
+	\centering
+        \begin{lstlisting}[language=JavaScript,caption={Start der Applikation},label={lst:gameAPI}]
+    /** gameApi.controllerTemplates.*
+    * Hier traegt der Entwickler ein, welches Gamepad-Controller Layout
+    * auf dem Smartphone des Spielers angezeigt werden soll
+    * */
+    gameApi.controller = gameApi.controllerTemplates.MODERN;
+    /**
+     * HANDSHAKE - bitte nicht modifizieren
+     * */
+    gameApi.frontendConnection = function (connInfoObj) {
+        gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
+        this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+    };
 
+    /**
+     * Handling der eingehenden Daten
+     * Hier wird die Steuerung des Spiels mit den Steuerungsdaten vom Smartphone kombiniert
+     * */
+    gameApi.frontendInboundMessage = function (data) {
+        var controllerEvent = controllerData.data.message;
+        var clientName = data.data.clientName;
+        var message = data.data.message;
+
+        switch (data.type) {
+            // Ein Client betritt oder verlaesst das Spiel
+            case "userConnection":
+                gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
+
+                if (message === 'connected') {
+                    // Was soll passieren wenn sich ein Client ins Spiel einloggt
+                } else if (message === 'disconnected') {
+                    // Was soll passieren, wenn sich ein Client das Spiel verlaesst
+                }
+                break;
+            // Ein Client sendet ein Button Event
+            case "button":
+                if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    // Was soll passieren, wenn Button A gedrueckt wird
+                } else if (controllerEvent.buttonName == 'btn-right' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    // Was soll passieren, wenn Button B gedrueckt wird
+                }
+                break;
+            case "accelerationData":
+                //Was passiert mit den Beschleunigungsdaten?
+                break;
+            case "orientationData":
+                //Was passiert mit den Rotationsdaten?
+                break;
+            default:
+                break;
+        }
+        \end{lstlisting}
+\end{figure}
 
 \section{Demonstration}
 \subsection{Vorbereitung}
