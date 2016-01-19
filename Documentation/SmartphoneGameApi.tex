@@ -136,17 +136,22 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.
 
 \subsection{Problemstellung}
+
+\begin{figure}[H]
+	\begin{minipage}[t]{0.4\textwidth}
+		\vspace{0pt}
+		\paragraph{Problemstellung}\mbox{}\\
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-\begin{figure}[h!]
-	\centering
-		\fbox{\includegraphics[width=12cm]{./images/FrontendInit.png}}
-		\caption{Nicht ausgelastet Bar}
-		\label{fig:FrontendInit}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.5\textwidth}
+		\vspace{0pt}
+		\fbox{\includegraphics[width=8cm]{./images/FrontendInit.png}}
+		\caption{3D Cube}
+		\label{fig:test2}
+	\end{minipage}
 \end{figure}
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.(siehe Abbildung \ref{fig:FrontendInit}).
-\\
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
 
 \section{Methodik}
 \subsection{Projektmanagement}
@@ -288,16 +293,23 @@ Die Basis aller weiteren Schritte ist das Auslesen der Sensordaten eines geeigne
 Die von der Applikation genutzten Daten sind im folgenden erläutert.
 \paragraph{Touchbildschirm}
 Die übliche Art der Interaktion mit einem aktuellen Smartphone, die Toucheingabe, darf natürlich nicht außer Acht gelassen werden. Da diese in der Entwicklung äußerst einfach zu implementieren ist, unteranderem über JQuerys .tap(), kann diese Eingabe als trivial angesehen und hier nicht weiter darauf eingegangen werden.
-\paragraph{Rotations- und Beschleunigungssensor}
+
+\begin{figure}[H]
+	\begin{minipage}[t]{0.4\textwidth}
+		\vspace{0pt}
+		\paragraph{Rotations- und Beschleunigungssensor}\mbox{}\\
 Diese Werte bilden den Kern der Applikation und sollen hier näher dargestellt werden:\\
 Die Interaktion über die Bewegung des Smartphones im dreidimensionalen Raum ist intuitiv und gut für jede denkbare Aufgabe geeignet. Die Datenerhebung erfolgt dabei für gewöhnlich durch Differentialkondensatoren und Drei-Achsen-Gyroskope.
 Da die Daten vom Gerät kontinuierlich in festgelegten Intervallen bestimmt werden, können diese auf komfortable Art und Weise ausgelesen werden. Die aufwändigere Arbeit ist die anschließende Verarbeitung und Filterung der Daten. Dies geschieht über ein zu setzendes Event, namentlich das \enquote{devicemotion} -Event, das bei jeder Änderung der Rotation oder Beschleunigung feuert und seine Daten beispielhaft in der Form event.acceleration.x; oder event.accelerationRate.alpha; bereitstellt, ebenso wie das Intervall der gemessenen Daten (in Millisekunden) über event.interval; verwendet werden kann.
-\begin{figure}[h]
-  \centering
-    \includegraphics{images/rotation}
-     \caption{Rotationsachen dargestellt}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.5\textwidth}
+		\vspace{0pt}
+		\fbox{\includegraphics[width=8cm]{./images/rotation}}
+		\caption{Rotationsachen dargestellt}
+		\label{fig:test2}
+	\end{minipage}
 \end{figure}
-
 Die Originalversion der Rotation und Berechnungen sind zu finden in den Aufzeichnungen von Damian Gordon\footnote{\url{http://de.slideshare.net/DamianGordon1/3d-robot-movements}}.
 Die Aufbereitung der Daten geschieht über eine Filterung aller leeren und ungültigen Daten, außerdem aller Daten, die darauf schließen lassen, dass keine Bewegung stattfand. Um eine Überlast der Datenverbindung zu verhindern wird eine Mittelung der ausgelesenen Daten als adäquates Mittel angesehen, diese kann über eine festgelegte Anzahl der Werte vorgenommen werden. Da Smartphones allerdings in einem unterschiedlichen Intervall Daten Messen, in der Entwicklung wurde eine Messung im Abstand von 50ms, 100ms und 200ms festgestellt, kann die Mittelung auch über einen gewissen Zeitwert vorgenommen werden.
 
@@ -316,34 +328,34 @@ Da dies einer der komplexeren Datentypen ist, den man mit dem Handy aufzeichnen 
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
     \includegraphics[width=8.5cm]{images/caniuseGetUserMedia}
-     \caption{Unterstützung der getUserMedia API auf caniuse.com}
-		\label{fig:test2}
+    \centering
+    \vspace{10 mm}
+    \includegraphics[width=8.5cm]{images/legende}
+    \caption{Unterstützung der getUserMedia API auf caniuse.com}
+	\label{fig:test2}
 \end{minipage}
 \end{figure}
 
 \begin{figure}[h]
-  \centering
-    \includegraphics{images/legende}
-     \caption{Legende:}
 \end{figure}
 
 
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Batteriestatus}\mbox{}\\
-Eine weitere Datenquelle ist der aktuelle Ladestatus (aktiv/inaktiv), die Batterieladung in Prozent und die Zeit zu vollständigen Ladung oder Entladung. Dies wird realisiert über die Battery Status API, die aktuell eine ähnliche Browserabdeckung erreicht wie die getUserMedia()-API.\\
-Die Verarbeitung der Daten geschieht hier wie in der Rotations- und Beschleunigungsmessung über EventListener, die jeweils auf die Events chargingchange, levelchange, chargingtimechange und dischargingtimechange reagieren und nach dem Schema battery.level; die gesuchten Daten ausgeben.
+%\begin{figure}[H]
+%\begin{minipage}[t]{0.4\textwidth}
+%\vspace{0pt}
+%\paragraph{Batteriestatus}\mbox{}\\
+%Eine weitere Datenquelle ist der aktuelle Ladestatus (aktiv/inaktiv), die Batterieladung in Prozent und die Zeit zu vollständigen Ladung oder %Entladung. Dies wird realisiert über die Battery Status API, die aktuell eine ähnliche Browserabdeckung erreicht wie die getUserMedia()-API.\\
+%Die Verarbeitung der Daten geschieht hier wie in der Rotations- und Beschleunigungsmessung über EventListener, die jeweils auf die Events %chargingchange, levelchange, chargingtimechange und dischargingtimechange reagieren und nach dem Schema battery.level; die gesuchten Daten %ausgeben.
 
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-    \includegraphics[width=8.5cm]{images/caniuseBatteryStatusAPI}
-     \caption{Unterstützung der Battery Status API auf caniuse.com}
-		\label{fig:test2}
-\end{minipage}
-\end{figure}
+%\end{minipage}
+%\hfill
+%\begin{minipage}[t]{0.5\textwidth}
+%\vspace{0pt}
+%    \includegraphics[width=8.5cm]{images/caniuseBatteryStatusAPI}
+%     \caption{Unterstützung der Battery Status API auf caniuse.com}
+%		\label{fig:test2}
+%\end{minipage}
+%\end{figure}
 
 \paragraph{Vibration}
 Im Gegensatz zu den anderen Daten geht es hierbei nicht um eine Ein-, sondern um eine Ausgabemethode. Die Benachrichtigung über Vibrationen ist in JavaScript denkbar einfach gestaltet, ist aber, ebenso wie die vorherigen APIs, nicht in jedem Browser verfügbar. Der letztliche Aufruf der Funktion geschieht über den Navigator, explizit über window.navigator.vibrate(), wobei die Länge und Art der Vibration angegeben werden kann.
@@ -534,7 +546,7 @@ Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden W
 Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden.
 
 
-\section{Conclusion} %% TODO: Chris
+\section{Fazit} %% TODO: Chris
 Alles super. Die erste Million ist nah!
 
 
