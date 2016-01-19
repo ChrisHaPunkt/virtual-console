@@ -4,4 +4,8 @@ Documentation/*.aux
 Documentation/*.out
 Documentation/*.gz*
 Documentation/SmartphoneGameApi.pdf
+Documentation/SmartphoneGameApi.bbl
+Documentation/SmartphoneGameApi.blg
+Documentation/references.bak
+Documentation/references.bib.bak
 .idea
