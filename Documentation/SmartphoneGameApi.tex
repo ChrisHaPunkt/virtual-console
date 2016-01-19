@@ -241,16 +241,22 @@ Smartphone Controller, Platformunabhängig Node Server
 
 
 \subsection{Architektur}
-
-\begin{figure}[h]
-	\centering
-		\fbox{\includegraphics[width=15cm]{./images/arch/M113.png}}
-		\caption{Virtuelle Maschinen vs. Docker Container\cite{dockercontainer}}
-		\label{fig:dockerVM}
+\begin{figure}[H]
+	\begin{minipage}[t]{0.4\textwidth}
+		\vspace{0pt}
+		\paragraph{Network}\mbox{}\\
+		Die Netzwerkverbindungen bilden einen wichtigen Bestandteil der Anwendung. Alle Clients und das Server-Frontend bzw. Spiel verbinden sich zum Server via WebSocket.
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.5\textwidth}
+		\vspace{0pt}
+		\includegraphics[width=8.5cm]{images/arch/M113.png}
+		\caption{Architektur der Applikation}
+		\label{fig:test2}
+	\end{minipage}
 \end{figure}
 
-\subsection{Network}
-Die Netzwerkverbindungen bilden einen wichtigen Bestandteil der Anwendung. Alle Clients und das Server-Frontend bzw. Spiel verbinden sich zum Server via WebSocket.
+
 
 \subsubsection{socket.io}
 Zum Aufbau und Handling der Netzwerkverbindungen wird die Bibliothek socket.io von Guillermo Rauch verwendet. Sie kapselt die WebSocket API Spezifikationen und bietet eine vereinfachte und einfach zu benutzende API zu den WebSockets auf Client und Server-Seite. Außerdem verfügt sie über Failover-Strategien, die das Verwenden von anderen Protokollen vorsehen, für den Fall, dass WebSockets vom Client oder Server nicht unterstützt werden.
