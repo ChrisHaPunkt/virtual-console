@@ -93,13 +93,11 @@ define([
             })
         }
     }
-    /** gameApi.controllerTemplates.*
-     * Hier trägt der Entwickler ein, welches Gamepad-Controller Layout
-     * auf dem Smartphone des Spielers angezeigt werden soll
-     * */
+    // gameApi.controllerTemplates.*
+    // Hier trägt der Entwickler ein, welches
     gameApi.controller = gameApi.controllerTemplates.MODERN;
     /**
-     * HANDSHAKE - bitte nicht modifizieren
+     * HANDSHAKE
      * */
     gameApi.frontendConnection = function (connInfoObj) {
         gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
@@ -107,38 +105,34 @@ define([
     };
 
     /**
-     * Handling der eingehenden Daten
-     * Hier wird die Steuerung des Spiels mit den Steuerungsdaten vom Smartphone kombiniert
+     * INCOMING DATA HANDLING
      * */
     gameApi.frontendInboundMessage = function (data) {
-        var controllerEvent = controllerData.data.message;
+
         var clientName = data.data.clientName;
         var message = data.data.message;
 
+        //console.log(data);
+
         switch (data.type) {
-            // Ein Client betritt oder verlässt das Spiel
             case "userConnection":
                 gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
 
                 if (message === 'connected') {
-                    // Was soll passieren wenn sich ein Client ins Spiel einloggt
+                    addCarIfPossible(clientName);
                 } else if (message === 'disconnected') {
-                    // Was soll passieren, wenn sich ein Client das Spiel verlässt
+                    removeCar(clientName);
                 }
                 break;
-            // Ein Client sendet ein Button Event
             case "button":
-                if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-                    // Was soll passieren, wenn Button A gedrückt wird
-                } else if (controllerEvent.buttonName == 'btn-right' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-                    // Was soll passieren, wenn Button B gedrückt wird
-                }
+                moveCar(carsToUser[clientName]);
+                console.log(clientName);
                 break;
             case "accelerationData":
-                //Was passiert mit den Beschleunigungsdaten?
+
                 break;
             case "orientationData":
-                //Was passiert mit den Rotationsdaten?
+                addLine(clientName, 'ORIENTATION | ' + message.orientationAlpha + ' | ' + message.orientationBeta + ' | ' + message.orientationGamma);
                 break;
             default:
                 break;
