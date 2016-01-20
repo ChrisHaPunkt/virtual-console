@@ -1,5 +1,4 @@
 
-
 %  article.tex (Version 3.3, released 19 January 2008)
 %  Article to demonstrate format for SPIE Proceedings
 %  Special instructions are included in this file after the
@@ -452,8 +451,7 @@ Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschn
 \vspace{0pt}
 
 \paragraph{Ergebnisse}\mbox{}\\
-Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 Als Pufferzone eingeplant werden.
-
+Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Das für die Tests verwendetet Gerät hat eine durchschnittliche sende Rate von 100 Paketen die Sekunde, was auf dem Testsystem zu einer angenommenen Maximalen Anzahl von 50 Geräten führt. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 als Pufferzone eingeplant werden.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
@@ -475,11 +473,10 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 \section{Ausblick}
 
 \paragraph{Glättung der Sensor Werte}
-Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
+Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich stark schwankenden Daten. So sendet ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Dies kann durch das einbauen eines thresholds für die Sensordaten erreicht werden.
 
 \paragraph{Begrenzung der gesendeten Sensor Daten}
 Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten und die Auslastung berechenbar zu machen, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden und hängen auch von der Anwendung ab welche an die API angebunden ist.
-
 
 \section{Fazit}
 Die Umsetzung zeigt ein flexibles und belastbares Framework, welches es ermöglicht ein Spiel unkompliziert mit einem mobilen Gerät zu bedienen.
