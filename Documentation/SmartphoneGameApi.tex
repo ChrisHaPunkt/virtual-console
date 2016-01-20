@@ -208,13 +208,13 @@ In diesem Projekt setzen wir auf HTML5 um die Sensordaten der Geräte auszulesen
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{jQuery}\mbox{}\\
-jQuery ist ein schnelles, kleines und feature-rich-JavaScript-Bibliothek. Es macht die Dinge wie HTML-Dokument-Traversal und Manipulation, Ereignisverarbeitung, Animation und Ajax mit einer einfach zu bedienendes API, die über eine Vielzahl von Browsern funktioniert viel einfacher. Mit einer Kombination aus Vielseitigkeit und Erweiterbarkeit, hat jQuery die Art und Weise, dass Millionen von Menschen zu schreiben JavaScript geändert.
+jQuery ist ein schnelle, kleine und einfach zu bedienende JavaScript-Bibliothek. Sie ermöglicht Dinge wie das einfache modifizieren von HTML, Ereignisverarbeitung, Animation und Ajax.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{require.js}\mbox{}\\
-RequireJS ist eine JavaScript-Datei und Modul-Lader. Es ist für die In-Browser-Einsatz optimiert, aber es kann in anderen JavaScript-Umgebungen wie Rhino und Knoten verwendet werden. Mit Hilfe eines modularen Script loader wie RequireJS wird die Geschwindigkeit und Qualität des Codes zu verbessern.
+RequireJS ist eine Bibliothek um einfach JavaScript-Datei und Modul zu laden. Es ist für die In-Browser-Einsatz optimiert, kann allerdings auch in anderen JavaScript-Umgebungen wie Rhino und Note verwendet werden.
 \end{minipage}
 \end{figure}
 
@@ -223,9 +223,8 @@ RequireJS ist eine JavaScript-Datei und Modul-Lader. Es ist für die In-Browser-
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{socket.io}\mbox{}\\
-Socket.IO ist eine JavaScript-Bibliothek für Echtzeit-Web-Anwendungen. Es ermöglicht Echtzeit, bidirektionale Kommunikation zwischen Web-Clients und Servern. Es besteht aus zwei Teilen: einem Client-seitige Bibliothek, die im Browser läuft und eine serverseitige Bibliothek für node.js. Beide Komponenten haben eine nahezu identische API. Wie node.js Es ist ereignisgesteuert.
-////
-Socket.IO nutzt in erster Linie die WebSocket-Protokoll mit Polling als Fallback-Option, [2] und gleichzeitig die gleiche Schnittstelle. Obwohl es einfach als Wrapper für WebSocket verwendet werden, bietet es viele weitere Funktionen, einschließlich der Rundfunk mehrere Steckdosen, die Speicherung von Daten mit jedem Kunden zugeordnet und asynchrone I / O.
+Socket.IO ist eine JavaScript-Bibliothek für Echtzeit-Web-Anwendungen. Es ermöglicht eine bidirektionale Kommunikation zwischen Web-Clients und Servern und besteht aus zwei Teilen: Einer Client-seitigen Bibliothek, welche im Browser läuft und einer serverseitigen Bibliothek für node.js. Beide Komponenten haben eine nahezu identische API und sind event gesteuert.
+
 
 Es kann mit dem NPM-Tool installiert werden. [3] [4]
 \end{minipage}
@@ -233,9 +232,7 @@ Es kann mit dem NPM-Tool installiert werden. [3] [4]
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{MongoDB}\mbox{}\\
-MongoDB (abgeleitet vom engl. humongous, „gigantisch“) ist eine Schema-freie, dokumentenorientierte Open-Source-Datenbank, die in der Programmiersprache C++ geschrieben ist.[1][2] Da die Datenbank dokumentenorientiert ist, kann sie Sammlungen von JSON-ähnlichen Dokumenten verwalten. So können viele Anwendungen Daten auf natürlichere Weise modellieren, da die Daten zwar in komplexen Hierarchien verschachtelt werden können, dabei aber immer abfragbar und indizierbar bleiben.
-////
-Die Entwicklung von MongoDB begann im Oktober 2007 durch das Unternehmen 10gen, welches am 27. August 2013 in MongoDB, Inc. umbenannt wurde. [3] Die Erstveröffentlichung fand im Februar 2009 statt.[4] MongoDB war 2012 die am weitesten verbreitete NoSQL-Datenbank.[5]
+MongoDB ist eine Schema-freie, dokumentenorientierte Open-Source-Datenbank, die in der Programmiersprache C++ geschrieben ist. Da die Datenbank dokumentenorientiert ist, kann sie Sammlungen von JSON-ähnlichen Dokumenten verwalten. Dadurch lässt sie sich leicht mit JavaScript zusammen benutzen und wurde von uns gewählt.
 \end{minipage}
 \end{figure}
 
@@ -501,63 +498,26 @@ Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen
 \paragraph{Szenario} 
 Der Server wird nach und nach mit immer mehr Paketen belastet und die CPU-Auslastung ermittelt.
 
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
+
 \paragraph{Durchführung}\mbox{}\\
 Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrecht erhalten wurden.
 
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-	\centering
-	\includegraphics[width=1\textwidth]{./images/ServerLast1.png}
-	\caption{ServerLast1}
-	\label{fig:ServerLast1}
-\end{minipage}
-\end{figure}
-
-\begin{figure}[H]
 \begin{minipage}[t]{0.4\textwidth}
-\vspace{0pt}
-\paragraph{Ergebnisse}\mbox{}\\
-Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast1} zeigt Messwerte bei 0 - 10 Paketen und das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab ca. 3500 Paketen in einem geringerem maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
-
+	\vspace{0pt}
+	\paragraph{Ergebnisse}\mbox{}\\
+	Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab circa 3500 Paketen in einem geringerem maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-	\centering
-	\includegraphics[width=1\textwidth]{./images/ServerLast3.png}
-	\caption{ServerLast2}
-	\label{fig:ServerLast2}
+	\begin{figure}[H]	
+	\vspace{0pt}
+		\centering
+		\includegraphics[width=1\textwidth]{./images/ServerLast3.png}
+		\caption{ServerLast2}
+		\label{fig:ServerLast2}
+	\end{figure}		
 \end{minipage}
-\end{figure}
 
-
-%\begin{table}
-%	\label{table:CPUMesswerte}
-%	\centering	
-%	\begin{tabular}{| L{2cm} | L{2cm} | L{2cm} |}
-%		\hline
-	%	\rowcolor{blau}
-	%	\textcolor{white}{\textbf{Pakete/sec}} & \textcolor{white}{\textbf{CPU Last in \% (Server)}} & \textcolor{white}{\textbf{CPU Last in \% (Client)}} \\\hline
-%		0 	& 0,00	& \\\hline
-%		1 	& 0,06 	& \\\hline
-%		2 	& 0,14	& \\\hline
-%		3 	& 0,18	& \\\hline
-	%	4 	& 0,23	& \\\hline
-	%	5 	& 0,30	& \\\hline
-	%	6 	& 0,31	& \\\hline
-	%	7 	& 0,44	& \\\hline
-	%	8 	& 0,49	& \\\hline
-	%	9 	& 0,55	& \\\hline
-	%	10 	& 0,54	& \\\hline
-	%	100 & 3,45	& \\\hline
-%	\end{tabular}
-%	\caption{CPU Messwerte}
-%\end{table}
 
 \subsubsection{Frontend}
 
@@ -569,23 +529,25 @@ Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschn
 
 
 
-\begin{figure}[H]
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
+
 \paragraph{Ergebnisse}\mbox{}\\
 Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Bei der Annahme das ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 Als Pufferzone eingeplant werden.
 
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-	\centering
-	\centering
-	\includegraphics[width=1\textwidth]{./images/LatenzMessung.png}
-	\caption{LatenzMessung}
-	\label{fig:LatenzMessung}
+	\begin{figure}[H]
+	\vspace{0pt}
+		\centering
+		\centering
+		\includegraphics[width=1\textwidth]{./images/LatenzMessung.png}
+		\caption{LatenzMessung}
+		\label{fig:LatenzMessung}
+	\end{figure}	
 \end{minipage}
-\end{figure}
+
 
 
 %%
