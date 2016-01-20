@@ -173,7 +173,7 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 		\begin{tabular}{| L{2.6cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} | C{2cm} |}
 		\hline
 		\rowcolor{blau}
-		\textcolor{white}{\textbf{Aufgabe}} & \textcolor{white}{\textbf{Schleiss}} & \textcolor{white}{\textbf{Grothknopf}} & \textcolor{white}{\textbf{Schiwkowksi}} & \textcolor{white}{\textbf{Hofmann}} & \textcolor{white}{\textbf{Heinrichs}}\\\hline
+		\textcolor{white}{\textbf{Aufgabe}} & \textcolor{white}{\textbf{Schleiss}} & \textcolor{white}{\textbf{Grothkopf}} & \textcolor{white}{\textbf{Schiwkowski}} & \textcolor{white}{\textbf{Hofmann}} & \textcolor{white}{\textbf{Heinrichs}}\\\hline
 		Recherche 		& X & X	& X	& X	& X	\\\hline
 		Konzept 		& X & X	& X	& X	& X	\\\hline
 		Serverdesign	& 	& X & 	& 	& X \\\hline
@@ -182,9 +182,8 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 		DemoGame 		& X	&	&	&	& X	\\\hline
 		ClientFrontend 	& X	&	& X	&	&	\\\hline
 		ClientBackend 	& X	&	& X	&	&	\\\hline
-		Database 	    & 	&	&	& X	& 	\\\hline
-		Poster          & 	& 	& 	& 	& 	\\\hline
-		Documentation   & 	& 	& 	& 	& X \\\hline
+		Userhandling 	& 	&	&	& X	& 	\\\hline
+		Documentation   & X	& X & X	& X	& X \\\hline
 		Projektmgmt. 	&	&	&	& 	& X	\\\hline
 	\end{tabular}
 \end{table}
@@ -274,7 +273,7 @@ verwendet werden.\footnote{\url{https://davidwalsh.name/websocket} [3] [4]}
 \subsubsection{Server Network Handling}
 Die Anwendung besteht aus einem zentralen node Server, einem Frontend zur Darstellung des Spiels und eine unbestimmte Anzahl an mobilen Clients. Alle Komponenten stellen jeweils eine WebSocket Verbindung zum Server her, der diese so zentral verwalten kann. Durch die Implementation der selbst geschriebenen Module 'gameApi' und 'clientNetwork' werden die Funktionen der WebSockets erneut gekapselt und ermöglichen eine stark angepasste Verwendung.\\
 Der Server hält zu jeder Zeit eine Liste aller offenen Socket-Verbindungen, was es ermöglich individuell mit jedem Client und dem Frontend zu kommunizieren und eingehende Nachrichten direkt einem Absender zuzuordnen. Auf diesem Level der Kommunikation wurden grundlegende Socket-Events zum Verbindungsaufbau, der Nutzerverwaltung sowie dem Verschicken der eigentlichen Nachrichten implementiert. Abhängig vom Typ der eingehenden Nachricht werden die Funktionen der nächst-höheren Programmschicht aufgerufen, die diese dem Netzwerk Modul bei der Initialisierung per Callback übergeben hat. Die eigentlichen Socket-Events werden an dieser Stelle nicht weitergegeben, um die technische Socket-Logik komplett im Modul zu kapseln. Die Struktur der einzelnen Nachrichtentypen wurde genau definiert. Besonders im Fall der tatsächlichen Nachtrichten Pakete wurde ein weiteres 'type' Attribut eingefügt, die es dem Spieleentwickler erlaubt unabhängig von den Socket Events eigene Nachrichten-Typen zu definieren. Ein weiterer wichtiger Aspekt ist die Art und Weise in der die Sockets auf Client-Seite aufgebaut werden.\\
-Zusätzlich bietet das 'serverNetwork' Modul eine Reihe an Funktionen an, mit den Clients und dem Frontend zu kommunizieren und diese zu verwalten \cite{js-object2pages},\cite{js-persistencewebsockets} .
+Zusätzlich bietet das 'serverNetwork' Modul eine Reihe an Funktionen an, mit den Clients und dem Frontend zu kommunizieren und diese zu verwalten.\footnote{\url{http://stackoverflow.com/questions/7709289/how-to-pass-javascript-object-from-one-page-to-other} und \url{http://tavendo.com/blog/post/websocket-persistent-connections/}}
 
 
 \subsection{Session}
@@ -475,8 +474,6 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 %%
 \section{Ausblick}
 
-\paragraph{QRCode} %% TODO: Micha
-    Busstop sinnvoll, gameApi.printQRCode()
 \paragraph{Glättung der Sensor Werte}
 Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
@@ -494,11 +491,9 @@ Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% References %%%%%
- \renewcommand{\bibname}{Referenzen}
+
 \bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
 
-\nocite{}
-\bibliography{references}   %>>>> bibliography data in report.bib
 
 \appendix
 \begin{appendices}

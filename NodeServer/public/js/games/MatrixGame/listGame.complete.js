@@ -2,6 +2,8 @@
  * Created by hannes on 12.01.2016.
  */
 define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrcode) {
+    gameApi.logLevel = gameApi.log.INFO;
+    gameApi.controller = gameApi.controllerTemplates.MODERN;
 
     var domContainer = $("#3d");
     var run = true;
@@ -22,9 +24,6 @@ define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrc
      * INCOMING DATA HANDLING
      * */
     gameApi.frontendInboundMessage = function (data) {
-
-
-/*
 
         var clientName = data.data.clientName;
         var message = data.data.message;
@@ -53,23 +52,8 @@ define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrc
             default:
                 break;
         }
- */
-
-
     };
 
-
-/*
-    gameApi.logLevel = gameApi.log.INFO;
-    gameApi.controller = gameApi.controllerTemplates.MODERN;
-*/
-
-
-
-
-    /*
-    Game-Anwendung
-     */
     var initUserContainer = function (name) {
         //  domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
 
