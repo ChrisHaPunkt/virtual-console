@@ -185,13 +185,14 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{NodeJS / Javascript}\mbox{}\\
-Was ist NodeJS, Warum genutzt
+NodeJS ist eine Laufzeitumgebung für JavaScript und basiert auf der Chrome's V8 JavaScript engine. 
+
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{HTML 5}\mbox{}\\
-Was kann HTML5, was nutzen wir für HTML 5 Features
+In diesem Projekt setzen wir auf HTML5 um die Sensordaten der Geräte auszulesen. Dies ist durch das neue HTML5 einfach umzusetzen.
 \end{minipage}
 \end{figure}
 
@@ -201,30 +202,34 @@ Was kann HTML5, was nutzen wir für HTML 5 Features
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{jQuery}\mbox{}\\
-jQuery Content
+jQuery ist ein schnelles, kleines und feature-rich-JavaScript-Bibliothek. Es macht die Dinge wie HTML-Dokument-Traversal und Manipulation, Ereignisverarbeitung, Animation und Ajax mit einer einfach zu bedienendes API, die über eine Vielzahl von Browsern funktioniert viel einfacher. Mit einer Kombination aus Vielseitigkeit und Erweiterbarkeit, hat jQuery die Art und Weise, dass Millionen von Menschen zu schreiben JavaScript geändert.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{require.js}\mbox{}\\
-Require.js Content
+RequireJS ist eine JavaScript-Datei und Modul-Lader. Es ist für die In-Browser-Einsatz optimiert, aber es kann in anderen JavaScript-Umgebungen wie Rhino und Knoten verwendet werden. Mit Hilfe eines modularen Script loader wie RequireJS wird die Geschwindigkeit und Qualität des Codes zu verbessern.
 \end{minipage}
 \end{figure}
-
-
 
 
 \begin{figure}[H]
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{socket.io}\mbox{}\\
-Socket.io Content
+Socket.IO ist eine JavaScript-Bibliothek für Echtzeit-Web-Anwendungen. Es ermöglicht Echtzeit, bidirektionale Kommunikation zwischen Web-Clients und Servern. Es besteht aus zwei Teilen: einem Client-seitige Bibliothek, die im Browser läuft und eine serverseitige Bibliothek für node.js. Beide Komponenten haben eine nahezu identische API. Wie node.js Es ist ereignisgesteuert.
+////
+Socket.IO nutzt in erster Linie die WebSocket-Protokoll mit Polling als Fallback-Option, [2] und gleichzeitig die gleiche Schnittstelle. Obwohl es einfach als Wrapper für WebSocket verwendet werden, bietet es viele weitere Funktionen, einschließlich der Rundfunk mehrere Steckdosen, die Speicherung von Daten mit jedem Kunden zugeordnet und asynchrone I / O.
+
+Es kann mit dem NPM-Tool installiert werden. [3] [4]
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{MongoDB}\mbox{}\\
-Was kann MongoDB, Warum MongoDB
+MongoDB (abgeleitet vom engl. humongous, „gigantisch“) ist eine Schema-freie, dokumentenorientierte Open-Source-Datenbank, die in der Programmiersprache C++ geschrieben ist.[1][2] Da die Datenbank dokumentenorientiert ist, kann sie Sammlungen von JSON-ähnlichen Dokumenten verwalten. So können viele Anwendungen Daten auf natürlichere Weise modellieren, da die Daten zwar in komplexen Hierarchien verschachtelt werden können, dabei aber immer abfragbar und indizierbar bleiben.
+////
+Die Entwicklung von MongoDB begann im Oktober 2007 durch das Unternehmen 10gen, welches am 27. August 2013 in MongoDB, Inc. umbenannt wurde. [3] Die Erstveröffentlichung fand im Februar 2009 statt.[4] MongoDB war 2012 die am weitesten verbreitete NoSQL-Datenbank.[5]
 \end{minipage}
 \end{figure}
 
@@ -525,7 +530,7 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
 \paragraph{Begrenzung der gesendeten Sensor Daten} %%TODO: Dennis
-Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden.
+Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten und die Auslastung berechenbar zu machen, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden und hängen auch von der Anwendung ab welche an die API angebunden ist.
 
 
 \section{Conclusion} %% TODO: Chris
