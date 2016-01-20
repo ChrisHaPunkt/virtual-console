@@ -500,7 +500,7 @@ Der Server wird nach und nach mit immer mehr Paketen belastet und die CPU-Auslas
 
 
 \paragraph{Durchführung}\mbox{}\\
-Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrecht erhalten wurden.
+Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrecht erhalten wurden. Das Testsystem war dabei mit einem Intel(R) Xeon(R) CPU E3-1241 v3 @ 3.50GHz ausgestattet.
 
 \begin{minipage}[t]{0.4\textwidth}
 	\vspace{0pt}
@@ -513,7 +513,7 @@ Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-ins
 	\vspace{0pt}
 		\centering
 		\includegraphics[width=1\textwidth]{./images/ServerLast3.png}
-		\caption{ServerLast2}
+		\caption{Serverlast bei 0 - 5500 Paketen}
 		\label{fig:ServerLast2}
 	\end{figure}		
 \end{minipage}
@@ -543,7 +543,7 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 		\centering
 		\centering
 		\includegraphics[width=1\textwidth]{./images/LatenzMessung.png}
-		\caption{LatenzMessung}
+		\caption{Geräte Latenz Messung}
 		\label{fig:LatenzMessung}
 	\end{figure}	
 \end{minipage}
@@ -606,13 +606,7 @@ Alles super. Die erste Million ist nah!
 	\label{m113}
 \end{figure}
 
-\section{}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth]{images/ServerLast1.png}
-	\caption{ServerLast1}
-	\label{serverlast1}
-\end{figure}
+
 
 \section{}
 \begin{figure}[H]
@@ -625,8 +619,25 @@ Alles super. Die erste Million ist nah!
 \section{}
 \begin{figure}[H]
 	\centering
+	\includegraphics[width=1\textwidth]{images/ServerLast1.png}
+	\caption{ServerLast 0 - 10 Pakete}
+	\label{serverlast1}
+\end{figure}
+
+\section{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{images/ServerLast2.png}
+	\caption{ServerLast 10 - 100 Pakete}
+	\label{serverlast1-2}
+\end{figure}
+
+
+\section{}
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=1\textwidth]{images/ServerLast3.png}
-	\caption{ServerLast2}
+	\caption{ServerLast 0 - 55000 Pakete}
 	\label{serverlast2}
 \end{figure}
 
