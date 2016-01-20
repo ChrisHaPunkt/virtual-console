@@ -144,7 +144,7 @@ Das vorliegende Dokument beschreibt die Entwicklung eines Frameworks, welches es
 %	\begin{minipage}[t]{0.4\textwidth}
 %		\vspace{0pt}
 		\paragraph{Problemstellung}\mbox{}\\
-Die Möglichkeit ein Spiel komfortabel mit einem mobilen Gerät zu verbinden und zu steuern soll im Folgenden unseren Beschreibungen zugrunde liegen. Hierzu werden verschiedene Technologien miteinander verbunden und genutzt.\\
+Die Möglichkeit ein Spiel komfortabel mit einem mobilen Gerät zu verbinden und zu steuern soll im folgenden unseren Beschreibungen zugrunde liegen. Hierzu werden verschiedene Technologien miteinander verbunden und genutzt.\\
 Eine Möglichkeit zu schaffen komfortabel an einem Spiel teilzunehmen, als Beispiel an einem Flughafen per QR-Code einem laufenden Spiel beizutreten, motivierte uns zu diesem Thema.
 %	\end{minipage}
 %	\hfill
@@ -217,7 +217,7 @@ jQuery ist ein schnelle, umfangreiche und einfach zu bedienende JavaScript-Bibli
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{require.js}\mbox{}\\
-RequireJS ist eine Bibliothek, um JavaScript-Dateien und Module zu laden. Es ist für den In-Browser-Einsatz optimiert, kann allerdings auch in anderen JavaScript-Umgebungen wie Rhino und Note verwendet werden.
+RequireJS ist eine Bibliothek um einfach JavaScript-Dateien und Module zu laden. Es ist für den In-Browser-Einsatz optimiert, kann allerdings auch in anderen JavaScript-Umgebungen wie Rhino und Note verwendet werden.
 \end{minipage}
 \end{figure}
 
@@ -226,7 +226,7 @@ RequireJS ist eine Bibliothek, um JavaScript-Dateien und Module zu laden. Es ist
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{socket.io}\mbox{}\\
-Das Framework \enquote{socket.io} wird in Abschnitt \ref{socketio} ausführlich beschrieben.
+Das Framework \enquote{socket.io} wird in Abschitt \ref{socketio} ausführlich beschrieben.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
@@ -238,7 +238,7 @@ MongoDB ist eine Schema-freie, dokumentenorientierte Open-Source-Datenbank, die 
 
 
 \subsubsection{Hardware}
-Die Server Hardware kann je nach Bedarf eine Server- oder Desktopumgebung sein. Der NodeJS Server kann plattformunabhängig auf so gut wie allen Plattformen genutzt werden.\\
+Die Server Hardware kann je nach Bedarf eine Server- oder Desktopumgebung sein. Der NodeJS Server kann platformunabhängig auf so gut wie allen Platformen genutzt werden.\\
 Als Eingabegerät sind Mobile Geräte wie Smartphones oder Tablets angedacht. Mit ihren Sensoren und Touchdisplays sind diese prädestiniert.
 %
 % -----------------Implementierung-------------------------
@@ -267,29 +267,29 @@ Als Eingabegerät sind Mobile Geräte wie Smartphones oder Tablets angedacht. Mi
 
 \subsubsection{socket.io}\label{socketio}
 Zum Aufbau und Handling der Netzwerkverbindungen wird die Bibliothek socket.io von Guillermo Rauch verwendet. Sie kapselt die WebSocket API Spezifikationen und bietet eine vereinfachte und einfach zu benutzende API zu den WebSockets auf Client und Server-Seite. Außerdem verfügt sie über Failover-Strategien, die das Verwenden von anderen Protokollen vorsehen, für den Fall, dass WebSockets vom Client oder Server nicht unterstützt werden.\\
-Auf node Server Seite werden die Pakete 'http' und 'socket.io' benötigt. Erstes um einen HTTP-Server zu erstellen und Letzteres, um diesen dann zu einer WebSocket Verbindung aufzuwerten und diese dann zu verwalten. Grundlegen wird die Verbindung mit Hilfe von message Events implementiert, welche auf dem jeweiligen Socket ausgelöst und abgehört werden können. Dieses Prinzip ähnelt stark den von node bekannten Events. Eine Client-Version von socket.io wird vom Server automatisch veröffentlicht und kann so auf dem Client direkt eingebunden und
+Auf node Server Seite werden die Pakete 'http' und 'socket.io' benötigt. Erstes um einen HTTP-Server zu erstellen und letzteres, um diesen dann zu einer WebSocket Verbindung aufzuwerten und diese dann zu verwalten. Grundlegen wird die Verbindung mit Hilfe von message Events implementiert, welche auf dem jeweiligen Socket ausgelöst und abgehört werden können. Dieses Prinzip ähnelt stark den von node bekannten Events. Eine Client-Version von socket.io wird vom Server automatisch veröffentlich und kann so auf dem Client direkt eingebunden und
 verwendet werden.\footnote{\url{https://davidwalsh.name/websocket} [3] [4]}
 
 
 \subsubsection{Server Network Handling}
 Die Anwendung besteht aus einem zentralen node Server, einem Frontend zur Darstellung des Spiels und eine unbestimmte Anzahl an mobilen Clients. Alle Komponenten stellen jeweils eine WebSocket Verbindung zum Server her, der diese so zentral verwalten kann. Durch die Implementation der selbst geschriebenen Module 'gameApi' und 'clientNetwork' werden die Funktionen der WebSockets erneut gekapselt und ermöglichen eine stark angepasste Verwendung.\\
-Der Server hält zu jeder Zeit eine Liste aller offenen Socket-Verbindungen, was ihm ermöglicht individuell mit jedem Client und dem Frontend zu kommunizieren und eingehende Nachrichten direkt einem Absender zuzuordnen. Auf diesem Level der Kommunikation wurden grundlegende Socket-Events zum Verbindungsaufbau, der Nutzerverwaltung sowie dem Verschicken der eigentlichen Nachrichten implementiert. Abhängig vom Typ der eingehenden Nachricht werden die Funktionen der nächst-höheren Programmschicht aufgerufen, die diese dem Netzwerk Modul bei der Initialisierung per Callback übergeben hat. Die eigentlichen Socket-Events werden an dieser Stelle nicht weitergegeben, um die technische Socket-Logik komplett im Modul zu kapseln. Die Struktur der einzelnen Nachrichtentypen wurde genau definiert. Besonders im Fall der tatsächlichen Nachtrichten Pakete wurde ein weiteres 'type' Attribut eingefügt, die es dem Spieleentwickler erlaubt unabhängig von den Socket Events eigene Nachrichten-Typen zu definieren. Ein weiterer wichtiger Aspekt ist die Art und Weise, in der die Sockets auf Client-Seite aufgebaut werden.\\
+Der Server hält zu jeder Zeit eine Liste aller offenen Socket-Verbindungen, was es ermöglich individuell mit jedem Client und dem Frontend zu kommunizieren und eingehende Nachrichten direkt einem Absender zuzuordnen. Auf diesem Level der Kommunikation wurden grundlegende Socket-Events zum Verbindungsaufbau, der Nutzerverwaltung sowie dem Verschicken der eigentlichen Nachrichten implementiert. Abhängig vom Typ der eingehenden Nachricht werden die Funktionen der nächst-höheren Programmschicht aufgerufen, die diese dem Netzwerk Modul bei der Initialisierung per Callback übergeben hat. Die eigentlichen Socket-Events werden an dieser Stelle nicht weitergegeben, um die technische Socket-Logik komplett im Modul zu kapseln. Die Struktur der einzelnen Nachrichtentypen wurde genau definiert. Besonders im Fall der tatsächlichen Nachtrichten Pakete wurde ein weiteres 'type' Attribut eingefügt, die es dem Spieleentwickler erlaubt unabhängig von den Socket Events eigene Nachrichten-Typen zu definieren. Ein weiterer wichtiger Aspekt ist die Art und Weise in der die Sockets auf Client-Seite aufgebaut werden.\\
 Zusätzlich bietet das 'serverNetwork' Modul eine Reihe an Funktionen an, mit den Clients und dem Frontend zu kommunizieren und diese zu verwalten \cite{js-object2pages},\cite{js-persistencewebsockets} .
 
 
 \subsection{Session}
-Die nächste Schicht nach dem Netzwerk stellt auf Server-Seite das Modul 'sessionHandling' dar. Hier werden die noch anonymen Socket-Verbindungen bzw. deren IDs mit tatsächlichen Nutzernamen und der zugrundeliegenden Nutzerverwaltung verknüpft. Dies bedeutet zunächst, dass jeder Client sich zum Benutzen der Anwendung am Server authentifizieren muss. Jede eingehende Login-Anfrage wird an das Modul 'UserManagement' weitergeleitet, um die übergebenden Nutzerdaten zu verifizieren. Nach einem erfolgreichen Login werden die Daten des Nutzers in eine Liste aktiver Nutzer gespeichert und sein Nutzername wird an die nächste Schicht weiter gegeben. Beim Disconnet eines Nutzers wird sein Eintrag aus der Liste gelöscht und es wird ebenfalls eine Nachricht an die nächste Programm-Schicht übergeben. Alle Nachrichten, die tatsächliche Kommunikationsdaten beinhalten werden direkt weitergegeben.\\
-Ein Login bedeutet notwendigerweise eine zuvor erfolgte Registrierung, welche ebenfalls vom 'UserManagement' Modul verwaltet wird. Um die Registrierung jedoch nicht zu einer unnötigen Barriere in der Verwendung der Applikation zu machen, ist es ebenfalls möglich, sich anonym einzuloggen. In diesem Fall wird der jeweiligen Socket-Verbindung ein zufälliger Nutzername zugewiesen. Der Vorteil eines Nutzerkontos bietet die Möglichkeit für das Spiel, Session übergreifend Daten für die Benutzer zu speichern.\\
+Die nächste Schicht nach dem Netzwerk stellt auf Server-Seite das Modul 'sessionHandling' dar. Hier werden die noch anonymen Socket-Verbindungen bzw. deren IDs mit tatsächlichen Nutzernamen und der zugrundeliegenden Nutzerverwaltung verknüpft. Dies bedeutet zunächst, dass jeder Client sich zum Benutzen der Anwendung am Server authentifizieren muss. Jede eingehende Login-Anfrage wird an das Modul 'UserManagement' weitergeleitet um die übergebenden Nutzerdaten zu verifizieren. Nach einem erfolgreichen Login werden die Daten des Nutzers in eine Liste aktiver Nutzer gespeichert und sein Nutzername wird an die nächste Schicht weiter gegeben. Beim Disconnet eines Nutzers wird sein Eintrag aus der Liste gelöscht und es wird ebenfalls eine Nachricht an die nächste Programm-Schicht übergeben. Alle Nachrichten, die tatsächliche Kommunikationsdaten beinhalten werden direkt weitergegeben.\\
+Ein Login bedeutet notwendigerweise eine zuvor erfolgte Registrierung, welche ebenfalls vom 'UserManagement' Modul verwaltet wird. Um die Registrierung jedoch nicht zu einer unnötigen Barriere in der Verwendung der Applikation zu machen, ist es ebenfalls möglich sich anonym einzuloggen. In diesem Fall wird der jeweiligen Socket-Verbindung ein zufälliger Nutzername zugewiesen. Der Vorteil eines Nutzerkontos bietet die Möglichkeit für das Spiel, Session übergreifend Daten für die Benutzer zu speichern.\\
 Die Login-Sessions sind direkt an eine bestehende Socket-Verbindung gekoppelt und werden beendet, sobald der Socket geschlossen wird.
 \subsection{User Management}
 Das \enquote{UserManagement} kümmert sich um die Verwaltung der Nutzer. Dafür stellt es Funktionen für die Registrierung, Authentifizierung sowie für das setzen und holen von Benutzerdaten zur Verfügung. Die Funktionen im \enquote{UserManagement} bekommen eine callback Funktion übergeben, welche bei einer erfolgreichen Ausführung ausgeführt wird.
 
 \subsection{Datenbank}
-Das "Database" Modul kümmert sich um die persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
+Das "Database" Modul kümmert sich um die Persistente Speicherung aller anfallenden Daten. Dafür wird eine MongoDB verwendete und die für das hinzufügen, löschen, updaten und für Abfragen benötigten Funktionen zur Verfügung gestellt.
 
 \subsection{Mobile - Sensoren und Daten}
-Die Basis aller weiteren Schritte ist das Auslesen der Sensordaten eines geeigneten Gerätes, während der gesamten Entwicklung wurden hierfür Smartphones unterschiedlicher Hersteller und Generationen verwenden. Die Daten wurden auf dem Gerät gemessen, aufbereitet und als gekapselte Datenpakete an den vorgesehenen Empfänger gesandt. Die Datenaufbereitung ist ein wichtiger Schritt, um die Netzwerklast am Knotenpunkt, dem Server, möglichst gering zu halten, da mehrere Geräte gleichzeitig eine Verbindung herstellen und aufrechterhalten können und dies zu einer Überlast des Empfängers bei unkontrolliertem Sendevolumen führt.\\
-Die von der Applikation genutzten Daten sind im Folgenden erläutert.
+Die Basis aller weiteren Schritte ist das Auslesen der Sensordaten eines geeigneten Gerätes, während der gesamten Entwicklung wurden hierfür Smartphones unterschiedlicher Hersteller und Generationen verwenden. Die Daten wurden auf dem Gerät gemessen, aufbereitet und als gekapselte Datenpakete an den vorgesehenen Empfänger gesandt. Die Datenaufbereitung ist ein wichtiger Schritt, um die Netzwerklast am Knotenpunkt, dem Server, möglichst gering zu halten, da mehrere Geräte gleichzeitig eine Verbindung herstellen und aufrecht erhalten können und dies zu einer Überlast des Empfängers bei unkontrolliertem Sendevolumen führt.\\
+Die von der Applikation genutzten Daten sind im folgenden erläutert.
 \paragraph{Touchbildschirm}
 Die übliche Art der Interaktion mit einem aktuellen Smartphone, die Toucheingabe, darf natürlich nicht außer Acht gelassen werden. Da diese in der Entwicklung äußerst einfach zu implementieren ist, unteranderem über JQuerys .tap(), kann diese Eingabe als trivial angesehen und hier nicht weiter darauf eingegangen werden.
 
@@ -310,14 +310,14 @@ Da die Daten vom Gerät kontinuierlich in festgelegten Intervallen bestimmt werd
 %	\end{minipage}
 %\end{figure}
 Die Originalversion der Rotation und Berechnungen sind zu finden in den Aufzeichnungen von Damian Gordon\footnote{\url{http://de.slideshare.net/DamianGordon1/3d-robot-movements}}.\\
-Die Aufbereitung der Daten geschieht über eine Filterung aller leeren und ungültigen Daten, außerdem aller Daten, die darauf schließen lassen, dass keine Bewegung stattfand. Um eine Überlastung der Datenverbindung zu verhindern, wird eine Mittelung der ausgelesenen Daten als adäquates Mittel angesehen, diese kann über eine festgelegte Anzahl der Werte vorgenommen werden. Da Smartphones allerdings in einem unterschiedlichen Intervall Daten messen, in der Entwicklung wurde eine Messung im Abstand von 50ms, 100ms und 200ms festgestellt, kann die Mittelung auch über einen gewissen Zeitwert vorgenommen werden.
+Die Aufbereitung der Daten geschieht über eine Filterung aller leeren und ungültigen Daten, außerdem aller Daten, die darauf schließen lassen, dass keine Bewegung stattfand. Um eine Überlast der Datenverbindung zu verhindern wird eine Mittelung der ausgelesenen Daten als adäquates Mittel angesehen, diese kann über eine festgelegte Anzahl der Werte vorgenommen werden. Da Smartphones allerdings in einem unterschiedlichen Intervall Daten Messen, in der Entwicklung wurde eine Messung im Abstand von 50ms, 100ms und 200ms festgestellt, kann die Mittelung auch über einen gewissen Zeitwert vorgenommen werden.
 
 \paragraph{Ausrichtung des Gerätes}
 Die Orientierung des Gerätes wird als „Portrait“ oder „Landscape“, also vertikale oder horizontale Ausrichtung beschrieben. Diese Daten verwenden dieselbe Technik wie der Beschleunigungssensor und wird beispielsweise in der Bildschirmausrichtung verwendet. So einfach wie das Prinzip ist auch die Verwendung: Die Ausrichtung lässt sich über window.orientation; (in Grad) ausmessen. Ein Wert über 180 beschreibt dabei den Portraitmodus, über 180 den Landscape- oder Landschaftsmodus.
 
 \vspace{0pt}
 \paragraph{Bild und Tonaufzeichungen}\mbox{}\\
-Da dies einer der komplexeren Datentypen ist, den man mit dem Handy aufzeichnen kann, empfiehlt sich für die Aufnahme eine leicht benutzbare API. Mit getUserMedia() ist für Bild und Ton nun eine einfache Alternative verfügbar, die stückweise in die aktuelle Browsergeneration eingefügt wird. Die aktuelle Verfügbarkeit innerhalb der Browser kann auf caniuse.com eingesehen werden und ergibt das Bild wie in Anhang \ref{app:caniuseMedia} aufgeziegt.
+Da dies einer der komplexeren Datentypen ist, den man mit dem Handy aufzeichnen kann, empfiehlt sich für die Aufnahme eine leicht benutzbare API. Mit getUserMedia() ist für Bild und Ton nun eine einfache Alternative verfügbar, die Stückweise in die aktuelle Browsergeneration eingefügt wird. Die aktuelle Verfügbarkeit innerhalb der Browser kann auf caniuse.com eingesehen werden und ergibt das Bild wie in Anhang \ref{app:caniuseMedia} aufgeziegt.
 
 %\begin{figure}[H]
 %\begin{minipage}[t]{0.4\textwidth}
@@ -355,7 +355,7 @@ Der Entwickler kopiert das in Anhang \ref{lst:CodeSnippetGameApi} kommentierte C
 Ein Computer stellt den NodeJS Server.\\
 Ein weiterer Computer stellt das gewählte Demogame-Frontend auf einem großen Bildschirm dar.\\
 Mehrere Clients verbinden sich mit ihren mobilen Geräten auf den Server.\\
-Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einem Aufruf des Skriptes \enquote{prepareDeps.sh}.
+Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einen Aufruf des Skriptes \enquote{prepareDeps.sh}.
 \lstset{
   numbers=left,
   stepnumber=5,
@@ -364,7 +364,7 @@ Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installi
 }
 
 \subsection{Start der Applikation}
-Der NodeJS Server wird mit dem Befehl wie in Listing \ref{lst:launchSuccess} gestartet. Im Folgenden sollte eine Meldung erscheinen, welche den Applikationsserver als gestartet meldet. Eine beispielhafte Meldung in Listing \ref{lst:launchSuccess} zu sehen.
+Der NodeJS Server wird mit dem Befehl wie in Listing \ref{lst:launchSuccess} gestartet. Imfolgenden sollte eine Meldung erscheinen welche den Applikationsserver als gestartet meldet. Eine Beispielhafte Meldung in in Listing \ref{lst:launchSuccess} zu sehen.
 
 \begin{figure}[h!]
 	\centering
@@ -379,8 +379,8 @@ Der NodeJS Server wird mit dem Befehl wie in Listing \ref{lst:launchSuccess} ges
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{Controller Interface}\mbox{}\\
-Die Clients rufen die Adresse des Servers auf und es wird ihnen ein Login-Formular dargestellt. Hier wird nun eine Entscheidung getroffen, ob ein Useraccount erstellt, ein Useraccount genutzt oder anonym weiter fortgefahren werden soll.
-Wird ein User-Account genutzt, wird anstelle eines generierten Namens der tatsächliche Benutzername im gewählten Demogame angezeigt.
+Die Clients rufen die Adresse des Servers auf und es wird ihnen eine Login Anzeige dargestellt. Hier wird nun eine Entscheidung getroffen, ob ein Login erstellt, genutzt oder anonym weiter fortgefahren werden soll.
+Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche Benutzername im gewählten Demogame angezeigt.
 
 \end{minipage}
 \hfill
@@ -420,12 +420,12 @@ Der Server wird nach und nach mit immer mehr Paketen belastet und die CPU-Auslas
 
 
 \paragraph{Durchführung}\mbox{}\\
-Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrechterhalten wurden. Das Testsystem war dabei mit einem Intel(R) Xeon(R) CPU E3-1241 v3 @ 3.50GHz ausgestattet.
+Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-inspector} wurde die NodeJS-Serveranwendung analysiert. Der node-inspector ermöglicht eine Nutzung der Entwicklertools des Chrom-Browsers. Zur Ermittlung der CPU-Last wurden Profile bei verschiedenen Lastzuständen erstellt welche 30 Sekunden lang aufrecht erhalten wurden. Das Testsystem war dabei mit einem Intel(R) Xeon(R) CPU E3-1241 v3 @ 3.50GHz ausgestattet.
 
 \begin{minipage}[t]{0.4\textwidth}
 	\vspace{0pt}
 	\paragraph{Ergebnisse}\mbox{}\\
-	Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab circa 3500 Paketen in geringerem Maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetztem System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen, sind weitere Messungen auf verschiedenen Testsystemen nötig.
+	Anhand der Ergebnisse ist gut der lineare Anstieg der Auslastung zu erkennen. Das Diagramm \ref{fig:ServerLast2} stellt die Ergebnisse von 0 bis 5500 Paketen da. Auf dem Diagramm \ref{fig:ServerLast2} ist gut zu erkennen das die Auslastung ab circa 3500 Paketen in einem geringerem maße ansteigt, allerdings ist auch hier ein linearer Verlauf zu erkennen. Die Auslastung schwankt zwar je nach eingesetzten System, der lineare Anstieg wird sich übertragen lassen. Um dies zu bestätigen sind weitere Messungen auf verschiedenen Testsystemen nötig.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
@@ -441,11 +441,11 @@ Mithilfe des node-inspectors\footnote{https://github.com/node-inspector/node-ins
 
 \subsubsection{Frontend}
 
-\paragraph{Test Szenario} Zur Messung der Latenz wird ein Gerät mit dem Server verbunden und jede Sekunde dessen durchschnittliche Latenz vom Senden der Daten auf dem Gerät bis zur Ausgabe dieser durch die API erfasst. Die Auslastung des Servers wird durch das Senden von zusätzlichen Paketen erreicht. Die Senderate wird nach und nach gesteigert um die maximale Auslastung der API auf dem Testsystem zu ermitteln. Zu beachten ist, dass auf allen Geräten vergleichbare Zeitstempel vergeben werden um die Ergebnisse nicht zu verfälschen. Die Tests werden dabei ohne die Anbindung einer Anwendung an die API durchgeführt. Zu beachten ist, das diese auch Leistung benötigt, was die Ergebnisse drastisch verändern kann. Aufgrund des Fokus auf die Entwicklung einer API ohne eine gezielte Anwendung wurde diese nicht berücksichtigt.
+\paragraph{Test Szenario} Zur Messung der Latenz wird ein Gerät mit dem Server verbunden und jede Sekunde dessen durchschnittliche Latenz vom Senden der Daten auf dem Gerät bis zur Ausgabe dieser durch die API erfasst. Die Auslastung des Servers wird durch das Senden von zusätzlichen Paketen erreicht. Die Senderate wird nach und nach gesteigert um die Maximale Auslastung der API auf dem Testsystem zu ermitteln. Zu beachten ist das auf allen Geräten vergleichbare Zeitstempel vergeben werden um die Ergebnisse nicht zu verfälschen. Die Test werden dabei ohne die Anbindung einer Anwendung an die API durchgeführt. Zu beachten ist, das diese auch Leistung benötigt was die Ergebnisse drastisch verändern kann. Aufgrund des Fokus auf die Entwicklung einer API ohne eine gezielte Anwendung wurde diese nicht berücksichtigt.
 
 
 \paragraph{Durchführung}
-Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschnittlichen Latenz pro Sekunde von einem Gerät ermittelt. Während der Messung wurde der Server mit einer unterschiedlich starken Anzahl an zusätzlichen Paketen belastet um eine höhere Auslastung zu erreichen. Die Werte wurden dabei in einem Abstand von einer Sekunde ermittelt. Zum Erfassen er Daten wurden die Chrome-Entwicklertools verwendet. Es wurden für jede Laststufe Daten über 50 Sekunden erfasst. Der Server und das Frontend liefen bei dem Test auf dem gleichen System.
+Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschnittlichen Latenz pro Sekunde von einem Gerät ermittelt. Während der Messung wurde der Server mit einer Unterschiedlich starken Anzahl an zusätzliche Paketen belastet um eine Höhere Auslastung zu erreichen. Die Werte wurden dabei in einem Abstand von einer Sekunde ermittelt. Zum Erfassen er Daten wurden die Chrome-Entwicklertools verwendet. Es wurden für jede Laststufe Daten über 50 Sekunden erfasst. Der Server und das Frontend liefen bei dem Test auf dem gleichen System.
 
 
 
@@ -478,10 +478,10 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 \paragraph{QRCode} %% TODO: Micha
     Busstop sinnvoll, gameApi.printQRCode()
 \paragraph{Glättung der Sensor Werte}
-Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
+Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuerten manche Testgeräte, selbst auf dem Tisch liegend permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
 \paragraph{Begrenzung der gesendeten Sensor Daten}
-Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten und die Auslastung berechenbar zu machen, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstests ermittelt werden und hängen auch von der Anwendung ab welche an die API angebunden ist.
+Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten und die Auslastung berechenbar zu machen, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden und hängen auch von der Anwendung ab welche an die API angebunden ist.
 
 
 \section{Fazit}
