@@ -342,9 +342,10 @@ Im Gegensatz zu den anderen Daten geht es hierbei nicht um eine Ein-, sondern um
 \paragraph{Browserempfehlung}
 Da (noch) nicht alle Browser alle APIs unterstützen, soll hier eine Empfehlung zur Verwendung der oben genannten Funktionalitäten genannt werden. Sowohl auf dem Desktop-Rechner als auch unter Android ist derzeit die aktuelle Version von Firefox (43) am 15.12.2015 erschienen und in der Lage, alle genannten Funktionen und APIs auszuführen.
 
-\subsection{Template} %% TODO: Ron
-\subsection{Client-JS} %% TODO: Ron
+\subsection{Graphical User Interface and JavaScript} %% TODO: Ron
 
+Den Kern der grafischen Oberfläche bilden zwei Pfeile, die nach dem Prinzip eines Steuerkreuzes funktionieren und dazu genutzt werden, die Geschehnisse auf dem verbundenen Rechner zu kontrollieren. Die Benutzeroberfläche wurde absichtlich übersichtlich und simpel gehalten, um eine schnelle Akzeptanz zu gewährleisten. Aus Test- und Präsentationsgründen wurde in jeder Ecke des Templates eine Checkbox platziert, die jeweils eine Art von Sensordaten steuert. Speziell die gezielte Deaktivierung und Aktivierung der Audio- und Videodaten wurde als wichtiges Kriterium angesehen, da dies einen gefährlichen Eingriff in die Privatsphäre darstellen kann. Aus diesem Grund ist eine Aktivierung der genannten Multimediadaten nicht ohne vorherige Bestätigung möglich. \\
+Jeder Tastendruck wird vom dahinterliegenden JavaScript aufgefangen und direkt an den Rechner weitergeleitet, wo er entsprechende Aktionen auslöst. Um den Benutzer in der Bedienung Sicherheit zu geben, wird für jeden Tastendruck ein optisches Feedback gegeben, entweder durch direkte Aktionen auf dem Rechner oder als Hinweis auf dem Smartphone selbst.
 \subsection{Nutzen der GameAPI}
 Der Entwickler kopiert das in Anhang \ref{lst:CodeSnippetGameApi} kommentierte Code-Skelett in sein Spiel und füllt die gekennzeichneten Stellen mit seiner Spielsteuerung.
 
@@ -354,7 +355,6 @@ Der Entwickler kopiert das in Anhang \ref{lst:CodeSnippetGameApi} kommentierte C
 Ein Computer stellt den NodeJS Server.\\
 Ein weiterer Computer stellt das gewählte Demogame-Frontend auf einem großen Bildschirm dar.\\
 Mehrere Clients verbinden sich mit ihren mobilen Geräten auf den Server.\\
-
 Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einen Aufruf des Skriptes \enquote{prepareDeps.sh}.
 \lstset{
   numbers=left,
@@ -386,7 +386,7 @@ Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-    \includegraphics[width=8.5cm]{images/controllerLayoutModern}
+    \includegraphics[width=8cm]{images/controllerLayoutModern}
      \caption{Unterstützung der getUserMedia API auf caniuse.com}
 		\label{fig:test2}
 \end{minipage}
@@ -399,13 +399,13 @@ Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche
 \vspace{0pt}
 \paragraph{Demo Applikation}\mbox{}\\
 Auf einem Browser, welcher als Frontend dient, muss nun das entsprechende Game über die URL aufgerufen werden. In der Demo-Applikation ist dies \enquote{/game/ 1|2|3 /}
-Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen durch. Ein Druck auf einen der Buttons auf einem der Clientgeräte wird als solcher identifiziert und im Frontend dargestellt. Ein anderer Cleint aktivert die Rotationserfassung und die gesendeten Daten erscheinen auf dem Fronend.
+Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen durch. Ein Druck auf einen der Buttons auf einem der Clientgeräte wird als solcher identifiziert und im Frontend dargestellt. Ein anderer Client aktiviert die Rotationserfassung und die gesendeten Daten erscheinen auf dem Fronend.
 
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
-    \includegraphics[width=8.5cm]{images/demoGames}
+    \includegraphics[width=8cm]{images/demoGames}
      \caption{Unterstützung der getUserMedia API auf caniuse.com}
 		\label{fig:test2}
 \end{minipage}
