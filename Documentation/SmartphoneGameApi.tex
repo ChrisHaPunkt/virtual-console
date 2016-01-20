@@ -140,20 +140,21 @@ Das vorliegende Dokument beschreibt die Entwicklung eines Frameworks, welches es
 
 \subsection{Problemstellung}
 
-\begin{figure}[H]
-	\begin{minipage}[t]{0.4\textwidth}
-		\vspace{0pt}
+%\begin{figure}[H]
+%	\begin{minipage}[t]{0.4\textwidth}
+%		\vspace{0pt}
 		\paragraph{Problemstellung}\mbox{}\\
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.
-	\end{minipage}
-	\hfill
-	\begin{minipage}[t]{0.5\textwidth}
-		\vspace{0pt}
-		\fbox{\includegraphics[width=8cm]{./images/FrontendInit.png}}
-		\caption{3D Cube}
-		\label{fig:test2}
-	\end{minipage}
-\end{figure}
+Die Möglichkeit ein Spiel komfortabel mit einem mobilen Gerät zu verbinden und zu steuern soll im folgenden unseren Beschreibungen zugrunde liegen. Hierzu werden verschiedene Technologien miteinander verbunden und genutzt.\\
+Eine Möglichkeit zu schaffen komfortabel an einem Spiel teilzunehmen, als Beispiel an einem Flughafen per QR-Code einem laufenden Spiel beizutreten, motivierte uns zu diesem Thema.
+%	\end{minipage}
+%	\hfill
+%	\begin{minipage}[t]{0.5\textwidth}
+%		\vspace{0pt}
+%		\fbox{\includegraphics[width=8cm]{./images/FrontendInit.png}}
+%		\caption{3D Cube}
+%		\label{fig:test2}
+%	\end{minipage}
+%\end{figure}
 
 
 \section{Methodik}
@@ -292,23 +293,23 @@ Die von der Applikation genutzten Daten sind im folgenden erläutert.
 \paragraph{Touchbildschirm}
 Die übliche Art der Interaktion mit einem aktuellen Smartphone, die Toucheingabe, darf natürlich nicht außer Acht gelassen werden. Da diese in der Entwicklung äußerst einfach zu implementieren ist, unteranderem über JQuerys .tap(), kann diese Eingabe als trivial angesehen und hier nicht weiter darauf eingegangen werden.
 
-\begin{figure}[H]
-	\begin{minipage}[t]{0.4\textwidth}
-		\vspace{0pt}
+%\begin{figure}[H]
+%	\begin{minipage}[t]{0.4\textwidth}
+%		\vspace{0pt}
 		\paragraph{Rotations- und Beschleunigungssensor}\mbox{}\\
 Diese Werte bilden den Kern der Applikation und sollen hier näher dargestellt werden:\\
 Die Interaktion über die Bewegung des Smartphones im dreidimensionalen Raum ist intuitiv und gut für jede denkbare Aufgabe geeignet. Die Datenerhebung erfolgt dabei für gewöhnlich durch Differentialkondensatoren und Drei-Achsen-Gyroskope.
-Da die Daten vom Gerät kontinuierlich in festgelegten Intervallen bestimmt werden, können diese auf komfortable Art und Weise ausgelesen werden. Die aufwändigere Arbeit ist die anschließende Verarbeitung und Filterung der Daten. Dies geschieht über ein zu setzendes Event, namentlich das \enquote{devicemotion} -Event, das bei jeder Änderung der Rotation oder Beschleunigung feuert und seine Daten beispielhaft in der Form event.acceleration.x; oder event.accelerationRate.alpha; bereitstellt, ebenso wie das Intervall der gemessenen Daten (in Millisekunden) über event.interval; verwendet werden kann.
-	\end{minipage}
-	\hfill
-	\begin{minipage}[t]{0.5\textwidth}
-		\vspace{0pt}
-		\fbox{\includegraphics[width=8cm]{./images/rotation}}
-		\caption{Rotationsachen dargestellt}
-		\label{fig:test2}
-	\end{minipage}
-\end{figure}
-Die Originalversion der Rotation und Berechnungen sind zu finden in den Aufzeichnungen von Damian Gordon\footnote{\url{http://de.slideshare.net/DamianGordon1/3d-robot-movements}}.
+Da die Daten vom Gerät kontinuierlich in festgelegten Intervallen bestimmt werden, können diese auf komfortable Art und Weise ausgelesen werden. Die aufwändigere Arbeit ist die anschließende Verarbeitung und Filterung der Daten. Dies geschieht über ein zu setzendes Event, namentlich das \enquote{devicemotion} -Event, das bei jeder Änderung der Rotation oder Beschleunigung feuert und seine Daten beispielhaft in der Form event.acceleration.x; oder event.accelerationRate.alpha; bereitstellt, ebenso wie das Intervall der gemessenen Daten (in Millisekunden) über event.interval; verwendet werden kann. Siehe auch Anhang \ref{rotation}.\\
+%	\end{minipage}
+%	\hfill
+%	\begin{minipage}[t]{0.5\textwidth}
+%		\vspace{0pt}
+%		\fbox{\includegraphics[width=8cm]{./images/rotation}}
+%		\caption{Rotationsachen dargestellt}
+%		\label{fig:test2}
+%	\end{minipage}
+%\end{figure}
+Die Originalversion der Rotation und Berechnungen sind zu finden in den Aufzeichnungen von Damian Gordon\footnote{\url{http://de.slideshare.net/DamianGordon1/3d-robot-movements}}.\\
 Die Aufbereitung der Daten geschieht über eine Filterung aller leeren und ungültigen Daten, außerdem aller Daten, die darauf schließen lassen, dass keine Bewegung stattfand. Um eine Überlast der Datenverbindung zu verhindern wird eine Mittelung der ausgelesenen Daten als adäquates Mittel angesehen, diese kann über eine festgelegte Anzahl der Werte vorgenommen werden. Da Smartphones allerdings in einem unterschiedlichen Intervall Daten Messen, in der Entwicklung wurde eine Messung im Abstand von 50ms, 100ms und 200ms festgestellt, kann die Mittelung auch über einen gewissen Zeitwert vorgenommen werden.
 
 \paragraph{Ausrichtung des Gerätes}
@@ -397,6 +398,7 @@ Wird ein Login genutzt, wird anstelle eines generierten Namens der tatsächliche
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{Demo Applikation}\mbox{}\\
+Auf einem Browser, welcher als Frontend dient, muss nun das entsprechende Game über die URL aufgerufen werden. In der Demo-Applikation ist dies \enquote{/game/ 1|2|3 /}
 Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen durch. Ein Druck auf einen der Buttons auf einem der Clientgeräte wird als solcher identifiziert und im Frontend dargestellt. Ein anderer Cleint aktivert die Rotationserfassung und die gesendeten Daten erscheinen auf dem Fronend.
 
 \end{minipage}
@@ -497,8 +499,6 @@ Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks
 
 \nocite{}
 \bibliography{references}   %>>>> bibliography data in report.bib
-
-\newpage
 
 \appendix
 \begin{appendices}
