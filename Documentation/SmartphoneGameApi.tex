@@ -41,11 +41,13 @@
 \usepackage[ngerman]{babel}
 \usepackage[autostyle=true,german=quotes]{csquotes}
 
+\usepackage{lipsum}
 \usepackage{color}
 \definecolor{lightgray}{rgb}{.9,.9,.9}
 \definecolor{darkgray}{rgb}{.4,.4,.4}
 \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
 
+\usepackage[titletoc,toc,title]{appendix}
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -102,8 +104,8 @@
    captionpos=b
 }
 
-\title{Mobiledevice controllerAPI} %% TODO: Chris, Hannes, Micha, Dennis, Ron
-%% TODO: Chris Untertitel
+\title{Mobiledevice Controller Framework} %% TODO: Chris, Hannes, Micha, Dennis, Ron
+
 %>>>> The author is responsible for formatting the 
 %  author list and their institutions.  Use  \skiplinehalf 
 %  to separate author list from addresses and between each address.
@@ -111,7 +113,7 @@
 %  can be indicated with a superscript in italics, 
 %  which is easily obtained with \supit{}.
 
-\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (915449), Michael Schleiss (923739)), Dennis Hofmann (919285), Christian Heinrichs (919020
+\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (915449), Michael Schleiss (923739)), Dennis Hofmann (919285), Christian Heinrichs (919020)
 \skiplinehalf
 University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
 }
@@ -208,13 +210,13 @@ In diesem Projekt setzen wir auf HTML5 um die Sensordaten der Geräte auszulesen
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{jQuery}\mbox{}\\
-jQuery ist ein schnelle, kleine und einfach zu bedienende JavaScript-Bibliothek. Sie ermöglicht Dinge wie das einfache modifizieren von HTML, Ereignisverarbeitung, Animation und Ajax.
+jQuery ist ein schnelle, umfangreiche und einfach zu bedienende JavaScript-Bibliothek. Sie ermöglicht Dinge wie das einfache modifizieren von HTML, Ereignisverarbeitung, Animation und Ajax.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{require.js}\mbox{}\\
-RequireJS ist eine Bibliothek um einfach JavaScript-Datei und Modul zu laden. Es ist für die In-Browser-Einsatz optimiert, kann allerdings auch in anderen JavaScript-Umgebungen wie Rhino und Note verwendet werden.
+RequireJS ist eine Bibliothek um einfach JavaScript-Dateien und Module zu laden. Es ist für den In-Browser-Einsatz optimiert, kann allerdings auch in anderen JavaScript-Umgebungen wie Rhino und Note verwendet werden.
 \end{minipage}
 \end{figure}
 
@@ -223,10 +225,7 @@ RequireJS ist eine Bibliothek um einfach JavaScript-Datei und Modul zu laden. Es
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{socket.io}\mbox{}\\
-Socket.IO ist eine JavaScript-Bibliothek für Echtzeit-Web-Anwendungen. Es ermöglicht eine bidirektionale Kommunikation zwischen Web-Clients und Servern und besteht aus zwei Teilen: Einer Client-seitigen Bibliothek, welche im Browser läuft und einer serverseitigen Bibliothek für node.js. Beide Komponenten haben eine nahezu identische API und sind event gesteuert.
-
-
-Es kann mit dem NPM-Tool installiert werden. [3] [4]
+Das Framework \enquote{socket.io} wird in Abschitt \ref{socketio} ausführlich beschrieben.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
@@ -237,10 +236,9 @@ MongoDB ist eine Schema-freie, dokumentenorientierte Open-Source-Datenbank, die 
 \end{figure}
 
 
-
 \subsubsection{Hardware}
-Smartphone Controller, Platformunabhängig Node Server
-
+Die Server Hardware kann je nach Bedarf eine Server- oder Desktopumgebung sein. Der NodeJS Server kann platformunabhängig auf so gut wie allen Platformen genutzt werden.\\
+Als Eingabegerät sind Mobile Geräte wie Smartphones oder Tablets angedacht. Mit ihren Sensoren und Touchdisplays sind diese prädestiniert.
 %
 % -----------------Implementierung-------------------------
 %
@@ -266,10 +264,11 @@ Smartphone Controller, Platformunabhängig Node Server
 
 
 
-\subsubsection{socket.io} %TODO: Cut and ref to Techn Desc
-Zum Aufbau und Handling der Netzwerkverbindungen wird die Bibliothek socket.io von Guillermo Rauch verwendet. Sie kapselt die WebSocket API Spezifikationen und bietet eine vereinfachte und einfach zu benutzende API zu den WebSockets auf Client und Server-Seite. Außerdem verfügt sie über Failover-Strategien, die das Verwenden von anderen Protokollen vorsehen, für den Fall, dass WebSockets vom Client oder Server nicht unterstützt werden.
-Auf node Server Seite werden die Pakete 'http' und 'socket.io' benötigt. Erstes um einen HTTP-Server zu erstellen und letzteres, um diesen dann zu einer WebSocket Verbindung aufzuwerten und diese dann zu verwalten. Grundlegen wird die Verbindung mit Hilfe von message Events implementiert, welche auf dem jeweiligen Socket ausgelöst und abgehört werden können. Dieses Prinzip ähnelt stark den von node bekannten Events. Eine Client-Version von socket.io wird vom Server automatisch veröffentlich und kann so auf dem Client direkt eingebunden und verwendet werden.
-\url{https://davidwalsh.name/websocket}
+\subsubsection{socket.io}\label{socketio}
+Zum Aufbau und Handling der Netzwerkverbindungen wird die Bibliothek socket.io von Guillermo Rauch verwendet. Sie kapselt die WebSocket API Spezifikationen und bietet eine vereinfachte und einfach zu benutzende API zu den WebSockets auf Client und Server-Seite. Außerdem verfügt sie über Failover-Strategien, die das Verwenden von anderen Protokollen vorsehen, für den Fall, dass WebSockets vom Client oder Server nicht unterstützt werden.\\
+Auf node Server Seite werden die Pakete 'http' und 'socket.io' benötigt. Erstes um einen HTTP-Server zu erstellen und letzteres, um diesen dann zu einer WebSocket Verbindung aufzuwerten und diese dann zu verwalten. Grundlegen wird die Verbindung mit Hilfe von message Events implementiert, welche auf dem jeweiligen Socket ausgelöst und abgehört werden können. Dieses Prinzip ähnelt stark den von node bekannten Events. Eine Client-Version von socket.io wird vom Server automatisch veröffentlich und kann so auf dem Client direkt eingebunden und
+verwendet werden.\footnote{\url{https://davidwalsh.name/websocket} [3] [4]}
+
 
 \subsubsection{Server Network Handling}
 Die Anwendung besteht aus einem zentralen node Server, einem Frontend zur Darstellung des Spiels und eine unbestimmte Anzahl an mobilen Clients. Alle Komponenten stellen jeweils eine WebSocket Verbindung zum Server her, der diese so zentral verwalten kann. Durch die Implementation der selbst geschriebenen Module 'gameApi' und 'clientNetwork' werden die Funktionen der WebSockets erneut gekapselt und ermöglichen eine stark angepasste Verwendung.\\
@@ -315,29 +314,9 @@ Die Aufbereitung der Daten geschieht über eine Filterung aller leeren und ungü
 \paragraph{Ausrichtung des Gerätes}
 Die Orientierung des Gerätes wird als „Portrait“ oder „Landscape“, also vertikale oder horizontale Ausrichtung beschrieben. Diese Daten verwenden dieselbe Technik wie der Beschleunigungssensor und wird beispielsweise in der Bildschirmausrichtung verwendet. So einfach wie das Prinzip ist auch die Verwendung: Die Ausrichtung lässt sich über window.orientation; (in Grad) ausmessen. Ein Wert über 180 beschreibt dabei den Portraitmodus, über 180 den Landscape- oder Landschaftsmodus.
 
-
-\begin{figure}[H]
-\begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{Bild und Tonaufzeichungen}\mbox{}\\
-Da dies einer der komplexeren Datentypen ist, den man mit dem Handy aufzeichnen kann, empfiehlt sich für die Aufnahme eine leicht benutzbare API. Mit getUserMedia() ist für Bild und Ton nun eine einfache Alternative verfügbar, die Stückweise in die aktuelle Browsergeneration eingefügt wird. Die aktuelle Verfügbarkeit innerhalb der Browser kann auf caniuse.com eingesehen werden und ergibt folgendes Bild:
-
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.5\textwidth}
-\vspace{0pt}
-    \includegraphics[width=8.5cm]{images/caniuseGetUserMedia}
-    \centering
-    \vspace{10 mm}
-    \includegraphics[width=8.5cm]{images/legende}
-    \caption{Unterstützung der getUserMedia API auf caniuse.com}
-	\label{fig:test2}
-\end{minipage}
-\end{figure}
-
-\begin{figure}[h]
-\end{figure}
-
+Da dies einer der komplexeren Datentypen ist, den man mit dem Handy aufzeichnen kann, empfiehlt sich für die Aufnahme eine leicht benutzbare API. Mit getUserMedia() ist für Bild und Ton nun eine einfache Alternative verfügbar, die Stückweise in die aktuelle Browsergeneration eingefügt wird. Die aktuelle Verfügbarkeit innerhalb der Browser kann auf caniuse.com eingesehen werden und ergibt das Bild wie in Anhang \ref{app:caniuseMedia} aufgeziegt.
 
 %\begin{figure}[H]
 %\begin{minipage}[t]{0.4\textwidth}
@@ -365,72 +344,17 @@ Da (noch) nicht alle Browser alle APIs unterstützen, soll hier eine Empfehlung 
 \subsection{Template} %% TODO: Ron
 \subsection{Client-JS} %% TODO: Ron
 
-\subsection{Beschreibung der GameAPI}
-Der Entwickler kopiert folgendes Code-Skelett in sein Spiel und füllt die gekennzeichneten Stellen mit seiner Spielsteuerung.
-\begin{figure}[h!]
-	\centering
-        \begin{lstlisting}[language=JavaScript,caption={Start der Applikation},label={lst:gameAPI}]
-    /** gameApi.controllerTemplates.*
-    * Hier traegt der Entwickler ein, welches Gamepad-Controller Layout
-    * auf dem Smartphone des Spielers angezeigt werden soll
-    * */
-    gameApi.controller = gameApi.controllerTemplates.MODERN;
-    /**
-     * HANDSHAKE - bitte nicht modifizieren
-     * */
-    gameApi.frontendConnection = function (connInfoObj) {
-        gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
-        this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
-    };
+\subsection{Nutzen der GameAPI}
+Der Entwickler kopiert das in Anhang \ref{lst:CodeSnippetGameApi} kommentierte Code-Skelett in sein Spiel und füllt die gekennzeichneten Stellen mit seiner Spielsteuerung.
 
-    /**
-     * Handling der eingehenden Daten
-     * Hier wird die Steuerung des Spiels mit den Steuerungsdaten vom Smartphone kombiniert
-     * */
-    gameApi.frontendInboundMessage = function (data) {
-        var controllerEvent = controllerData.data.message;
-        var clientName = data.data.clientName;
-        var message = data.data.message;
-
-        switch (data.type) {
-            // Ein Client betritt oder verlaesst das Spiel
-            case "userConnection":
-                gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
-
-                if (message === 'connected') {
-                    // Was soll passieren wenn sich ein Client ins Spiel einloggt
-                } else if (message === 'disconnected') {
-                    // Was soll passieren, wenn sich ein Client das Spiel verlaesst
-                }
-                break;
-            // Ein Client sendet ein Button Event
-            case "button":
-                if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-                    // Was soll passieren, wenn Button A gedrueckt wird
-                } else if (controllerEvent.buttonName == 'btn-right' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-                    // Was soll passieren, wenn Button B gedrueckt wird
-                }
-                break;
-            case "accelerationData":
-                //Was passiert mit den Beschleunigungsdaten?
-                break;
-            case "orientationData":
-                //Was passiert mit den Rotationsdaten?
-                break;
-            default:
-                break;
-        }
-        \end{lstlisting}
-\end{figure}
 
 \section{Demonstration}
 \subsection{Vorbereitung}
-\begin{enumerate}
- \item Ein Computer stellt den NodeJS Server.
- \item Ein weiterer Computer stellt das gewählte Demogame-Frontend auf einem großen Bildschirm dar.
- \item Mehrere Clients verbinden sich mit ihren mobilen Geräten auf den Server.
-\end{enumerate}
-Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einen Skriptaufruf, wie in Listing \ref{lst:installDeps} beschrieben.
+Ein Computer stellt den NodeJS Server.\\
+Ein weiterer Computer stellt das gewählte Demogame-Frontend auf einem großen Bildschirm dar.\\
+Mehrere Clients verbinden sich mit ihren mobilen Geräten auf den Server.\\
+
+Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einen Aufruf des Skriptes \enquote{prepareDeps.sh}.
 \lstset{
   numbers=left,
   stepnumber=5,
@@ -484,12 +408,6 @@ Die nun verbundenen Clients führen mit ihren Geräten unterschiedliche Aktionen
 		\label{fig:test2}
 \end{minipage}
 \end{figure}
-
-
-
-
-
-
 
 \section{Lasttestmessung}\label{Lasttestmessung} %% TODO: Dennis
 
@@ -557,15 +475,17 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 
 \paragraph{QRCode} %% TODO: Micha
     Busstop sinnvoll, gameApi.printQRCode()
-\paragraph{Glättung der Sensor Werte}  %% TODO: Dennis
+\paragraph{Glättung der Sensor Werte}
 Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuert ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
-\paragraph{Begrenzung der gesendeten Sensor Daten} %%TODO: Dennis
+\paragraph{Begrenzung der gesendeten Sensor Daten}
 Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten und die Auslastung berechenbar zu machen, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden und hängen auch von der Anwendung ab welche an die API angebunden ist.
 
 
-\section{Fazit} %% TODO: Chris
-Alles super. Die erste Million ist nah!
+\section{Fazit}
+Die Umsetzung zeigt ein flexibles und belastbares Framework, welches es ermöglicht ein Spiel unkompliziert mit einem mobilen Gerät zu bedienen.
+Ein Spieleentwickler hat die Möglichkeit eigene Controller-Templates bereitzustellen und mühelos sein Spiel zu integrieren.
+Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks, welche generiert werden. Das Usermanagement ermöglicht zudem eine komfortable Individualisierung der Spieler.
 
 
 
@@ -579,17 +499,68 @@ Alles super. Die erste Million ist nah!
 \bibliography{references}   %>>>> bibliography data in report.bib
 
 \newpage
-%% Appendixs
 
-\section{Appentix}
 \appendix
-
+\begin{appendices}
+  \renewcommand\thetable{\thesection\arabic{table}}
+  \renewcommand\thefigure{\thesection\arabic{figure}}
 \section{}
-	\begin{figure}[H]
-		\includegraphics{images/caniuseGetUserMedia}
-		\caption{Rotationsachen dargestellt}
-		\label{rotation}
-	\end{figure}
+\begin{figure}[H]\label{lst:CodeSnippetGameApi}
+	\centering
+        \begin{lstlisting}[language=JavaScript,caption={Nutzen der GampApi}]
+    /** gameApi.controllerTemplates.*
+    * Hier traegt der Entwickler ein, welches Gamepad-Controller Layout
+    * auf dem Smartphone des Spielers angezeigt werden soll
+    * */
+    gameApi.controller = gameApi.controllerTemplates.MODERN;
+    /**
+     * HANDSHAKE - bitte nicht modifizieren
+     * */
+    gameApi.frontendConnection = function (connInfoObj) {
+        gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
+        this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
+    };
+
+    /**
+     * Handling der eingehenden Daten
+     * Hier wird die Steuerung des Spiels mit den Steuerungsdaten vom Smartphone kombiniert
+     * */
+    gameApi.frontendInboundMessage = function (data) {
+        var controllerEvent = controllerData.data.message;
+        var clientName = data.data.clientName;
+        var message = data.data.message;
+
+        switch (data.type) {
+            // Ein Client betritt oder verlaesst das Spiel
+            case "userConnection":
+                gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
+
+                if (message === 'connected') {
+                    // Was soll passieren wenn sich ein Client ins Spiel einloggt
+                } else if (message === 'disconnected') {
+                    // Was soll passieren, wenn sich ein Client das Spiel verlaesst
+                }
+                break;
+            // Ein Client sendet ein Button Event
+            case "button":
+                if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    // Was soll passieren, wenn Button A gedrueckt wird
+                } else if (controllerEvent.buttonName == 'btn-right' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    // Was soll passieren, wenn Button B gedrueckt wird
+                }
+                break;
+            case "accelerationData":
+                //Was passiert mit den Beschleunigungsdaten?
+                break;
+            case "orientationData":
+                //Was passiert mit den Rotationsdaten?
+                break;
+            default:
+                break;
+        }
+        \end{lstlisting}
+\end{figure}
+\section{}
 
 \begin{figure}[H]
 	\centering
@@ -606,6 +577,13 @@ Alles super. Die erste Million ist nah!
 	\label{m113}
 \end{figure}
 
+  \section{}
+
+	\begin{figure}[H]
+		\includegraphics{images/caniuseGetUserMedia}
+		\caption{Rotationsachen dargestellt}
+		\label{app:caniuseMedia}
+	\end{figure}
 
 
 \section{}
@@ -648,5 +626,11 @@ Alles super. Die erste Million ist nah!
 	\caption{Latenzmessung}
 	\label{latenzmessung}
 \end{figure}
+\end{appendices}
+%% Appendixs
+
+
+
+
 
 \end{document} 
