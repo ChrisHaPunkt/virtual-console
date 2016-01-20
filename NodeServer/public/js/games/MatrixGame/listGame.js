@@ -7,7 +7,7 @@ define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrc
     var run = true;
 
     // set ui properties
-    $('#monitorBtn').html('List Game');
+    //$('#monitorBtn').html('List Game');
     $('body').css('background', '#000');
 
     /**
