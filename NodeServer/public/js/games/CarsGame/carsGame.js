@@ -93,7 +93,8 @@ define([
             })
         }
     }
-
+    // gameApi.controllerTemplates.*
+    // Hier trägt der Entwickler ein, welches
     gameApi.controller = gameApi.controllerTemplates.MODERN;
     /**
      * HANDSHAKE
