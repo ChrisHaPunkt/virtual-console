@@ -127,15 +127,15 @@ University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
   \begin{document} 
   \maketitle 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\begin{abstract} %% TODO: Micha
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+\begin{abstract} %%
+Aktuelle Browser bieten auf Basis von HTML5 die Möglichkeit zur Echtzeitkommunikation per Websocket und auf mobilen Endgeräten das Auslesen von Sensordaten. Beide Techniken sollen eingesetzt werden, um ein kabelloses Gamepad mit vielfachen Möglichkeiten zur Steuerung eines Spiels, zum Beispiel über die Rotation des mobilen Endgeräts oder dem Touchscreen, zu entwickeln.
 \end{abstract}
 
 %>>>> Include a list of keywords after the abstract 
 \keywords{Mobile, Smartphone, JavaScript, HTML5, Nodejs, API}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Einleitung} %% TODO: Hannes
+\section{Einleitung} %%
 Das vorliegende Dokument beschreibt die Entwicklung eines Frameworks, welches es erlaubt verschiedenste Anwendungen im öffentlichen Raum zu installieren, die mit Hilfe von mobilen Controllern gesteuert werden können. Hierbei stehen zwei Aspekte im Vordergrund. Zum einen soll das Framework eine Schnittstelle bieten, eigene Anwendungen unkompliziert in eine stabile Infrastruktur einzubinden. Dies bedeutet, dass alle notwendigen Funktionen der Kommunikation und der Nutzerverwaltung durch das Framework abgedeckt sind und der Entwickler unabhängig davon flexibel eine eigene Anwendung realisieren kann. Zum anderen soll das Framework dem Endbenutzer die einfache Bedienung der Anwendung über persönliche mobile Geräte - wie Smartphones - ermöglichen. Hierbei sollen möglichst alle Arten der Eingabe des Endgerätes genutzt und dieses so in ein multifunktionales Gamepad verwandelt werden.
 Im Folgenden wird nach einer Übersicht der verwendeten Technologien zunächst die zugrunde liegende Struktur des Servers und der dort implementierten Funktionen zum Client- bzw. User-Management erläutert. Anschließend werden die Controller für die Verwendung auf dem Smartphone vorgestellt. Hier wird besonders auf die Verwendung der zu Verfügung stehenden Sensoren und Ausgabemöglichkeiten auf mobilen Geräten eingegangen. Zuletzt werden die Ergebnisse eines Lasttests ausgewertet und geben so einen guten Einblick in die Performance des Systems.
 
