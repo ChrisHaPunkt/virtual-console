@@ -10,6 +10,8 @@ define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrc
     //$('#monitorBtn').html('List Game');
     $('body').css('background', '#000');
 
+    gameApi.logLevel = gameApi.log.INFO;
+    gameApi.controller = gameApi.controllerTemplates.MODERN;
     /**
      * HANDSHAKE
      * */
@@ -24,7 +26,7 @@ define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrc
     gameApi.frontendInboundMessage = function (data) {
 
 
-/*
+
 
         var clientName = data.data.clientName;
         var message = data.data.message;
@@ -53,15 +55,13 @@ define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrc
             default:
                 break;
         }
- */
+
 
 
     };
 
 
 /*
-    gameApi.logLevel = gameApi.log.INFO;
-    gameApi.controller = gameApi.controllerTemplates.MODERN;
 */
 
 
