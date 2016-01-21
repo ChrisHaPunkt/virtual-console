@@ -113,7 +113,7 @@
 %  can be indicated with a superscript in italics, 
 %  which is easily obtained with \supit{}.
 
-\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (915449), Michael Schleiss (923739)), Dennis Hofmann (919285), Christian Heinrichs (919020)
+\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (915449), Michael Schleiss (923739), Dennis Hofmann (919285), Christian Heinrichs (919020)
 \skiplinehalf
 University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
 }
@@ -554,6 +554,11 @@ Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks
             default:
                 break;
         }
+        // Nachricht an einen spezifischen User.
+        gameApi.sendToUser(userName, message);
+        // Nachricht an alle Nutzer gleichzeitig
+        gameApi.broadcast(messsage);
+
         \end{lstlisting}
 \end{figure}
 \section{}
