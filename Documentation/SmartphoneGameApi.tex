@@ -1,4 +1,5 @@
 
+
 %  article.tex (Version 3.3, released 19 January 2008)
 %  Article to demonstrate format for SPIE Proceedings
 %  Special instructions are included in this file after the
@@ -103,7 +104,7 @@
    captionpos=b
 }
 
-\title{Mobiledevice Controller Framework} %% TODO: Chris, Hannes, Micha, Dennis, Ron
+\title{Mobiledevice Controller Framework}
 
 %>>>> The author is responsible for formatting the 
 %  author list and their institutions.  Use  \skiplinehalf 
@@ -112,7 +113,7 @@
 %  can be indicated with a superscript in italics, 
 %  which is easily obtained with \supit{}.
 
-\author{ Ron Schiwkowksi  (918691), Hannes Grothknopf (915449), Michael Schleiss (923739)), Dennis Hofmann (919285), Christian Heinrichs (919020)
+\author{ Ron Schiwkowksi  (915074), Hannes Grothknopf (915449), Michael Schleiss (923739), Dennis Hofmann (919285), Christian Heinrichs (919020)
 \skiplinehalf
 University of Applied Sciences, Sokratesplatz 1, 24149 Kiel, Germany
 }
@@ -135,7 +136,8 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Einleitung} %% TODO: Hannes
-Das vorliegende Dokument beschreibt die Entwicklung eines Frameworks, welches es erlaubt verschiedene Anwendungen im öffentlichen Raum zu installieren, die mit Hilfe von mobilen Controllern gesteuert werden können. Hierbei stehen zwei Aspekte im Vordergrund. Zum einen soll das Framework eine Schnittstelle bieten, eigene Anwendungen unkompliziert in eine stabile Infrastruktur einzubinden. Dies bedeutet, dass alle notwendigen Funktionen der Kommunikation und der Nutzerverwaltung durch das Framework abgedeckt sind und der Entwickler unabhängig davon sehr flexible verschiedenste Anwendungen realisieren kann. Zum anderen soll das Framework dem Endbenutzer die einfache Bedienung der Anwendung über persönliche mobile Geräte, wie Smartphones ermöglichen. Hierbei sollen möglichst alle Arten der Eingabe des Endgerätes genutzt und dieses so in ein multifunktionales Gamepad verwandelt werden.
+Das vorliegende Dokument beschreibt die Entwicklung eines Frameworks, welches es erlaubt verschiedenste Anwendungen im öffentlichen Raum zu installieren, die mit Hilfe von mobilen Controllern gesteuert werden können. Hierbei stehen zwei Aspekte im Vordergrund. Zum einen soll das Framework eine Schnittstelle bieten, eigene Anwendungen unkompliziert in eine stabile Infrastruktur einzubinden. Dies bedeutet, dass alle notwendigen Funktionen der Kommunikation und der Nutzerverwaltung durch das Framework abgedeckt sind und der Entwickler unabhängig davon flexible eine eigene Anwendung realisieren kann. Zum anderen soll das Framework dem Endbenutzer die einfache Bedienung der Anwendung über persönliche mobile Geräte - wie Smartphones - ermöglichen. Hierbei sollen möglichst alle Arten der Eingabe des Endgerätes genutzt und dieses so in ein multifunktionales Gamepad verwandelt werden.
+Im Folgenden wird nach einer Übersicht der verwendeten Technologien zunächst die zugrunde liegende Struktur des Servers und der dort implementierten Funktionen zum Client- bzw. User-Management erläutert. Anschließend werden die Controller für die Verwendung auf dem Smartphone vorgestellt. Hier wird besonders auf die Verwendung der zu Verfügung stehenden Sensoren und Ausgabemöglichkeiten auf mobilen Geräten eingegangen. Zuletzt werden die Ergebnisse eines Lasttests ausgewertet und geben so einen guten Einblick in die Performance des Systems.
 
 \subsection{Problemstellung}
 
@@ -163,7 +165,7 @@ Verschiedene Aufgaben sind im Gitlab erfasst und Personen zugewiesen. Ein wöche
 \subsubsection{GitLab}
 Das Projekt wurde auf einem eigenen GitLab gehostet und den Projektmitgliedern zur Verfügung gestellt. Die Issues des Systems wurden genutzt um Aufgaben zu verteilen und zu dokumentieren.
 \\
-Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt möglichst flexibel zu halten. Der Master-Branch diente als Release-Branch, in den regelmäßig die Änderungen per Merge Request eingetragen und getestet wurden.
+Strukturiert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt möglichst flexibel zu halten. Der Master-Branch diente als Release-Branch, in den regelmäßig die Änderungen per Merge Request eingetragen und getestet wurden.
 \definecolor{blau}{HTML}{217AA2}
 \begin{table}
 	\label{table:Aufgabenverteilung}
@@ -181,8 +183,8 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 		DemoGame 		& X	&	&	&	& X	\\\hline
 		ClientFrontend 	& X	&	& X	&	&	\\\hline
 		ClientBackend 	& X	&	& X	&	&	\\\hline
-		Userhandling 	& 	&	&	& X	& 	\\\hline
-		Documentation   & X	& X & X	& X	& X \\\hline
+		UserMgmnt 		& 	&	&	& X	& 	\\\hline
+		Dokumentation   & X	& X & X	& X	& X \\\hline
 		Projektmgmt. 	&	&	&	& 	& X	\\\hline
 	\end{tabular}
 \end{table}
@@ -192,7 +194,7 @@ Strukuriert wurde das Arbeiten nach Feature Branches, um das Arbeiten am Projekt
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
 \paragraph{NodeJS / Javascript}\mbox{}\\
-NodeJS ist eine Laufzeitumgebung für JavaScript und basiert auf der Chrome's V8 JavaScript engine. 
+NodeJS ist eine Laufzeitumgebung für JavaScript und basiert auf der Chrome's V8 JavaScript engine. NodeJS dient als Kern unserer Applikation und stellt alle Dienste bereit.
 
 \end{minipage}
 \hfill
@@ -353,7 +355,7 @@ Der Entwickler kopiert das in Anhang \ref{lst:CodeSnippetGameApi} kommentierte C
 Ein Computer stellt den NodeJS Server.\\
 Ein weiterer Computer stellt das gewählte Demogame-Frontend auf einem großen Bildschirm dar.\\
 Mehrere Clients verbinden sich mit ihren mobilen Geräten auf den Server.\\
-Anschließend müssen die vom NodeJS Server benötigten Abhängigkeiten installiert werden. Dies geschieht mit einen Aufruf des Skriptes \enquote{prepareDeps.sh}.
+Anschließend müssen die vom NodeJS Server benötigten Abhgängikeiten installiert werden. Dies geschieht mit einen Aufruf des Skriptes \enquote{prepareDeps.sh}.
 \lstset{
   numbers=left,
   stepnumber=5,
@@ -451,7 +453,8 @@ Zur Erfassung der Daten wurde die Anzahl der gesendeten Pakete und der durchschn
 \vspace{0pt}
 
 \paragraph{Ergebnisse}\mbox{}\\
-Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die Durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen das es zu gelegentlichen Latenz Spitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Das für die Tests verwendetet Gerät hat eine durchschnittliche sende Rate von 100 Paketen die Sekunde, was auf dem Testsystem zu einer angenommenen Maximalen Anzahl von 50 Geräten führt. Mit blick auf die Daten von der Server-Leistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 als Pufferzone eingeplant werden.
+Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erkennen. Der Mittelwert gibt die durchschnittliche Latenz über 50 Sekunden an. Durch die mittlere Abweichung ist gut zu erkennen, dass es zu gelegentlichen Latenzspitzen kommt, welche im Betrieb unter Umständen zu Problemen führen können. Ab einer Paketanzahl von 5000 ist ein drastischer Anstieg der durchschnittlichen Latenz zu erkennen. Unter der Annahme, dass ein Gerät ~100 Pakete die Sekunde versenden kann, kann im Betrieb ohne Anwendung eine auf dem Testsystem maximal mögliche Anzahl von 50 Geräten angenommen werden. Mit Blick auf die Daten von der Serverleistungsmessung\ref{fig:ServerLast2} sollte die Anzahl von 35 Geräten nicht überschritten werden und der Bereich von 35-50 Als Pufferzone eingeplant werden.
+
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
@@ -473,10 +476,11 @@ Die Ergebnisse der Messung sind in dem Diagramm \ref{fig:LatenzMessung} zu erken
 \section{Ausblick}
 
 \paragraph{Glättung der Sensor Werte}
-Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich stark schwankenden Daten. So sendet ein auf dem Tisch liegendes Gerät permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Dies kann durch das einbauen eines thresholds für die Sensordaten erreicht werden.
+Ein noch zu lösendes Problem ist die Glättung der von den Sensoren kommenden Werte. Je nach Gerät liefern die Sensoren unterschiedlich Stark schwankenden Daten. So feuerten manche Testgeräte, selbst auf dem Tisch liegend permanent Orientierungsdaten, obwohl es nicht bewegt wird. Diese Schwankungen müssen erkannt und unterbunden werden. Einbauen eines thresholds.
 
 \paragraph{Begrenzung der gesendeten Sensor Daten}
 Um den Server nicht ungleich durch die verschiedenen Geräte zu belasten und die Auslastung berechenbar zu machen, muss das Sendeverhalten reglementiert werden. Die optimalen Werte dafür müssen noch durch weitere Leistungstest ermittelt werden und hängen auch von der Anwendung ab welche an die API angebunden ist.
+
 
 \section{Fazit}
 Die Umsetzung zeigt ein flexibles und belastbares Framework, welches es ermöglicht ein Spiel unkompliziert mit einem mobilen Gerät zu bedienen.
@@ -569,11 +573,18 @@ Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks
 	\label{m113}
 \end{figure}
 
+\section{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{images/komponenten}
+	\caption{Komponentendiagramm}
+	\label{komponenten}
+\end{figure}
   \section{}
 
 	\begin{figure}[H]
 		\includegraphics{images/caniuseGetUserMedia}
-		\caption{Rotationsachen dargestellt}
+		\caption{Kompatibilität getUserMedia(), caniuse.com}
 		\label{app:caniuseMedia}
 	\end{figure}
 
@@ -582,7 +593,7 @@ Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{images/rotation}
-	\caption{Rotationsachen dargestellt}
+	\caption{Rotationsachsen dargestellt}
 	\label{rotation}
 \end{figure}
 
@@ -618,6 +629,7 @@ Dazu nutzt er den Beispielcode und bedient sich der Eingabeevents des Frameworks
 	\caption{Latenzmessung}
 	\label{latenzmessung}
 \end{figure}
+
 \end{appendices}
 %% Appendixs
 
