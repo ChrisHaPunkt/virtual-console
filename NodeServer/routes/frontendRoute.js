@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET client listing. */
 router.get('/', function (req, res, next) {
-    res.render('games/MatrixGame/frontend', {title: '--:: Matrix Demo Game ::-- '});
+    res.render('mainMenu/frontend', {title: 'Main Menu'});
 });
 router.get('/1', function (req, res, next) {
     res.render('games/MatrixGame/frontend', {title: '--:: Matrix Demo Game ::-- '});

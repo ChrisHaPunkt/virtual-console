@@ -1,0 +1,11 @@
+extends ../frontendLayout
+
+block content
+    h1(class='globalTitle' id='title')= title
+    div(id='overlayMenu')
+    div(id='content', class='threeDContainer')
+block log
+    div(id='log')
+
+    // Load Require JS
+    script(data-main='/js/mainMenu/head.js', src='/js/libs/require.js')
