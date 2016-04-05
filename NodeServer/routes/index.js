@@ -13,14 +13,14 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     var chosenControllerTemplate = require('../app').get('chosenControllerTemplate');
 
-    var gameController = requirejs("../public/js/gameApi").controllerTemplates;
+  //  var gameController = requirejs("../public/js/gameApi").controllerTemplates;
 
     var controller = null;
     switch (chosenControllerTemplate) {
-        case gameController.DEMO:
+        case 1: //gameController.DEMO:
             controller = "controller/" + "controllerDemo";
             break;
-        case gameController.MODERN:
+        case 2: //gameController.MODERN:
             controller = "controller/" + "controllerModern";
             break;
         default:
