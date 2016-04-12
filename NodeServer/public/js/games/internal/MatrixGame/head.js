@@ -13,9 +13,10 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
-        "three": "../../libs/three",
-        "Chart": "../../libs/Chart.min",
-        "phaser": '../../libs/phaser',
+        "three": "/js/libs/three",
+        "Chart": "/js/libs/Chart.min",
+        "phaser": '/js/libs/phaser',
+        "matrixGame": 'listGame',
         "gameApi":'/js/gameApi'
     },
     shim: {
@@ -31,7 +32,7 @@ var GameHandler = null, gameApi = null, frontChart = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["phaser", "3dgame", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
+require(["phaser", "matrixGame", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
     $('#monitorBtn').click(function () {

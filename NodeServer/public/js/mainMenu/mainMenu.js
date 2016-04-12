@@ -6,9 +6,9 @@ define(['jquery'], function ($) {
 
         // TODO get these from DB
         var tmpData = [
-            {id: 'matrixGame', path: '/1', imgUrl: ''},
-            {id: 'carsGame', path: '/2', imgUrl: ''},
-            {id: '3dGame', path: '/3', imgUrl: ''}
+            {id: 'matrixGame', path: '/int/1', imgUrl: ''},
+            {id: 'carsGame', path: '/int/2', imgUrl: ''},
+            {id: '3dGame', path: '/int/3', imgUrl: ''}
         ];
 
         var init = function (domContainer, gameApi) {
@@ -40,7 +40,7 @@ define(['jquery'], function ($) {
                         'line-height': '100px'
                     },
                     click: function () {
-                        document.location = document.location + $(this).attr('path');
+                        document.location = document.location.href.replace('/menu', '/games') + $(this).attr('path');
                     },
                     path: tmpData[i].path
                 }).html(tmpData[i].id).appendTo(parent);
