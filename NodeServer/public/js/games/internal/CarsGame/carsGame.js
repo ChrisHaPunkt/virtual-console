@@ -32,11 +32,11 @@ define([
         },
 
         preload: function () {
-            game.load.image('logo', '/js/games/CarsGame/2cars/car.png');
-            game.load.image("road", "/js/games/CarsGame/2cars/road.png");
-            game.load.image("target", "/js/games/CarsGame/2cars/target.png");
-            game.load.image("car", "/js/games/CarsGame/2cars/car.png");
-            game.load.image("obstacle", "/js/games/CarsGame/2cars/obstacle.png");
+            game.load.image('logo', '/js/games/internal/CarsGame/2cars/car.png');
+            game.load.image("road", "/js/games/internal/CarsGame/2cars/road.png");
+            game.load.image("target", "/js/games/internal/CarsGame/2cars/target.png");
+            game.load.image("car", "/js/games/internal/CarsGame/2cars/car.png");
+            game.load.image("obstacle", "/js/games/internal/CarsGame/2cars/obstacle.png");
         },
 
         create: function () {

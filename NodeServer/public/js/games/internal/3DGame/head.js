@@ -6,24 +6,17 @@
  * This is necessary due to problems with the jquery and three js libraries.
  * See links below for further details.
  * */
-// http://requirejs.org/docs/jquery.html#noconflictmap
-define("jquery", [], function () {
-    return jQuery.noConflict();
-});
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
         "three": "/js/libs/three",
         "Chart": "/js/libs/Chart.min",
-        "phaser": '/js/libs/phaser',
-        "gameApi":'/js/gameApi'
+        "gameApi": '/js/gameApi',
+        "jquery": '/js/libs/jquery' // TODO jquery $ is public!
     },
     shim: {
         three: {
             exports: 'THREE'
-        },
-        'phaser': {
-            exports: 'Phaser'
         }
     }
 });
@@ -31,7 +24,7 @@ var GameHandler = null, gameApi = null, frontChart = null;
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["phaser", "3dgame", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
+require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
     gameApi = api;
     GameHandler = game;
     $('#monitorBtn').click(function () {
@@ -62,16 +55,13 @@ require(["phaser", "3dgame", "gameApi", "jquery", "Chart"], function (Phaser, ga
         console.log("+Chart");
 
 
-
-
     });
 
-    if(gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined"){
+    if (gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined") {
         $('#monitorBtn').trigger("click");
     }
     var game2 = new game();
     game2.start();
-
 
 
 });
