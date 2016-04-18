@@ -18,7 +18,7 @@ requirejs.config({
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["gameApi", "jquery"], function (gameApi, $) {
+require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi, $) {
 
     // API config
     gameApi.logLevel = gameApi.log.INFO;
@@ -73,5 +73,16 @@ require(["gameApi", "jquery"], function (gameApi, $) {
 
     };
 
+    /**
+     * INIT THE API - connect to server
+     * */
     var socket = gameApi.init();
+
+    /**
+     * instantiate externalGames js
+     * */
+    var externalGamesInstance = new externalGames();
+
+    externalGamesInstance.setSelectedGame(window.location.href.match(/game=([^&]+)/)[1]);
+
 });

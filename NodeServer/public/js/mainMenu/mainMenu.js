@@ -5,11 +5,20 @@
 define(['jquery'], function ($) {
 
         // TODO get these from DB
-        var tmpData = [
-            {id: 'matrixGame', path: '/int/1', imgUrl: ''},
-            {id: 'carsGame', path: '/int/2', imgUrl: ''},
-            {id: '3dGame', path: '/int/3', imgUrl: ''}
-        ];
+        var gameInfoData = {
+            intGamesBasePath: "/games/int",
+            extGamesBasePath: "/games/ext",
+            intGames: [
+                {id: 'matrixGame', path: '/1', imgUrl: ''},
+                {id: 'carsGame', path: '/2', imgUrl: ''},
+                {id: '3dGame', path: '/3', imgUrl: ''}
+            ],
+            extGames: [
+                {id: 'extGame1', imgUrl: ''},
+                {id: 'extGame2', imgUrl: ''},
+                {id: 'extGame3', imgUrl: ''}
+            ]
+        };
 
         var init = function (domContainer, gameApi) {
             var apiGameContainer = $('<div/>', {
@@ -21,13 +30,23 @@ define(['jquery'], function ($) {
                 }
             }).html('<p>API Games</p>').appendTo(domContainer);
 
+            var extGameContainer = $('<div/>', {
+                id: 'ext_game_container',
+                css: {
+                    'min-height': '200px',
+                    'background-color': 'transparent',
+                    margin: '25px'
+                }
+            }).html('<p>External Games</p>').appendTo(domContainer);
+
             initAPIGameTiles(apiGameContainer);
+            initEXTGameTiles(extGameContainer);
         };
 
         var initAPIGameTiles = function (parent) {
-            for (var i = 0; i < tmpData.length; i++) {
+            for (var i = 0; i < gameInfoData.intGames.length; i++) {
                 $('<div/>', {
-                    id: tmpData[i].id + '_tile',
+                    id: gameInfoData.intGames[i].id + '_tile',
                     class: 'gameTile',
                     css: {
                         width: '100px',
@@ -40,11 +59,34 @@ define(['jquery'], function ($) {
                         'line-height': '100px'
                     },
                     click: function () {
-                        document.location = document.location.href.replace('/menu', '/games') + $(this).attr('path');
+                        window.location = window.location.href.replace('/menu', gameInfoData.intGamesBasePath) + $(this).attr('path');
                     },
-                    path: tmpData[i].path
-                }).html(tmpData[i].id).appendTo(parent);
-            };
+                    path: gameInfoData.intGames[i].path
+                }).html(gameInfoData.intGames[i].id).appendTo(parent);
+            }
+        };
+
+        var initEXTGameTiles = function (parent) {
+            for (var i = 0; i < gameInfoData.extGames.length; i++) {
+                $('<div/>', {
+                    id: gameInfoData.extGames[i].id + '_tile',
+                    class: 'gameTile',
+                    css: {
+                        width: '100px',
+                        height: '100px',
+                        'background-color': 'grey',
+                        float: 'left',
+                        margin: '25px',
+                        color: 'white',
+                        'text-align': 'center',
+                        'line-height': '100px'
+                    },
+                    click: function () {
+                        window.location = window.location.href.replace('/menu', gameInfoData.extGamesBasePath) + '?game=' + $(this).attr('path');
+                    },
+                    path: gameInfoData.extGames[i].id
+                }).html(gameInfoData.extGames[i].id).appendTo(parent);
+            }
         };
 
         // return public interface of the require module
