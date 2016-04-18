@@ -1,0 +1,25 @@
+.gameContainer {
+    min-height: 200px;
+    background-color: transparent;
+    margin: 25px;
+}
+
+.gameTile {
+    width: 100px;
+    height: 100px;
+    margin: 25px;
+    float: left;
+
+    text-align: center;
+    line-height: 100px;
+}
+
+.internal {
+    background-color: black;
+    color: white;
+}
+
+.external {
+    background-color: grey;
+    color: white;
+}
