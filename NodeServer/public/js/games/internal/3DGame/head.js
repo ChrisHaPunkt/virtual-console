@@ -6,13 +6,16 @@
  * This is necessary due to problems with the jquery and three js libraries.
  * See links below for further details.
  * */
+// http://requirejs.org/docs/jquery.html#noconflictmap
+define("jquery", [], function () {
+    return jQuery.noConflict();
+});
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
         "three": "/js/libs/three",
         "Chart": "/js/libs/Chart.min",
-        "gameApi": '/js/gameApi',
-        "jquery": '/js/libs/jquery' // TODO jquery $ is public!
+        "gameApi": '/js/gameApi'
     },
     shim: {
         three: {
@@ -57,7 +60,7 @@ require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart)
 
     });
 
-    if (gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined") {
+    if(gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined"){
         $('#monitorBtn').trigger("click");
     }
     var game2 = new game();
