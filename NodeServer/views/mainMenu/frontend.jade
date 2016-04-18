@@ -1,9 +1,11 @@
 extends ../frontendLayout
 
 block content
-    h1(class='globalTitle' id='title')= title
-    div(id='overlayMenu')
+    div(id='header')
+        div(id='menu')
+            div(id='title', class='headerElement')= title
     div(id='content', class='threeDContainer')
+    div(id='overlayMenu')
 block log
     div(id='log')
 

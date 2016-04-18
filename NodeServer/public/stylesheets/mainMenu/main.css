@@ -1,1 +1,19 @@
+@import "header.css";
+@import "content.css";
 @import "gameTiles.css";
+
+body{
+    background-image: url('/img/background_02.jpg');
+}
+
+#log{
+    width: 90%;
+    height: 80%;
+    margin: 0 auto;
+    padding: 1em;
+
+    background-color: rgba(0,0,0,0.9);
+    border-radius: 0em;
+    border: none;
+    color: white;
+}
