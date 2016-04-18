@@ -1,7 +1,7 @@
 /**
  * Created by hannes on 12.01.2016.
  */
-define(['jquery', 'gameApi', '../../libs/qrcode.min'], function ($, gameApi, qrcode) {
+define(['jquery', 'gameApi', '../../../libs/qrcode.min'], function ($, gameApi, qrcode) {
 
     var domContainer = $("#3d");
     var run = true;
