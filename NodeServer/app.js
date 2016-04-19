@@ -11,7 +11,16 @@ var util = require('util');
 var mainMenuRoute = require('./routes/mainMenuRoute');
 var controllerRoutes = require('./routes/controllerRoute');
 var gameRoute = require('./routes/gameRoute');
+var config = require('../config.json');
 var app = module.exports.app = express();
+
+
+var Route = require("./sources/ValueObjects/RouteVO");
+var RouteInstance = new Route(1,"2","3","4");
+util.log(typeof RouteInstance);
+util.log(RouteInstance instanceof Route);
+util.log(RouteInstance.constructor.name);
+util.log(RouteInstance.validate());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

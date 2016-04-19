@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var database = require('../sources/Database')();
 
 /* GET client listing. */
 router.get('/', function (req, res, next) {

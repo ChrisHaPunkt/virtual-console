@@ -9,13 +9,14 @@ var debug = require('debug')('NodeServer:server');
 var http = require('http');
 var util = require('util');
 
+var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
 
 /**
  * Get port from environment and store in f.
  */
 
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || config.runningPort);
 app.set('port', port);
 
 /**
