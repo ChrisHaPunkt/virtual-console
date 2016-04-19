@@ -15,7 +15,7 @@ var sessionHandling = require('../sources/sessionHandling');
  * Get port from environment and store in f.
  */
 
-var port = normalizePort(process.env.PORT || '5222');
+var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
 /**
