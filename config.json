@@ -5,6 +5,6 @@
   "dbcollection": "virtualConsole",
   "debug": true,
   "runningHost": "localhost",
-  "runningPort": 80,
+  "runningPort": 5222,
   "runningProtocoll": "http"
 }
