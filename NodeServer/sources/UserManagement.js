@@ -1,13 +1,12 @@
 /**
  * Created by dennis on 29.10.15.
  */
-// Verbindung zur MongoDB
-var MongoDBHost = "localhost";
-var collectionName = "virtualConsole";
+
+var config = require('../../config.json');
 var database = require('./Database.js')();
 
 module.exports = function () {
-    var debug = true;
+    var debug = config.debug;
 
     var publicSection = {
 
