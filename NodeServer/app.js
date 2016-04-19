@@ -13,20 +13,30 @@ var controllerRoutes = require('./routes/controllerRoute');
 var gameRoute = require('./routes/gameRoute');
 var config = require('../config.json');
 var app = module.exports.app = express();
-
+var debug = config.debug;
 
 var RoutesHandler = require('./sources/Routes');
 
 var RouteVO = require("./sources/ValueObjects/RouteVO");
 
-var RouteInstance = new RouteVO(1, "2", "3", "4");
-util.log(typeof RouteInstance);
-util.log(RouteInstance instanceof RouteVO);
-util.log(RouteInstance.constructor.name);
-util.log(RouteInstance.validate());
-util.log(RouteInstance);
+var RouteInstance = new RouteVO(1, "new2", "3", "4");
 
-RoutesHandler.addNewRoute(RouteInstance);
+RoutesHandler.addNewRoute(RouteInstance, function (state, msg) {
+    if (debug) util.log("callback " + msg);
+
+    RoutesHandler.getAllRoutes(function (state, msg) {
+        if (state) {
+            if (debug) util.log("Got "+ msg.length+" Routes from DB");
+            if (debug) util.log(msg[0]);
+
+        } else {
+            if (debug) util.log("callback get All Routes " + msg);
+
+        }
+    });
+});
+
+
 
 
 // view engine setup
