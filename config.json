@@ -2,5 +2,6 @@
   "name": "config",
   "version": "0.0.1",
   "dbhost": "localhost",
-  "dbcollection": "virtualConsole"
+  "dbcollection": "virtualConsole",
+  "debug": true
 }

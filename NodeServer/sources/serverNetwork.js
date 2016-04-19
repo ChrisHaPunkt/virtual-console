@@ -18,7 +18,8 @@ var clients = {};
 var frontend = 0;
 var callback;
 var util = require('util');
-var debug = false;
+var config = require('../../config.json');
+var debug = config.debug;
 
 // start webserver and socket - function is called via public start method. see module exports at the end of this file
 var startListening = function () {

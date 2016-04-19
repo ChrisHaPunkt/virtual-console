@@ -6,7 +6,7 @@ var config = require('../../config.json');
 module.exports = function(){
 
     var dbURL = "mongodb://" + config.dbhost + "/" + config.dbcollection
-    var debug = true;
+    var debug = config.debug;
     this.dbURL = dbURL;
 
     /***************************************
