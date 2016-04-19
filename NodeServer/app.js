@@ -8,8 +8,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('util');
 
-var routes = require('./routes/index');
-var frontendRoute = require('./routes/frontendRoute');
+var mainMenuRoute = require('./routes/mainMenuRoute');
+var controllerRoutes = require('./routes/controllerRoute');
+var gameRoute = require('./routes/gameRoute');
 var app = module.exports.app = express();
 
 // view engine setup
@@ -24,8 +25,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/game', frontendRoute);
+app.use('/', controllerRoutes);
+app.use('/menu', mainMenuRoute);
+app.use('/games', gameRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

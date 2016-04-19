@@ -1,8 +1,8 @@
-extends ../../frontendLayout
+extends ../../../frontendLayout
 
 block content
     h1(class='globalTitle' id='monitorBtn' style='cursor:pointer' title='Click for Performance Monitor')= title
-    div(id='carsGame', class='threeDContainer')
+    div(id='3d', class='threeDContainer')
     div(id="qrcode")
 block log
     div(id='chart')
@@ -10,4 +10,4 @@ block log
     div(id='log')
 
     // Load Require JS
-    script(data-main='/js/games/CarsGame/head.js', src='/js/libs/require.js')
+    script(data-main='/js/games/internal/MatrixGame/head.js', src='/js/libs/require.js')

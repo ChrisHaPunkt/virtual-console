@@ -95,6 +95,15 @@ var startNetworkServer = function (server) {
         },
         onFrontendConnected: function () {
             callback.onFrontendConnected();
+
+            // send logged in users to newly connected frontend
+            for(var user in activeUsers){
+                if(!activeUsers.hasOwnProperty(user)) continue;
+                var currentUserName = activeUsers[user].userName;
+                if(currentUserName) {
+                    callback.onNewUser(currentUserName);
+                }
+            }
         },
         onFrontendOutboundMessage: function (type, message) {
             callback.onFrontendOutboundMessage(type, message);
@@ -127,7 +136,6 @@ var removeUserByName = function (userName) {
         removeUserById(tmpUserId);
     }
 };
-
 var removeUserById = function (id) {
     if (activeUsers.hasOwnProperty(id)) {
         delete activeUsers[id];
@@ -137,7 +145,6 @@ var removeUserById = function (id) {
 var getUserById = function (id) {
     return activeUsers[id];
 };
-
 var getUserIdByName = function (userName) {
     for (var tmpUserId in activeUsers) {
         if (activeUsers.hasOwnProperty(tmpUserId)) {

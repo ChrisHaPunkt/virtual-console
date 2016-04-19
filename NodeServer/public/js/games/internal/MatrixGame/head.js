@@ -13,9 +13,9 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
-        "three": "../../libs/three",
-        "Chart": "../../libs/Chart.min",
-        "phaser": '../../libs/phaser',
+        "three": "/js/libs/three",
+        "Chart": "/js/libs/Chart.min",
+        "phaser": '/js/libs/phaser',
         "matrixGame": 'listGame',
         "gameApi":'/js/gameApi'
     },
