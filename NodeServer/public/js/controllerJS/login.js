@@ -36,7 +36,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     //Open socket
     ////////////////////////////////////
     var serverURL = "127.0.0.1";
-    var serverPort = 5222;
+    var serverPort = 80;
 
     var resHandler = {
         onMessage: function (type, msg) {
