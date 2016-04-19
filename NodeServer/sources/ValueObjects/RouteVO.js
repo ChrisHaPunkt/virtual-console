@@ -10,13 +10,13 @@ function RouteVO(TYPE, name, url, displayName) {
 
     var namespace = "";
     switch (TYPE) {
-        case TYPES.internal:
+        case 1:
             namespace = "internal";
             break;
-        case TYPES.external:
+        case 2:
             namespace = "external";
             break;
-        case TYPES.native:
+        case 3:
             namespace = "native";
             break;
         default:
@@ -28,21 +28,23 @@ function RouteVO(TYPE, name, url, displayName) {
     if (debug) util.log("Route Obj created | Name :'" + name + "'");
     if (debug) util.log("Route Obj created | Url :'" + url + "'");
 
+    var buildFullUri = (config.runningPort == 80 || config.runningPort == 443) ?
+    config.runningProtocoll + '://' + config.runningHost + "/games/" + this.rel_url :
+    config.runningProtocoll + '://' + config.runningHost + ':' + config.runningPort + "/games/" + this.rel_url;
+
     this.type = TYPE;
-    this.name = name;
+    this.unique_name = name;
     this.namespace = namespace;
     this.displayName = displayName;
-    this.url = namespace + "/" + name;
-    this.fullUrl = (config.runningPort == 80 || config.runningPort == 443) ?
-    config.runningProtocoll + '://' + config.runningHost + "/games/" + this.url :
-    config.runningProtocoll + '://' + config.runningHost + ':' + config.runningPort + "/games/" + this.url;
+    this.rel_url = namespace + "/" + name;
+    this.fullUrl = buildFullUri;
 
     this.validate = function () {
-        return typeof this.type  != 'undefined' &&
-            typeof this.name != 'undefined' &&
+        return typeof this.type != 'undefined' &&
+            typeof this.unique_name != 'undefined' &&
             typeof this.namespace != 'undefined' &&
             typeof this.displayName != 'undefined' &&
-            typeof  this.url != 'undefined' &&
+            typeof this.rel_url != 'undefined' &&
             typeof this.fullUrl != 'undefined'
 
     }
