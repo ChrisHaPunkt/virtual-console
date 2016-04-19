@@ -4,7 +4,7 @@
 // Verbindung zur MongoDB
 var MongoDBHost = "localhost";
 var collectionName = "virtualConsole";
-var database = require('./Database.js')("mongodb://" + MongoDBHost + "/" + collectionName);
+var database = require('./Database.js')();
 
 module.exports = function () {
     var debug = true;
