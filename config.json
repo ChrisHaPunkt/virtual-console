@@ -1,0 +1,10 @@
+{
+  "name": "config",
+  "version": "0.0.1",
+  "dbhost": "localhost",
+  "dbcollection": "virtualConsole",
+  "debug": true,
+  "runningHost": "localhost",
+  "runningPort": 5222,
+  "runningProtocoll": "http"
+}

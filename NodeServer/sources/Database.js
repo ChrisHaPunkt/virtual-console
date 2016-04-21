@@ -2,9 +2,11 @@
  * Created by dennis on 29.10.15.
  */
 var MongoClient = require('mongodb').MongoClient;
+var config = require('../../config.json');
+module.exports = function(){
 
-module.exports = function(dbURL){
-    var debug = true;
+    var dbURL = "mongodb://" + config.dbhost + "/" + config.dbcollection
+    var debug = config.debug;
     this.dbURL = dbURL;
 
     /***************************************

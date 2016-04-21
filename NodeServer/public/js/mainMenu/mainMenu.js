@@ -41,7 +41,7 @@ define(['jquery'], function ($) {
                     id: gameInfoData.intGames[i].id + '_tile',
                     class: 'gameTile internal',
                     click: function () {
-                        window.location = window.location.href.replace('/menu', gameInfoData.intGamesBasePath) + $(this).attr('path');
+                        window.location = gameInfoData.intGamesBasePath + $(this).attr('path');
                     },
                     path: gameInfoData.intGames[i].path
                 }).html(gameInfoData.intGames[i].id).appendTo(parent);
@@ -54,7 +54,7 @@ define(['jquery'], function ($) {
                     id: gameInfoData.extGames[i].id + '_tile',
                     class: 'gameTile external',
                     click: function () {
-                        window.location = window.location.href.replace('/menu', gameInfoData.extGamesBasePath) + '?game=' + $(this).attr('path');
+                        window.location = gameInfoData.extGamesBasePath + '?game=' + $(this).attr('path');
                     },
                     path: gameInfoData.extGames[i].id
                 }).html(gameInfoData.extGames[i].id).appendTo(parent);
