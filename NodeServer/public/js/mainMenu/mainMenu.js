@@ -4,67 +4,90 @@
 
 define(['jquery'], function ($) {
 
-        // TODO get these from DB
-        var gameInfoData = {
-            intGamesBasePath: "/games/int",
-            extGamesBasePath: "/games/ext",
-            intGames: [
-                {id: 'matrixGame', path: '/1', imgUrl: ''},
-                {id: 'carsGame', path: '/2', imgUrl: ''},
-                {id: '3dGame', path: '/3', imgUrl: ''}
-            ],
-            extGames: [
-                {id: 'extGame1', imgUrl: ''},
-                {id: 'extGame2', imgUrl: ''},
-                {id: 'extGame3', imgUrl: ''}
-            ]
-        };
+        var MainMenu = function (domContainer, gameApi, that) {
 
-        var init = function (domContainer, gameApi) {
-            var apiGameContainer = $('<div/>', {
+            // init dom reference object
+            this.domElements = {};
+            this.domElements.domContainer = domContainer;
+
+            // set reference to game API
+            this.gameApi = gameApi;
+
+            // add API game container
+            this.domElements.apiGameContainer = $('<div/>', {
                 id: 'APIgameContainer',
                 class: 'gameContainer'
-            }).html('<p>API Games</p>').appendTo(domContainer);
+            }).html('<p>API Games</p>').appendTo(this.domElements.domContainer);
 
-            var extGameContainer = $('<div/>', {
+            // add external game container
+            this.domElements.extGameContainer = $('<div/>', {
                 id: 'EXTgameContainer',
                 class: 'gameContainer'
-            }).html('<p>External Games</p>').appendTo(domContainer);
+            }).html('<p>External Games</p>').appendTo(this.domElements.domContainer);
 
-            initAPIGameTiles(apiGameContainer);
-            initEXTGameTiles(extGameContainer);
+            // load game data from server
+            this.gameData = {};
+            MainMenu.prototype.loadGameData.call(this); // call prototype function with context of current 'new' object
+
+            // draw game tiles
+
+            console.log("OUT", this);
+            MainMenu.prototype.initAPIGameTiles.call(this, this.domElements.apiGameContainer);
+            MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
+
         };
 
-        var initAPIGameTiles = function (parent) {
-            for (var i = 0; i < gameInfoData.intGames.length; i++) {
+        MainMenu.prototype.loadGameData = function () {
+
+            // TODO get these from DB
+            this.gameData = {
+                intGamesBasePath: "/games/int",
+                extGamesBasePath: "/games/ext",
+                intGames: [
+                    {id: 'matrixGame', path: '/1', imgUrl: ''},
+                    {id: 'carsGame', path: '/2', imgUrl: ''},
+                    {id: '3dGame', path: '/3', imgUrl: ''}
+                ],
+                extGames: [
+                    {id: 'extGame1', imgUrl: ''},
+                    {id: 'extGame2', imgUrl: ''},
+                    {id: 'extGame3', imgUrl: ''}
+                ]
+            };
+
+            return true;
+
+        };
+
+        MainMenu.prototype.initAPIGameTiles = function (parent) {
+            console.log("IN", this);
+            for (var i = 0; i < this.gameData.intGames.length; i++) {
                 $('<div/>', {
-                    id: gameInfoData.intGames[i].id + '_tile',
+                    id: this.gameData.intGames[i].id + '_tile',
                     class: 'gameTile internal',
                     click: function () {
-                        window.location = gameInfoData.intGamesBasePath + $(this).attr('path');
+                        window.location = $(this).attr('path');
                     },
-                    path: gameInfoData.intGames[i].path
-                }).html(gameInfoData.intGames[i].id).appendTo(parent);
+                    path: this.gameData.intGamesBasePath + this.gameData.intGames[i].path
+                }).html(this.gameData.intGames[i].id).appendTo(parent);
             }
         };
 
-        var initEXTGameTiles = function (parent) {
-            for (var i = 0; i < gameInfoData.extGames.length; i++) {
+        MainMenu.prototype.initEXTGameTiles = function (parent) {
+            for (var i = 0; i < this.gameData.extGames.length; i++) {
                 $('<div/>', {
-                    id: gameInfoData.extGames[i].id + '_tile',
+                    id: this.gameData.extGames[i].id + '_tile',
                     class: 'gameTile external',
                     click: function () {
-                        window.location = gameInfoData.extGamesBasePath + '?game=' + $(this).attr('path');
+                        window.location = $(this).attr('path');
                     },
-                    path: gameInfoData.extGames[i].id
-                }).html(gameInfoData.extGames[i].id).appendTo(parent);
+                    path: this.gameData.extGamesBasePath + '?game=' + this.gameData.extGames[i].id
+                }).html(this.gameData.extGames[i].id).appendTo(parent);
             }
         };
 
         // return public interface of the require module
-        return {
-            init: init
-        };
+        return MainMenu;
 
     }
 );
