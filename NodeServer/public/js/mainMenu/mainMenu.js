@@ -30,8 +30,6 @@ define(['jquery'], function ($) {
             MainMenu.prototype.loadGameData.call(this); // call prototype function with context of current 'new' object
 
             // draw game tiles
-
-            console.log("OUT", this);
             MainMenu.prototype.initAPIGameTiles.call(this, this.domElements.apiGameContainer);
             MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
 
@@ -60,7 +58,6 @@ define(['jquery'], function ($) {
         };
 
         MainMenu.prototype.initAPIGameTiles = function (parent) {
-            console.log("IN", this);
             for (var i = 0; i < this.gameData.intGames.length; i++) {
                 $('<div/>', {
                     id: this.gameData.intGames[i].id + '_tile',
@@ -84,6 +81,11 @@ define(['jquery'], function ($) {
                     path: this.gameData.extGamesBasePath + '?game=' + this.gameData.extGames[i].id
                 }).html(this.gameData.extGames[i].id).appendTo(parent);
             }
+        };
+
+        MainMenu.prototype.redraw = function () {
+            MainMenu.prototype.initAPIGameTiles.call(this, this.domElements.apiGameContainer);
+            MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
         };
 
         // return public interface of the require module
