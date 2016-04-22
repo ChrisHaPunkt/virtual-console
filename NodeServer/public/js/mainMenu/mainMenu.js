@@ -2,9 +2,9 @@
  * Created by hannes on 31.03.2016.
  */
 
-define(['jquery'], function ($) {
+define(['jquery', 'gameApi'], function ($, gameApi) {
 
-        var MainMenu = function (domContainer, gameApi, that) {
+        var MainMenu = function (domContainer, gameApi) {
 
             // init dom reference object
             this.domElements = {};
@@ -36,6 +36,13 @@ define(['jquery'], function ($) {
         };
 
         MainMenu.prototype.loadGameData = function () {
+
+            gameApi.getGameData(function(data){
+                gameApi.addLogMessage(gameApi.log.INFO, "data", "Server send game data!");
+                console.log(this);
+                this.gameData = data;
+                console.log(this);
+            }.bind(this));
 
             // TODO get these from DB
             this.gameData = {

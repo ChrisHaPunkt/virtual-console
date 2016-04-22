@@ -145,6 +145,15 @@ define(['/socket.io/socket.io.js'], function (io) {
 
         broadcastMessage: function (message) {
             this.sendToServer('messageToAllClients', message);
+        },
+
+        // request data for a game. if no game id is provided the data of all games are request
+        getGameData: function(callback, gameId){
+            this.sendToServer('requestGameData', {
+                game: gameId ? gameId : null
+            });
+            // set return event to call callback method provided
+            this.socket.on('responseGameData', callback);
         }
 
     };
