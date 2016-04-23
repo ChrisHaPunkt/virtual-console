@@ -51,7 +51,7 @@ var startListening = function () {
             });
             if (debug)util.log('serverNetwork | Frontend Connected!');
             // server -> frontend handshake
-            exports.sendToFrontend('frontendConnection', 'Hello Frontend');
+            exports.sendToFrontend_InitAck('Hello Frontend');
         });
 
         // frontend sends message
@@ -156,6 +156,7 @@ var sendToClient = function (id, socketEventType, message) {
     }
 };
 // sends a message to the frontend
+// ONLY used by exported messaging functions (see below)
 var sendToFrontend = function (socketEventType, message) {
     if (frontend != 0) {
         frontend.emit(socketEventType, message);
@@ -214,14 +215,13 @@ var exports = {
     sendToClient: function (id, messageType, data) {
         return sendToClient(id, 'message', {type: messageType, data: data});
     },
-    sendToFrontend: function (messageType, data) {
-        //TODO: FixUp
-        //Der MessageType wird auf GameApi Seite noch unterschieden. Siehe https://gitlab.homeset.de/fhKiel/M113/wikis/GameApiDescription
-        if (messageType === "frontendConnection") {
-            return sendToFrontend('frontendConnection', data);
-
-        }
+    // normal frontend messaging function // this should be used by the game for controller to frontend messaging
+    sendToFrontend_Message: function (messageType, data) {
         return sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
+    },
+    // only used for connection establishment
+    sendToFrontend_InitAck: function(data){
+        return sendToFrontend('frontendInitAck', data);
     },
     broadcastMessage: function (messageType, data) {
         return broadcastMessage('broadcast', {type: messageType, data: data});

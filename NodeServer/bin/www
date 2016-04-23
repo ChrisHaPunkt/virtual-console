@@ -42,15 +42,15 @@ server.on('listening', onListening);
 sessionHandling.init(server, {
     onNewUser: function(name){
         //util.log('www | new user ' + name);
-        sessionHandling.sendToFrontend(name,'userConnection','connected');
+        sessionHandling.sendToFrontend_Message(name,'userConnection','connected');
     },
     onUserDisconnects: function(name){
         //util.log('www | user disconnected ' + name);
-        sessionHandling.sendToFrontend(name,'userConnection','disconnected');
+        sessionHandling.sendToFrontend_Message(name,'userConnection','disconnected');
     },
     onMessage: function(name,type,message){
         //util.log('www | user ' + name + ' says: ' + message);
-        sessionHandling.sendToFrontend(name,type,message);
+        sessionHandling.sendToFrontend_Message(name,type,message);
     },
 
     onFrontendConnected: function () {

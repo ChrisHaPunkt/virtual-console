@@ -46,7 +46,7 @@ define(['/socket.io/socket.io.js'], function (io) {
              * This is done by a handshake
              *
              * Client -> Server : 'frontendInit'
-             * Server -> Client : 'frontendConnection'
+             * Server -> Client : 'frontendInitAck'
              */
 
             // open socket connection to server - the origin ip of the http files is used if not specified
@@ -58,7 +58,7 @@ define(['/socket.io/socket.io.js'], function (io) {
             }.bind(this));
 
             // handshake with server was successful
-            this.socket.on('frontendConnection', function (incomingMessage) {
+            this.socket.on('frontendInitAck', function (incomingMessage) {
                 this.addLogMessage(this.log.INFO, 'conn', incomingMessage + " " + this.socket.id);
                 this.sendControllerTemplateToServer();
             }.bind(this));

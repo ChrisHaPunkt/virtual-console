@@ -185,8 +185,8 @@ var exports = {
     getUserData: function (name, data) {
         //TODO get userdata from usermanagement
     },
-    sendToFrontend: function (clientName, messageType, message) {
-        network.sendToFrontend(messageType, {clientName: clientName, message: message});
+    sendToFrontend_Message: function (clientName, messageType, message) {
+        network.sendToFrontend_Message(messageType, {clientName: clientName, message: message});
     }
 };
 // exporting the actual object
