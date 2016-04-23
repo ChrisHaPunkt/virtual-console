@@ -60,9 +60,20 @@ var startListening = function () {
                 callback.onFrontendOutboundMessage(message.type, message.data, function (result) {
                     // callback from session handling - not needed atm
                 });
-                if (debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
+                if (debug)util.log('serverNetwork | Frontend sent a message with type ' + message.type + ' : ' + message.data);
             }else{
-                util.log('serverNetwork | ERROR: Frontend sended a message without being initiated! (' + message.type + ' : ' + message.data + ')');
+                util.log('serverNetwork | ERROR: Frontend sent a message without being initiated! (' + message.type + ' : ' + message.data + ')');
+            }
+        });
+
+        socket.on('frontendOutboundData', function(data){
+            if(frontend != 0) {
+                callback.onFrontendOutboundData(data.request, data.data, function (result) {
+                    // callback from session handling - not needed atm
+                });
+                if (debug)util.log('serverNetwork | Frontend sent data with request ' + data.request + ' : ' + data.data);
+            }else{
+                util.log('serverNetwork | ERROR: Frontend sent data without being initiated! (' + data.request + ' : ' + data.data + ')');
             }
         });
 

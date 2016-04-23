@@ -116,9 +116,17 @@ define(['/socket.io/socket.io.js'], function (io) {
         /**
          * OUTGOING COMMUNICATION
          * */
-        sendToServer: function (messageType, message) {
+        sendToServer_Message: function (messageType, message) {
             if (this.socket != null) {
                 this.socket.emit('frontendOutboundMessage', {type: messageType, data: message});
+            } else {
+                this.addLogMessage(this.log.DEBUG, 'error', 'No server connection. Please initiate. \'init()\'');
+            }
+        },
+
+        sendToServer_Data: function (requestType, data) {
+            if (this.socket != null) {
+                this.socket.emit('frontendOutboundData', {request: requestType, data: data});
             } else {
                 this.addLogMessage(this.log.DEBUG, 'error', 'No server connection. Please initiate. \'init()\'');
             }
@@ -130,7 +138,7 @@ define(['/socket.io/socket.io.js'], function (io) {
                 this.controller = template;
             }
             if (this.controller) {
-                this.sendToServer('setControllerTemplate', this.controller);
+                this.sendToServer_Data('setControllerTemplate', this.controller);
             } else {
                 this.addLogMessage(this.log.DEBUG, 'error', 'Trying to send controller template before setting it.');
             }
@@ -140,16 +148,16 @@ define(['/socket.io/socket.io.js'], function (io) {
             var msg = {};
             msg.data = message;
             msg.username = name;
-            this.sendToServer('messageToClient', msg);
+            this.sendToServer_Message('messageToClient', msg);
         },
 
         broadcastMessage: function (message) {
-            this.sendToServer('messageToAllClients', message);
+            this.sendToServer_Message('messageToAllClients', message);
         },
 
         // request data for a game. if no game id is provided the data of all games are request
         getGameData: function(callback, gameId){
-            this.sendToServer('requestGameData', {
+            this.sendToServer_Message('requestGameData', {
                 game: gameId ? gameId : null
             });
             // set return event to call callback method provided

@@ -107,6 +107,9 @@ var startNetworkServer = function (server) {
         },
         onFrontendOutboundMessage: function (type, message) {
             callback.onFrontendOutboundMessage(type, message);
+        },
+        onFrontendOutboundData: function (request, data) {
+            callback.onFrontendOutboundData(request, data);
         }
     }).start();
 };
