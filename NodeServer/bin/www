@@ -68,7 +68,6 @@ sessionHandling.init(server, {
     onFrontendOutboundData: function (request, data) {
         if (request == 'setControllerTemplate'){
             app.set('chosenControllerTemplate', data);
-            util.log('www | frontend set controller template!');
         }
     }
 

@@ -66,6 +66,7 @@ var startListening = function () {
             }
         });
 
+        // frontend sends data or data request
         socket.on('frontendOutboundData', function(data){
             if(frontend != 0) {
                 callback.onFrontendOutboundData(data.request, data.data, function (result) {
@@ -229,6 +230,10 @@ var exports = {
     // normal frontend messaging function // this should be used by the game for controller to frontend messaging
     sendToFrontend_Message: function (messageType, data) {
         return sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
+    },
+    // internal data function // DO NOT use for game development
+    sendToFrontend_Data: function(requestId, data){
+        return sendToFrontend('frontendData', {id: requestId, data: data});
     },
     // only used for connection establishment
     sendToFrontend_InitAck: function(data){
