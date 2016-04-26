@@ -18,10 +18,16 @@ router.get('/ext', function (req, res, next) {
 
 
 RoutesHandler.getAllRoutes(function (state, msg) {
+    var app = require('../app');
+
     if (state) {
+        routes = msg;
+
+        //FullGeneratedRouteVOs for frontend menu generation
+        app.set("fullQualifiedRouteVOs", routes);
+
 
         if (debug) util.log("Got " + msg.length + " Routes from DB");
-        routes = msg;
 
         routes.forEach(function (route) {
 
