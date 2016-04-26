@@ -11,7 +11,7 @@ case $1 in
                  bash scripts/prepareDeps.sh
             fi
 
-            bash scripts/database.sh start &&
+            bash scripts/database.sh start
             node NodeServer/bin/www &
             PID=$!
             echo ${PID} > scripts/NODEPID

@@ -8,11 +8,12 @@ var debug = config.debug;
 var util = require('util');
 
 
-function RouteVO(TYPE, name, url, displayName) {
+function RouteVO(TYPE, name, displayName, urlId) {
 
     var TYPES = require('../Routes').TYPES;
 
     var namespace = "";
+    var namespaceShort = "";
     switch (TYPE) {
         case TYPES.internal:
             namespace = "internal";
@@ -27,14 +28,17 @@ function RouteVO(TYPE, name, url, displayName) {
             namespace = "BROKEN";
             break;
     }
-
+    namespaceShort = namespace.substr(0, 3);
 
     this.type = TYPE;
-    this.urlId = url;
+    if (urlId)
+        this.urlId = urlId;
     this.unique_name = name;
     this.namespace = namespace;
+    this.namespaceShort = namespaceShort;
     this.displayName = displayName;
-    this.rel_url = "/games/" + namespace + "/" + url;
+    var genUrlId = (urlId) ? urlId :'{toBeGenerated}';
+    this.rel_url = "/games/" + this.namespaceShort + "/" + genUrlId;
 
 
     this.fullUrl = (config.runningPort == 80 || config.runningPort == 443) ?
@@ -45,15 +49,15 @@ function RouteVO(TYPE, name, url, displayName) {
     if (debug) util.log("Route Obj created | Type :'" + namespace + "'");
     if (debug) util.log("Route Obj created | DisplayName :'" + displayName + "'");
     if (debug) util.log("Route Obj created | Name :'" + name + "'");
-    if (debug) util.log("Route Obj created | Url :'" + url + "'");
+    if (debug) util.log("Route Obj created | Url :'" + this.rel_url + "'");
 }
 
 RouteVO.prototype.validate = function () {
     return typeof this.type != 'undefined' &&
         typeof this.unique_name != 'undefined' &&
         typeof this.namespace != 'undefined' &&
+        typeof this.namespaceShort != 'undefined' &&
         typeof this.displayName != 'undefined' &&
-        typeof this.urlId != 'undefined' &&
         typeof this.rel_url != 'undefined' &&
         typeof this.fullUrl != 'undefined'
 

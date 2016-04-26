@@ -16,27 +16,14 @@ var app = module.exports.app = express();
 var debug = config.debug;
 
 var RoutesHandler = require('./sources/Routes');
-
 var RouteVO = require("./sources/ValueObjects/RouteVO");
 
-var RouteInstance = new RouteVO(1, "new2", "3", "4");
 
-RoutesHandler.addNewRoute(RouteInstance, function (state, msg) {
-    if (debug) util.log("callback " + msg);
+var types = RoutesHandler.TYPES;
 
-    RoutesHandler.getAllRoutes(function (state, msg) {
-        if (state) {
-            if (debug) util.log("Got "+ msg.length+" Routes from DB");
-            if (debug) util.log(msg[0]);
-
-        } else {
-            if (debug) util.log("callback get All Routes " + msg);
-
-        }
-    });
-});
-
-
+//RoutesHandler.addNewRoute(new RouteVO(types.internal, "MatrixGame", "Matrix Demo Game"));
+//RoutesHandler.addNewRoute(new RouteVO(types.internal, "CarsGame", "Cars Demo Game"));
+//RoutesHandler.addNewRoute(new RouteVO(types.internal, "3DGame", "ThreeD Game"));
 
 
 // view engine setup
