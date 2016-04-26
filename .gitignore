@@ -10,3 +10,5 @@ Documentation/references.bib.bak
 .idea
 Database/storage
 !Database/storage/.placeholder
+scripts/DBPID
+scripts/NODEPID
