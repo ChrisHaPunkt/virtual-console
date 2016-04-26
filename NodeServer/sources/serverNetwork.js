@@ -51,15 +51,31 @@ var startListening = function () {
             });
             if (debug)util.log('serverNetwork | Frontend Connected!');
             // server -> frontend handshake
-            exports.sendToFrontend('frontendConnection', 'Hello Frontend');
+            exports.sendToFrontend_InitAck('Hello Frontend');
         });
 
         // frontend sends message
         socket.on('frontendOutboundMessage', function (message) {
-            callback.onFrontendOutboundMessage(message.type, message.data, function(result){
-                // callback from session handling - not needed atm
-            });
-            if (debug)util.log('serverNetwork | Frontend sended a message with type ' + message.type + ' : ' + message.data);
+            if(frontend != 0) {
+                callback.onFrontendOutboundMessage(message.type, message.data, function (result) {
+                    // callback from session handling - not needed atm
+                });
+                if (debug)util.log('serverNetwork | Frontend sent a message with type ' + message.type + ' : ' + message.data);
+            }else{
+                util.log('serverNetwork | ERROR: Frontend sent a message without being initiated! (' + message.type + ' : ' + message.data + ')');
+            }
+        });
+
+        // frontend sends data or data request
+        socket.on('frontendOutboundData', function(data){
+            if(frontend != 0) {
+                callback.onFrontendOutboundData(data.request, data.data, function (result) {
+                    // callback from session handling - not needed atm
+                });
+                if (debug)util.log('serverNetwork | Frontend sent data with request ' + data.request + ' : ' + data.data);
+            }else{
+                util.log('serverNetwork | ERROR: Frontend sent data without being initiated! (' + data.request + ' : ' + data.data + ')');
+            }
         });
 
         // client registers
@@ -152,6 +168,7 @@ var sendToClient = function (id, socketEventType, message) {
     }
 };
 // sends a message to the frontend
+// ONLY used by exported messaging functions (see below)
 var sendToFrontend = function (socketEventType, message) {
     if (frontend != 0) {
         frontend.emit(socketEventType, message);
@@ -210,14 +227,17 @@ var exports = {
     sendToClient: function (id, messageType, data) {
         return sendToClient(id, 'message', {type: messageType, data: data});
     },
-    sendToFrontend: function (messageType, data) {
-        //TODO: FixUp
-        //Der MessageType wird auf GameApi Seite noch unterschieden. Siehe https://gitlab.homeset.de/fhKiel/M113/wikis/GameApiDescription
-        if (messageType === "frontendConnection") {
-            return sendToFrontend('frontendConnection', data);
-
-        }
+    // normal frontend messaging function // this should be used by the game for controller to frontend messaging
+    sendToFrontend_Message: function (messageType, data) {
         return sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
+    },
+    // internal data function // DO NOT use for game development
+    sendToFrontend_Data: function(requestId, data){
+        return sendToFrontend('frontendData', {id: requestId, data: data});
+    },
+    // only used for connection establishment
+    sendToFrontend_InitAck: function(data){
+        return sendToFrontend('frontendInitAck', data);
     },
     broadcastMessage: function (messageType, data) {
         return broadcastMessage('broadcast', {type: messageType, data: data});

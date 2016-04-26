@@ -13,7 +13,7 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
-        "gameApi":'/js/gameApi'
+        "gameApi": '/js/gameApi'
     }
 });
 
@@ -22,15 +22,16 @@ requirejs.config({
  * */
 require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
 
-    // API config
+
+    /**
+     * API config
+     */
+    // set basic config properties
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.MODERN;
     gameApi.performanceMonitor = false;
 
-    /**
-     * Handle new Controller Data
-     * @param controllerData
-     */
+    // handle new Controller Data
     gameApi.frontendInboundMessage = function (controllerData) {
 
         var controllerEvent = controllerData.data.message;
@@ -63,25 +64,17 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
         }
 
     };
+
     /**
-     * Local Game Initialization
-     * @param connInfoObj
-     */
-    gameApi.frontendConnection = function (connInfoObj) {
-        gameApi.addLogMessage(gameApi.log.INFO, 'conn', connInfoObj + " " + gameApi.socket.id);
-
-        this.emit('frontendOutboundMessage', {type: 'setControllerTemplate', data: gameApi.controller});
-
-
-    };
-
+     * INIT game API
+     * */
     var socket = gameApi.init();
 
     /**
      * START MAIN MENU
      * */
-
     var domContainer = $("#content");
-    mainMenu.init(domContainer, gameApi);
+    var mainMenuInstance = new mainMenu(domContainer, gameApi);
+    console.log(mainMenuInstance);
 
 });
