@@ -40,7 +40,6 @@ function RouteVO(TYPE, name, displayName, urlId) {
     var genUrlId = (urlId) ? urlId :'{toBeGenerated}';
     this.rel_url = "/games/" + this.namespaceShort + "/" + genUrlId;
 
-
     this.fullUrl = (config.runningPort == 80 || config.runningPort == 443) ?
     config.runningProtocoll + '://' + config.runningHost + "/games/" + this.rel_url :
     config.runningProtocoll + '://' + config.runningHost + ':' + config.runningPort + this.rel_url;

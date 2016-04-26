@@ -12,13 +12,14 @@ var routes;
 router.get('/', function (req, res, next) {
     res.render('mainMenu/frontend', {title: 'Main Menu'});
 });
-router.get('/ext', function (req, res, next) {
-    res.render('games/external/frontend', {title: 'External Games'});
-});
+//router.get('/ext', function (req, res, next) {
+//    res.render('games/external/frontend', {title: 'External Games'});
+//});
 
 
 RoutesHandler.getAllRoutes(function (state, msg) {
     var app = require('../app');
+    var TYPES = require('../sources/Routes').TYPES;
 
     if (state) {
         routes = msg;
@@ -30,18 +31,31 @@ RoutesHandler.getAllRoutes(function (state, msg) {
         if (debug) util.log("Got " + msg.length + " Routes from DB");
 
         routes.forEach(function (route) {
+            var route = route;
 
             var bindUrl = '/' + route.namespaceShort + '/' + route.urlId;
-            var viewRenderPath = 'games/' + route.namespace + '/' + route.unique_name + '/frontend';
+            var viewRenderPath = route.type == TYPES.internal ?
+            'games/' + route.namespace + '/' + route.unique_name + '/frontend' :
+                'games/external/frontend';
+
             util.log(bindUrl, viewRenderPath);
             router.get(bindUrl, function (req, res, next) {
-                res.render(viewRenderPath, {title: '--:: ' + route.displayName + ' ::-- '});
+                if (route.type == TYPES.external)
+                    res.render(viewRenderPath, {
+                        title: '--:: ' + route.displayName + ' ::-- ',
+                        url: "https://www.google.de"
+                    });
+
+                else
+                    res.render(viewRenderPath, {title: '--:: ' + route.displayName + ' ::-- '});
             });
 
         });
 
     } else {
         if (debug) util.log("callback get All Routes " + msg);
+        app.set("fullQualifiedRouteVOs", false);
+
         routes = [];
     }
 });
