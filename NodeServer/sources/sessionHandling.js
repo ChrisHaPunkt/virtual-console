@@ -4,6 +4,7 @@
 
 var network = require('../sources/serverNetwork.js');
 var userManagement = require('../sources/UserManagement.js')();
+var app = require('../app');
 var util = require('util');
 
 var activeUsers = {};
@@ -97,10 +98,10 @@ var startNetworkServer = function (server) {
             callback.onFrontendConnected();
 
             // send logged in users to newly connected frontend
-            for(var user in activeUsers){
-                if(!activeUsers.hasOwnProperty(user)) continue;
+            for (var user in activeUsers) {
+                if (!activeUsers.hasOwnProperty(user)) continue;
                 var currentUserName = activeUsers[user].userName;
-                if(currentUserName) {
+                if (currentUserName) {
                     callback.onNewUser(currentUserName);
                 }
             }
@@ -110,6 +111,11 @@ var startNetworkServer = function (server) {
         },
         onFrontendOutboundData: function (request, data) {
             callback.onFrontendOutboundData(request, data);
+            if (request == 'requestGameData' && !data.game) {
+                // data for all games have been requested
+                // TODO add additionally 'responseGameData' request
+                network.sendToFrontend_Data(1, app.get('fullQualifiedRouteVOs'));
+            }
         }
     }).start();
 };
@@ -175,7 +181,7 @@ var exports = {
     sendToUser: function (name, type, message) {
         network.sendToClient(getUserIdByName(name), type, message);
     },
-    broadcastMessage: function(type, data){
+    broadcastMessage: function (type, data) {
         network.broadcastMessage(type, data)
     },
     removeUser: function (name) {
