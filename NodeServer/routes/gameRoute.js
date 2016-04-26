@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var database = require('../sources/Database')();
+var config = require('../../config.json');
+var debug = config.debug;
+var util = require('util');
+
+var RoutesHandler = require('../sources/Routes');
+var routes;
+
 
 /* GET client listing. */
 router.get('/', function (req, res, next) {
@@ -9,14 +15,40 @@ router.get('/', function (req, res, next) {
 router.get('/ext', function (req, res, next) {
     res.render('games/external/frontend', {title: 'External Games'});
 });
-router.get('/int/1', function (req, res, next) {
-    res.render('games/internal/MatrixGame/frontend', {title: '--:: Matrix Demo Game ::-- '});
-});
-router.get('/int/2', function (req, res, next) {
-    res.render('games/internal/CarsGame/frontend', {title: '--:: Cars Demo Game ::-- '});
-});
-router.get('/int/3', function (req, res, next) {
-    res.render('games/internal/3DGame/frontend', {title: '--:: ThreeD Game ::-- '});
+
+
+RoutesHandler.getAllRoutes(function (state, msg) {
+    if (state) {
+
+        if (debug) util.log("Got " + msg.length + " Routes from DB");
+        routes = msg;
+
+        routes.forEach(function (route) {
+
+            var bindUrl = '/' + route.namespaceShort + '/' + route.urlId;
+            var viewRenderPath = 'games/' + route.namespace + '/' + route.unique_name + '/frontend';
+            util.log(bindUrl, viewRenderPath);
+            router.get(bindUrl, function (req, res, next) {
+                res.render(viewRenderPath, {title: '--:: ' + route.displayName + ' ::-- '});
+            });
+
+        });
+
+    } else {
+        if (debug) util.log("callback get All Routes " + msg);
+        routes = [];
+    }
 });
 
+/*
+ router.get('/int/1', function (req, res, next) {
+ res.render('games/internal/MatrixGame/frontend', {title: '--:: Matrix Demo Game ::-- '});
+ });
+ router.get('/int/2', function (req, res, next) {
+ res.render('games/internal/CarsGame/frontend', {title: '--:: Cars Demo Game ::-- '});
+ });
+ router.get('/int/3', function (req, res, next) {
+ res.render('games/internal/3DGame/frontend', {title: '--:: ThreeD Game ::-- '});
+ });
+ */
 module.exports = router;

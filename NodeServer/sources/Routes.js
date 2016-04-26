@@ -16,15 +16,17 @@ var persitNewRoute = function (RouteVO, callback) {
         if (state && data.length == 0) {
             database.insert("routes", RouteVO.strip(), callback);
 
-            callback(true,"Route insertet " + RouteVO);
+            if (typeof callback == "function")
+                callback(true, "Route insertet " + RouteVO);
 
         } else {
-            callback(false, "Route schon vorhanden: " + RouteVO);
+            if (typeof callback == "function")
+                callback(false, "Route schon vorhanden: " + RouteVO);
         }
     };
 
     if (!RouteVO.validate()) {
-        callback(false,"RouteVO broken : " + RouteVO);
+        callback(false, "RouteVO broken : " + RouteVO);
     } else {
         database.query("routes", query, insertCallback);
     }
@@ -43,8 +45,13 @@ var getAllRoutes = function (onSuccess) {
     var queryCallback = function (state, msg) {
         if (state && msg[0]) {
             var RouteVOs = [];
-            msg.forEach(function(value){
-                RouteVOs.push(new RouteVO(value.type, value.unique_name,value.urlId, value.displayName));
+            var i = 1;
+            msg.forEach(function (value) {
+                RouteVOs.push(new RouteVO(value.type, value.unique_name, value.displayName, i));
+                if (debug) {
+                    util.log(RouteVOs);
+                }
+                i++;
             });
             onSuccess(true, RouteVOs);
         } else {
