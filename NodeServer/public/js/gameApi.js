@@ -161,7 +161,7 @@ define(['/socket.io/socket.io.js'], function (io) {
                 game: gameId ? gameId : null
             });
             // set return event to call callback method provided
-            this.socket.on('responseGameData', callback);
+            this.socket.on('frontendData', callback);
         }
 
     };

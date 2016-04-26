@@ -22,8 +22,8 @@ var RouteVO = require("./sources/ValueObjects/RouteVO");
 var types = RoutesHandler.TYPES;
 
 RoutesHandler.addNewRoute(new RouteVO(types.internal, "MatrixGame", "Matrix Demo Game"));
-//RoutesHandler.addNewRoute(new RouteVO(types.internal, "CarsGame", "Cars Demo Game"));
-//RoutesHandler.addNewRoute(new RouteVO(types.internal, "3DGame", "ThreeD Game"));
+RoutesHandler.addNewRoute(new RouteVO(types.internal, "CarsGame", "Cars Demo Game"));
+RoutesHandler.addNewRoute(new RouteVO(types.internal, "3DGame", "ThreeD Game"));
 
 
 // view engine setup

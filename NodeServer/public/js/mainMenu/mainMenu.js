@@ -19,80 +19,44 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                 class: 'gameContainer'
             }).html('<p>API Games</p>').appendTo(this.domElements.domContainer);
 
-            // add external game container
-            this.domElements.extGameContainer = $('<div/>', {
-                id: 'EXTgameContainer',
-                class: 'gameContainer'
-            }).html('<p>External Games</p>').appendTo(this.domElements.domContainer);
-
             // load game data from server
             this.gameData = {};
             MainMenu.prototype.loadGameData.call(this); // call prototype function with context of current 'new' object
 
             // draw game tiles
-            MainMenu.prototype.initAPIGameTiles.call(this, this.domElements.apiGameContainer);
-            MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
+            //MainMenu.prototype.initGameTiles.call(this, this.domElements.apiGameContainer);
+            //MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
 
         };
 
         MainMenu.prototype.loadGameData = function () {
 
-            gameApi.getGameData(function(data){
+            gameApi.getGameData(function (data) {
                 gameApi.addLogMessage(gameApi.log.INFO, "data", "Server send game data!");
-                console.log(this);
                 this.gameData = data;
-                console.log(this);
+                MainMenu.prototype.initGameTiles.call(this, this.domElements.apiGameContainer);
             }.bind(this));
-
-            // TODO get these from DB
-            this.gameData = {
-                intGamesBasePath: "/games/int",
-                extGamesBasePath: "/games/ext",
-                intGames: [
-                    {id: 'matrixGame', path: '/1', imgUrl: ''},
-                    {id: 'carsGame', path: '/2', imgUrl: ''},
-                    {id: '3dGame', path: '/3', imgUrl: ''}
-                ],
-                extGames: [
-                    {id: 'extGame1', imgUrl: ''},
-                    {id: 'extGame2', imgUrl: ''},
-                    {id: 'extGame3', imgUrl: ''}
-                ]
-            };
 
             return true;
 
         };
 
-        MainMenu.prototype.initAPIGameTiles = function (parent) {
-            for (var i = 0; i < this.gameData.intGames.length; i++) {
+        // TODO render all games with this
+        MainMenu.prototype.initGameTiles = function (parent) {
+            this.gameData.data.forEach(function (game) {
                 $('<div/>', {
-                    id: this.gameData.intGames[i].id + '_tile',
+                    id: game.unique_name + '_tile',
                     class: 'gameTile internal',
                     click: function () {
                         window.location = $(this).attr('path');
                     },
-                    path: this.gameData.intGamesBasePath + this.gameData.intGames[i].path
-                }).html(this.gameData.intGames[i].id).appendTo(parent);
-            }
-        };
-
-        MainMenu.prototype.initEXTGameTiles = function (parent) {
-            for (var i = 0; i < this.gameData.extGames.length; i++) {
-                $('<div/>', {
-                    id: this.gameData.extGames[i].id + '_tile',
-                    class: 'gameTile external',
-                    click: function () {
-                        window.location = $(this).attr('path');
-                    },
-                    path: this.gameData.extGamesBasePath + '?game=' + this.gameData.extGames[i].id
-                }).html(this.gameData.extGames[i].id).appendTo(parent);
-            }
+                    path: game.fullUrl
+                }).html(game.unique_name).appendTo(parent);
+            })
         };
 
         MainMenu.prototype.redraw = function () {
-            MainMenu.prototype.initAPIGameTiles.call(this, this.domElements.apiGameContainer);
-            MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
+            MainMenu.prototype.loadGameData.call(this);
         };
 
         // return public interface of the require module
