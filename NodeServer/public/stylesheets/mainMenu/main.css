@@ -1,19 +1,36 @@
 @import "header.css";
 @import "content.css";
+@import "footer.css";
 @import "gameTiles.css";
 
+html, body, div, form, fieldset, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+    cursor: default;
+}
+
+html {
+    height: 100%;
+}
+
 body{
+    height: 100%;
+    font-weight: normal;
+    font-size: .8em;
+    line-height: 1.6em;
+    font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
+    color: #000;
     background-image: url('/img/background_02.jpg');
 }
 
-#log{
-    width: 90%;
-    height: 80%;
-    margin: 0 auto;
-    padding: 1em;
-
-    background-color: rgba(0,0,0,0.9);
-    border-radius: 0em;
-    border: none;
-    color: white;
+a {
+    border: 0;
+    color: #000;
+    text-decoration: none;
 }

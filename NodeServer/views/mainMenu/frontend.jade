@@ -1,16 +1,22 @@
-extends ../frontendLayout
+doctype html
+html
+    head
+        title= title
+    body
+        div(id='header')
+            div(id='menu')
+                div(id='title', class='headerElement')= title
+        div(id='content')
+            div(id='gameContainer')
+        div(id='footer')
+            div(id='log')
+        div(id='overlayMenu')
 
-block content
-    div(id='header')
-        div(id='menu')
-            div(id='title', class='headerElement')= title
-    div(id='content', class='threeDContainer')
-    div(id='overlayMenu')
-block log
-    div(id='log')
+        // Load jQuery
+        script(src="/js/libs/jquery.js")
 
-    // Load Require JS
-    script(data-main='/js/mainMenu/head.js', src='/js/libs/require.js')
+        // Load Require JS
+        script(data-main='/js/mainMenu/head.js', src='/js/libs/require.js')
 
-    //Load custom CSS
-    link(rel='stylesheet', href='/stylesheets/mainMenu/main.css')
+        // Load custom CSS
+        link(rel='stylesheet', href='/stylesheets/mainMenu/main.css')

@@ -73,7 +73,7 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
     /**
      * START MAIN MENU
      * */
-    var domContainer = $("#content");
+    var domContainer = $("#gameContainer");
     var mainMenuInstance = new mainMenu(domContainer, gameApi);
     console.log(mainMenuInstance);
 

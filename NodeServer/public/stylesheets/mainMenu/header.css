@@ -1,14 +1,21 @@
 #header{
     width: 100%;
-    height: 5em;
+    height: 10%;
+    margin: 0;
+    padding: 0;
+
+    border-radius: 0;
+    border: none;
+    color: white;
 
     background-color: rgba(0,0,0,0.9);
 }
 
 #menu{
-    height: 100%;
     width: 90%;
+    height: 100%;
     margin: 0 auto;
+    padding: 0;
 }
 .headerElement{
     height: 100%;

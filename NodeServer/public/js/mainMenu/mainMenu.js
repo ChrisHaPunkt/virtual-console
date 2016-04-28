@@ -13,12 +13,6 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             // set reference to game API
             this.gameApi = gameApi;
 
-            // add API game container
-            this.domElements.apiGameContainer = $('<div/>', {
-                id: 'APIgameContainer',
-                class: 'gameContainer'
-            }).html('<p>API Games</p>').appendTo(this.domElements.domContainer);
-
             // load game data from server
             this.gameData = {};
             MainMenu.prototype.loadGameData.call(this); // call prototype function with context of current 'new' object
@@ -35,19 +29,18 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                 gameApi.addLogMessage(gameApi.log.INFO, "data", "Server send game data!");
                 console.log(data);
                 this.gameData = data;
-                MainMenu.prototype.initGameTiles.call(this, this.domElements.apiGameContainer);
+                MainMenu.prototype.initGameTiles.call(this, this.domElements.domContainer);
             }.bind(this));
 
             return true;
 
         };
 
-        // TODO render all games with this
         MainMenu.prototype.initGameTiles = function (parent) {
             this.gameData.forEach(function (game) {
                 $('<div/>', {
                     id: game.unique_name + '_tile',
-                    class: 'gameTile internal',
+                    class: 'gameTile',
                     click: function () {
                         window.location = $(this).attr('path');
                     },
