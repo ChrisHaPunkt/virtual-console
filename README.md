@@ -6,11 +6,6 @@ gameApi.frontendInboundMessage = function(controllerData){
  // Hier muss die Spiellogik implementiert werden, falls neue Daten vom Controller Template kommen
 }
 ```
-```javascript
-gameApi.frontendConnection= function(connInfoObj){
- // Initiale Funktion bei erstmaliger Verbindung zwischen Server <> Game
-}
-```
 ### Initialisierung der API
 Sind die Funktionen gesetzt, wird die API folgendermaßen initialisiert:
 ```
@@ -53,14 +48,6 @@ if (controllerData.type == "button" && controllerData.data.message === gameApi.B
 
         GameHandler.adjustCubeSize(0, {x: a, y: b, z: c});
     }
-};
-/**
- * Local Game Initialization
- * @param connInfoObj
- */
-gameApi.frontendConnection = function (connInfoObj) {
-    console.log("on.FrontendData: ", connInfoObj);
-    gameApi.addLogMessage('conn', connInfoObj + " " + gameApi.socket.id);
 };
 
 /**
