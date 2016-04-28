@@ -9,7 +9,7 @@ var util = require('util');
 
 var activeUsers = {};
 var server = 0;
-var callback = 0;
+var userCallback = 0;
 var currentAnonymousUserId = 0;
 
 /**
@@ -72,7 +72,7 @@ var startNetworkServer = function (server) {
             var tmpUserName = "User_" + ++currentAnonymousUserId;
             setUserName(id, tmpUserName);
             setUserStatus(id, true, false);
-            callback.onNewUser(tmpUserName);
+            userCallback.onNewUser(tmpUserName);
 
             _callback({
                 result: true,
@@ -81,13 +81,13 @@ var startNetworkServer = function (server) {
 
         },
         onDisconnect: function (id, _callback) {
-            callback.onUserDisconnects(getUserById(id).userName);
+            userCallback.onUserDisconnects(getUserById(id).userName);
             removeUserById(id);
             _callback(true);
         },
         onMessage: function (id, type, data, _callback) {
             if (isLoggedIn(id)) {
-                callback.onMessage(getUserById(id).userName, type, data);
+                userCallback.onMessage(getUserById(id).userName, type, data);
                 _callback(true);
             } else {
                 _callback(false);
@@ -95,27 +95,38 @@ var startNetworkServer = function (server) {
             }
         },
         onFrontendConnected: function () {
-            callback.onFrontendConnected();
+            userCallback.onFrontendConnected();
 
             // send logged in users to newly connected frontend
             for (var user in activeUsers) {
                 if (!activeUsers.hasOwnProperty(user)) continue;
                 var currentUserName = activeUsers[user].userName;
                 if (currentUserName) {
-                    callback.onNewUser(currentUserName);
+                    userCallback.onNewUser(currentUserName);
                 }
             }
         },
         // frontend sends message
         onFrontendOutboundMessage: function (type, message) {
-            callback.onFrontendOutboundMessage(type, message);
+            userCallback.onFrontendOutboundMessage(type, message);
         },
         // frontend sends data or data request
         onFrontendOutboundData: function (request, data, callbackFromClient) {
-            callback.onFrontendOutboundData(request, data);
-            if (request == 'requestGameData' && !data.game) {
-                // data for all games have been requested
-                callbackFromClient(app.get('fullQualifiedRouteVOs'));
+            switch(request){
+                case 'setControllerTemplate':
+                    app.set('chosenControllerTemplate', data);
+                    break;
+                case 'requestGameData':
+                    if(data.game){
+                        // game has been specified
+                        // TODO get single game data only
+                    }else{
+                        // all games are requested
+                        callbackFromClient(app.get('fullQualifiedRouteVOs'));
+                    }
+                    break;
+                default:
+                    console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
         }
     }).start();
@@ -172,7 +183,7 @@ var getUserIdByName = function (userName) {
 var exports = {
     init: function (inServer, inCallback) {
         server = inServer;
-        callback = inCallback;
+        userCallback = inCallback;
         return this;
     },
     start: function () {

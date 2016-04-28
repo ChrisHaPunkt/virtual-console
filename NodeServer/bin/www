@@ -63,12 +63,6 @@ sessionHandling.init(server, {
         } else if (type == 'messageToAllClients') {
             sessionHandling.broadcastMessage(data.data);
         }
-    },
-
-    onFrontendOutboundData: function (request, data) {
-        if (request == 'setControllerTemplate'){
-            app.set('chosenControllerTemplate', data);
-        }
     }
 
 }).start();
