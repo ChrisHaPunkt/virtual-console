@@ -22,3 +22,7 @@
 .gameTile:hover {
     border: 1px solid orange;
 }
+
+.activeTile {
+    background-color: orangered;
+}
