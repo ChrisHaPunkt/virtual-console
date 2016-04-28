@@ -124,9 +124,10 @@ define(['/socket.io/socket.io.js'], function (io) {
             }
         },
 
-        sendToServer_Data: function (requestType, data) {
+        sendToServer_Data: function (requestType, data, callback) {
             if (this.socket != null) {
-                this.socket.emit('frontendOutboundData', {request: requestType, data: data});
+                // callback is send to server and called server-sided // direct response possible
+                this.socket.emit('frontendOutboundData', {request: requestType, data: data}, callback);
             } else {
                 this.addLogMessage(this.log.DEBUG, 'error', 'No server connection. Please initiate. \'init()\'');
             }
@@ -159,9 +160,7 @@ define(['/socket.io/socket.io.js'], function (io) {
         getGameData: function(callback, gameId){
             this.sendToServer_Data('requestGameData', {
                 game: gameId ? gameId : null
-            });
-            // set return event to call callback method provided
-            this.socket.on('frontendData', callback);
+            }, callback);
         }
 
     };

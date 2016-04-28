@@ -33,6 +33,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
 
             gameApi.getGameData(function (data) {
                 gameApi.addLogMessage(gameApi.log.INFO, "data", "Server send game data!");
+                console.log(data);
                 this.gameData = data;
                 MainMenu.prototype.initGameTiles.call(this, this.domElements.apiGameContainer);
             }.bind(this));
@@ -43,7 +44,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
 
         // TODO render all games with this
         MainMenu.prototype.initGameTiles = function (parent) {
-            this.gameData.data.forEach(function (game) {
+            this.gameData.forEach(function (game) {
                 $('<div/>', {
                     id: game.unique_name + '_tile',
                     class: 'gameTile internal',

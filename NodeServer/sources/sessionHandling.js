@@ -106,15 +106,16 @@ var startNetworkServer = function (server) {
                 }
             }
         },
+        // frontend sends message
         onFrontendOutboundMessage: function (type, message) {
             callback.onFrontendOutboundMessage(type, message);
         },
-        onFrontendOutboundData: function (request, data) {
+        // frontend sends data or data request
+        onFrontendOutboundData: function (request, data, callbackFromClient) {
             callback.onFrontendOutboundData(request, data);
             if (request == 'requestGameData' && !data.game) {
                 // data for all games have been requested
-                // TODO add additionally 'responseGameData' request
-                network.sendToFrontend_Data(1, app.get('fullQualifiedRouteVOs'));
+                callbackFromClient(app.get('fullQualifiedRouteVOs'));
             }
         }
     }).start();

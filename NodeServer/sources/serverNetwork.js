@@ -67,11 +67,9 @@ var startListening = function () {
         });
 
         // frontend sends data or data request
-        socket.on('frontendOutboundData', function(data){
+        socket.on('frontendOutboundData', function(data, callbackFromClient){
             if(frontend != 0) {
-                callback.onFrontendOutboundData(data.request, data.data, function (result) {
-                    // callback from session handling - not needed atm
-                });
+                callback.onFrontendOutboundData(data.request, data.data, callbackFromClient);
                 if (debug)util.log('serverNetwork | Frontend sent data with request ' + data.request + ' : ' + data.data);
             }else{
                 util.log('serverNetwork | ERROR: Frontend sent data without being initiated! (' + data.request + ' : ' + data.data + ')');
@@ -232,8 +230,8 @@ var exports = {
         return sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
     },
     // internal data function // DO NOT use for game development
-    sendToFrontend_Data: function(requestId, data){
-        return sendToFrontend('frontendData', {id: requestId, data: data});
+    sendToFrontend_Data: function(data){
+        return sendToFrontend('frontendData', data);
     },
     // only used for connection establishment
     sendToFrontend_InitAck: function(data){
