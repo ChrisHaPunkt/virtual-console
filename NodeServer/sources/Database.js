@@ -80,7 +80,7 @@ module.exports = function () {
                     callback(false, error);
                 } else {
                     if (debug) console.log("Database | Add to DB: ", data);
-                    callback(true, doc);
+                    if(typeof callback == "function") callback(true, doc);
                 }
                 closeDB(dbID);
             };

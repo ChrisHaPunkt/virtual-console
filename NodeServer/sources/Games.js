@@ -44,19 +44,20 @@ var updateGame = function (GameVO, callback) {
     var filter = {unique_name: GameVO.unique_name};
     var query = filter;
 
-    var insertCallback = function (state, data) {
-        if (state && data.length == 1) {
+    var updateCallback = function (state, data) {
+        if (state && data.length > 0) {
 
-            database.update("games", filter, GameVO.strip(), callback);
+            database.remove("games", filter);
+            database.insert("games", filter, GameVO.strip(), callback);
 
             if (typeof callback == "function")
-                callback(true, "Game updated " + GameVO.unique_name);
+                callback(true, "Game updated " + filter.unique_name);
 
         } else {
-            util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
+            util.log("GameUnique nicht vorhanden: " + filter.unique_name);
 
             if (typeof callback == "function")
-                callback(false, "GameUnique nicht vorhanden: " + GameVO.unique_name);
+                callback(false, "GameUnique nicht vorhanden: " + filter.unique_name);
         }
     };
 
@@ -66,7 +67,7 @@ var updateGame = function (GameVO, callback) {
         else
             util.log("GameVO broken : " + GameVO.unique_name)
     } else {
-        database.query("games", query, insertCallback);
+        database.query("games", query, updateCallback);
     }
 
 
@@ -89,13 +90,13 @@ var removeGame = function (GameVO_OR_uniqueName, callback) {
             database.remove("games",filter, callback);
 
             if (typeof callback == "function")
-                callback(true, "Game removed " + GameVO.unique_name);
+                callback(true, "Game removed " + unique);
 
         } else {
-            util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
+            util.log("GameUnique nicht vorhanden: " + unique);
 
             if (typeof callback == "function")
-                callback(false, "GameUnique nicht vorhanden: " + GameVO.unique_name);
+                callback(false, "GameUnique nicht vorhanden: " + unique);
         }
     };
 

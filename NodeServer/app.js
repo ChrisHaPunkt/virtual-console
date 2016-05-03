@@ -53,6 +53,12 @@ GameHandler.updateGame(new GameVO({
 
 GameHandler.remove("3DGame");
 
+GameHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "3DGame",
+    displayName: "ThreeD Game"
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
