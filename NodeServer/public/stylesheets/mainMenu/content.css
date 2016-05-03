@@ -1,4 +1,4 @@
-#content{
+#content {
     width: 100%;
     height: 80%;
     margin: 0;
@@ -10,15 +10,25 @@
     border-radius: 0;
     border: none;
     color: white;
- }
+}
 
-#gameContainer{
+#gameBar {
     width: 100%;
     height: 20%;
-    margin: 0 auto;
     padding: 0;
 
     align-self: center;
 
-    background-color: rgba(0,0,0,0.9);
+    background-color: transparent;
+}
+
+#gameContainer {
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+
+    display: table;
+
+    background-color: transparent;
+    /*background-color: rgba(0,0,0,0.9);*/
 }

@@ -6,6 +6,6 @@
   "debug": true,
   "dynamicHostname": true,
   "runningHost": "localhost",
-  "runningPort": 5222,
+  "runningPort": 5223,
   "runningProtocoll": "http"
 }

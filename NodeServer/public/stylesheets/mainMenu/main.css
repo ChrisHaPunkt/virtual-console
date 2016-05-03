@@ -26,7 +26,8 @@ body{
     line-height: 1.6em;
     font-family: 'Open Sans', Frutiger, Calibri, 'Myriad Pro', Myriad, sans-serif;
     color: #000;
-    background-image: url('/img/background_02.jpg');
+    background-color: #3F51B5;
+    /*background-image: url('/img/background_02.jpg');*/
 }
 
 a {

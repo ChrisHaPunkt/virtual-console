@@ -48,6 +48,17 @@ html {
     height: 100%;
 }
 
+#overlayMenu{
+    position: absolute;
+    top: 0;
+    margin: 0 auto;
+    height: 400px;
+    width: 600px;
+    visibility: hidden;
+
+    background-color: #cc0000;
+}
+
 .threeDContainer {
     width: 96%;
     height: 80%;
