@@ -3,21 +3,21 @@
  */
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../../config.json');
-module.exports = function(){
+module.exports = function () {
 
-    var dbURL = "mongodb://" + config.dbhost + "/" + config.dbcollection
+    var dbURL = "mongodb://" + config.dbhost + ":" + config.dbport + "/" + config.dbcollection
     var debug = config.debug;
     this.dbURL = dbURL;
 
     /***************************************
      * Connect to database
      ***************************************/
-    var openDB = function(onSuccess){
-        MongoClient.connect(dbURL, function(error, db) {
-            if(error){
+    var openDB = function (onSuccess) {
+        MongoClient.connect(dbURL, function (error, db) {
+            if (error) {
                 console.log(error);
             } else {
-               // if (debug) console.log("Connected to Database!");
+                // if (debug) console.log("Connected to Database!");
                 onSuccess(db);
             }
 
@@ -28,8 +28,8 @@ module.exports = function(){
     /***************************************
      * Close database connection
      ***************************************/
-    var closeDB = function(db){
-       // if (debug) console.log("Disconnected from Database!");
+    var closeDB = function (db) {
+        // if (debug) console.log("Disconnected from Database!");
         db.close();
     };
 
@@ -42,11 +42,12 @@ module.exports = function(){
         /***************************************
          * Remove all elements, which are selected by the filter object, from the database.
          ***************************************/
-        remove:function(collection, filter, callback) {
+        remove: function (collection, filter, callback) {
             var dbID = undefined;
-            if (!callback) callback = function(){};
+            if (!callback) callback = function () {
+            };
 
-            var removeCallback = function(error, doc) {
+            var removeCallback = function (error, doc) {
                 if (error) {
                     if (debug) console.log(error);
                     callback(false, error);
@@ -57,7 +58,7 @@ module.exports = function(){
                 closeDB(dbID);
             };
 
-            openDB(function(db) {
+            openDB(function (db) {
                 dbID = db;
                 var userCollection = db.collection(collection);
                 userCollection.deleteMany(filter, removeCallback);
@@ -68,11 +69,12 @@ module.exports = function(){
         /*************************************
          * Insert a element into the database
          *************************************/
-        insert:function(collection, data, callback) {
+        insert: function (collection, data, callback) {
             var dbID = undefined;
-            if (!callback) callback = function(){};
+            if (!callback) callback = function () {
+            };
 
-            var insertCallback = function(error, doc) {
+            var insertCallback = function (error, doc) {
                 if (error) {
                     if (debug) console.log(error);
                     callback(false, error);
@@ -84,7 +86,7 @@ module.exports = function(){
             };
 
             //Insert into database
-            openDB(function(db) {
+            openDB(function (db) {
                 dbID = db;
                 var userCollection = db.collection(collection);
                 userCollection.insertOne(data, insertCallback);
@@ -95,11 +97,12 @@ module.exports = function(){
         /****************************************
          * Update a database element
          ***************************************/
-        update:function(collection, filter, data, callback){
+        update: function (collection, filter, data, callback) {
             var dbID = undefined;
-            if (!callback) callback = function(){};
+            if (!callback) callback = function () {
+            };
 
-            var updateCallback = function(error, doc) {
+            var updateCallback = function (error, doc) {
                 if (error) {
                     if (debug) console.log(error);
                     callback(false, error);
@@ -111,10 +114,10 @@ module.exports = function(){
             };
 
             //Open a connection and update the entry specified by the filter object
-            openDB(function(db) {
+            openDB(function (db) {
                 dbID = db;
                 var userCollection = db.collection(collection);
-                userCollection.updateOne(filter, { $set: data }, updateCallback);
+                userCollection.updateOne(filter, {$set: data}, updateCallback);
             });
         },
 
@@ -122,11 +125,12 @@ module.exports = function(){
         /****************************************
          * Database query
          ***************************************/
-        query:function(collection, query, callback) {
+        query: function (collection, query, callback) {
             var dbID = undefined;
-            if (!callback) callback = function(){};
+            if (!callback) callback = function () {
+            };
 
-            var queryCallback = function(error, doc){
+            var queryCallback = function (error, doc) {
                 if (error) {
                     if (debug) console.log(error);
                     callback(false, error);
@@ -137,7 +141,7 @@ module.exports = function(){
                 closeDB(dbID);
             };
 
-            openDB(function(db) {
+            openDB(function (db) {
                 dbID = db;
                 var userCollection = db.collection(collection);
                 userCollection.find(query).toArray(queryCallback);

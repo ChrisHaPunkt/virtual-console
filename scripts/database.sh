@@ -5,7 +5,7 @@ case $1 in
             if [ DIR != "scripts" ]; then
                      cd `dirname $0`
             fi
-        mongod --dbpath ../Database/storage &
+        mongod --port 27111 --dbpath ../Database/storage &
         PID=$!
         echo ${PID} > DBPID
         # Restore the data in Database/dumpData in collections named like sub-folders

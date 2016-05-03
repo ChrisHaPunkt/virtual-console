@@ -2,6 +2,7 @@
   "name": "config",
   "version": "0.0.1",
   "dbhost": "localhost",
+  "dbport": "27111",
   "dbcollection": "virtualConsole",
   "debug": true,
   "dynamicHostname": true,
