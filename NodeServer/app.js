@@ -7,6 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('util');
+var System = require('./sources/System');
 
 var mainMenuRoute = require('./routes/mainMenuRoute');
 var controllerRoutes = require('./routes/controllerRoute');
@@ -15,33 +16,42 @@ var config = require('../config.json');
 var app = module.exports.app = express();
 var debug = config.debug;
 
-var RoutesHandler = require('./sources/Games');
+var GameHandler = require('./sources/Games');
 var GameVO = require("./sources/ValueObjects/GameVO");
 
 app.set("fullQualifiedGameVOs", false);
 
-var types = RoutesHandler.TYPES;
+var types = GameHandler.TYPES;
 
 
-RoutesHandler.addNewGame(new GameVO({
+GameHandler.addNewGame(new GameVO({
     type: types.external,
     unique_name: "ExternalGame",
     displayName: "Matrix Demo Game",
     contentUrl: "https://homeset.de/blog"
 }));
 
-RoutesHandler.addNewGame(new GameVO({
+GameHandler.addNewGame(new GameVO({
     type: types.internal,
     unique_name: "CarsGame",
     displayName: "Cars Demo Game"
 }));
 
-RoutesHandler.addNewGame(new GameVO({
+GameHandler.addNewGame(new GameVO({
     type: types.internal,
     unique_name: "3DGame",
     displayName: "ThreeD Game"
 }));
+GameHandler.updateGame(new GameVO({
+    type: types.internal,
+    unique_name: "3DGame",
+    displayName: "ThreeD Game NEUER NAME"
+}), function (callback) {
+    util.log("Update callback:" + callback);
+});
 
+
+GameHandler.remove("3DGame");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -90,5 +100,6 @@ app.use(function (err, req, res, next) {
     });
 });
 
+System.shutdown();
 
 module.exports = app;

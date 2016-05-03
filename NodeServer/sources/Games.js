@@ -39,6 +39,70 @@ var persitNewGame = function (GameVO, callback) {
 
 
 };
+var updateGame = function (GameVO, callback) {
+
+    var filter = {unique_name: GameVO.unique_name};
+    var query = filter;
+
+    var insertCallback = function (state, data) {
+        if (state && data.length == 1) {
+
+            database.update("games", filter, GameVO.strip(), callback);
+
+            if (typeof callback == "function")
+                callback(true, "Game updated " + GameVO.unique_name);
+
+        } else {
+            util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
+
+            if (typeof callback == "function")
+                callback(false, "GameUnique nicht vorhanden: " + GameVO.unique_name);
+        }
+    };
+
+    if (!GameVO.validate()) {
+        if (typeof callback == "function")
+            callback(false, "GameVO broken : " + GameVO.unique_name);
+        else
+            util.log("GameVO broken : " + GameVO.unique_name)
+    } else {
+        database.query("games", query, insertCallback);
+    }
+
+
+};
+var removeGame = function (GameVO_OR_uniqueName, callback) {
+
+    var unique, filter;
+    if (typeof GameVO_OR_uniqueName == "object") {
+        unique = GameVO_OR_uniqueName.unique_name;
+    } else {
+        unique = GameVO_OR_uniqueName;
+
+    }
+    filter = {unique_name: unique};
+
+
+    var removeCallback = function (state, data) {
+        if (state && data.length == 1) {
+
+            database.remove("games",filter, callback);
+
+            if (typeof callback == "function")
+                callback(true, "Game removed " + GameVO.unique_name);
+
+        } else {
+            util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
+
+            if (typeof callback == "function")
+                callback(false, "GameUnique nicht vorhanden: " + GameVO.unique_name);
+        }
+    };
+
+    database.query("games", filter, removeCallback);
+
+
+};
 
 /**
  *
@@ -78,7 +142,12 @@ var exports = {
         external: 2,
         native: 3
     },
-
+    updateGame: function (GameVO, callback) {
+        updateGame(GameVO, callback)
+    },
+    remove: function (GameVO_orUnique, callback) {
+        removeGame(GameVO_orUnique, callback)
+    },
     addNewGame: function (TYPE_OR_GAMEVO, NAME_OR_CALLBACK, url, displayName, callback) {
 
         if (TYPE_OR_GAMEVO instanceof GameVO) {
