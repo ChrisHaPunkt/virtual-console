@@ -15,16 +15,32 @@ var config = require('../config.json');
 var app = module.exports.app = express();
 var debug = config.debug;
 
-var RoutesHandler = require('./sources/Routes');
-var RouteVO = require("./sources/ValueObjects/RouteVO");
+var RoutesHandler = require('./sources/Games');
+var GameVO = require("./sources/ValueObjects/GameVO");
 
-app.set("fullQualifiedRouteVOs", false);
+app.set("fullQualifiedGameVOs", false);
 
 var types = RoutesHandler.TYPES;
 
-RoutesHandler.addNewRoute(new RouteVO(types.external, "MatrixGameEXT", "Matrix Demo Game"));
-//RoutesHandler.addNewRoute(new RouteVO(types.internal, "CarsGame", "Cars Demo Game"));
-//RoutesHandler.addNewRoute(new RouteVO(types.internal, "3DGame", "ThreeD Game"));
+
+RoutesHandler.addNewGame(new GameVO({
+    type: types.external,
+    unique_name: "ExternalGame",
+    displayName: "Matrix Demo Game",
+    contentUrl: "https://homeset.de/blog"
+}));
+
+RoutesHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "CarsGame",
+    displayName: "Cars Demo Game"
+}));
+
+RoutesHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "3DGame",
+    displayName: "ThreeD Game"
+}));
 
 
 // view engine setup

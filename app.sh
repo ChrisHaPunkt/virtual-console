@@ -2,19 +2,30 @@
 
 case $1 in
     'start' )
-            DIR="NodeServer/node_modules"
-
-            if [ "$(ls -A ${DIR})" ]; then
-                 echo " NodeModules present, starting app.."
-            else
-                echo "Prepare nodejs dependencies..."
-                 bash scripts/prepareDeps.sh
+            DIR=${PWD##*/}
+            if [ DIR != "virtual-console" ]; then
+                     cd `dirname $0`
             fi
+            if [ "$(cat scripts/NODEPID)" != "" ]; then
+                 echo " already running. U need to stop before running again.."
+            else
 
-            bash scripts/database.sh start
-            node NodeServer/bin/www &
-            PID=$!
-            echo ${PID} > scripts/NODEPID
+
+                DIR="NodeServer/node_modules"
+
+                if [ "$(ls -A ${DIR})" ]; then
+                     echo " NodeModules present, starting app.."
+                else
+                    echo "Prepare nodejs dependencies..."
+                     bash scripts/prepareDeps.sh
+                fi
+
+                bash scripts/database.sh start
+                node NodeServer/bin/www &
+                PID=$!
+                echo ${PID} > scripts/NODEPID
+             fi
+            $SHELL
         ;;
     'stop')
             bash scripts/database.sh stop

@@ -17,7 +17,7 @@ module.exports = function(){
             if(error){
                 console.log(error);
             } else {
-                if (debug) console.log("Connected to Database!");
+               // if (debug) console.log("Connected to Database!");
                 onSuccess(db);
             }
 
@@ -29,7 +29,7 @@ module.exports = function(){
      * Close database connection
      ***************************************/
     var closeDB = function(db){
-        if (debug) console.log("Disconnected from Database!");
+       // if (debug) console.log("Disconnected from Database!");
         db.close();
     };
 

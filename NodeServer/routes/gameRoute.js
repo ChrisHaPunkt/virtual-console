@@ -4,7 +4,7 @@ var config = require('../../config.json');
 var debug = config.debug;
 var util = require('util');
 
-var RoutesHandler = require('../sources/Routes');
+var RoutesHandler = require('../sources/Games');
 var routes;
 
 
@@ -17,44 +17,44 @@ router.get('/', function (req, res, next) {
 //});
 
 
-RoutesHandler.getAllRoutes(function (state, msg) {
+RoutesHandler.getAllGames(function (state, msg) {
     var app = require('../app');
-    var TYPES = require('../sources/Routes').TYPES;
+    var TYPES = require('../sources/Games').TYPES;
 
     if (state) {
         routes = msg;
 
         //FullGeneratedRouteVOs for frontend menu generation
-        app.set("fullQualifiedRouteVOs", routes);
+        app.set("fullQualifiedGameVOs", routes);
 
 
         if (debug) util.log("Got " + msg.length + " Routes from DB");
 
-        routes.forEach(function (route) {
-            var route = route;
+        routes.forEach(function (game) {
+            var game = game;
 
-            var bindUrl = '/' + route.namespaceShort + '/' + route.urlId;
-            var viewRenderPath = route.type == TYPES.internal ?
-            'games/' + route.namespace + '/' + route.unique_name + '/frontend' :
+            var bindUrl = '/' + game.namespaceShort + '/' + game.urlId;
+            var viewRenderPath = game.type == TYPES.internal ?
+            'games/' + game.namespace + '/' + game.unique_name + '/frontend' :
                 'games/external/frontend';
 
             util.log(bindUrl, viewRenderPath);
             router.get(bindUrl, function (req, res, next) {
-                if (route.type == TYPES.external)
+                if (game.type == TYPES.external)
                     res.render(viewRenderPath, {
-                        title: '--:: ' + route.displayName + ' ::-- ',
-                        url: "https://www.google.de"
+                        title: '--:: ' + game.displayName + ' ::-- ',
+                        url: game.contentUrl
                     });
 
                 else
-                    res.render(viewRenderPath, {title: '--:: ' + route.displayName + ' ::-- '});
+                    res.render(viewRenderPath, {title: '--:: ' + game.displayName + ' ::-- '});
             });
 
         });
 
     } else {
         if (debug) util.log("callback get All Routes " + msg);
-        app.set("fullQualifiedRouteVOs", false);
+        app.set("fullQualifiedGameVOs", false);
 
         routes = [];
     }
