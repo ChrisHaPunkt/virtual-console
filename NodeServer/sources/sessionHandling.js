@@ -122,7 +122,7 @@ var startNetworkServer = function (server) {
                         // TODO get single game data only
                     }else{
                         // all games are requested
-                        callbackFromClient(app.get('fullQualifiedRouteVOs'));
+                        callbackFromClient(app.get('fullQualifiedGameVOs'));
                     }
                     break;
                 default:

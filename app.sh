@@ -2,6 +2,10 @@
 
 case $1 in
     'start' )
+            DIR=${PWD##*/}
+            if [ DIR != "virtual-console" ]; then
+                     cd `dirname $0`
+            fi
             if [ "$(cat scripts/NODEPID)" != "" ]; then
                  echo " already running. U need to stop before running again.."
             else
