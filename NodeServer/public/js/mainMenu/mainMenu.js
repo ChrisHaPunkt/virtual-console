@@ -13,19 +13,12 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             // set reference to game API
             this.gameApi = gameApi;
 
-            // add API game container
-            this.domElements.apiGameContainer = $('<div/>', {
-                id: 'APIgameContainer',
-                class: 'gameContainer'
-            }).html('<p>API Games</p>').appendTo(this.domElements.domContainer);
-
             // load game data from server
             this.gameData = {};
             MainMenu.prototype.loadGameData.call(this); // call prototype function with context of current 'new' object
 
-            // draw game tiles
-            //MainMenu.prototype.initGameTiles.call(this, this.domElements.apiGameContainer);
-            //MainMenu.prototype.initEXTGameTiles.call(this, this.domElements.extGameContainer);
+            // init keyboard listening
+            MainMenu.prototype.initKeyboardInput.call(this);
 
         };
 
@@ -35,29 +28,83 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                 gameApi.addLogMessage(gameApi.log.INFO, "data", "Server send game data!");
                 console.log(data);
                 this.gameData = data;
-                MainMenu.prototype.initGameTiles.call(this, this.domElements.apiGameContainer);
+                MainMenu.prototype.initGameTiles.call(this, this.domElements.domContainer);
             }.bind(this));
 
             return true;
 
         };
 
-        // TODO render all games with this
         MainMenu.prototype.initGameTiles = function (parent) {
+            var i = 0;
             this.gameData.forEach(function (game) {
                 $('<div/>', {
                     id: game.unique_name + '_tile',
-                    class: 'gameTile internal',
+                    class: 'gameTile',
                     click: function () {
                         window.location = $(this).attr('path');
                     },
-                    path: game.fullUrl
+                    path: game.fullUrl,
+                    tileIndex: i++
                 }).html(game.unique_name).appendTo(parent);
-            })
+            });
+
+            // set center game tile active
+            var gameTilesLength = $('.gameTile').length;
+            $('.gameTile:eq(' + Math.floor(gameTilesLength/2) +')').addClass('activeTile');
         };
 
         MainMenu.prototype.redraw = function () {
             MainMenu.prototype.loadGameData.call(this);
+        };
+
+        MainMenu.prototype.initKeyboardInput = function(){
+
+            MainMenu.prototype.keys = {
+                LEFT_ARROW: 37,
+                UP_ARROW: 38,
+                RIGHT_ARROW: 39,
+                DOWN_ARROW: 40,
+                ENTER: 13
+            };
+
+            //$(document)
+            //$("html").keypress(function(event){
+            //this.domElements.domContainer.keypress(function(event){
+            window.addEventListener('keydown', function(event) {
+
+                var numberOfTiles = $('.gameTile').length;
+                var activeTile = $('.activeTile');
+                var tileIndex = parseInt(activeTile.attr("tileIndex"));
+
+                var key = event.keyCode ? event.keyCode : event.which;
+
+                switch (key){
+                    case MainMenu.prototype.keys.ENTER:
+                        activeTile.trigger( "click" );
+                        break;
+                    case MainMenu.prototype.keys.LEFT_ARROW:
+                        if(!(tileIndex <= 0)){
+                            var leftNeighbour = $('div[tileIndex=' + parseInt(tileIndex - 1) + ']');
+                            leftNeighbour.addClass('activeTile');
+                            activeTile.removeClass('activeTile');
+                        }
+                        break;
+                    case MainMenu.prototype.keys.UP_ARROW:
+                        break;
+                    case MainMenu.prototype.keys.RIGHT_ARROW:
+                        if(!(tileIndex >= numberOfTiles-1)) {
+                            var rightNeighbour = $('div[tileIndex=' + parseInt(tileIndex + 1) + ']');
+                            rightNeighbour.addClass('activeTile');
+                            activeTile.removeClass('activeTile');
+                        }
+                        break;
+                    case MainMenu.prototype.keys.DOWN_ARROW:
+                        break;
+                }
+            });
+
+        //MainMenu.prototype
         };
 
         // return public interface of the require module
