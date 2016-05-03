@@ -10,23 +10,29 @@ var $ = require("jquery");
 
 var persitNewGame = function (GameVO, callback) {
 
-
     var query = {unique_name: GameVO.unique_name};
+
     var insertCallback = function (state, data) {
         if (state && data.length == 0) {
+
             database.insert("games", GameVO.strip(), callback);
 
             if (typeof callback == "function")
-                callback(true, "Game inserted " + GameVO);
+                callback(true, "Game inserted " + GameVO.unique_name);
 
         } else {
+            util.log("GameUnique schon vorhanden: " + data[0].unique_name);
+
             if (typeof callback == "function")
-                callback(false, "GameUnique schon vorhanden: " + GameVO);
+                callback(false, "GameUnique schon vorhanden: " + GameVO.unique_name);
         }
     };
 
     if (!GameVO.validate()) {
-        callback(false, "GameVO broken : " + GameVO);
+        if (typeof callback == "function")
+            callback(false, "GameVO broken : " + GameVO.unique_name);
+        else
+            util.log("GameVO broken : " + GameVO.unique_name)
     } else {
         database.query("games", query, insertCallback);
     }
@@ -49,11 +55,11 @@ var getAllGames = function (onSuccess) {
             msg.forEach(function (value) {
                 var game = new GameVO(value.type, value.unique_name, value.displayName, i);
 
-                if(game.type == exports.TYPES.external)
-                    game.addContentUrl(value.contentUrl)
+                if (game.type == exports.TYPES.external)
+                    game.addContentUrl(value.contentUrl);
 
                 GameVOs.push(game);
-              i++;
+                i++;
             });
             onSuccess(true, GameVOs);
         } else {
@@ -77,7 +83,7 @@ var exports = {
 
         if (TYPE_OR_GAMEVO instanceof GameVO) {
 
-            if (debug) util.log("Got GameVO to persist " + TYPE_OR_GAMEVO);
+            if (debug) util.log("Got GameVO to persist " + TYPE_OR_GAMEVO.unique_name);
             persitNewGame(TYPE_OR_GAMEVO, NAME_OR_CALLBACK);
 
         } else {

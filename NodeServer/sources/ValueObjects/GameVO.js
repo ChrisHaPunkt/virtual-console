@@ -20,9 +20,32 @@ function GameVO(TYPE, name, displayName, urlId) {
 
     var TYPES = require('../Games').TYPES;
 
+    var gameType;
+    var gameName;
+    var gameDisplayName;
+    var gameUrlId;
+    var gameContentUrl;
+
+    if (typeof TYPE == "object") {
+
+        gameType = TYPE.type;
+        gameName = TYPE.unique_name;
+        gameDisplayName = TYPE.displayName;
+        gameUrlId = TYPE.urlId;
+        gameContentUrl = TYPE.contentUrl;
+
+    } else {
+
+        gameType = TYPE;
+        gameName = name;
+        gameDisplayName = displayName;
+        gameUrlId = urlId;
+
+    }
+
     var namespace = "";
     var namespaceShort = "";
-    switch (TYPE) {
+    switch (gameType) {
         case TYPES.internal:
             namespace = "internal";
             break;
@@ -38,14 +61,15 @@ function GameVO(TYPE, name, displayName, urlId) {
     }
     namespaceShort = namespace.substr(0, 3);
 
-    this.type = TYPE;
-    if (urlId)
-        this.urlId = urlId;
-    this.unique_name = name;
+    this.type = gameType;
+    if (gameUrlId)
+        this.urlId = gameUrlId;
+    this.unique_name = gameName;
     this.namespace = namespace;
+    this.contentUrl = gameContentUrl;
     this.namespaceShort = namespaceShort;
-    this.displayName = displayName;
-    var genUrlId = (urlId) ? urlId :'{toBeGenerated}';
+    this.displayName = gameDisplayName;
+    var genUrlId = (gameUrlId) ? gameUrlId : '{toBeGenerated}';
     this.rel_url = "/games/" + this.namespaceShort + "/" + genUrlId;
 
     var runningHost = config.dynamicHostname ? require('os').hostname() : config.runningHost;
@@ -54,14 +78,18 @@ function GameVO(TYPE, name, displayName, urlId) {
     config.runningProtocoll + '://' + runningHost + ':' + config.runningPort + this.rel_url;
 
 
-    if (debug) util.log("Route Obj created | Type :'" + namespace + "'");
+   /* if (debug) util.log("Route Obj created | Type :'" + namespace + "'");
     if (debug) util.log("Route Obj created | DisplayName :'" + displayName + "'");
     if (debug) util.log("Route Obj created | Name :'" + name + "'");
-    if (debug) util.log("Route Obj created | Url :'" + this.rel_url + "'");
+    if (debug) util.log("Route Obj created | Url :'" + this.rel_url + "'");*/
 }
 
 GameVO.prototype.validate = function () {
-    return (this.type == require('../Games').TYPES.external &&  this.contentUrl != 'undefined') && typeof this.type != 'undefined' &&
+    if (this.type == require('../Games').TYPES.external) {
+        if (typeof this.contentUrl == 'undefined')
+            return false;
+    }
+    return typeof this.type != 'undefined' &&
         typeof this.unique_name != 'undefined' &&
         typeof this.namespace != 'undefined' &&
         typeof this.namespaceShort != 'undefined' &&

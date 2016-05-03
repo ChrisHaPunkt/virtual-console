@@ -22,10 +22,25 @@ app.set("fullQualifiedGameVOs", false);
 
 var types = RoutesHandler.TYPES;
 
-var game = new GameVO(types.external, "MatrixGameEXT", "Matrix Demo Game").addContentUrl("https://homeset.de/blog");
-RoutesHandler.addNewGame(game);
-//RoutesHandler.addNewGame(new GameVO(types.internal, "CarsGame", "Cars Demo Game"));
-//RoutesHandler.addNewGame(new GameVO(types.internal, "3DGame", "ThreeD Game"));
+
+RoutesHandler.addNewGame(new GameVO({
+    type: types.external,
+    unique_name: "ExternalGame",
+    displayName: "Matrix Demo Game",
+    contentUrl: "https://homeset.de/blog"
+}));
+
+RoutesHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "CarsGame",
+    displayName: "Cars Demo Game"
+}));
+
+RoutesHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "3DGame",
+    displayName: "ThreeD Game"
+}));
 
 
 // view engine setup
