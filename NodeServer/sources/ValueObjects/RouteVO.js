@@ -40,9 +40,10 @@ function RouteVO(TYPE, name, displayName, urlId) {
     var genUrlId = (urlId) ? urlId :'{toBeGenerated}';
     this.rel_url = "/games/" + this.namespaceShort + "/" + genUrlId;
 
+    var runningHost = config.dynamicHostname ? require('os').hostname() : config.runningHost;
     this.fullUrl = (config.runningPort == 80 || config.runningPort == 443) ?
-    config.runningProtocoll + '://' + config.runningHost + "/games/" + this.rel_url :
-    config.runningProtocoll + '://' + config.runningHost + ':' + config.runningPort + this.rel_url;
+    config.runningProtocoll + '://' + runningHost + "/games/" + this.rel_url :
+    config.runningProtocoll + '://' + runningHost + ':' + config.runningPort + this.rel_url;
 
 
     if (debug) util.log("Route Obj created | Type :'" + namespace + "'");

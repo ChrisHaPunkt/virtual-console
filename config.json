@@ -4,6 +4,7 @@
   "dbhost": "localhost",
   "dbcollection": "virtualConsole",
   "debug": true,
+  "dynamicHostname": true,
   "runningHost": "localhost",
   "runningPort": 5222,
   "runningProtocoll": "http"
