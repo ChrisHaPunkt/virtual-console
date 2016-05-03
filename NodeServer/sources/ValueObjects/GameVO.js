@@ -47,7 +47,7 @@ function GameVO(TYPE, name, displayName, urlId) {
     this.displayName = displayName;
     var genUrlId = (urlId) ? urlId :'{toBeGenerated}';
     this.rel_url = "/games/" + this.namespaceShort + "/" + genUrlId;
-    
+
     var runningHost = config.dynamicHostname ? require('os').hostname() : config.runningHost;
     this.fullUrl = (config.runningPort == 80 || config.runningPort == 443) ?
     config.runningProtocoll + '://' + runningHost + "/games/" + this.rel_url :
@@ -61,7 +61,7 @@ function GameVO(TYPE, name, displayName, urlId) {
 }
 
 GameVO.prototype.validate = function () {
-    return typeof this.type != 'undefined' &&
+    return (this.type == require('../Games').TYPES.external &&  this.contentUrl != 'undefined') && typeof this.type != 'undefined' &&
         typeof this.unique_name != 'undefined' &&
         typeof this.namespace != 'undefined' &&
         typeof this.namespaceShort != 'undefined' &&
