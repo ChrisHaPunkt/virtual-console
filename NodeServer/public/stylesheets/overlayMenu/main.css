@@ -1,0 +1,10 @@
+#overlayMenu{
+    position: absolute;
+    top: 0;
+    margin: 0 auto;
+    height: 400px;
+    width: 600px;
+    visibility: hidden;
+
+    background-color: #cc0000;
+}

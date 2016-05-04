@@ -1,11 +1,11 @@
 extends ../../frontendLayout
 
-block content
-    h1(class='globalTitle' id='title')= title
-    div(id='content', class='threeDContainer')
-        iframe(src=url, style="width:100%;height:100%")
-block log
-    div(id='log')
-
+block header
     // Load Require JS
     script(data-main='/js/games/external/head.js', src='/js/libs/require.js')
+        // Load custom CSS
+    link(rel='stylesheet', href='/stylesheets/games/external/main.css')
+block content
+    div(id='game_content', class='threeDContainer')
+        iframe(src=url, style="width:100%;height:100%")
+block footer

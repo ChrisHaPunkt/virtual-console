@@ -101,7 +101,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
             };
             var GameHandler = {
 
-                domContainer: $("#3d"),
+                domContainer: $("#game_content"),
 
                 scene: new THREE.Scene(),
                 camera: new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000),
@@ -142,7 +142,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
                     };
 
                     if (this.gameObjects.length != 0) {
-                        var xPos = $("#3d").find("canvas").innerWidth() / (this.gameObjects.length + 1);
+                        var xPos = $("#game_content").find("canvas").innerWidth() / (this.gameObjects.length + 1);
                         if (this.gameObjects.length % 2 == 1) {
                             xPos *= -1;
                         }

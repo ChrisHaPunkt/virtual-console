@@ -3,12 +3,8 @@
  */
 define(['jquery', 'gameApi', '../../../libs/qrcode.min'], function ($, gameApi, qrcode) {
 
-    var domContainer = $("#3d");
+    var domContainer = $("#game_content");
     var run = true;
-
-    // set ui properties
-    //$('#monitorBtn').html('List Game');
-    $('body').css('background', '#000');
 
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.MODERN;
@@ -73,15 +69,13 @@ define(['jquery', 'gameApi', '../../../libs/qrcode.min'], function ($, gameApi, 
     var initUserContainer = function (name) {
         //  domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
 
-        var genColor = "#44c767";
-
         var newDivContainer = $("<div>", {
             id: name,
             class: "user-container"
         }).click(function () {
             console.log("Send to User");
             gameApi.sendToUser($(this).attr('id'), 'vibrate');
-        }).append('<div class="user-name"><button style="background-color: ' + genColor + ';" class="myButton">' + name + '</button></div><div class="user-messages"><ul class="messages"></ul></div>');
+        }).append('<div class="user-name"><button class="myButton">' + name + '</button></div><div class="user-messages"><ul class="messages"></ul></div>');
         domContainer.append(
             newDivContainer
         );
@@ -118,7 +112,7 @@ define(['jquery', 'gameApi', '../../../libs/qrcode.min'], function ($, gameApi, 
     var gameSocketInstance = gameApi.init();
 
     //generate QRCode
-
+    // TODO move to gameAPI
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         text: ""+gameSocketInstance.io.uri,
         width: 128,
