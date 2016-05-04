@@ -11,6 +11,7 @@ define("jquery", [], function () {
 // http://requirejs.org/docs/api.html#config-shim
 requirejs.config({
     paths: {
+        "qrcode.min": '/js/libs/qrcode.min',
         "gameApi":'/js/gameApi'
     }
 });

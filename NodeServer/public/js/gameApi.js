@@ -1,4 +1,4 @@
-define(['/socket.io/socket.io.js'], function (io) {
+define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrcode) {
 
     var gameApi = {
 
@@ -40,6 +40,10 @@ define(['/socket.io/socket.io.js'], function (io) {
             if (this.controller === null)
                 this.controller = this.controllerTemplates.DEMO;
 
+            // container for all dom elements
+            this.domElements = {};
+            // TODO check if overlay menu div is in dom
+
             /**
              * Build up a connection to server
              *
@@ -79,6 +83,11 @@ define(['/socket.io/socket.io.js'], function (io) {
             else return -1;
 
             /**
+             * MISC
+             * */
+            this.initQrCode();
+
+            /**
              * INIT END
              * */
             this.addLogMessage(this.log.INFO, "init", "Game Api successfully Initialized");
@@ -103,6 +112,26 @@ define(['/socket.io/socket.io.js'], function (io) {
                 console.log(type + ": " + msg);
                 pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }
+        },
+
+        initQrCode: function(){
+
+            this.domElements.qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: ""+this.socket.io.uri,
+                width: 128,
+                height: 128
+            });
+            //click listener for hiding qrcode
+            var qrcode_hidden = false;
+            $("#qrcode").on('click', function () {
+                if(qrcode_hidden) {
+                    $(this).css('opacity', 1);
+                    qrcode_hidden = false;
+                }else{
+                    $(this).css('opacity', 0);
+                    qrcode_hidden = true;
+                }
+            });
         },
 
         /**

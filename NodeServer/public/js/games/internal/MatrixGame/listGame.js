@@ -1,7 +1,7 @@
 /**
  * Created by hannes on 12.01.2016.
  */
-define(['jquery', 'gameApi', '../../../libs/qrcode.min'], function ($, gameApi, qrcode) {
+define(['jquery', 'gameApi'], function ($, gameApi) {
 
     var domContainer = $("#game_content");
     var run = true;
@@ -110,25 +110,6 @@ define(['jquery', 'gameApi', '../../../libs/qrcode.min'], function ($, gameApi, 
      * GAME INIT
      * */
     var gameSocketInstance = gameApi.init();
-
-    //generate QRCode
-    // TODO move to gameAPI
-    var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: ""+gameSocketInstance.io.uri,
-        width: 128,
-        height: 128
-    });
-    //click listener for hiding qrcode
-    var qrcode_hidden = false;
-    $("#qrcode").on('click', function () {
-        if(qrcode_hidden) {
-            $(this).css('opacity', 1);
-            qrcode_hidden = false;
-        }else{
-            $(this).css('opacity', 0);
-            qrcode_hidden = true;
-        }
-    });
 
     /**
      * EXPORTs

@@ -53,7 +53,7 @@ var updateGame = function (GameVO, callback) {
                 callback(true, "Game updated " + GameVO.unique_name);
 
         } else {
-            util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
+            //util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
 
             if (typeof callback == "function")
                 callback(false, "GameUnique nicht vorhanden: " + GameVO.unique_name);
@@ -92,7 +92,7 @@ var removeGame = function (GameVO_OR_uniqueName, callback) {
                 callback(true, "Game removed " + GameVO.unique_name);
 
         } else {
-            util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
+            //util.log("GameUnique nicht vorhanden: " + data[0].unique_name);
 
             if (typeof callback == "function")
                 callback(false, "GameUnique nicht vorhanden: " + GameVO.unique_name);
