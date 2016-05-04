@@ -42,7 +42,12 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
 
             // container for all dom elements
             this.domElements = {};
-            // TODO check if overlay menu div is in dom
+
+            // get overlay menu div
+            this.domElements.overlayMenu = $('#overlayMenu');
+            if(!this.domElements.overlayMenu){
+                this.addLogMessage(this.log.DEBUG, 'ERROR', 'No overlayMenu DIV!');
+            }
 
             /**
              * Build up a connection to server
