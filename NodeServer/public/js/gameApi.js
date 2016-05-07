@@ -120,23 +120,25 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         },
 
         initQrCode: function(){
-
-            this.domElements.qrcode = new QRCode(document.getElementById("qrcode"), {
+            // qrcode library cannot use jquery dom element
+            this.domElements.qrcode = document.getElementById("qrcode");
+            console.log(this.domElements.qrcode);
+            this.qrCode = new QRCode(this.domElements.qrcode, {
                 text: ""+this.socket.io.uri,
                 width: 128,
                 height: 128
             });
             //click listener for hiding qrcode
-            var qrcode_hidden = false;
-            $("#qrcode").on('click', function () {
-                if(qrcode_hidden) {
-                    $(this).css('opacity', 1);
-                    qrcode_hidden = false;
+            this.qrCode.qrcode_hidden = false;
+            this.domElements.qrcode.addEventListener('click', function () {
+                if(this.qrCode.qrcode_hidden) {
+                    this.domElements.qrcode.style.opacity = 1;
+                    this.qrCode.qrcode_hidden = false;
                 }else{
-                    $(this).css('opacity', 0);
-                    qrcode_hidden = true;
+                    this.domElements.qrcode.style.opacity = 0;
+                    this.qrCode.qrcode_hidden = true;
                 }
-            });
+            }.bind(this));
         },
 
         /**
