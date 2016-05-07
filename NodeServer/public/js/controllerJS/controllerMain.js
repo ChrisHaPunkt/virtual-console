@@ -11,7 +11,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
 
     var loginDiv = $('#login-body');
     var contentDiv = $('#content-body');
-    var overlayMenuButton = $('#overlayMenuButton');
+    var overlayMenuButton = $('#btn-overlayMenu');
 
 
     ////////////////////////////////////

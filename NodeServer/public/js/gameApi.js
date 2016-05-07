@@ -21,7 +21,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             UP: 7,
             DOWN: 8
         },
-        overlayMenuIsActive: false,
+        overlayMenu: {isActive: false},
         logLevel: null,
         socket: null,
         performanceMonitor: false,
@@ -41,16 +41,16 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             if (this.controller === null)
                 this.controller = this.controllerTemplates.DEMO;
 
-            // container for all dom elements
-            this.domElements = {};
-
             // get overlay menu div
-            this.domElements.overlayMenu = $('#overlayMenu');
-            if (!this.domElements.overlayMenu) {
+            this.overlayMenu.domElement = $('#overlayMenu');
+            if (!this.overlayMenu.domElement) {
                 this.addLogMessage(this.log.DEBUG, 'ERROR', 'No overlayMenu DIV!');
             } else {
-                this.domElements.overlayMenu.hide();
+                this.overlayMenu.domElement.hide();
             }
+
+            // init overlaymenu handler
+            this._initOverlayMenuHandler();
 
             /**
              * Build up a connection to server
@@ -124,40 +124,100 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
 
         initQrCode: function () {
             // qrcode library cannot use jquery dom element
-            this.domElements.qrcode = document.getElementById("qrcode");
-            console.log(this.domElements.qrcode);
-            this.qrCode = new QRCode(this.domElements.qrcode, {
+            this.qrCode = new QRCode(document.getElementById("qrcode"), {
                 text: "" + this.socket.io.uri,
                 width: 128,
                 height: 128
             });
+            this.qrCode.domElement = document.getElementById("qrcode");
             //click listener for hiding qrcode
             this.qrCode.qrcode_hidden = false;
-            this.domElements.qrcode.addEventListener('click', function () {
+            this.qrCode.domElement.addEventListener('click', function () {
                 if (this.qrCode.qrcode_hidden) {
-                    this.domElements.qrcode.style.opacity = 1;
+                    this.qrCode.domElement.style.opacity = 1;
                     this.qrCode.qrcode_hidden = false;
                 } else {
-                    this.domElements.qrcode.style.opacity = 0;
+                    this.qrCode.domElement.style.opacity = 0;
                     this.qrCode.qrcode_hidden = true;
                 }
             }.bind(this));
         },
 
         /**
+         * OVERLAY-MENU HANDLERS
+         * */
+        _initOverlayMenuHandler: function () {
+            this.overlayMenu.eventHandler = {
+                'overLayButton_Main_Menu': function () {
+                    window.location = '/menu';
+                },
+                'overLayButton_Settings': function () {
+                    // TODO check if needed here
+                },
+                'overLayButton_Shutdown': function () {
+                    // TODO trigger shutdown via socket
+                }
+            };
+
+            var that = this;
+            $('.overlayMenuItem').click(function () {
+                that.overlayMenu.eventHandler[this.id]();
+            });
+        },
+        addCustomOverlayMenuItem: function(name, action){
+            this.overlayMenu.nextElementIndex = this.overlayMenu.nextElementIndex || $('.overlayMenuItem').length;
+            $('<div/>', {
+                id: 'overLayButton_' + name.replace(' ', '_'),
+                class: 'overlayMenuItem',
+                menuindex: this.overlayMenu.nextElementIndex++
+            }).html(name).appendTo($('#overlayMenuContent'));
+            this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action;
+        },
+        removeOverlayMenuItem: function(name){
+            // TODO This method produces index issues, DONT use!!
+            console.error("This method produces index issues, DONT use!!");
+            $('#overLayButton_' + name.replace(' ', '_')).remove();
+            delete this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')];
+        },
+
+
+        /**
          * INCOMING COMMUNICATION
          * */
         onIncomingMessage: function (data) {
-            if (this.overlayMenuIsActive) {
-                if (data.type === 'button' && data.data.message.buttonName === 'overlayMenuButton') {
-                    this.domElements.overlayMenu.hide();
-                    this.overlayMenuIsActive = false;
+            if (this.overlayMenu.isActive) {
+                if (data.type === 'button') {
+                    this.overlayMenu.activeEntry = $('.activeMenuItem');
+                    var entryIndex = parseInt(this.overlayMenu.activeEntry.attr("menuindex"));
+                    var numberOfEntries = $('.overlayMenuItem').length;
+                    switch (data.data.message.buttonName) {
+                        case 'btn-overlayMenu':
+                            this.overlayMenu.domElement.css('display', 'none');
+                            this.overlayMenu.isActive = false;
+                            break;
+                        case 'btn-left':
+                            if (!(entryIndex <= 0)) {
+                                var leftNeighbour = $('div[menuindex=' + parseInt(entryIndex - 1) + ']');
+                                leftNeighbour.addClass('activeMenuItem');
+                                this.overlayMenu.activeEntry.removeClass('activeMenuItem');
+                            }
+                            break;
+                        case 'btn-right':
+                            if (!(entryIndex >= numberOfEntries - 1)) {
+                                var rightNeighbour = $('div[menuindex=' + parseInt(entryIndex + 1) + ']');
+                                rightNeighbour.addClass('activeMenuItem');
+                                this.overlayMenu.activeEntry.removeClass('activeMenuItem');
+                            }
+                            break;
+                        case 'btn-enter':
+                            this.overlayMenu.activeEntry.trigger("click");
+                            break;
+                    }
                 }
-                // TODO add navigation via controller buttons
             } else {
-                if (data.type === 'button' && data.data.message.buttonName === 'overlayMenuButton') {
-                    this.domElements.overlayMenu.show();
-                    this.overlayMenuIsActive = true;
+                if (data.type === 'button' && data.data.message.buttonName === 'btn-overlayMenu') {
+                    this.overlayMenu.domElement.css('display', 'flex');
+                    this.overlayMenu.isActive = true;
                 } else {
                     // pass data to function defined by game only if overlay Menu is NOT active
                     this.frontendInboundMessage(data);

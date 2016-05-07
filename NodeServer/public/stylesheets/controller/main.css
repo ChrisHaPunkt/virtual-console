@@ -49,7 +49,7 @@ canvas {
 /**
 * SPECIAL ELEMENTS
 */
-#overlayMenuButton{
+#btn-overlayMenu{
     position: absolute;
 
     width: 2em;
@@ -63,6 +63,6 @@ canvas {
     background-color: orangered;
     color: white;
 }
-#overlayMenuButton::after {
+#btn-overlayMenu::after {
     content: "M";
 }

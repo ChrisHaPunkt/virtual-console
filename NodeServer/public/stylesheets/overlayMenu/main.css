@@ -1,28 +1,26 @@
-#overlayMenu{
+#overlayMenu {
     position: absolute;
-    /*visibility: hidden;*/
+    display: none;
 
     height: 100%;
     width: 100%;
 
-    display: flex;
-    
     top: 0;
 
     background-color: transparent;
 }
 
-#overlayMenuContent{
+#overlayMenuContent {
     min-height: 20em;
     width: 30em;
 
     align-self: center;
     margin: 0 auto;
 
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
-.overlayMenuItem{
+.overlayMenuItem {
     width: 50%;
     height: 5em;
     margin: 0 auto;
@@ -30,7 +28,6 @@
     margin-top: 1em;
     margin-bottom: 1em;
 
-    /*background-color: #3F51B5;*/
     border: 1px solid #607D8B;
 
     text-align: center;
@@ -38,4 +35,8 @@
 
     color: white;
     font-size: 1.4em;
- }
+}
+
+.activeMenuItem {
+    background-color: #3F51B5;
+}
