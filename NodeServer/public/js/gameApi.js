@@ -150,13 +150,25 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             this.overlayMenu.eventHandler = {
                 'overLayButton_Main_Menu': function () {
                     window.location = '/menu';
-                },
+                }.bind(this),
                 'overLayButton_Settings': function () {
                     // TODO check if needed here
-                },
-                'overLayButton_Shutdown': function () {
+                }.bind(this),
+                'overLayButton_Restart': function () {
                     // TODO trigger shutdown via socket
-                }
+                    this.sendToServer_Data('restartServer', {
+                        delay: 10
+                    }, function(msg){
+                        console.error(msg);
+                    });
+                }.bind(this),
+                'overLayButton_Shutdown': function(){
+                    this.sendToServer_Data('shutdownServer', {
+                        delay: 1000
+                    }, function(msg){
+                        console.error(msg);
+                    });
+                }.bind(this)
             };
 
             var that = this;
@@ -199,11 +211,11 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 class: 'overlayMenuItem',
                 menuindex: this.overlayMenu.nextElementIndex++
             }).html(name).appendTo($('#overlayMenuContent'));
-            this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action;
+            this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action.bind(this);
         },
         removeOverlayMenuItem: function (name) {
-            // TODO This method produces index issues, DONT use!!
-            console.error("This method produces index issues, DONT use!!");
+            // TODO This method produces index errors, DONT use!!
+            console.error("This method produces index errors, DONT use!!");
             $('#overLayButton_' + name.replace(' ', '_')).remove();
             delete this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')];
         },
@@ -215,9 +227,6 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         onIncomingMessage: function (data) {
             if (this.overlayMenu.isActive) {
                 if (data.type === 'button') {
-                    this.overlayMenu.activeEntry = $('.activeMenuItem');
-                    var entryIndex = parseInt(this.overlayMenu.activeEntry.attr("menuindex"));
-                    var numberOfEntries = $('.overlayMenuItem').length;
                     switch (data.data.message.buttonName) {
                         case 'btn-overlayMenu':
                             this.overlayMenu.domElement.css('display', 'none');
