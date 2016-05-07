@@ -23,7 +23,7 @@ html {
     height: 100%;
 }
 
-body{
+body {
     height: 100%;
     font-weight: normal;
     font-size: .8em;
@@ -46,7 +46,7 @@ canvas {
 }
 
 /* PAGE SETUP */
-#header{
+#header {
     width: 100%;
     height: 10%;
     max-height: 10%;
@@ -57,15 +57,17 @@ canvas {
     border: none;
     color: white;
 
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
 }
-#menu{
+
+#menu {
     width: 90%;
     height: 100%;
     margin: 0 auto;
     padding: 0;
 }
-.headerElement{
+
+.headerElement {
     height: 100%;
     min-width: 2em;
     float: left;
@@ -91,7 +93,8 @@ canvas {
     border: none;
     color: white;
 }
-#footer{
+
+#footer {
     width: 100%;
     height: 10%;
     max-height: 10%;
@@ -102,11 +105,11 @@ canvas {
     border: none;
     color: white;
 
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 /* SPECIAL ELEMENTS */
-#log{
+#log {
     width: 90%;
     height: 100%;
     margin: 0 auto;
@@ -126,7 +129,7 @@ canvas {
     border: 1em solid white;
 }
 
-#chart{
+#chart {
     color: grey;
     display: none;
     font-size: 1em;
@@ -142,13 +145,16 @@ canvas {
 
 /* MISC */
 
-
 #myChart {
     max-width: 98%;
     max-height: 94px;
 }
 
-.messageType {
-    text-transform:uppercase;
+.logMessage_type {
+    text-transform: uppercase;
     font-weight: bold;
+}
+
+.logMessage_content {
+
 }

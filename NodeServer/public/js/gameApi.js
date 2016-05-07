@@ -110,12 +110,12 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 console.log(type + ": " + msg);
                 // additional log INFO levels to UI
                 if (level === this.log.INFO) {
-                    pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
+                    pageLogContent.innerHTML = '<p class="logMessage"><span class="logMessage_type">' + type + ': </span><span class="logMessage_content">' + msg + '</span></p>' + pageLogContent.innerHTML;
                 }
                 // if log level is INFO just log INFO logs
             } else if (this.logLevel === this.log.INFO && level === this.log.INFO) {
                 console.log(type + ": " + msg);
-                pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
+                pageLogContent.innerHTML = '<p class="logMessage"><span class="logMessage_type">' + type + ': </span><span class="logMessage_content">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }
         },
 
