@@ -164,7 +164,35 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 that.overlayMenu.eventHandler[this.id]();
             });
         },
-        addCustomOverlayMenuItem: function(name, action){
+        moveActiveMenuItem: function (direction) {
+            this.overlayMenu.activeEntry = $('.activeMenuItem');
+            var entryIndex = parseInt(this.overlayMenu.activeEntry.attr("menuindex"));
+            var numberOfEntries = $('.overlayMenuItem').length;
+
+            if (direction === 'left') {
+                if (!(entryIndex <= 0)) {
+                    var leftNeighbour = $('div[menuindex=' + parseInt(entryIndex - 1) + ']');
+                    leftNeighbour.addClass('activeMenuItem');
+                    this.overlayMenu.activeEntry.removeClass('activeMenuItem');
+                }
+            } else if (direction === 'right') {
+                if (!(entryIndex >= numberOfEntries - 1)) {
+                    var rightNeighbour = $('div[menuindex=' + parseInt(entryIndex + 1) + ']');
+                    rightNeighbour.addClass('activeMenuItem');
+                    this.overlayMenu.activeEntry.removeClass('activeMenuItem');
+                }
+            } else if (direction === 'up') {
+                // TODO implement
+                this.moveActiveMenuItem('left');
+            } else if (direction === 'down') {
+                // TODO implement
+                this.moveActiveMenuItem('right');
+            }
+        },
+        triggerActiveMenuItem: function () {
+            $('.activeMenuItem').trigger("click");
+        },
+        addCustomOverlayMenuItem: function (name, action) {
             this.overlayMenu.nextElementIndex = this.overlayMenu.nextElementIndex || $('.overlayMenuItem').length;
             $('<div/>', {
                 id: 'overLayButton_' + name.replace(' ', '_'),
@@ -173,7 +201,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             }).html(name).appendTo($('#overlayMenuContent'));
             this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action;
         },
-        removeOverlayMenuItem: function(name){
+        removeOverlayMenuItem: function (name) {
             // TODO This method produces index issues, DONT use!!
             console.error("This method produces index issues, DONT use!!");
             $('#overLayButton_' + name.replace(' ', '_')).remove();
@@ -196,21 +224,19 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                             this.overlayMenu.isActive = false;
                             break;
                         case 'btn-left':
-                            if (!(entryIndex <= 0)) {
-                                var leftNeighbour = $('div[menuindex=' + parseInt(entryIndex - 1) + ']');
-                                leftNeighbour.addClass('activeMenuItem');
-                                this.overlayMenu.activeEntry.removeClass('activeMenuItem');
-                            }
+                            this.moveActiveMenuItem('left');
                             break;
                         case 'btn-right':
-                            if (!(entryIndex >= numberOfEntries - 1)) {
-                                var rightNeighbour = $('div[menuindex=' + parseInt(entryIndex + 1) + ']');
-                                rightNeighbour.addClass('activeMenuItem');
-                                this.overlayMenu.activeEntry.removeClass('activeMenuItem');
-                            }
+                            this.moveActiveMenuItem('right');
+                            break;
+                        case 'btn-up':
+                            this.moveActiveMenuItem('up');
+                            break;
+                        case 'btn-down':
+                            this.moveActiveMenuItem('down');
                             break;
                         case 'btn-enter':
-                            this.overlayMenu.activeEntry.trigger("click");
+                            this.triggerActiveMenuItem();
                             break;
                     }
                 }

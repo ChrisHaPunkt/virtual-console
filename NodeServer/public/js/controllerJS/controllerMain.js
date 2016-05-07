@@ -127,7 +127,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     overlayMenuButton.click(function(){
         socket.sendData('button', {
             buttonName: $(this).attr('id'),
-            buttonState: 0,
+            buttonState: 7, // 7 = button 'up'
             timestamp: Date.now()
         });
     });
