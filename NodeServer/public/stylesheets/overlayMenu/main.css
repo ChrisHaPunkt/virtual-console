@@ -1,6 +1,6 @@
 #overlayMenu{
     position: absolute;
-    visibility: hidden;
+    /*visibility: hidden;*/
 
     height: 100%;
     width: 100%;
@@ -34,5 +34,8 @@
     border: 1px solid #607D8B;
 
     text-align: center;
-    line-height: 5em;
+    line-height: 5;
+
+    color: white;
+    font-size: 1.4em;
  }

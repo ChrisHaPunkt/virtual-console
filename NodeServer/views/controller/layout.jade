@@ -1,14 +1,13 @@
 doctype html
 html
-  head
-    title= title
-    meta(name = 'mobile-web-app-capable', content = 'yes')
-    link(rel='stylesheet', href='/stylesheets/controller/main.css')
-    link(rel='stylesheet', href='stylesheets/controller/login.css', media='screen')
-    script(src="/js/libs/jquery.js")
-    script(data-main='js/controllerJS/login.js', src='js/libs/require.js')
-  body
-    block error
-    block login
-    block controller
-    block content
+    head
+        title= title
+        meta(name = 'mobile-web-app-capable', content = 'yes')
+        link(rel='stylesheet', href='/stylesheets/controller/main.css')
+        link(rel='stylesheet', href='stylesheets/controller/login.css', media='screen')
+        script(src="/js/libs/jquery.js")
+        script(data-main='js/controllerJS/controllerMain.js', src='js/libs/require.js')
+    body
+        block login
+        block controller
+        block error

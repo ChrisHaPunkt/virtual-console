@@ -21,6 +21,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             UP: 7,
             DOWN: 8
         },
+        overlayMenuIsActive: false,
         logLevel: null,
         socket: null,
         performanceMonitor: false,
@@ -45,8 +46,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
 
             // get overlay menu div
             this.domElements.overlayMenu = $('#overlayMenu');
-            if(!this.domElements.overlayMenu){
+            if (!this.domElements.overlayMenu) {
                 this.addLogMessage(this.log.DEBUG, 'ERROR', 'No overlayMenu DIV!');
+            } else {
+                this.domElements.overlayMenu.hide();
             }
 
             /**
@@ -58,7 +61,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
              * Server -> Client : 'frontendInitAck'
              */
 
-            // open socket connection to server - the origin ip of the http files is used if not specified
+                // open socket connection to server - the origin ip of the http files is used if not specified
             this.socket = io.connect();
 
             // send init request when socket is connected
@@ -119,22 +122,22 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             }
         },
 
-        initQrCode: function(){
+        initQrCode: function () {
             // qrcode library cannot use jquery dom element
             this.domElements.qrcode = document.getElementById("qrcode");
             console.log(this.domElements.qrcode);
             this.qrCode = new QRCode(this.domElements.qrcode, {
-                text: ""+this.socket.io.uri,
+                text: "" + this.socket.io.uri,
                 width: 128,
                 height: 128
             });
             //click listener for hiding qrcode
             this.qrCode.qrcode_hidden = false;
             this.domElements.qrcode.addEventListener('click', function () {
-                if(this.qrCode.qrcode_hidden) {
+                if (this.qrCode.qrcode_hidden) {
                     this.domElements.qrcode.style.opacity = 1;
                     this.qrCode.qrcode_hidden = false;
-                }else{
+                } else {
                     this.domElements.qrcode.style.opacity = 0;
                     this.qrCode.qrcode_hidden = true;
                 }
@@ -145,8 +148,21 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
          * INCOMING COMMUNICATION
          * */
         onIncomingMessage: function (data) {
-            // pass data to function defined by game
-            this.frontendInboundMessage(data);
+            if (this.overlayMenuIsActive) {
+                if (data.type === 'button' && data.data.message.buttonName === 'overlayMenuButton') {
+                    this.domElements.overlayMenu.hide();
+                    this.overlayMenuIsActive = false;
+                }
+                // TODO add navigation via controller buttons
+            } else {
+                if (data.type === 'button' && data.data.message.buttonName === 'overlayMenuButton') {
+                    this.domElements.overlayMenu.show();
+                    this.overlayMenuIsActive = true;
+                } else {
+                    // pass data to function defined by game only if overlay Menu is NOT active
+                    this.frontendInboundMessage(data);
+                }
+            }
         },
 
         /**
@@ -193,7 +209,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         },
 
         // request data for a game. if no game id is provided the data of all games are request
-        getGameData: function(callback, gameId){
+        getGameData: function (callback, gameId) {
             this.sendToServer_Data('requestGameData', {
                 game: gameId ? gameId : null
             }, callback);
