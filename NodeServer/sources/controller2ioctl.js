@@ -26,38 +26,11 @@ exports.hellotest = function() {
             if (err) {
                 throw(err);
             }
-
-            setTimeout(function () {
-                uinput.key_event(stream, uinput.KEY_H, function (err) {
-                    if (err) {
-                        throw(err);
-                    }
-
-                    uinput.key_event(stream, uinput.KEY_E, function (err) {
-                        if (err) {
-                            throw(err);
-                        }
-
-                        uinput.key_event(stream, uinput.KEY_L, function (err) {
-                            if (err) {
-                                throw(err);
-                            }
-
-                            uinput.key_event(stream, uinput.KEY_L, function (err) {
-                                if (err) {
-                                    throw(err);
-                                }
-
-                                uinput.key_event(stream, uinput.KEY_O, function (err) {
-                                    if (err) {
-                                        throw(err);
-                                    }
-                                });
-                            });
-                        });
-                    });
-                });
-            }, 1000);
+            uinput.key_event(stream, uinput.KEY_H, function (err) {
+                if (err) {
+                    throw(err);
+                }
+            });
         });
     });
 };
