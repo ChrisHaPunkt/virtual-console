@@ -231,7 +231,7 @@ var exports = {
     },
     // internal data function // DO NOT use for game development
     sendToFrontend_Data: function(data){
-        return sendToFrontend('frontendData', data);
+        return sendToFrontend('frontendInboundData', data);
     },
     // only used for connection establishment
     sendToFrontend_InitAck: function(data){

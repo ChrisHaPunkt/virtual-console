@@ -37,6 +37,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
 
         MainMenu.prototype.initGameTiles = function (parent) {
             var i = 0;
+            parent.empty();
             this.gameData.forEach(function (game) {
                 $('<div/>', {
                     id: game.unique_name + '_tile',

@@ -109,11 +109,11 @@ setTimeout(function () {
     GameHandler.updateGame(new GameVO({
         type: types.internal,
         unique_name: "3DGame",
-        displayName: "ThreeD Game"
+        displayName: "ThreeD Game TEST2"
     }), function (callback) {
         util.log("Update callback:" + callback);
     });
-}, 15000);
+}, 5000);
 // error handlers
 
 // development error handler

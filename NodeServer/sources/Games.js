@@ -151,6 +151,8 @@ var getAllGames = function (onSuccess) {
 var reinitGames = function () {
     var gameRoute = require('../routes/gameRoute');
     //TODO:: socket.emit("redrawGames");
+    var sessionHandling = require('./sessionHandling');
+    sessionHandling.sendToFrontend_Data('gamesUpdated',{});
     util.log("reinit routes");
     gameRoute.rebindGameRoutes();
 };

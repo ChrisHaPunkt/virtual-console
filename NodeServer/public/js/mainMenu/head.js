@@ -32,6 +32,18 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
     gameApi.controller = gameApi.controllerTemplates.MODERN;
     gameApi.performanceMonitor = false;
 
+    // handle new Server Data
+    // {type: messageType, data: message}
+    gameApi.frontendInboundData = function(serverData){
+        switch(serverData.type){
+            case 'gamesUpdated':
+                mainMenuInstance.redraw();
+                break;
+            default:
+                console.error('Unknown server data: ', serverData);
+        }
+    };
+
     // handle new Controller Data
     gameApi.frontendInboundMessage = function (controllerData) {
 
