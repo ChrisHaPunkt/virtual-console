@@ -46,8 +46,9 @@ var updateGame = function (GameVO, callback) {
 
     var updateCallback = function (state, data) {
         if (state && data.length > 0) {
-            database.remove("games", filter);
-            database.insert("games", filter, GameVO.strip(), callback);
+            database.remove("games", filter, function(){
+                database.insert("games", GameVO.strip(), callback);
+            });
             if (debug) util.log("Game updated: " + filter.unique_name);
 
             if (typeof callback == "function")
