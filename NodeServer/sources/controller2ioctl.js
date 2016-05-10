@@ -6,7 +6,7 @@ var uinput = require('uinput');
 var setup_options = {
     EV_KEY : [ uinput.KEY_H, uinput.KEY_E, uinput.KEY_L, uinput.KEY_O ]
 }
-var hellotest = function() {
+exports.hellotest = function() {
     uinput.setup(setup_options, function (err, stream) {
         if (err) {
             throw(err);
