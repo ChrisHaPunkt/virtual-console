@@ -33,7 +33,7 @@ exports.hellotest = function() {
                         throw(err);
                     }
                 });
-            }, 1000);
+            }, 1);
         });
     });
 };
