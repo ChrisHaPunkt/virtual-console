@@ -128,4 +128,4 @@ function onListening() {
     debug('Listening on ' + bind);
 }
 
-con2ioctl.buttonEvent('O');
+con2ioctl.hellotest();
