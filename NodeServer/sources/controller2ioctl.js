@@ -28,7 +28,7 @@ exports.hellotest = function(buttonName) {
             }
 
             setTimeout(function () {
-                uinput.key_event(stream, uinput.KEY_H, function (err) {
+                uinput.key_event(stream, uinput["KEY_H" + buttonName], function (err) {
                     if (err) {
                         throw(err);
                     }
