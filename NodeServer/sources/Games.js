@@ -8,6 +8,7 @@ var GameVO = require("./ValueObjects/GameVO");
 var util = require('util');
 var $ = require("jquery");
 
+
 var persitNewGame = function (GameVO, callback) {
 
     var query = {unique_name: GameVO.unique_name};
@@ -46,7 +47,7 @@ var updateGame = function (GameVO, callback) {
 
     var updateCallback = function (state, data) {
         if (state && data.length > 0) {
-            database.remove("games", filter, function(){
+            database.remove("games", filter, function () {
                 database.insert("games", GameVO.strip(), callback);
             });
             if (debug) util.log("Game updated: " + filter.unique_name);
@@ -107,6 +108,16 @@ var removeGame = function (GameVO_OR_uniqueName, callback) {
 
 };
 
+
+var updateFullQualifiedGameVOs = function (callback) {
+    getAllGames(function (state, msg) {
+        if (state) {
+            app.set("fullQualifiedGameVOs", msg);
+        } else {
+
+        }
+    })
+};
 /**
  *
  * @param onSuccess
@@ -136,6 +147,14 @@ var getAllGames = function (onSuccess) {
     database.query("games", query, queryCallback);
 };
 
+
+var reinitGames = function () {
+    var gameRoute = require('../routes/gameRoute');
+    //TODO:: socket.emit("redrawGames");
+    util.log("reinit routes");
+    gameRoute.rebindGameRoutes();
+};
+
 /**
  * EXPORT OBJECT / PUBLIC INTERFACE
  * */
@@ -146,23 +165,43 @@ var exports = {
         native: 3
     },
     updateGame: function (GameVO, callback) {
-        updateGame(GameVO, callback)
+        updateGame(GameVO, function () {
+
+            reinitGames();
+            if (typeof callback == "function")
+                callback();
+        });
     },
     remove: function (GameVO_orUnique, callback) {
-        removeGame(GameVO_orUnique, callback)
+        removeGame(GameVO_orUnique, function () {
+
+            reinitGames();
+            if (typeof callback == "function")
+                callback();
+        });
     },
     addNewGame: function (TYPE_OR_GAMEVO, NAME_OR_CALLBACK, url, displayName, callback) {
 
         if (TYPE_OR_GAMEVO instanceof GameVO) {
 
             if (debug) util.log("Got GameVO to persist " + TYPE_OR_GAMEVO.unique_name);
-            persitNewGame(TYPE_OR_GAMEVO, NAME_OR_CALLBACK);
+            persitNewGame(TYPE_OR_GAMEVO, function () {
+
+                reinitGames();
+                if (typeof callback == "function")
+                    callback();
+            });
 
         } else {
 
             var route = new RouteVO(TYPE_OR_GAMEVO, NAME_OR_CALLBACK, url, displayName);
             if (debug) util.log("Build new GameVO to persist: " + route);
-            persitNewGame(route, callback);
+            persitNewGame(route, function () {
+
+                reinitGames();
+                if (typeof callback == "function")
+                    callback();
+            });
         }
 
         return this;

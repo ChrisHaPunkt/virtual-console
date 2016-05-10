@@ -46,7 +46,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                     },
                     path: game.fullUrl,
                     tileIndex: i++
-                }).html(game.unique_name).appendTo(parent);
+                }).html(game.displayName).appendTo(parent);
             });
 
             // set center game tile active
