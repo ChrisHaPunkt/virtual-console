@@ -19,7 +19,7 @@ exports.buttonEvent = function(buttonName) {
         }
 
         var create_options = {
-            name: 'myuinput',
+            name: 'virtual-gamepad',
             id: {
                 bustype: uinput.BUS_VIRTUAL,
                 vendor: 0x1,
