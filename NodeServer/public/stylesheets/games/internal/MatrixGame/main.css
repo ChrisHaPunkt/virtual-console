@@ -1,0 +1,52 @@
+body {
+    background: url('../../../../img/background_matrix.png') no-repeat center center fixed;;
+}
+
+.user-container {
+    background-color: #000;
+    /*color: #008800;*/
+    color: lightblue;
+    font-size: small;
+    font-family: Consolas, Arial;
+    border: 2px solid grey;
+    border-radius: 1em;
+
+    margin: 1.5%;
+    width: 30%;
+    height: 30%;
+
+    float: left;
+    overflow: hidden;
+}
+
+.user-name {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+
+    background-color: grey;
+    color: #000;
+}
+
+.user-messages{
+    height: 90%;
+
+    overflow: scroll;
+    margin-right: -25px;
+    padding-right: 25px;
+
+    margin-bottom: -25px;
+    padding-bottom: 25px;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 3%;
+    height: 100%;
+
+    left: 2px;
+}

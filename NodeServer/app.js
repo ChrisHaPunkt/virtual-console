@@ -42,6 +42,14 @@ GameHandler.addNewGame(new GameVO({
     unique_name: "3DGame",
     displayName: "ThreeD Game"
 }));
+
+GameHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "MatrixGame",
+    displayName: "Matrix Game"
+}));
+
+/*
 GameHandler.updateGame(new GameVO({
     type: types.internal,
     unique_name: "3DGame",
@@ -49,7 +57,6 @@ GameHandler.updateGame(new GameVO({
 }), function (callback) {
     util.log("Update callback:" + callback);
 });
-
 
 GameHandler.remove("3DGame");
 

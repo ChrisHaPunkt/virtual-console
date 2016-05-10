@@ -16,6 +16,7 @@ requirejs.config({
         "three": "/js/libs/three",
         "Chart": "/js/libs/Chart.min",
         "phaser": '/js/libs/phaser',
+        "qrcode.min": '/js/libs/qrcode.min',
         "carsGame": 'carsGame',
         "gameApi":'/js/gameApi'
     },

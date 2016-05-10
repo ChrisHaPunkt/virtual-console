@@ -49,7 +49,7 @@ var startNetworkServer = function (server) {
                 if (userManagementResult) {
                     setUserName(id, username);
                     setUserStatus(id, true, true);
-                    callback.onNewUser(username);
+                    userCallback.onNewUser(username);
 
                     _callback({
                         result: userManagementResult,

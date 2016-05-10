@@ -15,6 +15,7 @@ requirejs.config({
     paths: {
         "three": "/js/libs/three",
         "Chart": "/js/libs/Chart.min",
+        "qrcode.min": '/js/libs/qrcode.min',
         "gameApi": '/js/gameApi'
     },
     shim: {

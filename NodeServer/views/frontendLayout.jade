@@ -1,11 +1,22 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/frontend/style.css')
-    script(src="/js/libs/jquery.js")
-  body
-    block content
-    block log
-    include overlayMenu/overlayMenu
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/frontendStyle.css')
+        script(src="/js/libs/jquery.js")
+    body
+        div(id='header')
+            div(id='menu')
+                div(id='title', class='headerElement')= title
+            block header
+        div(id='content')
+            block content
+        div(id='footer')
+            div(id='log')
+            block footer
+        // START Special DOM Objects
+        include overlayMenu/overlayMenu
+        div(id='chart')
+            canvas(id='myChart')
+        div(id="qrcode")
+        // END Special DOM Objects

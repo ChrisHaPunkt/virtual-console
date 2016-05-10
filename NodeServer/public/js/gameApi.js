@@ -1,4 +1,4 @@
-define(['/socket.io/socket.io.js'], function (io) {
+define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrcode) {
 
     var gameApi = {
 
@@ -40,6 +40,15 @@ define(['/socket.io/socket.io.js'], function (io) {
             if (this.controller === null)
                 this.controller = this.controllerTemplates.DEMO;
 
+            // container for all dom elements
+            this.domElements = {};
+
+            // get overlay menu div
+            this.domElements.overlayMenu = $('#overlayMenu');
+            if(!this.domElements.overlayMenu){
+                this.addLogMessage(this.log.DEBUG, 'ERROR', 'No overlayMenu DIV!');
+            }
+
             /**
              * Build up a connection to server
              *
@@ -79,6 +88,11 @@ define(['/socket.io/socket.io.js'], function (io) {
             else return -1;
 
             /**
+             * MISC
+             * */
+            this.initQrCode();
+
+            /**
              * INIT END
              * */
             this.addLogMessage(this.log.INFO, "init", "Game Api successfully Initialized");
@@ -96,13 +110,35 @@ define(['/socket.io/socket.io.js'], function (io) {
                 console.log(type + ": " + msg);
                 // additional log INFO levels to UI
                 if (level === this.log.INFO) {
-                    pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
+                    pageLogContent.innerHTML = '<p class="logMessage"><span class="logMessage_type">' + type + ': </span><span class="logMessage_content">' + msg + '</span></p>' + pageLogContent.innerHTML;
                 }
                 // if log level is INFO just log INFO logs
             } else if (this.logLevel === this.log.INFO && level === this.log.INFO) {
                 console.log(type + ": " + msg);
-                pageLogContent.innerHTML = '<p class="message"><span class="messageType">' + type + ': </span><span class="messageContent">' + msg + '</span></p>' + pageLogContent.innerHTML;
+                pageLogContent.innerHTML = '<p class="logMessage"><span class="logMessage_type">' + type + ': </span><span class="logMessage_content">' + msg + '</span></p>' + pageLogContent.innerHTML;
             }
+        },
+
+        initQrCode: function(){
+            // qrcode library cannot use jquery dom element
+            this.domElements.qrcode = document.getElementById("qrcode");
+            console.log(this.domElements.qrcode);
+            this.qrCode = new QRCode(this.domElements.qrcode, {
+                text: ""+this.socket.io.uri,
+                width: 128,
+                height: 128
+            });
+            //click listener for hiding qrcode
+            this.qrCode.qrcode_hidden = false;
+            this.domElements.qrcode.addEventListener('click', function () {
+                if(this.qrCode.qrcode_hidden) {
+                    this.domElements.qrcode.style.opacity = 1;
+                    this.qrCode.qrcode_hidden = false;
+                }else{
+                    this.domElements.qrcode.style.opacity = 0;
+                    this.qrCode.qrcode_hidden = true;
+                }
+            }.bind(this));
         },
 
         /**
