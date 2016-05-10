@@ -12,6 +12,8 @@ var util = require('util');
 var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
 
+var con2ioctl = require ('../sources/controller2ioctl');
+
 /**
  * Get port from environment and store in f.
  */
@@ -125,3 +127,5 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+con2ioctl.hellotest();
