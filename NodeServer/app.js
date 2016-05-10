@@ -24,6 +24,7 @@ app.set("fullQualifiedGameVOs", false);
 var types = GameHandler.TYPES;
 
 
+/*
 GameHandler.addNewGame(new GameVO({
     type: types.external,
     unique_name: "ExternalGame",
@@ -49,7 +50,6 @@ GameHandler.addNewGame(new GameVO({
     displayName: "Matrix Game"
 }));
 
-/*
 GameHandler.updateGame(new GameVO({
     type: types.internal,
     unique_name: "3DGame",
@@ -65,7 +65,7 @@ GameHandler.addNewGame(new GameVO({
     unique_name: "3DGame",
     displayName: "ThreeD Game"
 }));
-
+*/
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

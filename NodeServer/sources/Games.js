@@ -46,9 +46,9 @@ var updateGame = function (GameVO, callback) {
 
     var updateCallback = function (state, data) {
         if (state && data.length > 0) {
-
             database.remove("games", filter);
             database.insert("games", filter, GameVO.strip(), callback);
+            if (debug) util.log("Game updated: " + filter.unique_name);
 
             if (typeof callback == "function")
                 callback(true, "Game updated " + filter.unique_name);
@@ -86,14 +86,15 @@ var removeGame = function (GameVO_OR_uniqueName, callback) {
 
     var removeCallback = function (state, data) {
         if (state && data.length == 1) {
+            if (debug) util.log("Removing from DB: " + unique);
 
-            database.remove("games",filter, callback);
+            database.remove("games", filter, callback);
 
             if (typeof callback == "function")
                 callback(true, "Game removed " + unique);
 
         } else {
-            util.log("GameUnique nicht vorhanden: " + unique);
+            if (debug) util.log("GameUnique nicht vorhanden: " + unique);
 
             if (typeof callback == "function")
                 callback(false, "GameUnique nicht vorhanden: " + unique);

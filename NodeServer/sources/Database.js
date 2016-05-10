@@ -3,10 +3,11 @@
  */
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../../config.json');
+
 module.exports = function () {
 
     var dbURL = "mongodb://" + config.dbhost + ":" + config.dbport + "/" + config.dbcollection
-    var debug = config.debug;
+    var debug = false;//config.debug;
     this.dbURL = dbURL;
 
     /***************************************
