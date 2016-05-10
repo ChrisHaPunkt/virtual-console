@@ -47,14 +47,18 @@ var updateGame = function (GameVO, callback) {
 
     var updateCallback = function (state, data) {
         if (state && data.length > 0) {
+
             database.remove("games", filter, function () {
-                database.insert("games", GameVO.strip(), callback);
+
+                database.insert("games", GameVO.strip(), function () {
+
+                    if (debug) util.log("Game updated: " + filter.unique_name);
+
+                    if (typeof callback == "function")
+                        callback(true, "Game updated " + filter.unique_name);
+
+                });
             });
-            if (debug) util.log("Game updated: " + filter.unique_name);
-
-            if (typeof callback == "function")
-                callback(true, "Game updated " + filter.unique_name);
-
         } else {
             util.log("GameUnique nicht vorhanden: " + filter.unique_name);
 
@@ -152,9 +156,16 @@ var reinitGames = function () {
     var gameRoute = require('../routes/gameRoute');
     //TODO:: socket.emit("redrawGames");
     var sessionHandling = require('./sessionHandling');
-    sessionHandling.sendToFrontend_Data('gamesUpdated',{});
+
     util.log("reinit routes");
-    gameRoute.rebindGameRoutes();
+    gameRoute.rebindGameRoutes(function(state){
+        if(state){
+            sessionHandling.sendToFrontend_Data('gamesUpdated', {});
+
+        }else{
+            if(debug)util.log("rebindgameRoutes Error");
+        }
+    });
 };
 
 /**

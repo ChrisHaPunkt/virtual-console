@@ -7,7 +7,7 @@ var util = require('util');
 var GamesHandler = require('../sources/Games');
 var routes;
 
-function rebindGameRoutes() {
+function rebindGameRoutes(callback) {
     GamesHandler.getAllGames(function (state, msg) {
         var app = require('../app');
         var TYPES = require('../sources/Games').TYPES;
@@ -42,7 +42,13 @@ function rebindGameRoutes() {
 
             });
 
+            if(typeof callback == "function"){
+                callback(true);
+            }
         } else {
+            if(typeof callback == "function"){
+                callback(false);
+            }
             if (debug) util.log("callback get All Routes " + msg);
             app.set("fullQualifiedGameVOs", false);
 
