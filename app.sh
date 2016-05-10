@@ -7,8 +7,12 @@ case $1 in
                      cd `dirname $0`
             fi
             if [ "$(cat scripts/NODEPID)" != "" ]; then
-                 echo " already running. U need to stop before running again.."
-            else
+                if [kill -s 0 `$(cat scripts/NODEPID)`]; then
+
+                     echo " already running. U need to stop before running again.."
+                     exit 1;
+                fi
+            fi
 
 
                 DIR="NodeServer/node_modules"
