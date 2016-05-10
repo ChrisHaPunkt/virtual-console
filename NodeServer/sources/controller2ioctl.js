@@ -26,11 +26,14 @@ exports.hellotest = function() {
             if (err) {
                 throw(err);
             }
-            uinput.key_event(stream, uinput.KEY_H, function (err) {
-                if (err) {
-                    throw(err);
-                }
-            });
+
+            setTimeout(function () {
+                uinput.key_event(stream, uinput.KEY_H, function (err) {
+                    if (err) {
+                        throw(err);
+                    }
+                });
+            }, 1000);
         });
     });
 };
