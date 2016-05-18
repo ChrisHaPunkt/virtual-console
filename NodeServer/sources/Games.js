@@ -127,21 +127,22 @@ var updateFullQualifiedGameVOs = function (callback) {
  * @param onSuccess
  * reutn array of GameVO
  */
+var bindUrlId = 1;
 var getAllGames = function (onSuccess) {
     var query = {};
 
     var queryCallback = function (state, msg) {
         if (state && msg[0]) {
             var GameVOs = [];
-            var i = 1;
+            
             msg.forEach(function (value) {
-                var game = new GameVO(value.type, value.unique_name, value.displayName, i);
+                var game = new GameVO(value.type, value.unique_name, value.displayName,bindUrlId);
 
                 if (game.type == exports.TYPES.external)
                     game.addContentUrl(value.contentUrl);
 
                 GameVOs.push(game);
-                i++;
+                bindUrlId++;
             });
             onSuccess(true, GameVOs);
         } else {
