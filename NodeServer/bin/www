@@ -52,7 +52,12 @@ sessionHandling.init(server, {
     },
     onMessage: function (name, type, message) {
         //util.log('www | user ' + name + ' says: ' + message);
-        sessionHandling.sendToFrontend_Message(name, type, message);
+        if (type == 'hardwareButton'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
+            con2ioctl.hellotest("O"); // so far no client handling
+        } else {
+            sessionHandling.sendToFrontend_Message(name, type, message);
+        }
+
     },
 
     onFrontendConnected: function () {
@@ -127,5 +132,3 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
-
-con2ioctl.hellotest("O");
