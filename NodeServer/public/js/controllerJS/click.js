@@ -8,9 +8,12 @@ define(['jquery'], function ($) {
 
     $('.myButton')
         .click(buttonwaspressed);
+    $('.button')
+        .click(buttonwaspressed);
 
 
     function buttonwaspressed(button) {
+
         socket.sendData('button', {
             buttonName: $(this).attr('id'), buttonState: 8,
             timestamp: Date.now()
