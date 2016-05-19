@@ -172,8 +172,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 }.bind(this)
             };
 
+            // bind click handler to overlay menu buttons via class
             var that = this;
             $('.overlayMenuItem').click(function () {
+                // call button id specific event handler
                 that.overlayMenu.eventHandler[this.id]();
             });
         },

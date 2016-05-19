@@ -9,7 +9,10 @@ define([
 
     //preamble
     var game;
+    var gameHasStarted = false;
+
     var cars = [];
+    var carPreloadQueue = [];
     var carsToUser = {};
     var carColors = [0xff0000, 0x0000ff, 0x00ff00, 0xffff00];
     var carTurnSpeed = 250;
@@ -59,6 +62,14 @@ define([
                     }
                 }
             });
+
+            // set game started
+            gameHasStarted = true;
+
+            // add preloaded clients
+            carPreloadQueue.forEach(function (clientName) {
+                addCarIfPossible(clientName);
+            });
         },
         update: function () {
             game.physics.arcade.collide(carGroup, obstacleGroup, function (c, t) {
@@ -83,10 +94,10 @@ define([
                 var steerTween = game.add.tween(cars[carToMove]).to({
                     angle: 0
                 }, carTurnSpeed / 2, Phaser.Easing.Linear.None, true);
-            })
+            });
             cars[carToMove].side = 1 - cars[carToMove].side;
             var moveTween = game.add.tween(cars[carToMove]).to({
-                x: cars[carToMove].positions[cars[carToMove].side],
+                x: cars[carToMove].positions[cars[carToMove].side]
             }, carTurnSpeed, Phaser.Easing.Linear.None, true);
             moveTween.onComplete.add(function () {
                 cars[carToMove].canMove = true;
@@ -119,7 +130,11 @@ define([
                 gameApi.addLogMessage(gameApi.log.INFO, 'client', 'Client ' + clientName + ' ' + message);
 
                 if (message === 'connected') {
-                    addCarIfPossible(clientName);
+                    if(gameHasStarted) {
+                        addCarIfPossible(clientName);
+                    }else{
+                        addCarToQueue(clientName);
+                    }
                 } else if (message === 'disconnected') {
                     removeCar(clientName);
                 }
@@ -137,6 +152,10 @@ define([
             default:
                 break;
         }
+    };
+
+    var addCarToQueue = function(clientName){
+        carPreloadQueue.push(clientName);
     };
 
     var addCarIfPossible = function (clientName) {
