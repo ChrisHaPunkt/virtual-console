@@ -27,7 +27,7 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
     /**
      * API config
      */
-    // set basic config properties
+        // set basic config properties
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.MODERN;
     gameApi.performanceMonitor = false;
@@ -58,12 +58,20 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
                 gameApi.addLogMessage(gameApi.log.INFO, 'client', "Client " + controllerData.data.clientName + ' ' + controllerData.data.message);
                 break;
             case "button":
-                // TODO trigger hardware keyboard events here?
-                if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-
+                if (controllerEvent.buttonName == 'btn-enter' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    mainMenuInstance.triggerActiveTile();
+                }
+                else if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    mainMenuInstance.moveActiveTile('left');
                 }
                 else if (controllerEvent.buttonName == 'btn-right' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-
+                    mainMenuInstance.moveActiveTile('right');
+                }
+                else if (controllerEvent.buttonName == 'btn-up' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    mainMenuInstance.moveActiveTile('up');
+                }
+                else if (controllerEvent.buttonName == 'btn-down' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    mainMenuInstance.moveActiveTile('down');
                 }
                 break;
             case "accelerationData":
@@ -75,7 +83,6 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
             default:
                 break;
         }
-
     };
 
     /**

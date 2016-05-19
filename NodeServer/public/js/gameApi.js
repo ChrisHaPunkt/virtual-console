@@ -21,6 +21,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             UP: 7,
             DOWN: 8
         },
+        overlayMenu: {isActive: false},
         logLevel: null,
         socket: null,
         performanceMonitor: false,
@@ -28,7 +29,6 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         frontendConnectionOutbound: null,
         frontendConnection: null,
         frontendInboundMessage: null,
-        frontendInboundData: null,
         controller: null,
         chart: {},
         init: function () {
@@ -41,14 +41,16 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             if (this.controller === null)
                 this.controller = this.controllerTemplates.DEMO;
 
-            // container for all dom elements
-            this.domElements = {};
-
             // get overlay menu div
-            this.domElements.overlayMenu = $('#overlayMenu');
-            if(!this.domElements.overlayMenu){
+            this.overlayMenu.domElement = $('#overlayMenu');
+            if (!this.overlayMenu.domElement) {
                 this.addLogMessage(this.log.DEBUG, 'ERROR', 'No overlayMenu DIV!');
+            } else {
+                this.overlayMenu.domElement.hide();
             }
+
+            // init overlaymenu handler
+            this._initOverlayMenuHandler();
 
             /**
              * Build up a connection to server
@@ -59,7 +61,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
              * Server -> Client : 'frontendInitAck'
              */
 
-            // open socket connection to server - the origin ip of the http files is used if not specified
+                // open socket connection to server - the origin ip of the http files is used if not specified
             this.socket = io.connect();
 
             // send init request when socket is connected
@@ -85,18 +87,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
              * Handle incoming messages
              */
             if (this.frontendInboundMessage !== null)
-                this.socket.on('frontendInboundMessage', function(msg){
-                    this.frontendInboundMessage(msg);
-                }.bind(this));
-            else return -1;
-
-            /**
-             * Handle incoming data
-             */
-            if (this.frontendInboundMessage !== null)
-                this.socket.on('frontendInboundData', function(data){
-                    this.frontendInboundData(data);
-                }.bind(this));
+                this.socket.on('frontendInboundMessage', this.onIncomingMessage.bind(this));
             else return -1;
 
             /**
@@ -131,26 +122,142 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             }
         },
 
-        initQrCode: function(){
+        initQrCode: function () {
             // qrcode library cannot use jquery dom element
-            this.domElements.qrcode = document.getElementById("qrcode");
-            console.log(this.domElements.qrcode);
-            this.qrCode = new QRCode(this.domElements.qrcode, {
-                text: ""+this.socket.io.uri,
+            this.qrCode = new QRCode(document.getElementById("qrcode"), {
+                text: "" + this.socket.io.uri,
                 width: 128,
                 height: 128
             });
+            this.qrCode.domElement = document.getElementById("qrcode");
             //click listener for hiding qrcode
             this.qrCode.qrcode_hidden = false;
-            this.domElements.qrcode.addEventListener('click', function () {
-                if(this.qrCode.qrcode_hidden) {
-                    this.domElements.qrcode.style.opacity = 1;
+            this.qrCode.domElement.addEventListener('click', function () {
+                if (this.qrCode.qrcode_hidden) {
+                    this.qrCode.domElement.style.opacity = 1;
                     this.qrCode.qrcode_hidden = false;
-                }else{
-                    this.domElements.qrcode.style.opacity = 0;
+                } else {
+                    this.qrCode.domElement.style.opacity = 0;
                     this.qrCode.qrcode_hidden = true;
                 }
             }.bind(this));
+        },
+
+        /**
+         * OVERLAY-MENU HANDLERS
+         * */
+        _initOverlayMenuHandler: function () {
+            this.overlayMenu.eventHandler = {
+                'overLayButton_Main_Menu': function () {
+                    window.location = '/menu';
+                }.bind(this),
+                'overLayButton_Settings': function () {
+                    // TODO check if needed here
+                }.bind(this),
+                'overLayButton_Restart': function () {
+                    // TODO trigger shutdown via socket
+                    this.sendToServer_Data('restartServer', {
+                        delay: 10
+                    }, function(msg){
+                        console.error(msg);
+                    });
+                }.bind(this),
+                'overLayButton_Shutdown': function(){
+                    this.sendToServer_Data('shutdownServer', {
+                        delay: 1000
+                    }, function(msg){
+                        console.error(msg);
+                    });
+                }.bind(this)
+            };
+
+            var that = this;
+            $('.overlayMenuItem').click(function () {
+                that.overlayMenu.eventHandler[this.id]();
+            });
+        },
+        moveActiveMenuItem: function (direction) {
+            this.overlayMenu.activeEntry = $('.activeMenuItem');
+            var entryIndex = parseInt(this.overlayMenu.activeEntry.attr("menuindex"));
+            var numberOfEntries = $('.overlayMenuItem').length;
+
+            if (direction === 'left') {
+                if (!(entryIndex <= 0)) {
+                    var leftNeighbour = $('div[menuindex=' + parseInt(entryIndex - 1) + ']');
+                    leftNeighbour.addClass('activeMenuItem');
+                    this.overlayMenu.activeEntry.removeClass('activeMenuItem');
+                }
+            } else if (direction === 'right') {
+                if (!(entryIndex >= numberOfEntries - 1)) {
+                    var rightNeighbour = $('div[menuindex=' + parseInt(entryIndex + 1) + ']');
+                    rightNeighbour.addClass('activeMenuItem');
+                    this.overlayMenu.activeEntry.removeClass('activeMenuItem');
+                }
+            } else if (direction === 'up') {
+                // TODO implement
+                this.moveActiveMenuItem('left');
+            } else if (direction === 'down') {
+                // TODO implement
+                this.moveActiveMenuItem('right');
+            }
+        },
+        triggerActiveMenuItem: function () {
+            $('.activeMenuItem').trigger("click");
+        },
+        addCustomOverlayMenuItem: function (name, action) {
+            this.overlayMenu.nextElementIndex = this.overlayMenu.nextElementIndex || $('.overlayMenuItem').length;
+            $('<div/>', {
+                id: 'overLayButton_' + name.replace(' ', '_'),
+                class: 'overlayMenuItem',
+                menuindex: this.overlayMenu.nextElementIndex++
+            }).html(name).appendTo($('#overlayMenuContent'));
+            this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action.bind(this);
+        },
+        removeOverlayMenuItem: function (name) {
+            // TODO This method produces index errors, DONT use!!
+            console.error("This method produces index errors, DONT use!!");
+            $('#overLayButton_' + name.replace(' ', '_')).remove();
+            delete this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')];
+        },
+
+
+        /**
+         * INCOMING COMMUNICATION
+         * */
+        onIncomingMessage: function (data) {
+            if (this.overlayMenu.isActive) {
+                if (data.type === 'button') {
+                    switch (data.data.message.buttonName) {
+                        case 'btn-overlayMenu':
+                            this.overlayMenu.domElement.css('display', 'none');
+                            this.overlayMenu.isActive = false;
+                            break;
+                        case 'btn-left':
+                            this.moveActiveMenuItem('left');
+                            break;
+                        case 'btn-right':
+                            this.moveActiveMenuItem('right');
+                            break;
+                        case 'btn-up':
+                            this.moveActiveMenuItem('up');
+                            break;
+                        case 'btn-down':
+                            this.moveActiveMenuItem('down');
+                            break;
+                        case 'btn-enter':
+                            this.triggerActiveMenuItem();
+                            break;
+                    }
+                }
+            } else {
+                if (data.type === 'button' && data.data.message.buttonName === 'btn-overlayMenu') {
+                    this.overlayMenu.domElement.css('display', 'flex');
+                    this.overlayMenu.isActive = true;
+                } else {
+                    // pass data to function defined by game only if overlay Menu is NOT active
+                    this.frontendInboundMessage(data);
+                }
+            }
         },
 
         /**
@@ -197,7 +304,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         },
 
         // request data for a game. if no game id is provided the data of all games are request
-        getGameData: function(callback, gameId){
+        getGameData: function (callback, gameId) {
             this.sendToServer_Data('requestGameData', {
                 game: gameId ? gameId : null
             }, callback);
