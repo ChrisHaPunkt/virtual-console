@@ -29,6 +29,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
+        $("#landscape_hint").show()
     };
     var showOverlayMenuButton = function () {
         alignOverlayMenuButton();
@@ -36,6 +37,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var hideOverlayMenuButton = function () {
         overlayMenuButton.hide();
+        $("#landscape_hint").hide()
     };
 
     hideContent();
@@ -183,4 +185,5 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     ///////////////////////////////////////
     click.setSocket(socket);
     sensor.setSocket(socket);
+    $("#anonymous").focus();
 });

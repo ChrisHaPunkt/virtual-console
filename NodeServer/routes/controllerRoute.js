@@ -1,5 +1,6 @@
 var express = require('express');
 var requirejs = require('requirejs');
+var util = require('util');
 
 requirejs.config({
     //Pass the top-level main.js/index.js require
@@ -20,6 +21,7 @@ router.get('/', function (req, res, next) {
         EXTERN:7
     };
 
+    util.log("CONTROLERROUTE", chosenControllerTemplate);
 
     var controller = null;
     switch (chosenControllerTemplate) {

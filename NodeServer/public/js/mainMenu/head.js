@@ -29,7 +29,7 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
      */
         // set basic config properties
     gameApi.logLevel = gameApi.log.INFO;
-    gameApi.controller = gameApi.controllerTemplates.MODERN;
+    gameApi.controller = gameApi.controllerTemplates.EXTERN;
     gameApi.performanceMonitor = false;
 
     // handle new Server Data

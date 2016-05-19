@@ -49,7 +49,7 @@ canvas {
 /**
 * SPECIAL ELEMENTS
 */
-#btn-overlayMenu{
+#btn-overlayMenu {
     position: absolute;
 
     width: 2em;
@@ -57,12 +57,31 @@ canvas {
     border-radius: 5em;
     font-size: 3em;
     line-height: 2;
-
     text-align: center;
 
     background-color: orangered;
     color: white;
 }
+
 #btn-overlayMenu::after {
     content: "M";
+}
+
+#landscape_hint {
+    /*position: absolute;*/
+    margin: 2em auto auto;
+
+    width: 7em;
+    min-height: 1em;
+    border-radius: 3em;
+    font-size: 2em;
+    line-height: 2;
+    text-align: center;
+
+    background-color: orangered;
+    color: white;
+}
+
+#landscape_hint::after {
+    content: "Rotate me first";
 }
