@@ -106,14 +106,14 @@ app.use(function (req, res, next) {
 
 setTimeout(function () {
     util.log("UpdateGame,,");
-    GameHandler.updateGame(new GameVO({
-        type: types.internal,
-        unique_name: "3DGame",
-        displayName: "ThreeD Game NEW"
-    }), function (callback) {
-        util.log("Update callback:" + callback);
-    });
+    GameHandler.addNewGame(new GameVO({
+        type: types.external,
+        unique_name: "Mario ext",
+        displayName: "Mario Game",
+        contentUrl: "http://supermarioemulator.com/mario.php"
+    }));
 }, 5000);
+
 // error handlers
 
 // development error handler
