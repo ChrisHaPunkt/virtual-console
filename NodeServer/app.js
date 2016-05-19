@@ -48,7 +48,7 @@ var types = GameHandler.TYPES;
  unique_name: "MatrixGame",
  displayName: "Matrix Game"
  }));
-/*
+ /*
  GameHandler.updateGame(new GameVO({
  type: types.internal,
  unique_name: "3DGame",
@@ -58,21 +58,21 @@ var types = GameHandler.TYPES;
  });
 
  GameHandler.remove("3DGame");
-GameHandler.addNewGame(new GameVO({
-    type: types.internal,
-    unique_name: "MatrixGame",
-    displayName: "Matrix Game"
-}));
+ GameHandler.addNewGame(new GameVO({
+ type: types.internal,
+ unique_name: "MatrixGame",
+ displayName: "Matrix Game"
+ }));
 
-GameHandler.updateGame(new GameVO({
-    type: types.internal,
-    unique_name: "3DGame",
-    displayName: "ThreeD Game NEUER NAME"
-}), function (callback) {
-    util.log("Update callback:" + callback);
-});
-/*
-GameHandler.remove("3DGame");
+ GameHandler.updateGame(new GameVO({
+ type: types.internal,
+ unique_name: "3DGame",
+ displayName: "ThreeD Game NEUER NAME"
+ }), function (callback) {
+ util.log("Update callback:" + callback);
+ });
+ /*
+ GameHandler.remove("3DGame");
 
  GameHandler.addNewGame(new GameVO({
  type: types.internal,
@@ -105,14 +105,10 @@ app.use(function (req, res, next) {
 });
 
 setTimeout(function () {
-    util.log("UpdateGame,,");
-    GameHandler.updateGame(new GameVO({
-        type: types.internal,
-        unique_name: "3DGame",
-        displayName: "ThreeD Game NEW"
-    }), function (callback) {
-        util.log("Update callback:" + callback);
-    });
+    util.log("System shutdown..");
+    /*System.shutdown(function (stdout, stderr) {
+    });*/
+
 }, 5000);
 // error handlers
 
@@ -137,7 +133,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
-System.shutdown();
 
 module.exports = app;

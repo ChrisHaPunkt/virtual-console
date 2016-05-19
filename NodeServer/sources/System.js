@@ -11,38 +11,81 @@ var os = require("os");
 
 var exec = require('child_process').exec;
 
-function execute(command, callback){
-    exec(command, function(error, stdout, stderr){ callback(stdout); });
+/**
+ * Execute from Project Root a command
+ * @param command
+ * @param callback
+ */
+function execute(command, callback) {
+    exec("cd " + __dirname + "/../../ && " + command, function (error, stdout, stderr) {
+        callback(stdout, stderr);
+    });
 }
 
+/**
+ * Stoppe die NodeJS Applikation und die Datenbank
+ * @param onSuccess
+ */
+var shutdownFullApplication = function (callback) {
 
+    execute('/bin/bash ./app.sh stop', function (stdout, stderr) {
 
-
-var shutdownSystem = function (onSuccess) {
-
-    execute('/usr/bin/node /home/odroid/virtual-console/app.sh stop', function(callback){
-    //execute('shutdown -P now', function(callback){
-        console.log(callback);
+        if (typeof callback == "function") {
+            callback(stdout, stderr);
+        }
     });
-    if(typeof onSuccess == "function"){
-        onSuccess();
-    }
+};
+/**
+ * Stoppe die Datenbank
+ * @param onSuccess
+ */
+var shutdownDatabase = function (onSuccess) {
+
+    execute('/bin/bash scripts/database.sh stop', function (stdout, stderr) {
+
+        if (typeof callback == "function") {
+            callback(stdout, stderr);
+        }
+    });
+};
+/**
+ * Starte die Datenbank
+ * @param onSuccess
+ */
+var startDatabase = function (onSuccess) {
+
+    execute('/bin/bash scripts/database.sh start', function (stdout, stderr) {
+
+        if (typeof callback == "function") {
+            callback(stdout, stderr);
+        }
+    });
+};
+
+var shutdownSystem = function (callback) {
+
+    execute('shutdown -P now', function (stdout, stderr) {
+
+        if (typeof callback == "function") {
+            callback(stdout, stderr);
+        }
+    });
 };
 
 /**
  *
- * @param onSuccess
+ * @param callback
  * reutn array of GameVO
  */
-var restartSystem = function (onSuccess) {
+var restartSystem = function (callback) {
 
-    execute('shutdown -r now', function(callback){
-        console.log(callback);
+    execute('shutdown -r now', function (stdout, stderr) {
+
+        if (typeof callback == "function") {
+            callback(stdout, stderr);
+        }
     });
 
-    if(typeof onSuccess == "function"){
-        onSuccess();
-    }
 };
 
 /**
@@ -52,7 +95,19 @@ var exports = {
 
 
     shutdown: function (callback) {
-        shutdownSystem(callback);
+        shutdownFullApplication(function () {
+
+            shutdownSystem(callback);
+        });
+        return this;
+    },
+
+    restart: function (callback) {
+
+        shutdownFullApplication(function () {
+
+            restartSystem(callback);
+        });
         return this;
     }
 
