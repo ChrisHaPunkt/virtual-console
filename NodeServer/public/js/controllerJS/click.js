@@ -15,7 +15,8 @@ define(['jquery'], function ($) {
 
     function buttonwaspressed(button) {
         socket.sendData('button', {
-            buttonName: $(this).attr('id'), buttonState: 8,
+            //buttonName: $(this).attr('id'), buttonState: 8,
+            buttonName: 'DOWN', buttonState: 8,
             timestamp: Date.now()
         });
     }
