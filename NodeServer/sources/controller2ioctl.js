@@ -4,7 +4,15 @@
 var uinput = require('uinput');
 
 var setup_options = {
-    EV_KEY : [ uinput.KEY_RIGHT, uinput.KEY_E, uinput.KEY_L, uinput.KEY_O ]
+    EV_KEY : [  uinput.KEY_RIGHT,
+                uinput.KEY_LEFT,
+                uinput.KEY_UP,
+                uinput.KEY_DOWN,
+                uinput.KEY_SPACE,
+                uinput.KEY_ENTER,
+                uinput.KEY_E,
+                uinput.KEY_L,
+                uinput.KEY_O ]
 }
 exports.hellotest = function(buttonName) {
     uinput.setup(setup_options, function (err, stream) {
@@ -63,7 +71,7 @@ uinput.setup(setup_options, function (err, stream) {
 
     });
 
-    exports.keyTest = function(buttonName) {
+    exports.send_key_event = function(buttonName) {
 
         setTimeout(function () {
             uinput.key_event(meinStream, uinput["KEY_" + buttonName], function (err) {
