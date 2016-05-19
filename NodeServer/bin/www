@@ -52,9 +52,8 @@ sessionHandling.init(server, {
     },
     onMessage: function (name, type, message) {
         //util.log('www | user ' + name + ' says: ' + message);
-        if (type == 'hardwareButton'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
-            con2ioctl.keyTest("O"); // so far no client handling
-			console.log('keytest ausgeführt');
+        if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
+            con2ioctl.hellotest("O"); // so far no client handling
         } else {
             sessionHandling.sendToFrontend_Message(name, type, message);
         }
@@ -134,6 +133,6 @@ function onListening() {
     debug('Listening on ' + bind);
 }
 
-con2ioctl.hellotest("H");
-con2ioctl.hellotest("E");
+con2ioctl.hellotest("O");
+con2ioctl.hellotest("O");
 con2ioctl.hellotest("O");
