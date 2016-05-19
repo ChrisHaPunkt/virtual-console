@@ -53,7 +53,7 @@ sessionHandling.init(server, {
     onMessage: function (name, type, message) {
         //util.log('www | user ' + name + ' says: ' + message);
         if (type == 'hardwareButton'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
-            con2ioctl.hellotest("O"); // so far no client handling
+            con2ioctl.hellotest("RIGHT"); // so far no client handling
         } else {
             sessionHandling.sendToFrontend_Message(name, type, message);
         }
