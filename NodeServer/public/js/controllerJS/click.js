@@ -7,10 +7,10 @@ define(['jquery'], function ($) {
     var socket;
 
     $('.myButton')
-        .mousedown(buttonwaspressed);
+        .ontouchstart(buttonwaspressed);
 
     $('.myButton')
-        .mouseup(buttonwasreleased);
+        .ontouchend(buttonwasreleased);
 
 
     function buttonwaspressed(button) {
