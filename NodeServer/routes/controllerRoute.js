@@ -16,17 +16,10 @@ router.get('/', function (req, res, next) {
     var gameController = {
         DEMO: 4,
         NEW: 5,
-        MODERN: 6
+        MODERN: 6,
+        EXTERN:7
     };
 
-    //var gameController = requirejs("../public/js/gameApi").controllerTemplates;
-    /*
-    // http://stackoverflow.com/questions/23179827/node-js-socket-io-socket-io-js-not-found-express-4-0
-    var gameController;
-    requirejs(["../public/js/gameApi"], function(gameApi){
-        gameController = gameApi.controllerTemplates;
-    });
-    */
 
     var controller = null;
     switch (chosenControllerTemplate) {
@@ -35,6 +28,9 @@ router.get('/', function (req, res, next) {
             break;
         case gameController.MODERN:
             controller = "controller/" + "controllerModern";
+            break;
+        case gameController.EXTERN:
+            controller = "controller/" + "controllerForExternalGames";
             break;
         default:
             controller = "controller/" + "controllerDemo";
