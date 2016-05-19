@@ -1,4 +1,4 @@
-define(['jquery', 'socket.io', 'qrcode.min'], function ($, io, qrcode) {
+define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrcode) {
 
     var gameApi = {
 
