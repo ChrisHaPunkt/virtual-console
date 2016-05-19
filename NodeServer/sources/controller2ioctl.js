@@ -71,10 +71,10 @@ uinput.setup(setup_options, function (err, stream) {
 
     });
 
-    exports.send_key_event = function(buttonName) {
+    exports.send_key_event = function(buttonName, buttonState) {
 
         setTimeout(function () {
-            uinput.key_event(meinStream, uinput["KEY_" + buttonName], function (err) {
+            uinput.send_event(meinStream, uinput.bindings.EV_KEY, uinput["KEY_" + buttonName], buttonState, function(err) {
                 if (err) {
                     throw(err);
                 }
