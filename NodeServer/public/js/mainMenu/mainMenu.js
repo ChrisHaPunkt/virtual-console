@@ -52,15 +52,14 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
 
             // set center game tile active
             var gameTilesLength = $('.gameTile').length;
-            $('.gameTile:eq(' + Math.floor(gameTilesLength/2) +')').addClass('activeTile');
+            $('.gameTile:eq(' + Math.floor(gameTilesLength / 2) + ')').addClass('activeTile');
         };
 
         MainMenu.prototype.redraw = function () {
             MainMenu.prototype.loadGameData.call(this);
         };
 
-        MainMenu.prototype.initKeyboardInput = function(){
-
+        MainMenu.prototype.initKeyboardInput = function () {
             MainMenu.prototype.keys = {
                 LEFT_ARROW: 37,
                 UP_ARROW: 38,
@@ -68,44 +67,56 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                 DOWN_ARROW: 40,
                 ENTER: 13
             };
-
-            //$(document)
-            //$("html").keypress(function(event){
-            //this.domElements.domContainer.keypress(function(event){
-            window.addEventListener('keydown', function(event) {
-
-                var numberOfTiles = $('.gameTile').length;
-                var activeTile = $('.activeTile');
-                var tileIndex = parseInt(activeTile.attr("tileIndex"));
-
+            window.addEventListener('keydown', function (event) {
                 var key = event.keyCode ? event.keyCode : event.which;
-
-                switch (key){
+                switch (key) {
                     case MainMenu.prototype.keys.ENTER:
-                        activeTile.trigger( "click" );
+                        MainMenu.prototype.triggerActiveTile();
                         break;
                     case MainMenu.prototype.keys.LEFT_ARROW:
-                        if(!(tileIndex <= 0)){
-                            var leftNeighbour = $('div[tileIndex=' + parseInt(tileIndex - 1) + ']');
-                            leftNeighbour.addClass('activeTile');
-                            activeTile.removeClass('activeTile');
-                        }
+                        MainMenu.prototype.moveActiveTile('left');
                         break;
                     case MainMenu.prototype.keys.UP_ARROW:
+                        MainMenu.prototype.moveActiveTile('up');
                         break;
                     case MainMenu.prototype.keys.RIGHT_ARROW:
-                        if(!(tileIndex >= numberOfTiles-1)) {
-                            var rightNeighbour = $('div[tileIndex=' + parseInt(tileIndex + 1) + ']');
-                            rightNeighbour.addClass('activeTile');
-                            activeTile.removeClass('activeTile');
-                        }
+                        MainMenu.prototype.moveActiveTile('right');
                         break;
                     case MainMenu.prototype.keys.DOWN_ARROW:
+                        MainMenu.prototype.moveActiveTile('down');
                         break;
                 }
             });
+        };
 
-        //MainMenu.prototype
+        MainMenu.prototype.moveActiveTile = function (direction) {
+            var numberOfTiles = $('.gameTile').length;
+            var activeTile = $('.activeTile');
+            var tileIndex = parseInt(activeTile.attr("tileIndex"));
+
+            if (direction === 'left') {
+                if (!(tileIndex <= 0)) {
+                    var leftNeighbour = $('div[tileIndex=' + parseInt(tileIndex - 1) + ']');
+                    leftNeighbour.addClass('activeTile');
+                    activeTile.removeClass('activeTile');
+                }
+            } else if (direction === 'right') {
+                if (!(tileIndex >= numberOfTiles - 1)) {
+                    var rightNeighbour = $('div[tileIndex=' + parseInt(tileIndex + 1) + ']');
+                    rightNeighbour.addClass('activeTile');
+                    activeTile.removeClass('activeTile');
+                }
+            } else if (direction === 'up') {
+                // TODO implement
+                MainMenu.prototype.moveActiveTile('left');
+            } else if (direction === 'down') {
+                // TODO implement
+                MainMenu.prototype.moveActiveTile('right');
+            }
+        };
+
+        MainMenu.prototype.triggerActiveTile = function () {
+            $('.activeTile').trigger("click");
         };
 
         // return public interface of the require module

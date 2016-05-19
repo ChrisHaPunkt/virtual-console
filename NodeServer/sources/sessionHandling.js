@@ -4,6 +4,7 @@
 
 var network = require('../sources/serverNetwork.js');
 var userManagement = require('../sources/UserManagement.js')();
+var system = require('../sources/System.js');
 var app = require('../app');
 var util = require('util');
 
@@ -124,6 +125,18 @@ var startNetworkServer = function (server) {
                         // all games are requested
                         callbackFromClient(app.get('fullQualifiedGameVOs'));
                     }
+                    break;
+                case 'restartServer':
+                    setTimeout(function () {
+                        // TODO restart server
+                    }, data.delay);
+                    callbackFromClient('Server restarting in ' + data.delay / 1000 + ' seconds!');
+                    break;
+                case 'shutdownServer':
+                    setTimeout(function () {
+                        system.shutdown();
+                    }, data.delay);
+                    callbackFromClient('Server shutting down in ' + data.delay / 1000 + ' seconds!');
                     break;
                 default:
                     console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);

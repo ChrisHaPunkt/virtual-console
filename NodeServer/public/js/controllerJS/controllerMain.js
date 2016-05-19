@@ -7,12 +7,16 @@ define("jquery", [], function () {
 
 
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
-    ////////////////////////////////////
-    //Setting Visibility of Logint and Controller
-    ////////////////////////////////////
+
+
     var loginDiv = $('#login-body');
     var contentDiv = $('#content-body');
+    var overlayMenuButton = $('#btn-overlayMenu');
 
+
+    ////////////////////////////////////
+    //Setting Visibility of Login and Controller
+    ////////////////////////////////////
     var hideLogin = function () {
         //loginDiv.hide();
         loginDiv.slideUp();
@@ -25,10 +29,17 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
-
+    };
+    var showOverlayMenuButton = function () {
+        alignOverlayMenuButton();
+        overlayMenuButton.show();
+    };
+    var hideOverlayMenuButton = function () {
+        overlayMenuButton.hide();
     };
 
     hideContent();
+    hideOverlayMenuButton();
     showLogin();
 
 
@@ -50,6 +61,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             if (data.result) {
                 hideLogin();
                 showContent();
+                showOverlayMenuButton();
 
             } else {
                 // false login
@@ -60,6 +72,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             if (data.result) {
                 hideLogin();
                 showContent();
+                showOverlayMenuButton();
             } else {
                 // false login
             }
@@ -74,7 +87,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
 
 
     /////////////////////////////////////
-    //Define onclick listener
+    //Define Login onclick listener
     /////////////////////////////////////
     var sendAnonymousLogin = function () {
         //event.preventDefault();
@@ -93,6 +106,36 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     document.getElementById("anonymous").addEventListener("click", sendAnonymousLogin);
     document.getElementById("register").addEventListener("click", sendRegister);
     document.getElementById("login").addEventListener("click", sendLogin);
+
+    /////////////////////////////////////
+    //Overlay Menu Button
+    /////////////////////////////////////
+    var alignOverlayMenuButton = function (position) {
+        if(!position) {
+            overlayMenuButton.css('top', ($('html').height()-overlayMenuButton.height())/2);
+            overlayMenuButton.css('left', ($('html').width()-overlayMenuButton.width())/2);
+        }else if (position === 'top'){
+            overlayMenuButton.css('top', 0);
+            overlayMenuButton.css('left', ($('html').width()-overlayMenuButton.width())/2);
+        }else if (position === 'bottom'){
+            overlayMenuButton.css('bottom', 0);
+            overlayMenuButton.css('left', ($('html').width()-overlayMenuButton.width())/2);
+        }
+    };
+
+    // set click listener
+    overlayMenuButton.click(function(){
+        socket.sendData('button', {
+            buttonName: $(this).attr('id'),
+            buttonState: 7, // 7 = button 'up'
+            timestamp: Date.now()
+        });
+    });
+
+
+    /////////////////////////////////////
+    //Multi Client Simulation
+    /////////////////////////////////////
     $("#simulateBtn").click(function () {
         var pid = simulateFunction();
         console.log("add " + pid);
