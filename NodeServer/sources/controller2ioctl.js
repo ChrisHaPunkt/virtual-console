@@ -4,7 +4,7 @@
 var uinput = require('uinput');
 
 var setup_options = {
-    EV_KEY : [ uinput.KEY_H, uinput.KEY_E, uinput.KEY_L, uinput.KEY_O ]
+    EV_KEY : [ uinput.KEY_RIGHT, uinput.KEY_E, uinput.KEY_L, uinput.KEY_O ]
 }
 exports.hellotest = function(buttonName) {
     uinput.setup(setup_options, function (err, stream) {
@@ -33,7 +33,7 @@ exports.hellotest = function(buttonName) {
                         throw(err);
                     }
                 });
-            }, 500);
+            }, 1000);
         });
     });
 };
