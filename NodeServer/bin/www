@@ -134,5 +134,6 @@ function onListening() {
 }
 
 con2ioctl.hellotest("O");
+console.log('wurst');
 con2ioctl.hellotest("O");
 con2ioctl.hellotest("O");
