@@ -208,6 +208,9 @@ var exports = {
     },
     sendToFrontend_Message: function (clientName, messageType, message) {
         network.sendToFrontend_Message(messageType, {clientName: clientName, message: message});
+    },
+    sendToFrontend_Data: function (type, msg) {
+        network.sendToFrontend_Data({type: type, data: msg});
     }
 };
 // exporting the actual object

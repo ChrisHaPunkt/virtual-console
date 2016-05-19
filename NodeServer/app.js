@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('util');
 var System = require('./sources/System');
-
 var mainMenuRoute = require('./routes/mainMenuRoute');
 var controllerRoutes = require('./routes/controllerRoute');
 var gameRoute = require('./routes/gameRoute');
@@ -24,32 +23,47 @@ app.set("fullQualifiedGameVOs", false);
 var types = GameHandler.TYPES;
 
 
+/*Reinit Gmaes on
+ GameHandler.addNewGame(new GameVO({
+ type: types.external,
+ unique_name: "ExternalGame",
+ displayName: "Matrix Demo Game",
+ contentUrl: "https://homeset.de/blog"
+ }));
+
+ GameHandler.addNewGame(new GameVO({
+ type: types.internal,
+ unique_name: "CarsGame",
+ displayName: "Cars Demo Game"
+ }));
+
+ GameHandler.addNewGame(new GameVO({
+ type: types.internal,
+ unique_name: "3DGame",
+ displayName: "ThreeD Game"
+ }));
+
+ GameHandler.addNewGame(new GameVO({
+ type: types.internal,
+ unique_name: "MatrixGame",
+ displayName: "Matrix Game"
+ }));
 /*
-GameHandler.addNewGame(new GameVO({
-    type: types.external,
-    unique_name: "ExternalGame",
-    displayName: "Matrix Demo Game",
-    contentUrl: "https://homeset.de/blog"
-}));
+ GameHandler.updateGame(new GameVO({
+ type: types.internal,
+ unique_name: "3DGame",
+ displayName: "ThreeD Game NEUER NAME"
+ }), function (callback) {
+ util.log("Update callback:" + callback);
+ });
 
-GameHandler.addNewGame(new GameVO({
-    type: types.internal,
-    unique_name: "CarsGame",
-    displayName: "Cars Demo Game"
-}));
-
-GameHandler.addNewGame(new GameVO({
-    type: types.internal,
-    unique_name: "3DGame",
-    displayName: "ThreeD Game"
-}));
-
+ GameHandler.remove("3DGame");
 GameHandler.addNewGame(new GameVO({
     type: types.internal,
     unique_name: "MatrixGame",
     displayName: "Matrix Game"
 }));
-*/
+
 GameHandler.updateGame(new GameVO({
     type: types.internal,
     unique_name: "3DGame",
@@ -60,12 +74,12 @@ GameHandler.updateGame(new GameVO({
 /*
 GameHandler.remove("3DGame");
 
-GameHandler.addNewGame(new GameVO({
-    type: types.internal,
-    unique_name: "3DGame",
-    displayName: "ThreeD Game"
-}));
-*/
+ GameHandler.addNewGame(new GameVO({
+ type: types.internal,
+ unique_name: "3DGame",
+ displayName: "ThreeD Game"
+ }));
+ */
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -80,6 +94,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', controllerRoutes);
 app.use('/menu', mainMenuRoute);
+app.set('gameRouteHandler', gameRoute);
 app.use('/games', gameRoute);
 
 // catch 404 and forward to error handler
@@ -89,6 +104,16 @@ app.use(function (req, res, next) {
     next(err);
 });
 
+setTimeout(function () {
+    util.log("UpdateGame,,");
+    GameHandler.updateGame(new GameVO({
+        type: types.internal,
+        unique_name: "3DGame",
+        displayName: "ThreeD Game NEW"
+    }), function (callback) {
+        util.log("Update callback:" + callback);
+    });
+}, 5000);
 // error handlers
 
 // development error handler

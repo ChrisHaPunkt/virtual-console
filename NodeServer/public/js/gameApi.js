@@ -28,6 +28,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         frontendConnectionOutbound: null,
         frontendConnection: null,
         frontendInboundMessage: null,
+        frontendInboundData: null,
         controller: null,
         chart: {},
         init: function () {
@@ -84,7 +85,18 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
              * Handle incoming messages
              */
             if (this.frontendInboundMessage !== null)
-                this.socket.on('frontendInboundMessage', this.onIncomingMessage.bind(this));
+                this.socket.on('frontendInboundMessage', function(msg){
+                    this.frontendInboundMessage(msg);
+                }.bind(this));
+            else return -1;
+
+            /**
+             * Handle incoming data
+             */
+            if (this.frontendInboundMessage !== null)
+                this.socket.on('frontendInboundData', function(data){
+                    this.frontendInboundData(data);
+                }.bind(this));
             else return -1;
 
             /**
@@ -139,14 +151,6 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                     this.qrCode.qrcode_hidden = true;
                 }
             }.bind(this));
-        },
-
-        /**
-         * INCOMING COMMUNICATION
-         * */
-        onIncomingMessage: function (data) {
-            // pass data to function defined by game
-            this.frontendInboundMessage(data);
         },
 
         /**
