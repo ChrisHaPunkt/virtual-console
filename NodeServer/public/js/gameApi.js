@@ -15,7 +15,8 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         controllerTemplates: {
             DEMO: 4,
             NEW: 5,
-            MODERN: 6
+            MODERN: 6,
+            EXTERN:7
         },
         BUTTON: {
             UP: 7,
@@ -29,7 +30,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         frontendConnectionOutbound: null,
         frontendConnection: null,
         frontendInboundMessage: null,
-        frontendInboundData: null,
+        frontendType: null,
         controller: null,
         chart: {},
         init: function () {
@@ -74,6 +75,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             this.socket.on('frontendInitAck', function (incomingMessage) {
                 this.addLogMessage(this.log.INFO, 'conn', incomingMessage + " " + this.socket.id);
                 this.sendControllerTemplateToServer();
+                this.sendFrontendTypeToServer();
             }.bind(this));
 
             /**
@@ -88,18 +90,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
              * Handle incoming messages
              */
             if (this.frontendInboundMessage !== null)
-                this.socket.on('frontendInboundMessage', function(msg){
-                    this.frontendInboundMessage(msg);
-                }.bind(this));
-            else return -1;
-
-            /**
-             * Handle incoming data
-             */
-            if (this.frontendInboundMessage !== null)
-                this.socket.on('frontendInboundData', function(data){
-                    this.frontendInboundData(data);
-                }.bind(this));
+                this.socket.on('frontendInboundMessage', this.onIncomingMessage.bind(this));
             else return -1;
 
             /**
@@ -183,8 +174,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 }.bind(this)
             };
 
+            // bind click handler to overlay menu buttons via class
             var that = this;
             $('.overlayMenuItem').click(function () {
+                // call button id specific event handler
                 that.overlayMenu.eventHandler[this.id]();
             });
         },
@@ -301,6 +294,18 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 this.sendToServer_Data('setControllerTemplate', this.controller);
             } else {
                 this.addLogMessage(this.log.DEBUG, 'error', 'Trying to send controller template before setting it.');
+            }
+        },
+
+        sendFrontendTypeToServer: function(type){
+            if (type) {
+                // a new frontend type can be passed to the function before sending it to the server
+                this.frontendType = type;
+            }
+            if (this.frontendType) {
+                this.sendToServer_Data('setFrontendType', this.frontendType);
+            } else {
+                this.addLogMessage(this.log.DEBUG, 'error', 'Trying to send frontend type before setting it.');
             }
         },
 

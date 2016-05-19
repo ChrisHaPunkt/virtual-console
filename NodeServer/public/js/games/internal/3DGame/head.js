@@ -29,11 +29,16 @@ var GameHandler = null, gameApi = null, frontChart = null;
  * START OF THE FRONTEND APPLICATION
  * */
 require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
+
     gameApi = api;
+    gameApi.frontendType = 'internal';
+
     GameHandler = game;
+
     $('#monitorBtn').click(function () {
         $('#chart').show();
         gameApi.performanceMonitor = true;
+        gameApi.frontendType = 'internal';
         var data = {
             labels: [0],
             datasets: [{
@@ -57,11 +62,9 @@ require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart)
         });
         gameApi.chart.chartObj = frontChart;
         console.log("+Chart");
-
-
     });
 
-    if(gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined"){
+    if (gameApi.performanceMonitor && typeof gameApi.chartObj !== "undefined") {
         $('#monitorBtn').trigger("click");
     }
     var game2 = new game();
