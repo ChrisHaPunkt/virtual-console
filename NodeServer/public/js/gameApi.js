@@ -20,7 +20,8 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         },
         BUTTON: {
             UP: 7,
-            DOWN: 8
+            DOWN: 8,
+            HOLD: 9
         },
         overlayMenu: {isActive: false},
         logLevel: null,

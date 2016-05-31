@@ -1,60 +1,33 @@
 //- Created by michaelschleiss on 29.10.15.
-doctype html
 html
     head
         meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
         meta(name = 'mobile-web-app-capable', content = 'yes')
         link(rel='stylesheet', href='/stylesheets/controller/controllerExternal.css')
     body
-        div(id='content-body')
-            //- button(id='simulateBtn' value='Simulate') Simulate
-            label(id='lblCheckboxAcc' for='chkAcc')
-                div(class="slideThree")
-                    input(type='checkbox' id='chkAcc' class='chkSensors' value ='Acceleration')
-                    label(for='chkAcc')
-                        b(style="width:100%") &nbsp;ACC
-            label(id='lblCheckboxRot' for='chkRot')
-                div(class="slideThree")
-                    input(type='checkbox' id='chkRot' class='chkSensors' value ='Rotation')
-                    label(for='chkRot')
-                        b(style="width:100%") &nbsp;ROT
-                        //Content
-            div(style="min-width:100%;top: 40%;position: relative;;text-align:center")
-                div(id='leftContent' style="width:48%;float:left;border: 1px solid blue")
-                    div(class="arrowRectangle")
-                        div(style="line-height:2em;width:32%")
-                            span(class="button",id="btn-left") LEFT
-                        div(style="width:32%")
-                            span(class="button",style="display:block;line-height:2em", id="btn-up") UP
-                            span(class="button",style="display:block", id="btn-down") DOWN
-                        div(style="line-height:2em;width:32%")
-                            span(class="button",id="btn-right") RIGHT
-
-                div(id='rightContent' style="float:right;width:48%;border: 1px solid green")
-                    div(class="ABCDrectangle")
-                        div
-                            span(class="button",style="line-height:2em;vertical-align:middle", id="btn-a") A
-                        div
-                            span(class="button",style="display:inline-block;width:45%;text-align:center", id="btn-x") X
-                            span(class="button",style="display:inline-block;width:45%;text-align:center", id="btn-b") B
-                        div
-                            span(class="button",style="line-height:2em;vertical-align:middle", id="btn-y") y
-            div(style="min-width:100%;padding-top: 10%;text-align:center;position: absolute;bottom: 5em;")
-
-                div(id='centerContent' style="clear:both;width:80%;border: 1px solid red;height:inherit")
-                    div
-                        span(class="button") SPACE
-                        span(class="button") ENTER
-
-            div(id='checkboxesBottom')
-                label(id='lblCheckboxBat' for='chkBat')
-                    div(class="slideThree")
-                        input(type='checkbox' id='chkBat' class='chkSensors' value ='Battery')
-                        label(for='chkBat')
-                            b(style="width:100%") &nbsp;BAT
-                label(id='lblCheckboxVid' for='chkVid')
-                    div(class="slideThree")
-                        input(type='checkbox' id='chkVid' class='chkSensors' value ='Audio')
-                        label(for='chkVid')
-                            b(style="width:100%") &nbsp;A/V
-
+        .snes
+            .left
+                .pad
+                    .control.top.myButton(id="btn-up")
+                        .arrow
+                    .control.left.myButton(id="btn-left")
+                        .arrow
+                    .control.right.myButton(id="btn-right")
+                        .arrow
+                    .control.bottom.myButton(id="btn-down")
+                        .arrow
+                    .control.middle.myButton(id="btn-center")
+            .middle
+                .logo
+                .logo.clone
+                .title
+                button.select.myButton(id="btn-select")
+                button.start.myButton(id="btn-start")
+            .right
+                .circle
+                    .group-1
+                        button.green.myButton(id="btn-y")
+                        button.blue.myButton(id="btn-x")
+                    .group-2
+                        button.yellow.myButton(id="btn-b")
+                        button.red.myButton(id="btn-a")

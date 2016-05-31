@@ -2,16 +2,25 @@
  * Created by michaelschleiss on 29.10.15.
  */
 
-define(['jquery'], function ($) {
+define(['jquery', '../libs/jquery.mobile.custom.min'], function ($) {
 
     var socket;
 
-    $('.myButton')
-        .click(buttonwaspressed);
-    $('.button')
-        .click(buttonwaspressed);
-
-
+    $(".myButton").on("vmousedown", function (event) {
+        console.log(event, "vmousedown");
+        buttonwaspressed(event.target);
+    });
+    $(".myButton").on("vmouseup", function (event) {
+        console.log(event, "vmouseup");
+        buttonwasreleased(event.target);
+    });
+    /*
+    $(".myButton").on("tap", function (event) {
+        console.log(event, "tap");
+        buttonwaspressed(event.target);
+        buttonwasreleased(event.target);
+    });
+*/
     function buttonwaspressed(button) {
 
         socket.sendData('button', {

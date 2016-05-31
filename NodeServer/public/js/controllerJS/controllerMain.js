@@ -113,20 +113,20 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     //Overlay Menu Button
     /////////////////////////////////////
     var alignOverlayMenuButton = function (position) {
-        if(!position) {
-            overlayMenuButton.css('top', ($('html').height()-overlayMenuButton.height())/2);
-            overlayMenuButton.css('left', ($('html').width()-overlayMenuButton.width())/2);
-        }else if (position === 'top'){
+        if (!position) {
+            overlayMenuButton.css('top', ($('html').height() - overlayMenuButton.height()) / 2);
+            overlayMenuButton.css('left', ($('html').width() - overlayMenuButton.width()) / 2);
+        } else if (position === 'top') {
             overlayMenuButton.css('top', 0);
-            overlayMenuButton.css('left', ($('html').width()-overlayMenuButton.width())/2);
-        }else if (position === 'bottom'){
+            overlayMenuButton.css('left', ($('html').width() - overlayMenuButton.width()) / 2);
+        } else if (position === 'bottom') {
             overlayMenuButton.css('bottom', 0);
-            overlayMenuButton.css('left', ($('html').width()-overlayMenuButton.width())/2);
+            overlayMenuButton.css('left', ($('html').width() - overlayMenuButton.width()) / 2);
         }
     };
 
     // set click listener
-    overlayMenuButton.click(function(){
+    overlayMenuButton.click(function () {
         socket.sendData('button', {
             buttonName: $(this).attr('id'),
             buttonState: 7, // 7 = button 'up'
@@ -186,4 +186,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     click.setSocket(socket);
     sensor.setSocket(socket);
     $("#anonymous").focus();
+
+
+        
 });
