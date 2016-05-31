@@ -7,12 +7,11 @@ define(['jquery', '../libs/jquery.mobile.custom.min'], function ($) {
     var socket;
 
     $(".myButton").on("vmousedown", function (event) {
-        console.log(event, "vmousedown");
-        buttonwaspressed(event.target);
+
+        buttonwaspressed(event.currentTarget);
     });
     $(".myButton").on("vmouseup", function (event) {
-        console.log(event, "vmouseup");
-        buttonwasreleased(event.target);
+        buttonwasreleased(event.currentTarget);
     });
     /*
     $(".myButton").on("tap", function (event) {
@@ -22,16 +21,17 @@ define(['jquery', '../libs/jquery.mobile.custom.min'], function ($) {
     });
 */
     function buttonwaspressed(button) {
-
+        console.log(button)
         socket.sendData('button', {
-            buttonName: $(this).attr('id'), buttonState: 8,
+            buttonName: $(button).attr('id'), buttonState: 8,
             timestamp: Date.now()
         });
     }
 
-    function buttonwasreleased() {
+    function buttonwasreleased(button) {
+        console.log(button)
         socket.sendData('button', {
-            buttonName: $(this).attr('id'), buttonState: 7,
+            buttonName: $(button).attr('id'), buttonState: 7,
             timestamp: Date.now()
         });
     }
