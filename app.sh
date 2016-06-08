@@ -13,6 +13,7 @@ case $1 in
                 else
                     echo "No DB running"
                     echo "" > scripts/DBPID
+                    pkill mongod
                     bash scripts/database.sh start
                 fi
             else
