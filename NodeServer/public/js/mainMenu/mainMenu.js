@@ -40,7 +40,6 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             parent.empty();
 
 
-
             // add game tiles
             this.gameData.forEach(function (game) {
                 $('<div/>', {

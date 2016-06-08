@@ -8,7 +8,7 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
-    window.addEventListener('load', function(e) {
+    window.addEventListener('load', function (e) {
 
     }, false);
     var loginDiv = $('#login-body');
@@ -104,7 +104,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
                         url: url
                     };
 
-                    socket.emit("addNewGameDetails", transferObject);
+                    cn.sendData("addNewGameDetails", transferObject);
                 }
                 },
                 {
@@ -130,7 +130,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             console.log(type, msg);
             switch (type) {
                 case 'command-openGameUrlInput':
-                showAddNewGameUrl();
+                    showAddNewGameUrl();
                     break;
                 default:
                     console.log('unknown command from server: ', type, msg);
