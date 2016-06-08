@@ -34,6 +34,7 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
     // handle new Server Data
     // {type: messageType, data: message}
     gameApi.frontendInboundData = function(serverData){
+
         switch(serverData.type){
             case 'gamesUpdated':
                 mainMenuInstance.redraw();

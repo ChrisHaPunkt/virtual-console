@@ -45,6 +45,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         frontendConnectionOutbound: null,
         frontendConnection: null,
         frontendInboundMessage: null,
+        frontendInboundData: null,
         controller: null,
         chart: {},
         init: function () {
@@ -116,6 +117,9 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
              */
             if (this.frontendInboundMessage !== null)
                 this.socket.on('frontendInboundMessage', this.onIncomingMessage.bind(this));
+            else return -1;
+            if (this.frontendInboundData !== null)
+                this.socket.on('frontendInboundData', this.onIncomingData.bind(this));
             else return -1;
 
             /**
@@ -197,10 +201,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                         // Get context with jQuery - using jQuery's .get() method.
                         var ctx = $("#myChart").get(0).getContext("2d");
                         // This will get the first returned node in the jQuery collection.
-                         this.performanceMonitor.chartObj = new Chart(ctx).Line(data, {
-                         maintainAspectRatio: false,
-                         responsive: true
-                         });
+                        this.performanceMonitor.chartObj = new Chart(ctx).Line(data, {
+                            maintainAspectRatio: false,
+                            responsive: true
+                        });
                         this.addLogMessage(this.log.INFO, 'info', 'Performance monitor started.');
                     } else {
                         this.performanceMonitor.domElement.hide();
@@ -352,6 +356,9 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                     }
                 }
             }
+        },
+        onIncomingData: function (data) {
+            this.frontendInboundData(data);
         },
 
         /**

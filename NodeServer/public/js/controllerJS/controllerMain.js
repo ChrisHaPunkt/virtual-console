@@ -8,9 +8,7 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
-    window.addEventListener('load', function (e) {
 
-    }, false);
     var loginDiv = $('#login-body');
 
     var contentDiv = $('#content-body');
