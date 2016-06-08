@@ -1,4 +1,18 @@
-define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrcode) {
+// http://requirejs.org/docs/api.html#config-shim
+requirejs.config({
+    paths: {
+        "three": "/js/libs/three",
+        "Chart": "/js/libs/Chart.min",
+        "qrcode.min": '/js/libs/qrcode.min',
+        "gameApi": '/js/gameApi'
+    },
+    shim: {
+        three: {
+            exports: 'THREE'
+        }
+    }
+});
+define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($, io, qrcode, Chart) {
 
     var gameApi = {
 
@@ -16,17 +30,18 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             DEMO: 4,
             NEW: 5,
             MODERN: 6,
-            EXTERN:7
+            EXTERN: 7
         },
         BUTTON: {
             UP: 7,
             DOWN: 8,
             HOLD: 9
         },
+        headerMenu: {},
         overlayMenu: {isActive: false},
         logLevel: null,
         socket: null,
-        performanceMonitor: false,
+        performanceMonitor: {isActive: false},
         pageLogContent: null,
         frontendConnectionOutbound: null,
         frontendConnection: null,
@@ -43,6 +58,12 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             if (this.controller === null)
                 this.controller = this.controllerTemplates.DEMO;
 
+            // get header menu div
+            this.headerMenu.domElement = $('#menu');
+
+            // get chart dom element
+            this.performanceMonitor.domElement = $('#chart');
+
             // get overlay menu div
             this.overlayMenu.domElement = $('#overlayMenu');
             if (!this.overlayMenu.domElement) {
@@ -56,6 +77,9 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
 
             // init overlaymenu handler
             this._initOverlayMenuHandler();
+
+            // init performance chart
+            this._initPerformanceChart();
 
             /**
              * Build up a connection to server
@@ -98,7 +122,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             /**
              * MISC
              * */
-            this.initQrCode();
+            this._initQrCode();
 
             /**
              * INIT END
@@ -127,7 +151,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             }
         },
 
-        initQrCode: function () {
+        _initQrCode: function () {
             // qrcode library cannot use jquery dom element
             this.qrCode = new QRCode(document.getElementById("qrcode"), {
                 text: "" + this.socket.io.uri,
@@ -148,6 +172,46 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             }.bind(this));
         },
 
+        _initPerformanceChart: function () {
+            if (this.logLevel === this.log.DEBUG || this.logLevel === this.log.INFO) {
+
+                this.addCustomOverlayMenuItem('Performance Monitor', function () {
+                    if (!this.performanceMonitor.isActive) {
+                        this.performanceMonitor.domElement.show();
+                        this.performanceMonitor.isActive = true;
+                        var data = {
+                            labels: [0],
+                            datasets: [{
+                                fillColor: "rgba(220,220,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                pointColor: "rgba(220,220,220,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "#fff",
+                                data: [0]
+                            }]
+                        };
+                        this.performanceMonitor.data = data;
+                        // setup chart
+                        //Chart.defaults.global.defaultFontColor = "#fff";
+                        //render Chart
+                        // Get context with jQuery - using jQuery's .get() method.
+                        var ctx = $("#myChart").get(0).getContext("2d");
+                        // This will get the first returned node in the jQuery collection.
+                         this.performanceMonitor.chartObj = new Chart(ctx).Line(data, {
+                         maintainAspectRatio: false,
+                         responsive: true
+                         });
+                        this.addLogMessage(this.log.INFO, 'info', 'Performance monitor started.');
+                    } else {
+                        this.performanceMonitor.domElement.hide();
+                        this.performanceMonitor.isActive = false;
+                        this.addLogMessage(this.log.INFO, 'info', 'Performance monitor stopped.');
+                    }
+                }, this);
+            }
+        },
+
         /**
          * OVERLAY-MENU HANDLERS
          * */
@@ -163,14 +227,14 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                     // TODO trigger shutdown via socket
                     this.sendToServer_Data('restartServer', {
                         delay: 10
-                    }, function(msg){
+                    }, function (msg) {
                         console.error(msg);
                     });
                 }.bind(this),
-                'overLayButton_Shutdown': function(){
+                'overLayButton_Shutdown': function () {
                     this.sendToServer_Data('shutdownServer', {
                         delay: 1000
-                    }, function(msg){
+                    }, function (msg) {
                         console.error(msg);
                     });
                 }.bind(this)
@@ -178,9 +242,14 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
 
             // bind click handler to overlay menu buttons via class
             var that = this;
-            $('.overlayMenuItem').click(function () {
+            // add event also to dynamic created elements // http://stackoverflow.com/a/18144022
+            $('#overLayActiveButtons').on('click', '.overlayMenuItem', function () {
                 // call button id specific event handler
                 that.overlayMenu.eventHandler[this.id]();
+
+                // close overlay menu after button click
+                that.overlayMenu.domElement.css('display', 'none');
+                that.overlayMenu.isActive = false;
             });
         },
         moveActiveMenuItem: function (direction) {
@@ -211,14 +280,14 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         triggerActiveMenuItem: function () {
             $('.activeMenuItem').trigger("click");
         },
-        addCustomOverlayMenuItem: function (name, action) {
+        addCustomOverlayMenuItem: function (name, action, context) {
             this.overlayMenu.nextElementIndex = this.overlayMenu.nextElementIndex || $('.overlayMenuItem').length;
             $('<div/>', {
                 id: 'overLayButton_' + name.replace(' ', '_'),
                 class: 'overlayMenuItem',
                 menuindex: this.overlayMenu.nextElementIndex++
-            }).html(name).appendTo($('#overlayMenuContent'));
-            this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action.bind(this);
+            }).html(name).appendTo($('#overLayActiveButtons'));
+            this.overlayMenu.eventHandler['overLayButton_' + name.replace(' ', '_')] = action.bind(context);
         },
         removeOverlayMenuItem: function (name) {
             // TODO This method produces index errors, DONT use!!
@@ -266,6 +335,22 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 } else {
                     // pass data to function defined by game only if overlay Menu is NOT active
                     this.frontendInboundMessage(data);
+
+                    // performance monitor
+                    if (this.performanceMonitor.isActive) {
+                        var controllerEvent = data.data.message;
+
+                        if (this.performanceMonitor.isActive && (data.type == "button" || data.type == "accelerationData" || data.type == "orientationData")) {
+                            var timestamp = Date.now();
+                            var chart = this.performanceMonitor.chartObj;
+                            console.log("Delay: " + (timestamp - controllerEvent.timestamp) + " ms");
+                            if (chart.datasets[0].points.length > 30) {
+                                //cleanup first points for a sliding view
+                                chart.removeData();
+                            }
+                            chart.addData([(timestamp - controllerEvent.timestamp)], (timestamp - controllerEvent.timestamp) + " ms");
+                        }
+                    }
                 }
             }
         },
