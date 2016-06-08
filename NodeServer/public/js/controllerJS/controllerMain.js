@@ -8,7 +8,7 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
 
-    window.addEventListener('load', function(e) {
+    window.addEventListener('load', function (e) {
 
     }, false);
     var loginDiv = $('#login-body');
@@ -32,9 +32,10 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
-        setTimeout(function() {
+        setTimeout(function () {
             console.log("scroll");
-            window.scrollTo(9999999, 1); }, 1);
+            window.scrollTo(9999999, 1);
+        }, 1);
         $("#landscape_hint").show()
     };
     var showOverlayMenuButton = function () {
@@ -61,9 +62,16 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
         onMessage: function (type, msg) {
             // do anything you want with server messages
             console.log(type, msg);
+            switch (type) {
+                case 'command-openGameUrlInput':
+                // TODO open
+                    break;
+                default:
+                    console.log('unknown command from server: ', type, msg);
+            }
 
             //vibrate
-          //  sensor.vibrate(500);
+            //  sensor.vibrate(500);
         },
         onAnonymousLogin: function (data) {
             if (data.result) {
@@ -194,5 +202,4 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     $("#anonymous").focus();
 
 
-        
 });
