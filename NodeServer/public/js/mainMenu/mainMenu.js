@@ -40,18 +40,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             parent.empty();
 
             // default adding tile
-            $('<div/>', {
-                id: 'gameAddButton',
-                class: 'gameTile',
-                click: function (event, data) {
-                    gameApi.sendToUser(data.userName, {
-                        type:'command-openGameUrlInput',
-                        data:false
-                    });
-                },
-                path: '',
-                tileIndex: i++
-            }).html('+').appendTo(parent);
+
 
             // add game tiles
             this.gameData.forEach(function (game) {
@@ -65,7 +54,18 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                     tileIndex: i++
                 }).html(game.displayName).appendTo(parent);
             });
-
+            $('<div/>', {
+                id: 'gameAddButton',
+                class: 'gameTile newPlaceholder',
+                click: function (event, data) {
+                    gameApi.sendToUser(data.userName, {
+                        type: 'command-openGameUrlInput',
+                        data: false
+                    });
+                },
+                path: '',
+                tileIndex: i++
+            }).html('+').appendTo(parent);
             // set center game tile active
             var gameTilesLength = $('.gameTile').length;
             $('.gameTile:eq(' + Math.floor(gameTilesLength / 2) + ')').addClass('activeTile');
