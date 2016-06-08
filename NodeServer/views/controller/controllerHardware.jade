@@ -1,13 +1,23 @@
-//- Created by michaelschleiss on 29.10.15.
+//
+   Created by michaelschleiss on 29.10.15.
+
+//- controllerDemo.jade
 doctype html
 html
    head
       meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
       meta(name = 'mobile-web-app-capable', content = 'yes')
+      link(rel='stylesheet', href='/stylesheets/controller/main.css')
       link(rel='stylesheet', href='/stylesheets/controller/controllerModern.css')
    body
+      div(class='nes-controller')
+         div(class="d-pad")
+         div(class="select")
+         div(class="start")
+         div(class="b-button")
+         div(class="a-button")
       div(id='content-body')
-         //- button(id='simulateBtn' value='Simulate') Simulate
+         // button(id='simulateBtn' value='Simulate') Simulate
          label(id='lblCheckboxAcc' for='chkAcc')
             div(class="slideThree")
                input(type='checkbox' id='chkAcc' class='chkSensors' value ='Acceleration')
@@ -21,10 +31,10 @@ html
          div(style="min-width:105%;padding-top: 1em;")
             div(id='leftContent' style="width:49%")
                div(id='leftContentEncap' style="padding-right: 4em;")
-                  div(id='LEFT', class='myButton')
+                  div(id='btn-left', class='myButton')
             div(id='rightContent' style="width:49%")
                div(id='rightContentEncap' style="padding-left: 4em;")
-                  div(id='RIGHT', class='myButton')
+                  div(id='btn-right', class='myButton')
          div(id='checkboxesBottom')
             label(id='lblCheckboxBat' for='chkBat')
                div(class="slideThree")

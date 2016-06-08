@@ -14,6 +14,24 @@ var setup_options = {
                 uinput.KEY_L,
                 uinput.KEY_O ]
 }
+
+exports.getKeyMapping = function(gameID, playerID) {
+
+    return {
+        "btn-up": "UP",
+        "btn-left": "LEFT",
+        "btn-right": "RIGHT",
+        "btn-down": "DOWN",
+        "btn-center": "",
+        "btn-select": "",
+        "btn-start": "",
+        "btn-<": "",
+        "btn-x": "",
+        "btn-b": "",
+        "btn-a": ""
+    };
+};
+
 exports.hellotest = function(buttonName) {
     uinput.setup(setup_options, function (err, stream) {
         if (err) {
