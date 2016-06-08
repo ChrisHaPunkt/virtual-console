@@ -45,6 +45,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                     id: game.unique_name + '_tile',
                     class: 'gameTile',
                     click: function (event, data) {
+                        gameApi.sendToServer_Data('gameSelected', {gameUniqueName: game.unique_name}, function(){});
                         window.location = $(this).attr('path');
                     },
                     path: game.fullUrl,

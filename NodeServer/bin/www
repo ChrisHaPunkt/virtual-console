@@ -65,10 +65,11 @@ sessionHandling.init(server, {
         }
 
     },
-    onGameStarted: function (gameID) {
+    onGameStarted: function () {
         var users = sessionHandling.getClientList();
         for (user in users) {
-            userName = user.name;
+            var userName = user.name;
+            var gameID = app.get("selectedGame");
             keyMapping[userName] = con2ioctl.getKeyMapping(gameID, userName);
         }
 

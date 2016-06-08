@@ -154,6 +154,10 @@ var startNetworkServer = function (server) {
                     }, data.delay);
                     callbackFromClient('Server shutting down in ' + data.delay / 1000 + ' seconds!');
                     break;
+                case 'gameSelected':
+                    app.set("selectedGame", data.gameUniqueName);
+                case 'gameStarted':
+                    callback.onGameStarted();
                 default:
                     console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
