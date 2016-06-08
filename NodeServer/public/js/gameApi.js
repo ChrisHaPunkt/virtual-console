@@ -20,7 +20,8 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
         },
         BUTTON: {
             UP: 7,
-            DOWN: 8
+            DOWN: 8,
+            HOLD: 9
         },
         overlayMenu: {isActive: false},
         logLevel: null,
@@ -49,6 +50,9 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             } else {
                 this.overlayMenu.domElement.hide();
             }
+
+            // get overlay user name container
+            this.overlayMenu.domElementActiveUser = $('#overLayActiveUser');
 
             // init overlaymenu handler
             this._initOverlayMenuHandler();
@@ -254,8 +258,11 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
                 }
             } else {
                 if (data.type === 'button' && data.data.message.buttonName === 'btn-overlayMenu') {
+                    console.log(data);
                     this.overlayMenu.domElement.css('display', 'flex');
                     this.overlayMenu.isActive = true;
+                    this.overlayMenu.activeUser = data.data.clientName;
+                    this.overlayMenu.domElementActiveUser.html(data.data.clientName);
                 } else {
                     // pass data to function defined by game only if overlay Menu is NOT active
                     this.frontendInboundMessage(data);

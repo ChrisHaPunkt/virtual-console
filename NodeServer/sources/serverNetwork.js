@@ -108,7 +108,7 @@ var startListening = function () {
             callback.onMessage(socket.id, message.type, message.data, function(result){
                 // callback from session handling - not needed atm
             });
-            if (debug)util.log('serverNetwork | a user id ' + socket.id + ' sended a message with type ' + message.type + ' : ' + message.data);
+            if (debug)util.log('serverNetwork | a user id ' + socket.id + ' sent a message with type \'' + message.type + '\' : ' + JSON.stringify(message.data));
         });
 
         // client disconnects

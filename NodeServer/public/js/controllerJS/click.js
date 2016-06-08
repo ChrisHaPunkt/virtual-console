@@ -2,24 +2,36 @@
  * Created by michaelschleiss on 29.10.15.
  */
 
-define(['jquery'], function ($) {
+define(['jquery', '../libs/jquery.mobile.custom.min'], function ($) {
 
     var socket;
 
-    $('.myButton')
-        .click(buttonwaspressed);
+    $(".myButton").on("vmousedown", function (event) {
 
-
+        buttonwaspressed(event.currentTarget);
+    });
+    $(".myButton").on("vmouseup", function (event) {
+        buttonwasreleased(event.currentTarget);
+    });
+    /*
+    $(".myButton").on("tap", function (event) {
+        console.log(event, "tap");
+        buttonwaspressed(event.target);
+        buttonwasreleased(event.target);
+    });
+*/
     function buttonwaspressed(button) {
+        console.log(button)
         socket.sendData('button', {
-            buttonName: $(this).attr('id'), buttonState: 8,
+            buttonName: $(button).attr('id'), buttonState: 8,
             timestamp: Date.now()
         });
     }
 
-    function buttonwasreleased() {
+    function buttonwasreleased(button) {
+        console.log(button)
         socket.sendData('button', {
-            buttonName: $(this).attr('id'), buttonState: 7,
+            buttonName: $(button).attr('id'), buttonState: 7,
             timestamp: Date.now()
         });
     }
