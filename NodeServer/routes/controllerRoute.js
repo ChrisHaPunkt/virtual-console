@@ -15,7 +15,6 @@ router.get('/', function (req, res, next) {
     var chosenControllerTemplate = require('../app').get('chosenControllerTemplate');
 
     var gameController = {
-        DEMO: 4,
         NEW: 5,
         MODERN: 6,
         EXTERN:7
@@ -25,9 +24,6 @@ router.get('/', function (req, res, next) {
 
     var controller = null;
     switch (chosenControllerTemplate) {
-        case gameController.DEMO:
-            controller = "controller/" + "controllerDemo";
-            break;
         case gameController.MODERN:
             controller = "controller/" + "controllerModern";
             break;
@@ -35,7 +31,7 @@ router.get('/', function (req, res, next) {
             controller = "controller/" + "controllerForExternalGames";
             break;
         default:
-            controller = "controller/" + "controllerDemo";
+            controller = "controller/" + "controllerForExternalGames";
             break;
     }
 

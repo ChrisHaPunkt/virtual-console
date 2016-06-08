@@ -13,7 +13,6 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min'], function ($, io, qrc
             DEBUG: 3
         },
         controllerTemplates: {
-            DEMO: 4,
             NEW: 5,
             MODERN: 6,
             EXTERN:7

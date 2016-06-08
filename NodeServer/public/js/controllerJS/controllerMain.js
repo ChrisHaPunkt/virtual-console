@@ -8,8 +8,11 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
 
+    window.addEventListener('load', function(e) {
 
+    }, false);
     var loginDiv = $('#login-body');
+
     var contentDiv = $('#content-body');
     var overlayMenuButton = $('#btn-overlayMenu');
 
@@ -29,6 +32,9 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
+        setTimeout(function() {
+            console.log("scroll");
+            window.scrollTo(9999999, 1); }, 1);
         $("#landscape_hint").show()
     };
     var showOverlayMenuButton = function () {
@@ -57,7 +63,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
 
             //vibrate
-            sensor.vibrate(500);
+          //  sensor.vibrate(500);
         },
         onAnonymousLogin: function (data) {
             if (data.result) {

@@ -1,17 +1,16 @@
-.button{
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-    -webkit-tap-highlight-color:rgba(0,0,0,0);
+.button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
 
 @media only screen and (orientation: portrait) {
     #content-body {
-       display: none !important;
+        display: none !important;
     }
 
 }
@@ -28,9 +27,13 @@
 @import url(http://fonts.googlaeapis.com/css?family=Anton);
     body {
         /*background: #222;*/
-        margin-top: 20px;
         font-family: 'Anton', sans-serif;
     }
+
+    #content-body{
+        padding-top: 5rem;
+    }
+
     /* base */
     .snes {
         position: relative;
@@ -39,6 +42,7 @@
         margin: 0 auto;
         background: #b7b7b7;
     }
+
     /* "L" and "R" shoulder buttons */
     .snes:before,
     .snes:after {
@@ -55,12 +59,14 @@
         border-top-right-radius: 6px;
         box-shadow: inset -6px -17px 5px rgba(0, 0, 0, 0.2);
     }
+
     .snes:after {
         left: auto;
         right: -50px;
         border-top-right-radius: 50px 20px;
         border-top-left-radius: 6px;
     }
+
     .snes > .left,
     .snes > .right {
         position: absolute;
@@ -71,10 +77,12 @@
         background: #b7b7b7;
         border-radius: 50%;
     }
+
     .snes > .right {
         left: auto;
         right: -110px;
     }
+
     .snes > .left .pad {
         position: absolute;
         height: 120px;
@@ -90,6 +98,7 @@
     .control:active {
         box-shadow: 0 0;
     }
+
     .snes > .left .pad .control {
         position: absolute;
         height: 30px;
@@ -98,27 +107,33 @@
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.6), 0 0 0 3px rgba(60, 60, 60, 0.2), 0 0 0 4px rgba(60, 60, 60, 0.2);
         border-radius: 2px;
     }
+
     .snes > .left .pad .top {
         top: 15px;
         left: 50%;
         margin: 0 0 0 -15px;
     }
+
     .snes > .left .pad .left {
         top: 45px;
         left: 15px;
     }
+
     .snes > .left .pad .right {
         top: 45px;
         right: 15px;
     }
+
     .snes > .left .pad .control.right:before {
         transform: rotate(90deg) translate(-3px, -5px);
     }
+
     .snes > .left .pad .bottom {
         bottom: 15px;
         left: 50%;
         margin: 0 0 0 -15px;
     }
+
     /* Overlap the other controls to hide box-shadow */
     .snes > .left .pad .middle {
         height: 34px;
@@ -130,6 +145,7 @@
         box-shadow: none;
         border-radius: 3px;
     }
+
     .snes > .left .pad .middle:after {
         position: absolute;
         top: 50%;
@@ -142,6 +158,7 @@
         border-radius: 100%;
         box-shadow: inset 0 0 2px rgba(120, 120, 120, 0.6), inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(240, 240, 240, 0.2);
     }
+
     /* Triangle with rounded corners */
     .arrow {
         top: 14px;
@@ -158,6 +175,7 @@
         transform-origin: 50% 10%;
         box-shadow: 0 1px 1px rgba(240, 240, 240, 0.25);
     }
+
     .arrow:before {
         position: absolute;
         z-index: -1;
@@ -171,6 +189,7 @@
         transform: rotate(60deg);
         box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     }
+
     .arrow:after {
         position: absolute;
         z-index: -1;
@@ -184,39 +203,49 @@
         transform: rotate(-60deg);
         box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
     }
+
     /* Arrow: left */
     .snes > .left .pad .left .arrow {
         transform: scale(1.15, 1.1) rotate(-90deg);
         box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
     }
+
     .snes > .left .pad .left .arrow:after {
         box-shadow: 0 -1px 1px rgba(240, 240, 240, 0.25);
     }
+
     .snes > .left .pad .left .arrow:before {
         box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     }
+
     /* Arrow: right */
     .snes > .left .pad .right .arrow {
         transform: scale(1.15, 1.1) rotate(90deg);
         box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
     }
+
     .snes > .left .pad .right .arrow:after {
         box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.2);
     }
+
     .snes > .left .pad .right .arrow:before {
         box-shadow: 0 -1px 1px rgba(240, 240, 240, 0.25);
     }
+
     /* Arrow: bottom */
     .snes > .left .pad .bottom .arrow {
         transform: scale(1.15, 1.1) rotate(180deg);
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
+
     .snes > .left .pad .bottom .arrow:after {
         box-shadow: 1px -1px 1px rgba(0, 0, 0, 0.2);
     }
+
     .snes > .left .pad .bottom .arrow:before {
         box-shadow: -1px -1px 1px rgba(240, 240, 240, 0.25);
     }
+
     /*
      * Middle stuff
      */
@@ -228,6 +257,7 @@
         width: 100px;
         height: 40px;
     }
+
     /* logo */
     .snes > .middle .logo {
         position: absolute;
@@ -238,10 +268,12 @@
         width: 10px;
         border-radius: 50%;
     }
+
     .snes > .middle .logo.clone {
         top: -84px;
         left: -47px;
     }
+
     .snes > .middle .logo:before {
         position: absolute;
         z-index: 5;
@@ -253,6 +285,7 @@
         background: #494949;
         border-radius: 50%;
     }
+
     .snes > .middle .logo:after {
         position: absolute;
         bottom: -5px;
@@ -263,6 +296,7 @@
         background: #b7b7b7;
         border-radius: 50%;
     }
+
     /* title */
     .snes > .middle .title {
         position: absolute;
@@ -271,12 +305,14 @@
         width: 200px;
         font-style: italic;
     }
+
     .snes > .middle .title:before {
         position: absolute;
         content: 'SUPER NINTENDO';
         font-size: 23px;
         color: #494949;
     }
+
     .snes > .middle .title:after {
         position: absolute;
         top: 41px;
@@ -287,6 +323,7 @@
         background: #494949;
         padding: 0 2px;
     }
+
     /* button */
     .snes > .middle button {
         position: absolute;
@@ -300,25 +337,30 @@
         box-shadow: inset 0 0 1px rgba(120, 120, 120, 0.7), inset 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(60, 60, 60, 0.3), inset 0 -2px 10px rgba(60, 60, 60, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.7), 0 2px 5px rgba(240, 240, 240, 0.8), 2px 0 5px rgba(240, 240, 240, 0.8), 0 -2px 5px rgba(60, 60, 60, 0.4), -2px 0 5px rgba(60, 60, 60, 0.6);
         outline: none;
     }
+
     .snes > .middle button.start {
         left: 60px;
     }
+
     .snes > .middle button:before {
         position: absolute;
         transform: rotate(-45deg);
         font-style: italic;
         font-size: 10px;
     }
+
     .snes > .middle button.select:before {
         top: 32px;
         left: 5px;
         content: 'SELECT';
     }
+
     .snes > .middle button.start:before {
         top: 30px;
         left: 10px;
         content: 'START';
     }
+
     /*
      * Right stuff
      */
@@ -335,6 +377,7 @@
         background: linear-gradient(to bottom, #7c7c7c 0%, #212121 100%);
         box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.7), inset 0 2px 5px rgba(240, 240, 240, 0.5), inset 0 0 2px rgba(120, 120, 120, 0.6), inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 2px rgba(240, 240, 240, 0.6);
     }
+
     .snes > .right .circle .group-1,
     .snes > .right .circle .group-2 {
         position: absolute;
@@ -346,10 +389,12 @@
         transform: rotate(-40deg);
         box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.4);
     }
+
     .snes > .right .circle .group-2 {
         top: 100px;
         left: 95px;
     }
+
     .snes > .right .circle .group-1:before,
     .snes > .right .circle .group-1:after,
     .snes > .right .circle .group-2:before,
@@ -362,16 +407,19 @@
         background: #B7B7B7;
         border-radius: 50%;
     }
+
     .snes > .right .circle .group-1:before,
     .snes > .right .circle .group-2:before {
         box-shadow: -2px -1px 0 0px rgba(0, 0, 0, 0.2), -2px 1px 0 0px rgba(0, 0, 0, 0.2);
     }
+
     .snes > .right .circle .group-1:after,
     .snes > .right .circle .group-2:after {
         left: auto;
         right: -25px;
         box-shadow: 2px -1px 0 0px rgba(0, 0, 0, 0.2), 2px 1px 0 0px rgba(0, 0, 0, 0.2);
     }
+
     .snes > .right .circle button {
         position: absolute;
         z-index: 5;
@@ -384,6 +432,7 @@
         transform: rotate(40deg);
         user-select: none;
     }
+
     .snes > .right .circle button:active {
         box-shadow: inset 0 -1px 0 5px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(0, 0, 0, 0.7), inset 0 -4px 5px rgba(240, 240, 240, 0.4), inset 0 0 2px rgba(120, 120, 120, 0.4), inset 0 2px 2px rgba(240, 240, 240, 0.4), 0 0 0 5px #B7B7B7 /* Overlap box shadow of the group pseudos */;
         /*box-shadow:
@@ -395,6 +444,7 @@
           0 0 0 5px #B7B7B7
         ;*/
     }
+
     .snes > .right .circle button:after {
         position: absolute;
         content: '';
@@ -406,6 +456,7 @@
         background: linear-gradient(top, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 80%);
         border-radius: 50%;
     }
+
     /* Button caption */
     .snes > .right .circle button:before {
         position: absolute;
@@ -413,46 +464,55 @@
         font-weight: bold;
         color: #B7B7B7;
     }
+
     .snes > .right .circle button.green {
         top: 5px;
         left: -20px;
         background: #158733;
     }
+
     .snes > .right .circle button.green:before {
         content: 'Y';
         left: -20px;
         top: 35px;
     }
+
     .snes > .right .circle button.blue {
         top: 5px;
         right: -20px;
         background: #143ebc;
     }
+
     .snes > .right .circle button.blue:before {
         content: 'X';
         right: -20px;
         top: -15px;
     }
+
     .snes > .right .circle button.yellow {
         top: 5px;
         left: -20px;
         background: #e2bd00;
     }
+
     .snes > .right .circle button.yellow:before {
         content: 'B';
         left: -20px;
         top: 35px;
     }
+
     .snes > .right .circle button.red {
         top: 5px;
         right: -20px;
         background: #d10000;
     }
+
     .snes > .right .circle button.red:before {
         content: 'A';
         right: -20px;
         top: -15px;
     }
+
     /**/
 
 }

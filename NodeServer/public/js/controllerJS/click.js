@@ -5,12 +5,17 @@
 define(['jquery', '../libs/jquery.mobile.custom.min'], function ($) {
 
     var socket;
+    navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
     $(".myButton").on("vmousedown", function (event) {
 
+        if (navigator.vibrate) {
+
+            navigator.vibrate(100);
+        }
         buttonwaspressed(event.currentTarget);
-    });
-    $(".myButton").on("vmouseup", function (event) {
+    })
+        .on("vmouseup", function (event) {
         buttonwasreleased(event.currentTarget);
     });
     /*
