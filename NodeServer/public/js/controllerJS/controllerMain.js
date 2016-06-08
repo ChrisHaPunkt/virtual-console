@@ -33,6 +33,8 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             });
 
         }
+
+
     };
 
     ////////////////////////////////////
@@ -69,6 +71,49 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
     hideOverlayMenuButton();
     showLogin();
 
+    var showAddNewGameUrl = function () {
+        var container = '<div class="addNewGameContainer"><h3>Add new Game:</h3>' +
+
+            '   <span><label>Name:<div><input type="text" id="name" placeholder="Name"></div></label></span>' +
+            '   <span><label>UniqueName:<div><input type="text" id="uname" placeholder="Unique_Name"></div></label></span>' +
+            '   <span><label>URL:<div><input type="text" id="url" placeholder="http://..."></div></label></span>' +
+            '</div>';
+        var n = noty({
+            type: 'confirm',
+            modal: true,
+            layout: 'topCenter',
+            text: container,
+            closeWith: ['button'],
+            buttons: [
+                {
+                    addClass: 'btn btn-primary', text: 'Add', onClick: function ($noty) {
+                    var name = $(".addNewGameContainer").find("#name").val();
+                    var uname = $(".addNewGameContainer").find("#uname").val();
+                    var url = $(".addNewGameContainer").find("#url").val();
+                    // this = button element
+                    // $noty = $noty element
+
+                    $noty.close();
+                    var transferObject = {
+                        type: "ext",
+                        name: name,
+                        uname: uname,
+                        url: url
+                    };
+
+                    socket.emit("addNewGame", transferObject);
+                }
+                },
+                {
+                    addClass: 'btn btn-danger', text: 'Cancel', onClick: function ($noty) {
+                    $noty.close();
+                    noty({text: 'You clicked "Cancel" button', type: 'error'});
+                }
+                }
+            ]
+        });
+    };
+    $("#header").click(showAddNewGameUrl);
 
     ////////////////////////////////////
     //Open socket
