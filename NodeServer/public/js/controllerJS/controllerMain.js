@@ -6,16 +6,34 @@ define("jquery", [], function () {
 });
 
 
-require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
+require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
-    window.addEventListener('load', function(e) {
-
-    }, false);
     var loginDiv = $('#login-body');
 
     var contentDiv = $('#content-body');
     var overlayMenuButton = $('#btn-overlayMenu');
 
+    var hint = {
+        success: function (msg) {
+
+            var n = noty({
+                type: 'success',
+                text: msg,
+                killer: true,
+                layout: 'top',
+                timeout: '5000'
+            });
+        },
+        error: function (msg) {
+            var n = noty({
+                type: 'error',
+                text: msg,
+                killer: true,
+                layout: 'top'
+            });
+
+        }
+    };
 
     ////////////////////////////////////
     //Setting Visibility of Login and Controller
@@ -32,9 +50,10 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     };
     var showContent = function () {
         contentDiv.show();
-        setTimeout(function() {
+        setTimeout(function () {
             console.log("scroll");
-            window.scrollTo(9999999, 1); }, 1);
+            window.scrollTo(9999999, 1);
+        }, 1);
         $("#landscape_hint").show()
     };
     var showOverlayMenuButton = function () {
@@ -63,10 +82,11 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
             console.log(type, msg);
 
             //vibrate
-          //  sensor.vibrate(500);
+            //      sensor.vibrate(500);
         },
         onAnonymousLogin: function (data) {
             if (data.result) {
+                hint.success('<b>Welcome: ' + data.username + '</b> ');
                 hideLogin();
                 showContent();
                 showOverlayMenuButton();
@@ -78,17 +98,26 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
         },
         onLogin: function (data) {
             if (data.result) {
+                hint.success('<b>Welcome: ' + data.username + '</b> ')
                 hideLogin();
                 showContent();
                 showOverlayMenuButton();
             } else {
                 // false login
+                hint.error(data.message);
+
             }
             console.log(data);
         },
         onRegister: function (data) {
             // do anything you want with server messages
             console.log(data);
+            if (data.result) {
+                hint.success('<b>Erfolg: </b> User added.. Login');
+                sendLogin();
+            } else {
+                hint.error('<b>Error: </b>' + data.message)
+            }
         }
     };
     var socket = cn(serverURL, serverPort, resHandler);
@@ -99,14 +128,17 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     /////////////////////////////////////
     var sendAnonymousLogin = function () {
         //event.preventDefault();
+        $.noty.closeAll();
         socket.sendAnonymousLogin();
     };
 
     var sendRegister = function () {
         //event.preventDefault();
+        $.noty.closeAll();
         socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);
     };
     var sendLogin = function () {
+        $.noty.closeAll();
         //event.preventDefault();
         socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);
     };
@@ -194,5 +226,4 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     $("#anonymous").focus();
 
 
-        
 });
