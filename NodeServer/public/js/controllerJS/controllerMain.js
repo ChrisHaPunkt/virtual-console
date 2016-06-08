@@ -104,7 +104,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
                         url: url
                     };
 
-                    cn.sendData("addNewGameDetails", transferObject);
+                    socket.sendData("addNewGameDetails", transferObject);
                 }
                 },
                 {
