@@ -21,7 +21,7 @@ requirejs.config({
 /**
  * START OF THE FRONTEND APPLICATION
  * */
-require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
+require(["mainMenu", "gameApi", "jquery",'../libs/jquery.noty.packaged.min'], function (mainMenu, gameApi, $, noty) {
 
 
     /**

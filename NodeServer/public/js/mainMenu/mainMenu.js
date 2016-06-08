@@ -2,7 +2,7 @@
  * Created by hannes on 31.03.2016.
  */
 
-define(['jquery', 'gameApi'], function ($, gameApi) {
+define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, gameApi, noty) {
 
         var MainMenu = function (domContainer, gameApi) {
 
@@ -61,6 +61,13 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                         type: 'command-openGameUrlInput',
                         data: false
                     });
+                    var n = noty({
+                        type: 'alert',
+                        text: "<h2>Please Enter Details On Your Smartphone Controller</h2>",
+                        timeout: false,
+                        layout: 'topCenter'
+                    });
+
                 },
                 path: '',
                 tileIndex: i++
@@ -72,6 +79,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
         };
 
         MainMenu.prototype.redraw = function () {
+            var n = noty({type: 'success', text: "update GameTiles...", timeout: 1000, killer: true});
             MainMenu.prototype.loadGameData.call(this);
         };
 
