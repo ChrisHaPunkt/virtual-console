@@ -16,7 +16,6 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
          */
         gameApi.logLevel = gameApi.log.INFO;
         gameApi.controller = gameApi.controllerTemplates.MODERN;
-        gameApi.performanceMonitor = false;
 
         /**
          * Handle new Controller Data
@@ -25,16 +24,6 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
         gameApi.frontendInboundMessage = function (controllerData) {
 
             var controllerEvent = controllerData.data.message;
-            if (gameApi.performanceMonitor && (controllerData.type == "button" || controllerData.type == "accelerationData" || controllerData.type == "orientationData")) {
-                var timestamp = Date.now();
-                var chart = gameApi.chart.chartObj;
-                console.log("Delay: " + (timestamp - controllerEvent.timestamp) + " ms");
-                if(chart.datasets[0].points.length > 30){
-                    //cleanup first points for a sliding view
-                    chart.removeData();
-                }
-                chart.addData([(timestamp - controllerEvent.timestamp)],(timestamp - controllerEvent.timestamp) + " ms");
-            }
 
             gameApi.addLogMessage(gameApi.log.DEBUG, "on.FrontendInboundMessage", controllerData);
             var msgDetails = typeof controllerData.data.message === "object" ? JSON.stringify(controllerData.data.message) : controllerData.data.message;
