@@ -31,6 +31,7 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.EXTERN;
     gameApi.performanceMonitor = false;
+    gameApi.frontendType = 'mainMenu';
 
     // handle new Server Data
     // {type: messageType, data: message}

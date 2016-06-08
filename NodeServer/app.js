@@ -48,7 +48,7 @@ var types = GameHandler.TYPES;
  unique_name: "MatrixGame",
  displayName: "Matrix Game"
  }));
- /*
+/*
  GameHandler.updateGame(new GameVO({
  type: types.internal,
  unique_name: "3DGame",
@@ -58,21 +58,21 @@ var types = GameHandler.TYPES;
  });
 
  GameHandler.remove("3DGame");
- GameHandler.addNewGame(new GameVO({
- type: types.internal,
- unique_name: "MatrixGame",
- displayName: "Matrix Game"
- }));
+GameHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "MatrixGame",
+    displayName: "Matrix Game"
+}));
 
- GameHandler.updateGame(new GameVO({
- type: types.internal,
- unique_name: "3DGame",
- displayName: "ThreeD Game NEUER NAME"
- }), function (callback) {
- util.log("Update callback:" + callback);
- });
- /*
- GameHandler.remove("3DGame");
+GameHandler.updateGame(new GameVO({
+    type: types.internal,
+    unique_name: "3DGame",
+    displayName: "ThreeD Game NEUER NAME"
+}), function (callback) {
+    util.log("Update callback:" + callback);
+});
+/*
+GameHandler.remove("3DGame");
 
  GameHandler.addNewGame(new GameVO({
  type: types.internal,
@@ -86,7 +86,7 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-//app.use(logger(''));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -105,11 +105,15 @@ app.use(function (req, res, next) {
 });
 
 setTimeout(function () {
-    util.log("System shutdown..");
-    /*System.shutdown(function (stdout, stderr) {
-    });*/
-
+    util.log("UpdateGame,,");
+    GameHandler.addNewGame(new GameVO({
+        type: types.external,
+        unique_name: "Mario ext",
+        displayName: "Mario Game",
+        contentUrl: "http://supermarioemulator.com/mario.php"
+    }));
 }, 5000);
+
 // error handlers
 
 // development error handler
@@ -133,5 +137,7 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
+
+System.shutdown();
 
 module.exports = app;

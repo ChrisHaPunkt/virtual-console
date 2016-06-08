@@ -12,6 +12,8 @@ var util = require('util');
 var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
 
+var con2ioctl = require ('../sources/controller2ioctl');
+
 /**
  * Get port from environment and store in f.
  */
@@ -50,7 +52,12 @@ sessionHandling.init(server, {
     },
     onMessage: function (name, type, message) {
         //util.log('www | user ' + name + ' says: ' + message);
-        sessionHandling.sendToFrontend_Message(name, type, message);
+        if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
+            con2ioctl.send_key_event(message.buttonName, message.buttonState); // so far no client handling
+        } else {
+            sessionHandling.sendToFrontend_Message(name, type, message);
+        }
+
     },
 
     onFrontendConnected: function () {
@@ -125,3 +132,7 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+con2ioctl.hellotest("H");
+con2ioctl.hellotest("E");
+con2ioctl.hellotest("O");
