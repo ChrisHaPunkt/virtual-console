@@ -44,7 +44,8 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                 id: 'gameAddButton',
                 class: 'gameTile',
                 click: function (event, data) {
-                    gameApi.sendToUser(data.userName, {
+                    console.log('ADD GAME ', data);
+                    gameApi.sendToUser(data.clientName, {
                         type:'command-openGameUrlInput',
                         data:false
                     });
