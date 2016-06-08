@@ -113,7 +113,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             ]
         });
     };
-    $("#header").click(showAddNewGameUrl);
+
 
     ////////////////////////////////////
     //Open socket
