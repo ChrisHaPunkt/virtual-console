@@ -130,7 +130,7 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             console.log(type, msg);
             switch (type) {
                 case 'command-openGameUrlInput':
-                // TODO open
+                showAddNewGameUrl();
                     break;
                 default:
                     console.log('unknown command from server: ', type, msg);

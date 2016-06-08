@@ -39,7 +39,6 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             var i = 0;
             parent.empty();
 
-            // default adding tile
 
 
             // add game tiles
@@ -54,6 +53,8 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                     tileIndex: i++
                 }).html(game.displayName).appendTo(parent);
             });
+
+            // default adding tile
             $('<div/>', {
                 id: 'gameAddButton',
                 class: 'gameTile newPlaceholder',
