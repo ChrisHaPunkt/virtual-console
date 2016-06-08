@@ -72,7 +72,6 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
         };
 
         MainMenu.prototype.redraw = function () {
-            console.log("CALLES REDRAW GAME TILES");
             MainMenu.prototype.loadGameData.call(this);
         };
 
