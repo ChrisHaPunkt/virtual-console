@@ -8,6 +8,9 @@ define("jquery", [], function () {
 
 require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
+    window.addEventListener('load', function(e) {
+
+    }, false);
     var loginDiv = $('#login-body');
 
     var contentDiv = $('#content-body');
@@ -125,9 +128,13 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
         onMessage: function (type, msg) {
             // do anything you want with server messages
             console.log(type, msg);
-
-            //vibrate
-            //      sensor.vibrate(500);
+            switch (type) {
+                case 'command-openGameUrlInput':
+                // TODO open
+                    break;
+                default:
+                    console.log('unknown command from server: ', type, msg);
+            }
         },
         onAnonymousLogin: function (data) {
             if (data.result) {

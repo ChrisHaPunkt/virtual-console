@@ -134,20 +134,14 @@ canvas {
     display: none;
     font-size: 1em;
     max-height: 100px;
-    overflow-y: auto;
-    padding: 3px 5px 3px 5px;
-    width: 96%;
-    border: 2px solid grey;
-    border-radius: 2em;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: hidden;
 }
 
 /* MISC */
 
 #myChart {
-    max-width: 98%;
-    max-height: 94px;
 }
 
 .logMessage_type {

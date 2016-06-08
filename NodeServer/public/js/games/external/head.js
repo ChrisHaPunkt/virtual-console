@@ -24,7 +24,6 @@ require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi
     // API config
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.MODERN;
-    gameApi.performanceMonitor = false;
 
     /**
      * Handle new Controller Data
