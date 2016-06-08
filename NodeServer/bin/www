@@ -80,7 +80,7 @@ sessionHandling.init(server, {
 
     onFrontendOutboundMessage: function (type, data) {
         if (type == 'messageToClient') {
-            sessionHandling.sendToUser(data.username, data.data);
+            sessionHandling.sendToUser(data.username, data.data.type, data.data.data);
         } else if (type == 'messageToAllClients') {
             sessionHandling.broadcastMessage(data.data);
         }

@@ -38,17 +38,33 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
         MainMenu.prototype.initGameTiles = function (parent) {
             var i = 0;
             parent.empty();
+
+            // add game tiles
             this.gameData.forEach(function (game) {
                 $('<div/>', {
                     id: game.unique_name + '_tile',
                     class: 'gameTile',
-                    click: function () {
+                    click: function (event, data) {
                         window.location = $(this).attr('path');
                     },
                     path: game.fullUrl,
                     tileIndex: i++
                 }).html(game.displayName).appendTo(parent);
             });
+
+            // default adding tile
+            $('<div/>', {
+                id: 'gameAddButton',
+                class: 'gameTile newPlaceholder',
+                click: function (event, data) {
+                    gameApi.sendToUser(data.clientName, {
+                        type: 'command-openGameUrlInput',
+                        data: false
+                    });
+                },
+                path: '',
+                tileIndex: i++
+            }).html('+').appendTo(parent);
 
             // set center game tile active
             var gameTilesLength = $('.gameTile').length;
@@ -115,8 +131,8 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
             }
         };
 
-        MainMenu.prototype.triggerActiveTile = function () {
-            $('.activeTile').trigger("click");
+        MainMenu.prototype.triggerActiveTile = function (clientName) {
+            $('.activeTile').trigger("click", {clientName: clientName});
         };
 
         // return public interface of the require module

@@ -4,6 +4,8 @@
 
 var network = require('../sources/serverNetwork.js');
 var userManagement = require('../sources/UserManagement.js')();
+var GameHandler = require('../sources/Games');
+var GameVO = require("../sources/ValueObjects/GameVO");
 var system = require('../sources/System.js');
 var app = require('../app');
 var util = require('util');
@@ -88,6 +90,17 @@ var startNetworkServer = function (server) {
         },
         onMessage: function (id, type, data, _callback) {
             if (isLoggedIn(id)) {
+                switch (type){
+                    case 'addNewGameDetails':
+                        GameHandler.addNewGame(new GameVO({
+                            type: GameHandler.TYPES.external,
+                            unique_name: data.uname,
+                            displayName: data.name,
+                            contentUrl: data.url
+                        }));
+                        break;
+                    default:
+                }
                 userCallback.onMessage(getUserById(id).userName, type, data);
                 _callback(true);
             } else {

@@ -30,12 +30,11 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
         // set basic config properties
     gameApi.logLevel = gameApi.log.INFO;
     gameApi.controller = gameApi.controllerTemplates.EXTERN;
-    gameApi.performanceMonitor = false;
-    gameApi.frontendType = 'mainMenu';
 
     // handle new Server Data
     // {type: messageType, data: message}
     gameApi.frontendInboundData = function(serverData){
+
         switch(serverData.type){
             case 'gamesUpdated':
                 mainMenuInstance.redraw();
@@ -59,8 +58,8 @@ require(["mainMenu", "gameApi", "jquery"], function (mainMenu, gameApi, $) {
                 gameApi.addLogMessage(gameApi.log.INFO, 'client', "Client " + controllerData.data.clientName + ' ' + controllerData.data.message);
                 break;
             case "button":
-                if (controllerEvent.buttonName == 'btn-enter' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
-                    mainMenuInstance.triggerActiveTile();
+                if ((controllerEvent.buttonName == 'btn-select' || controllerEvent.buttonName == 'btn-a') && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
+                    mainMenuInstance.triggerActiveTile(controllerData.data.clientName);
                 }
                 else if (controllerEvent.buttonName == 'btn-left' && controllerEvent.buttonState === gameApi.BUTTON.DOWN) {
                     mainMenuInstance.moveActiveTile('left');

@@ -105,13 +105,10 @@ app.use(function (req, res, next) {
 });
 
 setTimeout(function () {
-    util.log("UpdateGame,,");
-    GameHandler.addNewGame(new GameVO({
-        type: types.external,
-        unique_name: "Mario ext",
-        displayName: "Mario Game",
-        contentUrl: "http://supermarioemulator.com/mario.php"
-    }));
+    //util.log("System shutdown..");
+    /*System.shutdown(function (stdout, stderr) {
+    });*/
+
 }, 5000);
 
 // error handlers

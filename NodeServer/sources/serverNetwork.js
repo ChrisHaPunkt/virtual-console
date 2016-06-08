@@ -169,6 +169,7 @@ var sendToClient = function (id, socketEventType, message) {
 // ONLY used by exported messaging functions (see below)
 var sendToFrontend = function (socketEventType, message) {
     if (frontend != 0) {
+        util.log("SEND REBUILD",socketEventType, message);
         frontend.emit(socketEventType, message);
         return true;
     } else {

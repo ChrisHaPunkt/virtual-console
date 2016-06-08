@@ -27,6 +27,21 @@
 }
 
 /* GAME TILES */
+#gameAddButton {
+    opacity: 0.4;
+    background-color: grey;
+    border: 2px dotted white;
+    height: 96px;
+    font-size: 2em;
+}
+
+#gameAddButton .activeTile {
+
+    background-color: grey;
+    border: 2px dotted white;
+    height: 96px;
+}
+
 .gameTile {
     width: 100px;
     height: 100px;
@@ -49,5 +64,7 @@
 }
 
 .activeTile {
+    opacity: 1 !important;
     background-color: orangered;
+    border-color: orange !important;
 }
