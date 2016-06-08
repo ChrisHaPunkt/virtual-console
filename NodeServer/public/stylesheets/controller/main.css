@@ -85,3 +85,17 @@ canvas {
 #landscape_hint::after {
     content: "Rotate me first";
 }
+
+
+input {
+    border: 1px dotted #000000;
+    outline:0;
+    height:25px;
+    width: 80%;
+    padding-left: 3px;
+    margin: 2px;
+}
+
+#content-body{
+    display: none;
+}

@@ -6,9 +6,9 @@ define("jquery", [], function () {
 });
 
 
-require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sensor, $) {
+require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
-    window.addEventListener('load', function (e) {
+    window.addEventListener('load', function(e) {
 
     }, false);
     var loginDiv = $('#login-body');
@@ -16,6 +16,29 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     var contentDiv = $('#content-body');
     var overlayMenuButton = $('#btn-overlayMenu');
 
+    var hint = {
+        success: function (msg) {
+
+            var n = noty({
+                type: 'success',
+                text: msg,
+                killer: true,
+                layout: 'top',
+                timeout: '5000'
+            });
+        },
+        error: function (msg) {
+            var n = noty({
+                type: 'error',
+                text: msg,
+                killer: true,
+                layout: 'top'
+            });
+
+        }
+
+
+    };
 
     ////////////////////////////////////
     //Setting Visibility of Login and Controller
@@ -51,6 +74,49 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     hideOverlayMenuButton();
     showLogin();
 
+    var showAddNewGameUrl = function () {
+        var container = '<div class="addNewGameContainer"><h3>Add new Game:</h3>' +
+
+            '   <span><label>Name:<div><input type="text" id="name" placeholder="Name"></div></label></span>' +
+            '   <span><label>UniqueName:<div><input type="text" id="uname" placeholder="Unique_Name"></div></label></span>' +
+            '   <span><label>URL:<div><input type="text" id="url" placeholder="http://..."></div></label></span>' +
+            '</div>';
+        var n = noty({
+            type: 'confirm',
+            modal: true,
+            layout: 'topCenter',
+            text: container,
+            closeWith: ['button'],
+            buttons: [
+                {
+                    addClass: 'btn btn-primary', text: 'Add', onClick: function ($noty) {
+                    var name = $(".addNewGameContainer").find("#name").val();
+                    var uname = $(".addNewGameContainer").find("#uname").val();
+                    var url = $(".addNewGameContainer").find("#url").val();
+                    // this = button element
+                    // $noty = $noty element
+
+                    $noty.close();
+                    var transferObject = {
+                        type: "ext",
+                        name: name,
+                        uname: uname,
+                        url: url
+                    };
+
+                    socket.emit("addNewGame", transferObject);
+                }
+                },
+                {
+                    addClass: 'btn btn-danger', text: 'Cancel', onClick: function ($noty) {
+                    $noty.close();
+                    noty({text: 'You clicked "Cancel" button', type: 'error'});
+                }
+                }
+            ]
+        });
+    };
+
 
     ////////////////////////////////////
     //Open socket
@@ -69,12 +135,10 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
                 default:
                     console.log('unknown command from server: ', type, msg);
             }
-
-            //vibrate
-            //  sensor.vibrate(500);
         },
         onAnonymousLogin: function (data) {
             if (data.result) {
+                hint.success('<b>Welcome: ' + data.username + '</b> ');
                 hideLogin();
                 showContent();
                 showOverlayMenuButton();
@@ -86,17 +150,26 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
         },
         onLogin: function (data) {
             if (data.result) {
+                hint.success('<b>Welcome: ' + data.username + '</b> ')
                 hideLogin();
                 showContent();
                 showOverlayMenuButton();
             } else {
                 // false login
+                hint.error(data.message);
+
             }
             console.log(data);
         },
         onRegister: function (data) {
             // do anything you want with server messages
             console.log(data);
+            if (data.result) {
+                hint.success('<b>Erfolg: </b> User added.. Login');
+                sendLogin();
+            } else {
+                hint.error('<b>Error: </b>' + data.message)
+            }
         }
     };
     var socket = cn(serverURL, serverPort, resHandler);
@@ -107,14 +180,17 @@ require(['click', 'clientNetwork', 'sensor', 'jquery'], function (click, cn, sen
     /////////////////////////////////////
     var sendAnonymousLogin = function () {
         //event.preventDefault();
+        $.noty.closeAll();
         socket.sendAnonymousLogin();
     };
 
     var sendRegister = function () {
         //event.preventDefault();
+        $.noty.closeAll();
         socket.sendRegister(document.getElementById('input-user').value, document.getElementById('input-password').value);
     };
     var sendLogin = function () {
+        $.noty.closeAll();
         //event.preventDefault();
         socket.sendLogin(document.getElementById('input-user').value, document.getElementById('input-password').value);
     };

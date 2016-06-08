@@ -105,7 +105,7 @@ app.use(function (req, res, next) {
 });
 
 setTimeout(function () {
-    util.log("System shutdown..");
+    //util.log("System shutdown..");
     /*System.shutdown(function (stdout, stderr) {
     });*/
 
