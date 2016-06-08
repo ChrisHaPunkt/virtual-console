@@ -16,7 +16,7 @@ var persitNewGame = function (GameVO, callback) {
     var insertCallback = function (state, data) {
         if (state && data.length == 0) {
 
-            database.insert("games", GameVO.strip(), callback);
+            database.insert("games", GameVO.strip(), function(result){});
 
             if (typeof callback == "function")
                 callback(true, "Game inserted " + GameVO.unique_name);
