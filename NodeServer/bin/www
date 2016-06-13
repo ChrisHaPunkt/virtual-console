@@ -44,6 +44,7 @@ server.on('listening', onListening);
 /**
  * Keymapping object for external controller
  */
+console.log('wurst');
 var keyMapping = {};
 
 sessionHandling.init(server, {
@@ -56,6 +57,7 @@ sessionHandling.init(server, {
         sessionHandling.sendToFrontend_Message(name, 'userConnection', 'disconnected');
     },
     onMessage: function (name, type, message) {
+        console.log('onMessage');
         //util.log('www | user ' + name + ' says: ' + message);
         if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
             var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
@@ -66,6 +68,7 @@ sessionHandling.init(server, {
 
     },
     onGameStarted: function () {
+        console.log('onGamestarted');
         var users = sessionHandling.getClientList();
         for (user in users) {
             var userName = user.name;
