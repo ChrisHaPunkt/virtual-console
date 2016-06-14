@@ -25,13 +25,13 @@ app.set("handlingDB", false);
 var types = GameHandler.TYPES;
 
 
-//Reinit Gmaes on
-GameHandler.addNewGame(new GameVO({
-    type: types.external,
-    unique_name: "ExternalGame",
-    displayName: "Matrix Demo Game",
-    contentUrl: "https://homeset.de/blog"
-}));
+/*Reinit Gmaes on
+ GameHandler.addNewGame(new GameVO({
+ type: types.external,
+ unique_name: "ExternalGame",
+ displayName: "Matrix Demo Game",
+ contentUrl: "https://homeset.de/blog"
+ }));
 
 GameHandler.addNewGame(new GameVO({
     type: types.internal,
@@ -39,11 +39,11 @@ GameHandler.addNewGame(new GameVO({
     displayName: "Cars Demo Game"
 }));
 
-GameHandler.addNewGame(new GameVO({
-    type: types.internal,
-    unique_name: "3DGame",
-    displayName: "ThreeD Game"
-}));
+ GameHandler.addNewGame(new GameVO({
+ type: types.internal,
+ unique_name: "3DGame",
+ displayName: "ThreeD Game"
+ }));
 
 GameHandler.addNewGame(new GameVO({
     type: types.internal,

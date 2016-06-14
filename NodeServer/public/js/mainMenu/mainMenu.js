@@ -39,6 +39,10 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
             var i = 0;
             parent.empty();
 
+            //x
+            if (!this.gameData){
+             this.gameData = [];
+            }
             // add game tiles
             this.gameData.forEach(function (game) {
                 var tileContent = $("<div>").attr("style","line-height: initial;vertical-align: middle;display: inline-flex;font-size:1.5em").html(game.displayName);
