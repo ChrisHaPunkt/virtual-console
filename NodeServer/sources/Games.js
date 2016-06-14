@@ -7,7 +7,7 @@ var debug = config.debug;
 var GameVO = require("./ValueObjects/GameVO");
 var util = require('util');
 var $ = require("jquery");
-
+var System = require("./System");
 
 var persitNewGame = function (GameVO, callback) {
 
@@ -114,13 +114,15 @@ var removeGame = function (GameVO_OR_uniqueName, callback) {
 
 
 var updateFullQualifiedGameVOs = function (callback) {
-    getAllGames(function (state, msg) {
-        if (state) {
-            app.set("fullQualifiedGameVOs", msg);
-        } else {
+    System.guaranteeDatabase(function() {
+        getAllGames(function (state, msg) {
+            if (state) {
+                app.set("fullQualifiedGameVOs", msg);
+            } else {
 
-        }
-    })
+            }
+        })
+    });
 };
 /**
  *
@@ -129,27 +131,30 @@ var updateFullQualifiedGameVOs = function (callback) {
  */
 var bindUrlId = 1;
 var getAllGames = function (onSuccess) {
-    var query = {};
+    System.guaranteeDatabase(function(){
+        var query = {};
 
-    var queryCallback = function (state, msg) {
-        if (state && msg[0]) {
-            var GameVOs = [];
-            
-            msg.forEach(function (value) {
-                var game = new GameVO(value.type, value.unique_name, value.displayName,bindUrlId);
+        var queryCallback = function (state, msg) {
+            if (state && msg[0]) {
+                var GameVOs = [];
 
-                if (game.type == exports.TYPES.external)
-                    game.addContentUrl(value.contentUrl);
+                msg.forEach(function (value) {
+                    var game = new GameVO(value.type, value.unique_name, value.displayName,bindUrlId);
 
-                GameVOs.push(game);
-                bindUrlId++;
-            });
-            onSuccess(true, GameVOs);
-        } else {
-            onSuccess(false, "No Games present in DB");
-        }
-    };
-    database.query("games", query, queryCallback);
+                    if (game.type == exports.TYPES.external)
+                        game.addContentUrl(value.contentUrl);
+
+                    GameVOs.push(game);
+                    bindUrlId++;
+                });
+                onSuccess(true, GameVOs);
+            } else {
+                onSuccess(false, "No Games present in DB");
+            }
+        };
+        database.query("games", query, queryCallback);
+    });
+
 };
 
 
