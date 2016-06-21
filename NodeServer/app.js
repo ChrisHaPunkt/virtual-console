@@ -135,6 +135,4 @@ app.use(function (err, req, res, next) {
     });
 });
 
-System.shutdown();
-
 module.exports = app;
