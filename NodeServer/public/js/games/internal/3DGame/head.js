@@ -29,7 +29,10 @@ var GameHandler = null, gameApi = null, frontChart = null;
  * START OF THE FRONTEND APPLICATION
  * */
 require(["3dgame", "gameApi", "jquery", "Chart"], function (game, api, $, Chart) {
+
     gameApi = api;
+    gameApi.frontendType = 'internal';
+
     GameHandler = game;
 
     var game2 = new game();

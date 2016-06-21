@@ -18,7 +18,7 @@ requirejs.config({
         "phaser": '/js/libs/phaser',
         "qrcode.min": '/js/libs/qrcode.min',
         "carsGame": 'carsGame',
-        "gameApi":'/js/gameApi'
+        "gameApi": '/js/gameApi'
     },
     shim: {
         three: {
@@ -34,9 +34,15 @@ var GameHandler = null, gameApi = null, frontChart = null;
  * START OF THE FRONTEND APPLICATION
  * */
 require(["phaser", "carsGame", "gameApi", "jquery", "Chart"], function (Phaser, game, api, $, Chart) {
+
     gameApi = api;
+    gameApi.frontendType = 'internal';
+
     GameHandler = game;
 
     var game2 = new game();
     game2.start();
+
+
+
 });
