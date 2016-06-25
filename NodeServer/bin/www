@@ -57,8 +57,11 @@ sessionHandling.init(server, {
         sessionHandling.sendToFrontend_Message(name, 'userConnection', 'disconnected');
     },
     onMessage: function (name, type, message) {
-        console.log('onMessage');
+        console.log('wurst');
         //util.log('www | user ' + name + ' says: ' + message);
+        var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
+        con2ioctl.send_key_event('left', message.buttonState);
+        util.log(key);
         if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
             var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
             con2ioctl.send_key_event(key, message.buttonState);

@@ -23,7 +23,7 @@ app.set("fullQualifiedGameVOs", false);
 var types = GameHandler.TYPES;
 
 
-/*Reinit Gmaes on
+//Reinit Gmaes on
  GameHandler.addNewGame(new GameVO({
  type: types.external,
  unique_name: "ExternalGame",
