@@ -72,7 +72,7 @@ sessionHandling.init(server, {
         console.log('onMessage hat funktioniert');
         //util.log('www | user ' + name + ' says: ' + message);
         //var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
-        con2ioctl.send_key_event('left', message.buttonState);
+        con2ioctl.send_key_event('LEFT', message.buttonState);
         util.log(app.get('frontendType'));
         if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
             var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
