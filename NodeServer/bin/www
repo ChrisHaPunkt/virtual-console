@@ -44,8 +44,20 @@ server.on('listening', onListening);
 /**
  * Keymapping object for external controller
  */
-console.log('wurst');
-var keyMapping = {};
+console.log('keympapping hat funktioniert');
+var keyMapping = {
+    "btn-up": "UP",
+    "btn-left": "LEFT",
+    "btn-right": "RIGHT",
+    "btn-down": "DOWN",
+    "btn-center": "",
+    "btn-select": "",
+    "btn-start": "",
+    "btn-<": "",
+    "btn-x": "",
+    "btn-b": "",
+    "btn-a": ""
+};;
 
 sessionHandling.init(server, {
     onNewUser: function (name) {
@@ -57,7 +69,7 @@ sessionHandling.init(server, {
         sessionHandling.sendToFrontend_Message(name, 'userConnection', 'disconnected');
     },
     onMessage: function (name, type, message) {
-        console.log('wurst');
+        console.log('onMessage hat funktioniert');
         //util.log('www | user ' + name + ' says: ' + message);
         var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
         con2ioctl.send_key_event('left', message.buttonState);
@@ -71,7 +83,7 @@ sessionHandling.init(server, {
 
     },
     onGameStarted: function () {
-        console.log('onGamestarted');
+        console.log('onGamestarted hat funktioniert');
         var users = sessionHandling.getClientList();
         for (user in users) {
             var userName = user.name;
