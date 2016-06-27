@@ -86,6 +86,22 @@ canvas {
     content: "Rotate me first";
 }
 
+@media only screen and (orientation: portrait) {
+    #content-body {
+        display: none !important;
+    }
+
+}
+
+@media only screen and (orientation: landscape) {
+    #landscape_hint {
+        display: none !important;
+    }
+
+    #btn-overlayMenu::after {
+        content: "M";
+    }
+}
 
 input {
     border: 1px dotted #000000;
@@ -98,4 +114,12 @@ input {
 
 #content-body{
     display: none;
+}
+
+
+#content-body{
+    display: none;
+    position:relative;
+    height:100%;
+    width:95%;
 }

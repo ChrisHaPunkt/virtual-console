@@ -2,7 +2,8 @@ extends layout
 block login
     include loginSite
 block controller
-    |!{ controller }
+    div(id='content-body')
+        |!{ controller }
     //- adding menu button independent of controller template
 
     div(id='btn-overlayMenu')

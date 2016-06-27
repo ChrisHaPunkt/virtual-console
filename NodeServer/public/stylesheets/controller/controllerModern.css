@@ -1,9 +1,3 @@
-body{
-	background-color:black;
-}
-
-
-
 #btn-left{
 	width: 0px;
 	height: 0px;
@@ -43,13 +37,6 @@ body{
 	height:100%;
 	border-left: 0.1em solid darkgrey;
 
-}
-
-#content-body{
-	display: none;
-	position:relative;
-	height:100%;
-	width:95%;
 }
 
 #lblCheckboxRot{

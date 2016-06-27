@@ -17,32 +17,63 @@ router.get('/', function (req, res, next) {
     var gameController = {
         NEW: 5,
         MODERN: 6,
-        EXTERN:7
+        EXTERN: 7
     };
 
     util.log("CONTROLERROUTE", chosenControllerTemplate);
 
-    var controller = null;
+/*    var controller = null;
     switch (chosenControllerTemplate) {
         case gameController.MODERN:
             controller = "controller/" + "controllerModern";
             break;
         case gameController.EXTERN:
-            controller = "controller/" + "controllerForExternalGames";
+            controller = "controller/" + "controllerExternal";
             break;
         default:
-            controller = "controller/" + "controllerForExternalGames";
+            controller = "controller/" + "controllerExternal";
             break;
+    }*/
+
+    var controller = ['controllerModern', 'controllerExternal'];
+    var renderedControllerCount = 0;
+    var controllerBasePath = "controller/";
+    var htmlContent = '';
+
+    controller.forEach(function (value) {
+
+        res.render(
+            controllerBasePath + value,
+            {
+                controllerID: value
+            },
+            function (err, htmlControllerContent) {
+                htmlContent += htmlControllerContent;
+                renderedControllerCount++;
+            });
+
+    });
+
+    while(renderedControllerCount != controller.length){
+        console.log('.');
     }
 
-    res.render(controller, function (err, htmlControllerContent) {
+    console.log(renderedControllerCount);
+    console.log(htmlContent);
+
+    res.render('controller/index', {
+        title: 'Login',
+        controller: htmlContent
+    });
+
+/*    res.render(controller, function (err, htmlControllerContent) {
 
         res.render('controller/index', {
             title: 'Login',
             controller: htmlControllerContent
         });
 
-    });
+    });*/
 
 });
 
