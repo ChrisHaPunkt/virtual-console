@@ -90,7 +90,7 @@ var startNetworkServer = function (server) {
         },
         onMessage: function (id, type, data, _callback) {
             if (isLoggedIn(id)) {
-                switch (type){
+                switch (type) {
                     case 'addNewGameDetails':
                         GameHandler.addNewGame(new GameVO({
                             type: GameHandler.TYPES.external,
@@ -126,7 +126,7 @@ var startNetworkServer = function (server) {
         },
         // frontend sends data or data request
         onFrontendOutboundData: function (request, data, callbackFromClient) {
-            switch(request){
+            switch (request) {
                 case 'setControllerTemplate':
                     app.set('chosenControllerTemplate', data);
                     break;
@@ -134,10 +134,10 @@ var startNetworkServer = function (server) {
                     app.set('frontendType', data);
                     break;
                 case 'requestGameData':
-                    if(data.game){
+                    if (data.game) {
                         // game has been specified
                         // TODO get singlle game data only
-                    }else{
+                    } else {
                         // all games are requested
                         callbackFromClient(app.get('fullQualifiedGameVOs'));
                     }
@@ -156,8 +156,10 @@ var startNetworkServer = function (server) {
                     break;
                 case 'gameSelected':
                     app.set("selectedGame", data.gameUniqueName);
+                    break;
                 case 'gameStarted':
                     callback.onGameStarted();
+                    break;
                 default:
                     console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }

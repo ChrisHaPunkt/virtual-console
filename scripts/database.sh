@@ -50,5 +50,4 @@ case $1 in
     ;;
 
 esac
-#$SHELL
 exit 0
