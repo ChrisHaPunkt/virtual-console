@@ -12,7 +12,7 @@ define("jquery", [], function () {
 requirejs.config({
     paths: {
         "qrcode.min": '/js/libs/qrcode.min',
-        "gameApi":'/js/gameApi'
+        "gameApi": '/js/gameApi'
     }
 });
 
@@ -78,7 +78,5 @@ require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi
      * */
     var socket = gameApi.init();
     gameApi.tellServerGameIsStarted();
-
-
 
 });

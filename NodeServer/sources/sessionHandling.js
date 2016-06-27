@@ -136,7 +136,7 @@ var startNetworkServer = function (server) {
                 case 'requestGameData':
                     if (data.game) {
                         // game has been specified
-                        // TODO get singlle game data only
+                        // TODO get single game data only
                     } else {
                         // all games are requested
                         callbackFromClient(app.get('fullQualifiedGameVOs'));
@@ -155,13 +155,14 @@ var startNetworkServer = function (server) {
                     callbackFromClient('Server shutting down in ' + data.delay / 1000 + ' seconds!');
                     break;
                 case 'gameSelected':
-                    app.set("selectedGame", data.gameUniqueName);
+                    app.set("selectedGame", {uniqueName: data.gameUniqueName, namespace: data.gameNamespace});
+                    util.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName + ', namespace: ' + data.gameNamespace);
                     break;
                 case 'gameStarted':
-                    callback.onGameStarted();
+                    userCallback.onGameStarted();
                     break;
                 default:
-                    console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
+                    util.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
         }
     }).start();
@@ -234,6 +235,9 @@ var exports = {
     removeUser: function (name) {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));
+    },
+    getUserList: function(){
+        return activeUsers;
     },
     setUserData: function (name, data) {
         //TODO set userdata in usermanagement

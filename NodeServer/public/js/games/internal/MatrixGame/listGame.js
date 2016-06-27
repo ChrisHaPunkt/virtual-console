@@ -21,9 +21,6 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
      * */
     gameApi.frontendInboundMessage = function (data) {
 
-
-
-
         var clientName = data.data.clientName;
         var message = data.data.message;
 
@@ -53,18 +50,10 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
         }
 
 
-
     };
-    gameApi.tellServerGameIsStarted();
-
-/*
-*/
-
-
-
 
     /*
-    Game-Anwendung
+     Game-Anwendung
      */
     var initUserContainer = function (name) {
         //  domContainer.append('<div id="' + name + '" class="user-container"><div class="user-name">' + name + '</div><div class="user-messages"><ul class="messages"></ul></div></div>');
@@ -110,6 +99,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
      * GAME INIT
      * */
     var gameSocketInstance = gameApi.init();
+    gameApi.tellServerGameIsStarted();
 
     /**
      * EXPORTs

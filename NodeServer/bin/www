@@ -93,14 +93,17 @@ sessionHandling.init(server, {
     },
     onGameStarted: function () {
         console.log('onGamestarted hat funktioniert');
-        var users = sessionHandling.getClientList();
-        if (isGameExtOrInt) {
+        var users = sessionHandling.getUserList();
+        /*
+        // TODO FIX IF CONDITION
+        if (isGameExtOrInt){
             for (user in users) {
-                var userName = user.name;
+                var userName = user.userName;
                 var gameID = app.get("selectedGame");
                 if (os.platform() == 'linux') keyMapping[userName] = Keymapping.getDefaultHWKeyMapping(gameID, userName);
             }
         }
+        */
 
     },
 

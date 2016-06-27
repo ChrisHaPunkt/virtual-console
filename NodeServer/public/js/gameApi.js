@@ -225,6 +225,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         _initOverlayMenuHandler: function () {
             this.overlayMenu.eventHandler = {
                 'overLayButton_Main_Menu': function () {
+                    this.sendToServer_Data('gameSelected', {gameUniqueName: 'main_menu'}, function(){});
                     window.location = '/menu';
                 }.bind(this),
                 'overLayButton_Settings': function () {
@@ -250,7 +251,8 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
             // bind click handler to overlay menu buttons via class
             var that = this;
             // add event also to dynamic created elements // http://stackoverflow.com/a/18144022
-            $('#overLayActiveButtons').on('click', '.overlayMenuItem', function () {
+            $('#overlayMenuContent').on('click', '.overlayMenuItem', function () {
+                console.log(this.id, 'CLICKED!!');
                 // call button id specific event handler
                 that.overlayMenu.eventHandler[this.id]();
 
@@ -327,14 +329,13 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                         case 'btn-down':
                             this.moveActiveMenuItem('down');
                             break;
-                        case 'btn-enter':
+                        case 'btn-select':
                             this.triggerActiveMenuItem();
                             break;
                     }
                 }
             } else {
                 if (data.type === 'button' && data.data.message.buttonName === 'btn-overlayMenu') {
-                    console.log(data);
                     this.overlayMenu.domElement.css('display', 'flex');
                     this.overlayMenu.isActive = true;
                     this.overlayMenu.activeUser = data.data.clientName;

@@ -95,6 +95,6 @@ require(["mainMenu", "gameApi", "jquery",'../libs/jquery.noty.packaged.min'], fu
      * */
     var domContainer = $("#gameContainer");
     var mainMenuInstance = new mainMenu(domContainer, gameApi);
-    console.log(mainMenuInstance);
+    gameApi.tellServerGameIsStarted();
 
 });
