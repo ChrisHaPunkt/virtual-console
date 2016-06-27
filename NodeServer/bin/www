@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('NodeServer:server');
 var http = require('http');
 var util = require('util');
+var os = require('os');
 
 var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
