@@ -230,7 +230,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
             }
 
         }
-
+//
         GameHandler.initRenderer();
         GameHandler.addNewGameObj();
         GameHandler.initCameraPosition(1000);
