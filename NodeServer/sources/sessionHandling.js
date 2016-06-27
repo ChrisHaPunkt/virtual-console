@@ -156,6 +156,7 @@ var startNetworkServer = function (server) {
                     break;
                 case 'gameSelected':
                     app.set("selectedGame", data.gameUniqueName);
+                    console.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName);
                 case 'gameStarted':
                     callback.onGameStarted();
                 default:

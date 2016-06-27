@@ -221,6 +221,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         _initOverlayMenuHandler: function () {
             this.overlayMenu.eventHandler = {
                 'overLayButton_Main_Menu': function () {
+                    this.sendToServer_Data('gameSelected', {gameUniqueName: 'main_menu'}, function(){});
                     window.location = '/menu';
                 }.bind(this),
                 'overLayButton_Settings': function () {
