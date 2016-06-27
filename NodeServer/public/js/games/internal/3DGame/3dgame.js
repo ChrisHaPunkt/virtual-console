@@ -234,6 +234,7 @@ define(['jquery', 'three', 'gameApi', "Chart"], function ($, THREE, gameApi, Cha
         GameHandler.initRenderer();
         GameHandler.addNewGameObj();
         GameHandler.initCameraPosition(1000);
+        gameApi.tellServerGameIsStarted();
         GameHandler.render();
 
         GameHandler.setRotationContinously(0, {x: 0, y: 10, z: 0});

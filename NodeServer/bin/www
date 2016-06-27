@@ -85,10 +85,12 @@ sessionHandling.init(server, {
     onGameStarted: function () {
         console.log('onGamestarted hat funktioniert');
         var users = sessionHandling.getClientList();
-        for (user in users) {
-            var userName = user.name;
-            var gameID = app.get("selectedGame");
-            keyMapping[userName] = con2ioctl.getKeyMapping(gameID, userName);
+        if (isGameExtOrInt){
+            for (user in users) {
+                var userName = user.name;
+                var gameID = app.get("selectedGame");
+                keyMapping[userName] = con2ioctl.getKeyMapping(gameID, userName);
+            }
         }
 
     },

@@ -70,6 +70,7 @@ define([
             carPreloadQueue.forEach(function (clientName) {
                 addCarIfPossible(clientName);
             });
+            gameApi.tellServerGameIsStarted();
         },
         update: function () {
             game.physics.arcade.collide(carGroup, obstacleGroup, function (c, t) {

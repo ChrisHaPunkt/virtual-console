@@ -392,7 +392,6 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                 this.addLogMessage(this.log.DEBUG, 'error', 'Trying to send controller template before setting it.');
             }
         },
-
         sendToUser: function (name, message) {
             var msg = {};
             msg.data = message;
@@ -410,7 +409,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                 game: gameId ? gameId : null
             }, callback);
         },
-        tellServerGameIsStarted: function (uniqueName, callback) {
+        tellServerGameIsStarted: function (callback) {
             this.sendToServer_Data('gameStarted', {
             }, callback);
         }
