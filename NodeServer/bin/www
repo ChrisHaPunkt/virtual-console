@@ -90,7 +90,7 @@ sessionHandling.init(server, {
             for (user in users) {
                 var userName = user.name;
                 var gameID = app.get("selectedGame");
-                if(os.platform() == 'linux') keyMapping[userName] = con2ioctl.getKeyMapping(gameID, userName);
+                if(os.platform() == 'linux') keyMapping[userName] = con2ioctl.getDefaultKeyMapping(gameID, userName);
             }
         }
 
