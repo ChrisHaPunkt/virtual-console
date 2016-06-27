@@ -86,6 +86,7 @@ sessionHandling.init(server, {
     onGameStarted: function () {
         console.log('onGamestarted hat funktioniert');
         var users = sessionHandling.getUserList();
+        /*
         // TODO FIX IF CONDITION
         if (isGameExtOrInt){
             for (user in users) {
@@ -94,6 +95,7 @@ sessionHandling.init(server, {
                 if(os.platform() == 'linux') keyMapping[userName] = con2ioctl.getKeyMapping(gameID, userName);
             }
         }
+        */
 
     },
 
