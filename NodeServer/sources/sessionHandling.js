@@ -136,7 +136,7 @@ var startNetworkServer = function (server) {
                 case 'requestGameData':
                     if (data.game) {
                         // game has been specified
-                        // TODO get singlle game data only
+                        // TODO get single game data only
                     } else {
                         // all games are requested
                         callbackFromClient(app.get('fullQualifiedGameVOs'));
@@ -159,7 +159,7 @@ var startNetworkServer = function (server) {
                     console.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName);
                     break;
                 case 'gameStarted':
-                    callback.onGameStarted();
+                    userCallback.onGameStarted();
                     break;
                 default:
                     console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
