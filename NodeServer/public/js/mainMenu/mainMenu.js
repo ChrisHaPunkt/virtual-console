@@ -45,10 +45,14 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
                     id: game.unique_name + '_tile',
                     class: 'gameTile',
                     click: function (event, data) {
-                        gameApi.sendToServer_Data('gameSelected', {gameUniqueName: game.unique_name}, function(){});
+                        gameApi.sendToServer_Data('gameSelected', {
+                            gameUniqueName: game.unique_name,
+                            gameNamespace: game.namespace
+                        }, function(){});
                         window.location = $(this).attr('path');
                     },
                     path: game.fullUrl,
+                    //namespace: game.namespace,
                     tileIndex: i++
                 }).html(game.displayName).appendTo(parent);
             });

@@ -155,14 +155,14 @@ var startNetworkServer = function (server) {
                     callbackFromClient('Server shutting down in ' + data.delay / 1000 + ' seconds!');
                     break;
                 case 'gameSelected':
-                    app.set("selectedGame", data.gameUniqueName);
-                    console.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName);
+                    app.set("selectedGame", {uniqueName: data.gameUniqueName, namespace: data.gameNamespace});
+                    util.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName + ', namespace: ' + data.gameNamespace);
                     break;
                 case 'gameStarted':
                     userCallback.onGameStarted();
                     break;
                 default:
-                    console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
+                    util.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
         }
     }).start();
