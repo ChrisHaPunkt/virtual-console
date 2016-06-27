@@ -236,6 +236,9 @@ var exports = {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));
     },
+    getUserList: function(){
+        return activeUsers;
+    },
     setUserData: function (name, data) {
         //TODO set userdata in usermanagement
     },
