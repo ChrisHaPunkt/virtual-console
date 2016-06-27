@@ -65,12 +65,12 @@ define([
 
             // set game started
             gameHasStarted = true;
+            gameApi.tellServerGameIsStarted();
 
             // add preloaded clients
             carPreloadQueue.forEach(function (clientName) {
                 addCarIfPossible(clientName);
             });
-            gameApi.tellServerGameIsStarted();
         },
         update: function () {
             game.physics.arcade.collide(carGroup, obstacleGroup, function (c, t) {
