@@ -23,6 +23,6 @@
     "mongodb":"2.0.49",
     "requirejs":"latest",
     "tcp-port-used":"latest",
-    "uinput":"latest"
+    ## Uncomment this un unix systems for hardware emulation ## "uinput":"latest"
   }
 }
