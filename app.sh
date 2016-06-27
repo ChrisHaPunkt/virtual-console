@@ -4,7 +4,7 @@ case $1 in
     'start' )
             DIR=${PWD##*/}
             echo `dirname $0`
-            if [ DIR != "virtual-console" ]; then
+            if [ ${DIR} != "virtual-console" ]; then
                      cd "`dirname $0`"
             fi
             cd scripts
