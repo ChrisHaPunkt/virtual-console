@@ -1,0 +1,137 @@
+.myButton {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+
+    display: inline-flex;
+    -moz-box-shadow: 6px 7px 0px -1px #c21b1b;
+    -webkit-box-shadow: 6px 7px 0px -1px #c21b1b;
+    box-shadow: 6px 7px 0px -1px #c21b1b;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c74545), color-stop(1, #cf3e3e));
+    background:-moz-linear-gradient(top, #c74545 5%, #cf3e3e 100%);
+    background:-webkit-linear-gradient(top, #c74545 5%, #cf3e3e 100%);
+    background:-o-linear-gradient(top, #c74545 5%, #cf3e3e 100%);
+    background:-ms-linear-gradient(top, #c74545 5%, #cf3e3e 100%);
+    background:linear-gradient(to bottom, #c74545 5%, #cf3e3e 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c74545', endColorstr='#cf3e3e',GradientType=0);
+    background-color:#c74545;
+    -moz-border-radius:42%;
+    -webkit-border-radius:42%;
+    border-radius:100%;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:10em;
+    font-weight:bold;
+    padding:5% 5%;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #662828;
+    margin-bottom: 1%;
+}
+.myButton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cf3e3e), color-stop(1, #c74545));
+    background:-moz-linear-gradient(top, #cf3e3e 5%, #c74545 100%);
+    background:-webkit-linear-gradient(top, #cf3e3e 5%, #c74545 100%);
+    background:-o-linear-gradient(top, #cf3e3e 5%, #c74545 100%);
+    background:-ms-linear-gradient(top, #cf3e3e 5%, #c74545 100%);
+    background:linear-gradient(to bottom, #cf3e3e 5%, #c74545 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cf3e3e', endColorstr='#c74545',GradientType=0);
+    background-color:#cf3e3e;
+}
+.myButton:active {
+    position:relative;
+    top:12px;
+}
+
+.buttonName {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    text-align: center;
+}
+
+#btn-A {
+    float: left;
+}
+
+#btn-B {
+    float: right;
+}
+
+#btn-left{
+    margin-left:55%;
+    margin-top:20%;
+    width: 0px;
+    height: 0px;
+    -webkit-transform:rotate(360deg);
+    border-style: solid;
+    border-width: 125px 100px 125px 0;
+    border-color: transparent #6dc1d6 transparent transparent;
+}
+
+#btn-right{
+    margin-left:40%;
+    margin-top:20%;
+    width: 0px;
+    height: 0px;
+    -webkit-transform:rotate(360deg);
+    border-style: solid;
+    border-width: 125px 0 125px 100px;
+    border-color: transparent transparent transparent #6dc1d6;
+}
+
+#leftContent{
+    width:50%;
+    height:100%;
+    float:left;
+}
+#rightContent{
+    width:50%;
+    height:100%;
+    float:right;
+}
+
+#content-body{
+    position:relative;
+    height:100%;
+    width:100%;
+}
+
+
+
+#chkAcc{
+
+
+}
+#chkRot{
+    position:absolute;
+    left:90%;
+    top:10%;
+
+}
+#chkBat{
+    position:absolute;
+    left:10%;
+    top:90%;
+}
+#chkVid{
+    position:absolute;
+    left:90%;
+    top:90%;
+}
+
+#lblCheckboxAcc{
+    position:absolute;
+    left:10%;
+    top:10%;
+    color:white;
+    border: 1px solid white;
+}
+
+.chkSensors{
+    color:white;
+}

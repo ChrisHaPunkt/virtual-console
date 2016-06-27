@@ -130,6 +130,9 @@ var startNetworkServer = function (server) {
                 case 'setControllerTemplate':
                     app.set('chosenControllerTemplate', data);
                     break;
+                case 'setFrontendType':
+                    app.set('frontendType', data);
+                    break;
                 case 'requestGameData':
                     if(data.game){
                         // game has been specified
@@ -151,6 +154,10 @@ var startNetworkServer = function (server) {
                     }, data.delay);
                     callbackFromClient('Server shutting down in ' + data.delay / 1000 + ' seconds!');
                     break;
+                case 'gameSelected':
+                    app.set("selectedGame", data.gameUniqueName);
+                case 'gameStarted':
+                    callback.onGameStarted();
                 default:
                     console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }

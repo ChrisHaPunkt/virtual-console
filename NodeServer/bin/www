@@ -12,6 +12,8 @@ var util = require('util');
 var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
 
+var con2ioctl = require ('../sources/controller2ioctl');
+
 /**
  * Get port from environment and store in f.
  */
@@ -39,6 +41,24 @@ server.on('listening', onListening);
  * This starts the socket server and user management
  */
 
+/**
+ * Keymapping object for external controller
+ */
+console.log('keympapping hat funktioniert');
+var keyMapping = {
+    "btn-up": "UP",
+    "btn-left": "LEFT",
+    "btn-right": "RIGHT",
+    "btn-down": "DOWN",
+    "btn-center": "",
+    "btn-select": "",
+    "btn-start": "",
+    "btn-<": "",
+    "btn-x": "",
+    "btn-b": "",
+    "btn-a": ""
+};;
+
 sessionHandling.init(server, {
     onNewUser: function (name) {
         //util.log('www | new user ' + name);
@@ -49,8 +69,28 @@ sessionHandling.init(server, {
         sessionHandling.sendToFrontend_Message(name, 'userConnection', 'disconnected');
     },
     onMessage: function (name, type, message) {
+        console.log('onMessage hat funktioniert');
         //util.log('www | user ' + name + ' says: ' + message);
-        sessionHandling.sendToFrontend_Message(name, type, message);
+        var key = keyMapping[message.buttonName]; //userdistinctin fehlt!! wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
+        con2ioctl.send_key_event(key, message.buttonState);
+        util.log(key);
+        if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
+            var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
+            con2ioctl.send_key_event(key, message.buttonState);
+        } else {
+            sessionHandling.sendToFrontend_Message(name, type, message);
+        }
+
+    },
+    onGameStarted: function () {
+        console.log('onGamestarted hat funktioniert');
+        var users = sessionHandling.getClientList();
+        for (user in users) {
+            var userName = user.name;
+            var gameID = app.get("selectedGame");
+            keyMapping[userName] = con2ioctl.getKeyMapping(gameID, userName);
+        }
+
     },
 
     onFrontendConnected: function () {
@@ -125,3 +165,7 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+con2ioctl.hellotest("H");
+con2ioctl.hellotest("E");
+con2ioctl.hellotest("O");

@@ -20,27 +20,6 @@
     background-color: rgba(0, 0, 0, 0.9);
 }
 
-#overLayActiveButtons {
-    height: 100%;
-    width: 90%;
-    margin: 0 auto;
-}
-
-#overLayActiveUser{
-    position: relative;
-    bottom: 0;
-    left: 0;
-
-    width: 10em;
-    height: 5%;
-
-    transform: rotate(-90deg);
-    transform-origin: left top 0;
-
-    background-color: transparent;
-    color: white;
-}
-
 .overlayMenuItem {
     width: 50%;
     height: 5em;

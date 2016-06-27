@@ -409,6 +409,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
             this.sendToServer_Data('requestGameData', {
                 game: gameId ? gameId : null
             }, callback);
+        },
+        tellServerGameIsStarted: function (uniqueName, callback) {
+            this.sendToServer_Data('gameStarted', {
+            }, callback);
         }
 
     };
