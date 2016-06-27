@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
 case $1 in
     'start' )
+
+        pkill mongod
         DIR=${PWD##*/}
             if [ DIR != "scripts" ]; then
-                     cd `dirname $0`
+                     cd "`dirname $0`"
             fi
-        mongod --port 27111 --dbpath ../Database/storage &
+        cd .. && cd Database && cd storage
+        if [  -f mongod.lock ]; then
+            pkill mongod
+            rm mongod.lock && mongod --port 27111 --dbpath . &
+        else
+            mongod --port 27111 --dbpath . &
+        fi
         PID=$!
+        cd .. && cd .. && cd scripts
         echo ${PID} > DBPID
         # Restore the data in Database/dumpData in collections named like sub-folders
         # Comment the following line to prevent data restore
@@ -18,7 +27,21 @@ case $1 in
                      cd scripts
             fi
             echo "Stopping MongoDB..."
-            kill -INT `cat DBPID`
+
+
+            DBPIDv=`cat DBPID`
+            case "$(uname -s)" in
+
+               CYGWIN*|MINGW32*|MINGW64*|MSYS*)
+                 echo 'MS Windows'
+
+                 DBPIDv=`ps aux | awk '/mongod/ { print $1}'`
+                 echo "Mongo PID ${DBPIDv}"
+                 ;;
+
+            esac
+
+            pkill mongod || kill -INT ${DBPIDv}
             echo "" > DBPID
         ;;
 
@@ -27,5 +50,4 @@ case $1 in
     ;;
 
 esac
-
 exit 0

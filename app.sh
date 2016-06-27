@@ -3,22 +3,25 @@
 case $1 in
     'start' )
             DIR=${PWD##*/}
-            if [ DIR != "virtual-console" ]; then
-                     cd `dirname $0`
+            echo `dirname $0`
+            if [ ${DIR} != "virtual-console" ]; then
+                     cd "`dirname $0`"
             fi
-            if [ "$(cat scripts/DBPID)" != "" ]; then
+            cd scripts
+            if [ "$(cat DBPID)" != "" ]; then
 
-                if  kill -s 0 `cat scripts/DBPID`; then
+                if  kill -s 0 `cat DBPID`; then
                     echo "DB already running."
                 else
                     echo "No DB running"
-                    echo "" > scripts/DBPID
-                    bash scripts/database.sh start
+                    echo "" > DBPID
+                    pkill mongod
+                    bash database.sh start
                 fi
             else
-                bash scripts/database.sh start
+                bash database.sh start
             fi
-
+            cd ..
             DIR="NodeServer/node_modules"
 
             if [ "$(ls -A ${DIR})" ]; then
@@ -63,5 +66,4 @@ case $1 in
     ;;
 
 esac
-
 exit

@@ -65,6 +65,7 @@ define([
 
             // set game started
             gameHasStarted = true;
+            gameApi.tellServerGameIsStarted();
 
             // add preloaded clients
             carPreloadQueue.forEach(function (clientName) {

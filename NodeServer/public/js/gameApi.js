@@ -48,7 +48,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         frontendInboundData: null,
         controller: null,
         chart: {},
-        init: function () {
+        init: function (callback) {
 
             // set log level to info if not set by game
             if (this.logLevel === null)
@@ -90,7 +90,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
              * Server -> Client : 'frontendInitAck'
              */
 
-                // open socket connection to server - the origin ip of the http files is used if not specified
+            // open socket connection to server - the origin ip of the http files is used if not specified
             this.socket = io.connect();
 
             // send init request when socket is connected
@@ -131,6 +131,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
              * INIT END
              * */
             this.addLogMessage(this.log.INFO, "init", "Game Api successfully Initialized");
+
+            if (typeof callback == "function")
+                callback();
+
             return this.socket;
         },
 
@@ -221,6 +225,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         _initOverlayMenuHandler: function () {
             this.overlayMenu.eventHandler = {
                 'overLayButton_Main_Menu': function () {
+                    this.sendToServer_Data('gameSelected', {gameUniqueName: 'main_menu'}, function(){});
                     window.location = '/menu';
                 }.bind(this),
                 'overLayButton_Settings': function () {
@@ -246,7 +251,8 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
             // bind click handler to overlay menu buttons via class
             var that = this;
             // add event also to dynamic created elements // http://stackoverflow.com/a/18144022
-            $('#overLayActiveButtons').on('click', '.overlayMenuItem', function () {
+            $('#overlayMenuContent').on('click', '.overlayMenuItem', function () {
+                console.log(this.id, 'CLICKED!!');
                 // call button id specific event handler
                 that.overlayMenu.eventHandler[this.id]();
 
@@ -323,14 +329,13 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                         case 'btn-down':
                             this.moveActiveMenuItem('down');
                             break;
-                        case 'btn-enter':
+                        case 'btn-select':
                             this.triggerActiveMenuItem();
                             break;
                     }
                 }
             } else {
                 if (data.type === 'button' && data.data.message.buttonName === 'btn-overlayMenu') {
-                    console.log(data);
                     this.overlayMenu.domElement.css('display', 'flex');
                     this.overlayMenu.isActive = true;
                     this.overlayMenu.activeUser = data.data.clientName;
@@ -392,7 +397,6 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
                 this.addLogMessage(this.log.DEBUG, 'error', 'Trying to send controller template before setting it.');
             }
         },
-
         sendToUser: function (name, message) {
             var msg = {};
             msg.data = message;
@@ -409,6 +413,12 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
             this.sendToServer_Data('requestGameData', {
                 game: gameId ? gameId : null
             }, callback);
+            // set return event to call callback method provided
+            this.socket.on('responseGameData', callback);
+
+        },
+        tellServerGameIsStarted: function (uniqueName, callback) {
+            this.sendToServer_Data('gameStarted', {}, callback);
         }
 
     };

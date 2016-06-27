@@ -1,4 +1,5 @@
 NodeServer/node_modules/*
+NodeServer/package.json
 Documentation/*.log
 Documentation/*.aux
 Documentation/*.out

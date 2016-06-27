@@ -90,7 +90,7 @@ var startNetworkServer = function (server) {
         },
         onMessage: function (id, type, data, _callback) {
             if (isLoggedIn(id)) {
-                switch (type){
+                switch (type) {
                     case 'addNewGameDetails':
                         GameHandler.addNewGame(new GameVO({
                             type: GameHandler.TYPES.external,
@@ -126,15 +126,18 @@ var startNetworkServer = function (server) {
         },
         // frontend sends data or data request
         onFrontendOutboundData: function (request, data, callbackFromClient) {
-            switch(request){
+            switch (request) {
                 case 'setControllerTemplate':
                     app.set('chosenControllerTemplate', data);
                     break;
+                case 'setFrontendType':
+                    app.set('frontendType', data);
+                    break;
                 case 'requestGameData':
-                    if(data.game){
+                    if (data.game) {
                         // game has been specified
                         // TODO get single game data only
-                    }else{
+                    } else {
                         // all games are requested
                         callbackFromClient(app.get('fullQualifiedGameVOs'));
                     }
@@ -151,8 +154,15 @@ var startNetworkServer = function (server) {
                     }, data.delay);
                     callbackFromClient('Server shutting down in ' + data.delay / 1000 + ' seconds!');
                     break;
+                case 'gameSelected':
+                    app.set("selectedGame", {uniqueName: data.gameUniqueName, namespace: data.gameNamespace});
+                    util.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName + ', namespace: ' + data.gameNamespace);
+                    break;
+                case 'gameStarted':
+                    userCallback.onGameStarted();
+                    break;
                 default:
-                    console.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
+                    util.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
         }
     }).start();
@@ -225,6 +235,9 @@ var exports = {
     removeUser: function (name) {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));
+    },
+    getUserList: function(){
+        return activeUsers;
     },
     setUserData: function (name, data) {
         //TODO set userdata in usermanagement

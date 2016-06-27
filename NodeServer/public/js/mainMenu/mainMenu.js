@@ -2,7 +2,7 @@
  * Created by hannes on 31.03.2016.
  */
 
-define(['jquery', 'gameApi'], function ($, gameApi) {
+define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, gameApi, noty) {
 
         var MainMenu = function (domContainer, gameApi) {
 
@@ -45,9 +45,14 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                     id: game.unique_name + '_tile',
                     class: 'gameTile',
                     click: function (event, data) {
+                        gameApi.sendToServer_Data('gameSelected', {
+                            gameUniqueName: game.unique_name,
+                            gameNamespace: game.namespace
+                        }, function(){});
                         window.location = $(this).attr('path');
                     },
                     path: game.fullUrl,
+                    //namespace: game.namespace,
                     tileIndex: i++
                 }).html(game.displayName).appendTo(parent);
             });
@@ -57,10 +62,20 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
                 id: 'gameAddButton',
                 class: 'gameTile newPlaceholder',
                 click: function (event, data) {
-                    gameApi.sendToUser(data.clientName, {
-                        type: 'command-openGameUrlInput',
-                        data: false
-                    });
+                    if(data) {
+                        gameApi.sendToUser(data.clientName, {
+                            type: 'command-openGameUrlInput',
+                            data: false
+                        });
+                        var n = noty({
+                            type: 'alert',
+                            text: "<h2>Please Enter Details On Your Smartphone Controller</h2>",
+                            timeout: false,
+                            layout: 'topCenter'
+                        });
+                    }else{
+                        var n = noty({type: 'error', text: "Only possible from handheld device", timeout: 3000, killer: true});
+                    }
                 },
                 path: '',
                 tileIndex: i++
@@ -72,7 +87,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
         };
 
         MainMenu.prototype.redraw = function () {
-            console.log("CALLES REDRAW GAME TILES");
+            var n = noty({type: 'success', text: "update GameTiles...", timeout: 1000, killer: true});
             MainMenu.prototype.loadGameData.call(this);
         };
 

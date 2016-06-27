@@ -20,10 +20,11 @@ var GameVO = require("./sources/ValueObjects/GameVO");
 
 app.set("fullQualifiedGameVOs", false);
 
+app.set("handlingDB", false);
 var types = GameHandler.TYPES;
 
 
-/*Reinit Gmaes on
+//Reinit Gmaes on
  GameHandler.addNewGame(new GameVO({
  type: types.external,
  unique_name: "ExternalGame",
@@ -48,7 +49,7 @@ var types = GameHandler.TYPES;
  unique_name: "MatrixGame",
  displayName: "Matrix Game"
  }));
- /*
+/*
  GameHandler.updateGame(new GameVO({
  type: types.internal,
  unique_name: "3DGame",
@@ -58,21 +59,21 @@ var types = GameHandler.TYPES;
  });
 
  GameHandler.remove("3DGame");
- GameHandler.addNewGame(new GameVO({
- type: types.internal,
- unique_name: "MatrixGame",
- displayName: "Matrix Game"
- }));
+GameHandler.addNewGame(new GameVO({
+    type: types.internal,
+    unique_name: "MatrixGame",
+    displayName: "Matrix Game"
+}));
 
- GameHandler.updateGame(new GameVO({
- type: types.internal,
- unique_name: "3DGame",
- displayName: "ThreeD Game NEUER NAME"
- }), function (callback) {
- util.log("Update callback:" + callback);
- });
- /*
- GameHandler.remove("3DGame");
+GameHandler.updateGame(new GameVO({
+    type: types.internal,
+    unique_name: "3DGame",
+    displayName: "ThreeD Game NEUER NAME"
+}), function (callback) {
+    util.log("Update callback:" + callback);
+});
+/*
+GameHandler.remove("3DGame");
 
  GameHandler.addNewGame(new GameVO({
  type: types.internal,
@@ -86,7 +87,7 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-//app.use(logger(''));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -110,6 +111,7 @@ setTimeout(function () {
     });*/
 
 }, 5000);
+
 // error handlers
 
 // development error handler

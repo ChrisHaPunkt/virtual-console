@@ -12,7 +12,7 @@ define("jquery", [], function () {
 requirejs.config({
     paths: {
         "qrcode.min": '/js/libs/qrcode.min',
-        "gameApi":'/js/gameApi'
+        "gameApi": '/js/gameApi'
     }
 });
 
@@ -23,7 +23,7 @@ require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi
 
     // API config
     gameApi.logLevel = gameApi.log.INFO;
-    gameApi.controller = gameApi.controllerTemplates.MODERN;
+    gameApi.controller = gameApi.controllerTemplates.EXTERN;
 
     /**
      * Handle new Controller Data
@@ -77,12 +77,6 @@ require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi
      * INIT THE API - connect to server
      * */
     var socket = gameApi.init();
-
-    /**
-     * instantiate externalGames js
-     * */
-    var externalGamesInstance = new externalGames();
-
-    externalGamesInstance.setSelectedGame(window.location.href.match(/game=([^&]+)/)[1]);
+    gameApi.tellServerGameIsStarted();
 
 });

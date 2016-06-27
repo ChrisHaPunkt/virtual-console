@@ -74,7 +74,7 @@ function GameVO(TYPE, name, displayName, urlId) {
 
     var runningHost = config.dynamicHostname ? require('os').hostname() : config.runningHost;
     this.fullUrl = (config.runningPort == 80 || config.runningPort == 443) ?
-    config.runningProtocoll + '://' + runningHost + "/games/" + this.rel_url :
+    config.runningProtocoll + '://' + runningHost + "" + this.rel_url :
     config.runningProtocoll + '://' + runningHost + ':' + config.runningPort + this.rel_url;
 
 

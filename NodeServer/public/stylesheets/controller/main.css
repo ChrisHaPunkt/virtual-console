@@ -57,12 +57,12 @@ canvas {
     border-radius: 5em;
     font-size: 3em;
     line-height: 2;
+
     text-align: center;
 
     background-color: orangered;
     color: white;
 }
-
 #btn-overlayMenu::after {
     content: "M";
 }

@@ -3,9 +3,9 @@
  */
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../../config.json');
-
 module.exports = function () {
 
+    var System = require('./System');
     var dbURL = "mongodb://" + config.dbhost + ":" + config.dbport + "/" + config.dbcollection
     var debug = false;//config.debug;
     this.dbURL = dbURL;
@@ -14,14 +14,18 @@ module.exports = function () {
      * Connect to database
      ***************************************/
     var openDB = function (onSuccess) {
+
         MongoClient.connect(dbURL, function (error, db) {
+            
             if (error) {
-                console.log(error);
+
+              
+
             } else {
                 // if (debug) console.log("Connected to Database!");
                 onSuccess(db);
             }
-
+          
         });
     };
 
