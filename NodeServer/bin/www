@@ -86,6 +86,7 @@ sessionHandling.init(server, {
     onGameStarted: function () {
         console.log('onGamestarted hat funktioniert');
         var users = sessionHandling.getUserList();
+        // TODO FIX IF CONDITION
         if (isGameExtOrInt){
             for (user in users) {
                 var userName = user.userName;
