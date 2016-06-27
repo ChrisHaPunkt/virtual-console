@@ -79,7 +79,7 @@ sessionHandling.init(server, {
                 } else { // UserAcc
                     // Wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
                     key = Keymapping.getKeyMappingByUserGame(app.get("selectedGame").uniqueName, name, message.buttonName);
-                    util.log("GOT BUTTON: " + message.buttonName, Keymapping.getKeyMappingByUserGame(app.get('selectedGame').uniqueName, name, message.buttonName));
+                    util.log("GOT BUTTON: " + message.buttonName, key);
                 }
 
                 Keymapping.send_key_event(key, message.buttonState);

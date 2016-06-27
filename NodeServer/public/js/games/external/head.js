@@ -78,5 +78,6 @@ require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi
      * */
     var socket = gameApi.init();
     gameApi.tellServerGameIsStarted();
-
+    
+    $("#game_content").find("> iframe").focus();
 });
