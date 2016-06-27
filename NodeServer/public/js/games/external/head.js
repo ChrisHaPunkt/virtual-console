@@ -77,12 +77,8 @@ require(["externalGames", "gameApi", "jquery"], function (externalGames, gameApi
      * INIT THE API - connect to server
      * */
     var socket = gameApi.init();
+    gameApi.tellServerGameIsStarted();
 
-    /**
-     * instantiate externalGames js
-     * */
-    var externalGamesInstance = new externalGames();
 
-    externalGamesInstance.setSelectedGame(window.location.href.match(/game=([^&]+)/)[1]);
 
 });

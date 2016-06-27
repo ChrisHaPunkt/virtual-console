@@ -55,7 +55,7 @@ define(['jquery', 'gameApi'], function ($, gameApi) {
 
 
     };
-
+    gameApi.tellServerGameIsStarted();
 
 /*
 */
