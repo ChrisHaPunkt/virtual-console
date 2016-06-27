@@ -106,7 +106,16 @@ sessionHandling.init(server, {
         } else if (type == 'messageToAllClients') {
             sessionHandling.broadcastMessage(data.data);
         }
+    },
+    
+
+    onFrontendOutboundData: function (request, data) {
+    if (request == 'setControllerTemplate'){
+        app.set('chosenControllerTemplate', data);
+        util.log('www | frontend set controller template!');
     }
+}
+
 
 }).start();
 /**
@@ -168,7 +177,3 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
-
-if(os.platform() == 'linux') con2ioctl.hellotest("H");
-if(os.platform() == 'linux') con2ioctl.hellotest("E");
-if(os.platform() == 'linux') con2ioctl.hellotest("O");

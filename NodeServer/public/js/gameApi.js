@@ -48,7 +48,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         frontendInboundData: null,
         controller: null,
         chart: {},
-        init: function () {
+        init: function (callback) {
 
             // set log level to info if not set by game
             if (this.logLevel === null)
@@ -90,7 +90,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
              * Server -> Client : 'frontendInitAck'
              */
 
-                // open socket connection to server - the origin ip of the http files is used if not specified
+            // open socket connection to server - the origin ip of the http files is used if not specified
             this.socket = io.connect();
 
             // send init request when socket is connected
@@ -131,6 +131,10 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
              * INIT END
              * */
             this.addLogMessage(this.log.INFO, "init", "Game Api successfully Initialized");
+
+            if (typeof callback == "function")
+                callback();
+
             return this.socket;
         },
 
@@ -408,10 +412,12 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
             this.sendToServer_Data('requestGameData', {
                 game: gameId ? gameId : null
             }, callback);
+            // set return event to call callback method provided
+            this.socket.on('responseGameData', callback);
+
         },
-        tellServerGameIsStarted: function (callback) {
-            this.sendToServer_Data('gameStarted', {
-            }, callback);
+        tellServerGameIsStarted: function (uniqueName, callback) {
+            this.sendToServer_Data('gameStarted', {}, callback);
         }
 
     };
