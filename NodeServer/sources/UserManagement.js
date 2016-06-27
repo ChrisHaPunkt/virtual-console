@@ -4,6 +4,7 @@
 
 var config = require('../../config.json');
 var database = require('./Database.js')();
+var Keymapping = require('./Keymapping');
 
 module.exports = function () {
     var debug = config.debug;
@@ -14,7 +15,7 @@ module.exports = function () {
          * Register a user
          **************************************/
         registerUser: function (name, password, callback) {
-            var User = {name: name, password: password};
+            var User = {name: name, password: password, keymapping: {}};
             var query = {name: name};
 
             var registerCallback = function (state, data) {

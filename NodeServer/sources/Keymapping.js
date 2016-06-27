@@ -1,55 +1,81 @@
 /**
  * Created by michaelschleiss on 10.05.16.
  */
-var uinput = require('uinput');
-var Database = require('./Database');
-var setup_options = {
-    EV_KEY: [uinput.KEY_RIGHT,
-        uinput.KEY_LEFT,
-        uinput.KEY_UP,
-        uinput.KEY_DOWN,
-        uinput.KEY_SPACE,
-        uinput.KEY_ENTER,
-        uinput.KEY_Y,
-        uinput.KEY_X,
-        uinput.KEY_A,
-        uinput.KEY_B,
-        uinput.KEY_O]
-}
+var os = require('os');
+var debug = require('../../config.json').debug;
+
+
+var Database = require('./Database')();
+var util = require('util');
+
 var Keymapping = {
-
-    getDefaultKeyMapping: function (gameID, playerID) {
-
-        return {
-            "btn-up": "UP",
-            "btn-left": "LEFT",
-            "btn-right": "RIGHT",
-            "btn-down": "DOWN",
-            "btn-center": "",
-            "btn-select": "ENTER",
-            "btn-start": "ENTER",
-            "btn-y": "Y",
-            "btn-x": "X",
-            "btn-b": "B",
-            "btn-a": "A"
-        };
+    MAP: {
     },
-    getKeyMappingByUserGame: function (gameID, playerID) {
+    init: function (ready) {
+        if (debug) util.log("Init Keymapping Cache...");
+        var that = this;
+        this.createKeymappingFromDB(function (success) {
+            if (success) {
+                if (typeof ready == "function")
+                    ready(that.MAP);
+            } else {
+                console.error("Error Keymapping init");
+            }
+            if (debug) util.log("Init Keymapping Cache... Finished");
+        })
+        
+    },
+    createKeymappingFromDB: function (onSuccess) {
+        var that = this;
+        var query = {keymapping: {$exists: true, $nin: [{}]}};
 
+        var queryCallback = function (state, users) {
+            if (debug) util.log("Got Keymappings for", users.length, "Users");
+            if (state) {
 
-        return {
-            "btn-up": "UP",
-            "btn-left": "LEFT",
-            "btn-right": "RIGHT",
-            "btn-down": "DOWN",
-            "btn-center": "",
-            "btn-select": "ENTER",
-            "btn-start": "ENTER",
-            "btn-y": "Y",
-            "btn-x": "X",
-            "btn-b": "B",
-            "btn-a": "A"
+             //   util.log(users);
+
+                users.forEach(function (user) {
+                    that.MAP[user.name] = {};
+                    for (var game in user.keymapping) {
+                        // skip loop if the property is from prototype
+                        if(!user.keymapping.hasOwnProperty(game)) continue;
+
+                        // your code
+                   //     util.log(user.name, game + " = " , user.keymapping[game]);
+                        that.MAP[user.name][game] = user.keymapping[game];
+                    }
+
+                });
+                onSuccess(true);
+            } else {
+                onSuccess(false, "No Games present in DB");
+            }
         };
+        Database.query("userData", query, queryCallback);
+    },
+
+    defaultMapping: {
+        "btn-up": "UP",
+        "btn-left": "LEFT",
+        "btn-right": "RIGHT",
+        "btn-down": "DOWN",
+        "btn-center": "",
+        "btn-select": "ENTER",
+        "btn-start": "ENTER",
+        "btn-y": "Y",
+        "btn-x": "X",
+        "btn-b": "B",
+        "btn-a": "A"
+    },
+
+    getDefaultHWKeyMapping: function (buttonName) {
+
+        return this.defaultMapping[buttonName];
+    },
+    getKeyMappingByUserGame: function (gameID, playerID, buttonName) {
+
+        return this.MAP[playerID][gameID][buttonName];
     },
 
     hellotest: function (buttonName) {
@@ -85,40 +111,64 @@ var Keymapping = {
     }
 };
 var meinStream;
-
-uinput.setup(setup_options, function (err, stream) {
-    if (err) {
-        throw(err);
-    }
-    meinStream = stream;
-
-    var create_options = {
-        name: 'myuinput',
-        id: {
-            bustype: uinput.BUS_VIRTUAL,
-            vendor: 0x1,
-            product: 0x1,
-            version: 1
+if (os.platform() == 'linux') {
+    try {
+        var uinput = require('uinput');
+        Keymapping.HWSUPP = true;
+        var setup_options = {
+            EV_KEY: [uinput.KEY_RIGHT,
+                uinput.KEY_LEFT,
+                uinput.KEY_UP,
+                uinput.KEY_DOWN,
+                uinput.KEY_SPACE,
+                uinput.KEY_ENTER,
+                uinput.KEY_Y,
+                uinput.KEY_X,
+                uinput.KEY_A,
+                uinput.KEY_B,
+                uinput.KEY_O]
         }
-    };
+        uinput.setup(setup_options, function (err, stream) {
+            if (err) {
+                throw(err);
+            }
+            meinStream = stream;
 
-    uinput.create(stream, create_options, function (err) {
-        if (err) {
-            throw(err);
-        }
+            var create_options = {
+                name: 'myuinput',
+                id: {
+                    bustype: uinput.BUS_VIRTUAL,
+                    vendor: 0x1,
+                    product: 0x1,
+                    version: 1
+                }
+            };
 
-    });
-
-    Keymapping.send_key_event = function (buttonName, buttonState) {
-
-        setTimeout(function () {
-            uinput.send_event(meinStream, uinput.EV_KEY, uinput["KEY_" + buttonName], buttonState - 7, function (err) {
+            uinput.create(stream, create_options, function (err) {
                 if (err) {
                     throw(err);
                 }
+
             });
-        }, 1);
-    };
-});
+
+            Keymapping.send_key_event = function (buttonName, buttonState) {
+
+                setTimeout(function () {
+                    uinput.send_event(meinStream, uinput.EV_KEY, uinput["KEY_" + buttonName], buttonState - 7, function (err) {
+                        if (err) {
+                            throw(err);
+                        }
+                    });
+                }, 1);
+            };
+        });
+    } catch (e) {
+        console.error("FATAL, cannot load uinput on unix system");
+
+    }
+}
+else {
+    Keymapping.HWSUPP = false;
+}
 
 module.exports = Keymapping;

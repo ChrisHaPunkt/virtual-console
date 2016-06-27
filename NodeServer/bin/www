@@ -13,7 +13,7 @@ var os = require('os');
 var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
 
-if(os.platform() == 'linux') var con2ioctl = require ('../sources/controller2ioctl');
+var Keymapping = require('../sources/Keymapping');
 
 /**
  * Get port from environment and store in f.
@@ -31,7 +31,6 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(app.get('port'));
 server.on('error', onError);
 server.on('listening', onListening);
@@ -46,20 +45,10 @@ server.on('listening', onListening);
  * Keymapping object for external controller
  */
 console.log('keympapping hat funktioniert');
-var keyMapping = {
-    "btn-up": "UP",
-    "btn-left": "LEFT",
-    "btn-right": "RIGHT",
-    "btn-down": "DOWN",
-    "btn-center": "",
-    "btn-select": "",
-    "btn-start": "",
-    "btn-<": "",
-    "btn-x": "",
-    "btn-b": "",
-    "btn-a": ""
-};;
 
+Keymapping.init(function (MAP) {
+    util.log("fineished MAP: ",MAP)
+});
 sessionHandling.init(server, {
     onNewUser: function (name) {
         //util.log('www | new user ' + name);
@@ -70,14 +59,33 @@ sessionHandling.init(server, {
         sessionHandling.sendToFrontend_Message(name, 'userConnection', 'disconnected');
     },
     onMessage: function (name, type, message) {
+        util.log('www | user ' + name + ' says: ' + message + " asd as " + name.indexOf("User_"));
+
         console.log('onMessage hat funktioniert');
-        //util.log('www | user ' + name + ' says: ' + message);
-        var key = keyMapping[message.buttonName]; //userdistinctin fehlt!! wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
-        if(os.platform() == 'linux') con2ioctl.send_key_event(key, message.buttonState);
-        util.log(key);
-        if (app.get('frontendType') == 'external'){ // distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
-            var key = keyMapping[name][message.buttonName]; //wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
-            if(os.platform() == 'linux') con2ioctl.send_key_event(key, message.buttonState);
+
+        /**
+         * distinguish between buttons that will be handled by game internally or by 'hardwarebuttons' sent to Operating System (ioctl)
+         */
+        util.log("GOT BUTTON: "+message.buttonName, Keymapping.getKeyMappingByUserGame("carsGame", name, message.buttonName));
+        if (app.get('selectedGame').namespace == 'external' ) {
+            var key;
+            
+            // TODO: Distinguish between button and sensorData
+            // Anonymer Benutzer, dann nutze generisches Keymapping 
+            if (name.indexOf("User_") === 0) { // AnonymUser (Beginnt mit "User_"
+                key = Keymapping.getDefaultHWKeyMapping(message.buttonName);
+
+            } else { // UserAcc
+                // Wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
+                key = Keymapping.getKeyMappingByUserGame(app.get("selectedGame").uniqueName, name, message.buttonName); 
+            }
+            
+            if (Keymapping.HWSUPP) {
+                Keymapping.send_key_event(key, message.buttonState);
+            }
+            else {
+                sessionHandling.sendToFrontend_Message(name, type, message);
+            }
         } else {
             sessionHandling.sendToFrontend_Message(name, type, message);
         }
@@ -86,11 +94,11 @@ sessionHandling.init(server, {
     onGameStarted: function () {
         console.log('onGamestarted hat funktioniert');
         var users = sessionHandling.getClientList();
-        if (isGameExtOrInt){
+        if (isGameExtOrInt) {
             for (user in users) {
                 var userName = user.name;
                 var gameID = app.get("selectedGame");
-                if(os.platform() == 'linux') keyMapping[userName] = con2ioctl.getDefaultKeyMapping(gameID, userName);
+                if (os.platform() == 'linux') keyMapping[userName] = Keymapping.getDefaultHWKeyMapping(gameID, userName);
             }
         }
 
@@ -107,14 +115,14 @@ sessionHandling.init(server, {
             sessionHandling.broadcastMessage(data.data);
         }
     },
-    
+
 
     onFrontendOutboundData: function (request, data) {
-    if (request == 'setControllerTemplate'){
-        app.set('chosenControllerTemplate', data);
-        util.log('www | frontend set controller template!');
+        if (request == 'setControllerTemplate') {
+            app.set('chosenControllerTemplate', data);
+            util.log('www | frontend set controller template!');
+        }
     }
-}
 
 
 }).start();
