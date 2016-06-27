@@ -9,8 +9,7 @@ var Database = require('./Database')();
 var util = require('util');
 
 var Keymapping = {
-    MAP: {
-    },
+    MAP: {},
     init: function (ready) {
         if (debug) util.log("Init Keymapping Cache...");
         var that = this;
@@ -23,7 +22,7 @@ var Keymapping = {
             }
             if (debug) util.log("Init Keymapping Cache... Finished");
         })
-        
+
     },
     createKeymappingFromDB: function (onSuccess) {
         var that = this;
@@ -33,16 +32,16 @@ var Keymapping = {
             if (debug) util.log("Got Keymappings for", users.length, "Users");
             if (state) {
 
-             //   util.log(users);
+                //   util.log(users);
 
                 users.forEach(function (user) {
                     that.MAP[user.name] = {};
                     for (var game in user.keymapping) {
                         // skip loop if the property is from prototype
-                        if(!user.keymapping.hasOwnProperty(game)) continue;
+                        if (!user.keymapping.hasOwnProperty(game)) continue;
 
                         // your code
-                   //     util.log(user.name, game + " = " , user.keymapping[game]);
+                        //     util.log(user.name, game + " = " , user.keymapping[game]);
                         that.MAP[user.name][game] = user.keymapping[game];
                     }
 
@@ -75,7 +74,13 @@ var Keymapping = {
     },
     getKeyMappingByUserGame: function (gameID, playerID, buttonName) {
 
-        return this.MAP[playerID][gameID][buttonName];
+        util.log("Request HW-Button '" + buttonName + "' for player '" + playerID + "' in game '" + gameID + "'");
+        try {
+            return this.MAP[playerID][gameID][buttonName];
+        }catch (e){
+            util.log("No entry for this game and this player, delivering default...");
+            return this.defaultMapping[buttonName];
+        }
     },
 
     hellotest: function (buttonName) {
