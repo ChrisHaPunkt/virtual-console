@@ -58,17 +58,20 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
                 id: 'gameAddButton',
                 class: 'gameTile newPlaceholder',
                 click: function (event, data) {
-                    gameApi.sendToUser(data.clientName, {
-                        type: 'command-openGameUrlInput',
-                        data: false
-                    });
-                    var n = noty({
-                        type: 'alert',
-                        text: "<h2>Please Enter Details On Your Smartphone Controller</h2>",
-                        timeout: false,
-                        layout: 'topCenter'
-                    });
-
+                    if(data) {
+                        gameApi.sendToUser(data.clientName, {
+                            type: 'command-openGameUrlInput',
+                            data: false
+                        });
+                        var n = noty({
+                            type: 'alert',
+                            text: "<h2>Please Enter Details On Your Smartphone Controller</h2>",
+                            timeout: false,
+                            layout: 'topCenter'
+                        });
+                    }else{
+                        var n = noty({type: 'error', text: "Only possible from handheld device", timeout: 3000, killer: true});
+                    }
                 },
                 path: '',
                 tileIndex: i++

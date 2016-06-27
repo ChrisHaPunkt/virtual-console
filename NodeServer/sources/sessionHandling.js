@@ -136,7 +136,7 @@ var startNetworkServer = function (server) {
                 case 'requestGameData':
                     if(data.game){
                         // game has been specified
-                        // TODO get single game data only
+                        // TODO get singlle game data only
                     }else{
                         // all games are requested
                         callbackFromClient(app.get('fullQualifiedGameVOs'));

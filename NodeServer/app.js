@@ -20,6 +20,7 @@ var GameVO = require("./sources/ValueObjects/GameVO");
 
 app.set("fullQualifiedGameVOs", false);
 
+app.set("handlingDB", false);
 var types = GameHandler.TYPES;
 
 
