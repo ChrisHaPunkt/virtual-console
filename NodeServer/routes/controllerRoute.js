@@ -9,20 +9,13 @@ requirejs.config({
     nodeRequire: require
 });
 var router = express.Router();
+var htmlControllerContent = '';
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    var chosenControllerTemplate = require('../app').get('chosenControllerTemplate');
 
-    var gameController = {
-        NEW: 5,
-        MODERN: 6,
-        EXTERN: 7
-    };
-
-    util.log("CONTROLERROUTE", chosenControllerTemplate);
-
-/*    var controller = null;
+    /*
+    var controller = null;
     switch (chosenControllerTemplate) {
         case gameController.MODERN:
             controller = "controller/" + "controllerModern";
@@ -35,45 +28,52 @@ router.get('/', function (req, res, next) {
             break;
     }*/
 
-    var controller = ['controllerModern', 'controllerExternal'];
+    // TODO Fix mapping
+    var gameController = {
+        NEW: 5,
+        MODERN: 6,
+        EXTERN: 7
+    };
+    var controller = {
+        controllerModern: gameController.MODERN,
+        controllerExternal: gameController.EXTERN
+    };
+
     var renderedControllerCount = 0;
     var controllerBasePath = "controller/";
-    var htmlContent = '';
 
-    controller.forEach(function (value) {
+    // pre-render each controller template and add to one string variable 'htmlContent' if not done before
+    if (htmlControllerContent === '') {
+        for (var key in controller) {
 
-        res.render(
-            controllerBasePath + value,
-            {
-                controllerID: value
-            },
-            function (err, htmlControllerContent) {
-                htmlContent += htmlControllerContent;
-                renderedControllerCount++;
-            });
+            if (!controller.hasOwnProperty(key)) continue;
 
-    });
+            res.render(
+                controllerBasePath + key,
+                {
+                    controllerID: 'controller_' + controller[key],
+                    controllerCSS: key
+                },
+                function (err, tmpContent) {
+                    htmlControllerContent += tmpContent;
+                    renderedControllerCount++;
+                });
 
-    while(renderedControllerCount != controller.length){
-        console.log('.');
+        }
+        // wait for all render functions to return
+        // TODO: improve, this blocks the program
+        while (renderedControllerCount != Object.keys(controller).length) {
+            console.log('.');
+        }
     }
 
-    console.log(renderedControllerCount);
-    console.log(htmlContent);
+    console.log(htmlControllerContent);
 
+    // render controller main template with all controllers
     res.render('controller/index', {
-        title: 'Login',
-        controller: htmlContent
+        title: 'Controller',
+        controller: htmlControllerContent
     });
-
-/*    res.render(controller, function (err, htmlControllerContent) {
-
-        res.render('controller/index', {
-            title: 'Login',
-            controller: htmlControllerContent
-        });
-
-    });*/
 
 });
 

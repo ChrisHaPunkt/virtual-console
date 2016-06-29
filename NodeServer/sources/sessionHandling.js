@@ -129,6 +129,8 @@ var startNetworkServer = function (server) {
             switch (request) {
                 case 'setControllerTemplate':
                     app.set('chosenControllerTemplate', data);
+                    // send command to all clients to change controller template
+                    exports.broadcastMessage('loadControllerTemplate', data);
                     break;
                 case 'setFrontendType':
                     app.set('frontendType', data);
@@ -236,7 +238,7 @@ var exports = {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));
     },
-    getUserList: function(){
+    getUserList: function () {
         return activeUsers;
     },
     setUserData: function (name, data) {

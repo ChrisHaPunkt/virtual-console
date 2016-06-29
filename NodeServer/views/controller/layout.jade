@@ -2,16 +2,16 @@ doctype html
 html
     head
         title= title
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
         meta(name = 'mobile-web-app-capable', content = 'yes')
 
         link(rel='stylesheet', href='/stylesheets/controller/main.css')
         link(rel='stylesheet', href='/stylesheets/animate.css')
         link(rel='stylesheet', href='/stylesheets/buttons.css')
         link(rel='stylesheet', href='stylesheets/controller/login.css', media='screen')
+        link(id='controller_css', rel='stylesheet', href='')
         script(src="/js/libs/jquery.js")
         script(data-main='js/controllerJS/controllerMain.js', src='js/libs/require.js')
-
-
     body
         block login
         block controller

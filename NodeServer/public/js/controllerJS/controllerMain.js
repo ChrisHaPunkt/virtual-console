@@ -10,9 +10,12 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
 
 
     var loginDiv = $('#login-body');
-
     var contentDiv = $('#content-body');
     var overlayMenuButton = $('#btn-overlayMenu');
+    var currentActiveController = $('#controller_7'); // hardcoded default 'EXTERN'
+    currentActiveController.show();
+    var controllerCSS = $('#controller_css');
+    controllerCSS.attr("href", "/stylesheets/controller/controllerExternal.css");
 
     var hint = {
         success: function (msg) {
@@ -41,15 +44,12 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
     ////////////////////////////////////
     //Setting Visibility of Login and Controller
     ////////////////////////////////////
+    var showLogin = function () {
+        loginDiv.show();
+    };
     var hideLogin = function () {
         //loginDiv.hide();
         loginDiv.slideUp();
-    };
-    var hideContent = function () {
-        contentDiv.hide();
-    };
-    var showLogin = function () {
-        loginDiv.show();
     };
     var showContent = function () {
         contentDiv.show();
@@ -58,6 +58,15 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             window.scrollTo(9999999, 1);
         }, 1);
         $("#landscape_hint").show()
+    };
+    var hideContent = function () {
+        contentDiv.hide();
+    };
+    var switchVisibleController = function(id){
+        currentActiveController.hide();
+        currentActiveController = $('#controller_' + id);
+        currentActiveController.show();
+        controllerCSS.attr("href", "/stylesheets/controller/" + currentActiveController.attr('controllerCSS') + ".css");
     };
     var showOverlayMenuButton = function () {
         alignOverlayMenuButton();
@@ -125,10 +134,13 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
     var resHandler = {
         onMessage: function (type, msg) {
             // do anything you want with server messages
-            console.log(type, msg);
+            console.log('Message from Server ', type, msg);
             switch (type) {
                 case 'command-openGameUrlInput':
                     showAddNewGameUrl();
+                    break;
+                case 'loadControllerTemplate':
+                    switchVisibleController(msg);
                     break;
                 default:
                     console.log('unknown command from server: ', type, msg);

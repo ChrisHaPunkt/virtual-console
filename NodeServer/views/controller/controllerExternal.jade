@@ -1,34 +1,28 @@
 //- Created by michaelschleiss on 29.10.15.
-html
-    head
-        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
-        meta(name = 'mobile-web-app-capable', content = 'yes')
-        link(rel='stylesheet', href='/stylesheets/controller/controllerExternal.css')
-    body
-        div(id=controllerID class='controllerContent')
-            .snes
-                .left
-                    .pad
-                        .control.top.myButton(id="btn-up")
-                            .arrow
-                        .control.left.myButton(id="btn-left")
-                            .arrow
-                        .control.right.myButton(id="btn-right")
-                            .arrow
-                        .control.bottom.myButton(id="btn-down")
-                            .arrow
-                        .control.middle.myButton(id="btn-center")
-                .middle
-                    .logo
-                    .logo.clone
-                    .title
-                    button.select.myButton(id="btn-select")
-                    button.start.myButton(id="btn-start")
-                .right
-                    .circle
-                        .group-1
-                            button.green.myButton(id="btn-y")
-                            button.blue.myButton(id="btn-x")
-                        .group-2
-                            button.yellow.myButton(id="btn-b")
-                            button.red.myButton(id="btn-a")
+div(id=controllerID controllerCSS = controllerCSS class='controllerContent')
+    .snes
+        .left
+            .pad
+                .control.top.myButton(id="btn-up")
+                    .arrow
+                .control.left.myButton(id="btn-left")
+                    .arrow
+                .control.right.myButton(id="btn-right")
+                    .arrow
+                .control.bottom.myButton(id="btn-down")
+                    .arrow
+                .control.middle.myButton(id="btn-center")
+        .middle
+            .logo
+            .logo.clone
+            .title
+            button.select.myButton(id="btn-select")
+            button.start.myButton(id="btn-start")
+        .right
+            .circle
+                .group-1
+                    button.green.myButton(id="btn-y")
+                    button.blue.myButton(id="btn-x")
+                .group-2
+                    button.yellow.myButton(id="btn-b")
+                    button.red.myButton(id="btn-a")

@@ -114,12 +114,11 @@ input {
 
 #content-body{
     display: none;
-}
-
-
-#content-body{
-    display: none;
     position:relative;
     height:100%;
     width:95%;
+}
+
+.controllerContent{
+    display: none;
 }

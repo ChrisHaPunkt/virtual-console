@@ -239,7 +239,7 @@ var exports = {
         return sendToFrontend('frontendInitAck', data);
     },
     broadcastMessage: function (messageType, data) {
-        return broadcastMessage('broadcast', {type: messageType, data: data});
+        return broadcastMessage({type: messageType, data: data});
     }
 };
 // exporting the actual object
