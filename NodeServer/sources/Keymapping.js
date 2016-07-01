@@ -104,9 +104,9 @@ var Keymapping = {
                 console.log(msg[0]);
                 dbuser["keymapping"] = map;
 
-                database.remove("userData", query, function () {
+                Database.remove("userData", query, function () {
 
-                    database.insert("userData", dbuser, function () {
+                    Database.insert("userData", dbuser, function () {
 
                         if (debug) util.log("User updated: ", dbuser);
 
