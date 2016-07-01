@@ -100,9 +100,23 @@ var Keymapping = {
         var callback = function (state, msg) {
             //The user exist
             if (state == true && msg[0]) {
+                var dbuser = msg[0];
                 console.log(msg[0]);
-                msg[0]["keymapping"] = map;
-                Database.update("userData", query, msg[0]);
+                dbuser["keymapping"] = map;
+
+                database.remove("userData", query, function () {
+
+                    database.insert("userData", dbuser, function () {
+
+                        if (debug) util.log("User updated: ", dbuser);
+
+                    });
+                });
+
+
+                //Database.update("userData", query, msg[0]);
+            } else {
+                util.log("Cannot update map, user " + user + " not fount in db");
             }
         };
         Database.query("userData", query, callback);
