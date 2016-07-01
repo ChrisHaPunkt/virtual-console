@@ -106,9 +106,7 @@ var Keymapping = {
             }
         };
         Database.query("userData", query, callback);
-
-        // TODO persit to DB
-        // this.init();
+        this.init();
     },
 
 
