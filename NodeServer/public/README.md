@@ -1,5 +1,8 @@
-## TODO 
-# GameApi
+## TODO @hannes
+
+# Controller ControllerMain / ClientNetwork
+ 
+# GameApi (FrontendNetwork) / Games
 
 ### Wichtige Funktionen
 Folgende Funktionen müssen vor dem Spiel implementiert werden (im aktuellen Layout in der 3dgame.js):
@@ -11,7 +14,7 @@ gameApi.frontendInboundMessage = function(controllerData){
 ```
 ### Initialisierung der API
 Sind die Funktionen gesetzt, wird die API folgendermaßen initialisiert:
-```
+```javascript
 var socketHandle = gameApi.init();
 if (socketHandle !== -1) {
  // Game Implementierung

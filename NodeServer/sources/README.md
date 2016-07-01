@@ -1,7 +1,7 @@
-## TODO @hannes @chrish
+## TODO @hannes @michaels
 
 # Classes
 
 ## Network and Session
 
-## Keymapping / Games / (System)
+## Keymapping / Games / System
