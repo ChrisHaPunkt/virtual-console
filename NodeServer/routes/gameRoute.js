@@ -30,11 +30,13 @@ function rebindGameRoutes(callback) {
 
                 util.log(bindUrl, viewRenderPath);
                 router.get(bindUrl, function (req, res, next) {
-                    if (game.type == TYPES.external)
+                    if (game.type == TYPES.external) {
+                        var url = game.contentUrl.indexOf("http") === 0 ? game.contentUrl : 'http://' + game.contentUrl;
                         res.render(viewRenderPath, {
                             title: '--:: ' + game.displayName + ' ::-- ',
-                            url: game.contentUrl
+                            url: url
                         });
+                    }
 
                     else
                         res.render(viewRenderPath, {title: '--:: ' + game.displayName + ' ::-- '});
