@@ -89,6 +89,7 @@ sessionHandling.init(server, {
                 }
 
                 Keymapping.send_key_event(key, message.buttonState);
+                sessionHandling.sendToFrontend_Message(name, type, message);
             }
             else {
                 util.log("No HW Support, external games not possible");
