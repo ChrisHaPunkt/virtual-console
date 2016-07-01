@@ -70,7 +70,7 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
                         var n = noty({
                             type: 'alert',
                             text: "<h2>Please Enter Details On Your Smartphone Controller</h2>",
-                            timeout: false,
+                            timeout: 5000,
                             layout: 'topCenter'
                         });
                     }else{

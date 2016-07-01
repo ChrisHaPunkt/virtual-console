@@ -46,8 +46,11 @@ server.on('listening', onListening);
  */
 console.log('keympapping hat funktioniert');
 
+/**
+ * Fetch Keymapping / Game / User from Database and cache it
+ */
 Keymapping.init(function (MAP) {
-    util.log("fineished MAP: ", MAP)
+    util.log("finished MAP: ", MAP)
 });
 sessionHandling.init(server, {
     onNewUser: function (name) {

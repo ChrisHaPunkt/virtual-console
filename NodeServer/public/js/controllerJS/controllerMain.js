@@ -5,7 +5,7 @@ define("jquery", [], function () {
     return jQuery.noConflict();
 });
 
-
+var testFunction;
 require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
 
@@ -108,13 +108,104 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
                 {
                     addClass: 'btn btn-danger', text: 'Cancel', onClick: function ($noty) {
                     $noty.close();
-                    noty({text: 'You clicked "Cancel" button', type: 'error'});
+                    noty({text: 'You clicked "Cancel" button', type: 'warning'});
                 }
                 }
             ]
         });
     };
 
+    var alterKeymappingsForUser = function (user) {
+
+        var spin = noty({
+            type: 'confirm',
+            modal: true,
+            layout: 'topCenter',
+            text: "<span>Fetching maps <br><br> <i class='fa fa-fw fa-spin fa-spinner'></i></span>"
+        });
+
+        /**
+         * TODO Fetch user mappings from server
+         */
+        window.setTimeout(function () {
+            spin.close();
+            var map = {
+                "ExternalGame": {
+                    "btn-up": "UP",
+                    "btn-left": "LEFT",
+                    "btn-right": "RIGHT",
+                    "btn-down": "DOWN",
+                    "btn-center": "",
+                    "btn-select": "ENTER",
+                    "btn-start": "ENTER",
+                    "btn-y": "Y",
+                    "btn-x": "X",
+                    "btn-b": "B",
+                    "btn-a": "A"
+                },
+                "matrixGame": {
+                    "btn-up": "UP",
+                    "btn-left": "LEFT",
+                    "btn-right": "RIGHT",
+                    "btn-down": "DOWN",
+                    "btn-center": "",
+                    "btn-select": "ENTER",
+                    "btn-start": "ENTER",
+                    "btn-y": "Y",
+                    "btn-x": "X",
+                    "btn-b": "B",
+                    "btn-a": "A"
+                }
+            };
+            var container =
+                '<div class="alterKeymappingContainer"><h3>Altering keymapping for ' + user + ':</h3>' +
+                '   ' +
+                '   <textarea style="width: 100%;max-width: 100%;min-height: 100%;overflow: auto" id="mapContent">' + JSON.stringify(map, undefined, 4) + '</textarea>' +
+                '</div>';
+            var n = noty({
+                type: 'confirm',
+                modal: true,
+                layout: 'topCenter',
+                text: container,
+                closeWith: ['button'],
+                buttons: [
+                    {
+                        addClass: 'btn btn-primary',
+                        text: 'Save',
+                        onClick: function ($noty) {
+                            var mapContent = $(".alterKeymappingContainer").find("#mapContent").val();
+                            // this = button element
+                            // $noty = $noty element
+
+                            $noty.close();
+                            var transferObject = {
+                                user: user,
+                                newContent: mapContent
+                            };
+
+                            socket.sendData("alterKeymapping", transferObject);
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-danger', text: 'Cancel', onClick: function ($noty) {
+                        $noty.close();
+                        noty({text: 'You clicked "Cancel" button', type: 'warning'});
+                    }
+                    }
+                ]
+            });
+
+            var text = document.getElementById('mapContent');
+            function resize () {
+                text.style.height = 'auto';
+                text.style.height = text.scrollHeight+'px';
+            }
+            resize();
+        }, 2000);
+
+
+    };
+    testFunction = alterKeymappingsForUser;
 
     ////////////////////////////////////
     //Open socket
@@ -129,6 +220,9 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             switch (type) {
                 case 'command-openGameUrlInput':
                     showAddNewGameUrl();
+                    break;
+                case 'command-alterKeymapping':
+                    alterKeymappingsForUser(msg.user);
                     break;
                 default:
                     console.log('unknown command from server: ', type, msg);
