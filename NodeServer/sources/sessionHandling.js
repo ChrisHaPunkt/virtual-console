@@ -14,6 +14,7 @@ var activeUsers = {};
 var server = 0;
 var userCallback = 0;
 var currentAnonymousUserId = 0;
+var debug = require('../../config.json').debug;
 
 /**
  * FUNCTION TO START THE UNDERLYING SERVER-NETWORK
@@ -106,10 +107,9 @@ var startNetworkServer = function (server) {
 
                         break;
                     case 'alterKeymappingForUser':
-                        util.log("UpdateMAP ", data);
+                        if (debug) util.log("UpdateMAP ", data);
                         Keymapping.updateMapForUser(data.username, data.newMap);
 
-                        util.log("NewMap",Keymapping.MAP);
                         break;
                     default:
                 }
@@ -248,7 +248,7 @@ var exports = {
         removeUserByName(name);
         network.disconnectClient(getUserIdByName(name));
     },
-    getUserList: function(){
+    getUserList: function () {
         return activeUsers;
     },
     setUserData: function (name, data) {

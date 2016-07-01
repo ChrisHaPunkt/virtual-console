@@ -95,8 +95,19 @@ var Keymapping = {
         //tempupdate
         this.MAP[user] = map;
 
+        var query = {name: user};
+
+        var callback = function (state, msg) {
+            //The user exist
+            if (state == true && msg[0]) {
+                console.log(msg[0]);
+                msg[0]["keymapping"] = map;
+                Database.update("userData", query, msg[0]);
+            }
+        };
+        Database.query("userData", query, callback);
+
         // TODO persit to DB
-        // this.persist()
         // this.init();
     },
 
