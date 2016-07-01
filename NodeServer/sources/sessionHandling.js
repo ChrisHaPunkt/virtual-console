@@ -9,11 +9,12 @@ var GameVO = require("../sources/ValueObjects/GameVO");
 var system = require('../sources/System.js');
 var app = require('../app');
 var util = require('util');
-
+var Keymapping = require('./Keymapping');
 var activeUsers = {};
 var server = 0;
 var userCallback = 0;
 var currentAnonymousUserId = 0;
+var debug = require('../../config.json').debug;
 
 /**
  * FUNCTION TO START THE UNDERLYING SERVER-NETWORK
@@ -88,7 +89,7 @@ var startNetworkServer = function (server) {
             removeUserById(id);
             _callback(true);
         },
-        onMessage: function (id, type, data, _callback) {
+        onMessage: function (id, type, data, emitCallbackFromClient, _callback) {
             if (isLoggedIn(id)) {
                 switch (type) {
                     case 'addNewGameDetails':
@@ -98,6 +99,17 @@ var startNetworkServer = function (server) {
                             displayName: data.name,
                             contentUrl: data.url
                         }));
+                        break;
+                    case 'getUserKeymapping':
+
+                        var jsonMap = Keymapping.getMapForUser(data.username);
+                        emitCallbackFromClient(jsonMap);
+
+                        break;
+                    case 'alterKeymappingForUser':
+                        if (debug) util.log("UpdateMAP ", data);
+                        Keymapping.updateMapForUser(data.username, data.newMap);
+
                         break;
                     default:
                 }

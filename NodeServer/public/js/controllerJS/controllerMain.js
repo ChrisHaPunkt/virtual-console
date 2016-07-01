@@ -5,10 +5,16 @@ define("jquery", [], function () {
     return jQuery.noConflict();
 });
 
+var jQuery;
 var testFunction;
 require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.packaged.min'], function (click, cn, sensor, $, noty) {
 
-
+    var login = {
+        anonym: null,
+        username: null,
+        state: false
+    };
+    jQuery = $;
     var loginDiv = $('#login-body');
     var contentDiv = $('#content-body');
     var overlayMenuButton = $('#btn-overlayMenu');
@@ -140,36 +146,10 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
         /**
          * TODO Fetch user mappings from server
          */
-        window.setTimeout(function () {
+        socket.sendData("getUserKeymapping", {username: user}, function(response){
             spin.close();
-            var map = {
-                "ExternalGame": {
-                    "btn-up": "UP",
-                    "btn-left": "LEFT",
-                    "btn-right": "RIGHT",
-                    "btn-down": "DOWN",
-                    "btn-center": "",
-                    "btn-select": "ENTER",
-                    "btn-start": "ENTER",
-                    "btn-y": "Y",
-                    "btn-x": "X",
-                    "btn-b": "B",
-                    "btn-a": "A"
-                },
-                "matrixGame": {
-                    "btn-up": "UP",
-                    "btn-left": "LEFT",
-                    "btn-right": "RIGHT",
-                    "btn-down": "DOWN",
-                    "btn-center": "",
-                    "btn-select": "ENTER",
-                    "btn-start": "ENTER",
-                    "btn-y": "Y",
-                    "btn-x": "X",
-                    "btn-b": "B",
-                    "btn-a": "A"
-                }
-            };
+            console.log(response);
+            var map = response;
             var container =
                 '<div class="alterKeymappingContainer"><h3>Altering keymapping for ' + user + ':</h3>' +
                 '   ' +
@@ -192,11 +172,11 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
 
                             $noty.close();
                             var transferObject = {
-                                user: user,
-                                newContent: mapContent
+                                username: user,
+                                newMap: JSON.parse(mapContent)
                             };
-
-                            socket.sendData("alterKeymapping", transferObject);
+                            console.log(transferObject);
+                            socket.sendData("alterKeymappingForUser", transferObject);
                         }
                     },
                     {
@@ -209,16 +189,25 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
             });
 
             var text = document.getElementById('mapContent');
-            function resize () {
+
+            function resize() {
                 text.style.height = 'auto';
-                text.style.height = text.scrollHeight+'px';
+                text.style.height = jQuery(window).height() * 50 / 100 + 'px';
             }
+
             resize();
-        }, 2000);
+        });
+
 
 
     };
-    testFunction = alterKeymappingsForUser;
+
+    $(".title").click(function () {
+        if (login.state === true && !login.anonym) {
+            alterKeymappingsForUser(login.username);
+        }
+
+    });
 
     ////////////////////////////////////
     //Open socket
@@ -237,8 +226,8 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
                 case 'loadControllerTemplate':
                     switchVisibleController(msg);
                     break;
-                case 'command-alterKeymapping':
-                    alterKeymappingsForUser(msg.user);
+                case 'command-userKeymapping':
+                    alterKeymappingsForUser(msg.user, msg.map);
                     break;
                 default:
                     console.log('unknown command from server: ', type, msg);
@@ -246,6 +235,11 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
         },
         onAnonymousLogin: function (data) {
             if (data.result) {
+
+                login.state = true;
+                login.anonym = true;
+                login.username = data.username;
+
                 hint.success('<b>Welcome: ' + data.username + '</b> ');
                 hideLogin();
                 showContent();
@@ -253,17 +247,30 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
 
             } else {
                 // false login
+
+                login.state = false;
+                login.anonym = null;
+                login.username = null;
             }
             console.log(data);
         },
         onLogin: function (data) {
             if (data.result) {
+
+                login.state = true;
+                login.anonym = false;
+                login.username = data.username;
+
                 hint.success('<b>Welcome: ' + data.username + '</b> ')
                 hideLogin();
                 showContent();
                 showOverlayMenuButton();
             } else {
                 // false login
+
+                login.state = false;
+                login.anonym = null;
+                login.username = null;
                 hint.error(data.message);
 
             }

@@ -60,7 +60,7 @@ define(['/socket.io/socket.io.js'], function(io) {
             if (io !== 'undefined') {
                 init(inServerUrl, inServerPort, inCallback);
                 return {
-                    sendData: function (type, data) {
+                    sendData: function (type, data, response) {
 
                         // check parameters
                         if (typeof data === 'undefined') {
@@ -73,7 +73,8 @@ define(['/socket.io/socket.io.js'], function(io) {
                         }
 
                         // send message
-                        socket.emit('message', {type: type, data: data});
+                        
+                        socket.emit('message', {type: type, data: data}, response);
                     },
                     sendLogin: function (username, password) {
                         socket.emit('login', {username: username, password: password});

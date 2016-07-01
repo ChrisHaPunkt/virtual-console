@@ -37,7 +37,7 @@ var startListening = function () {
 
         // new client connects
         addClient(socket);
-        callback.onNewClient(socket.id, function(result){
+        callback.onNewClient(socket.id, function (result) {
             // callback from session handling - not needed atm
         });
         if (debug)util.log('serverNetwork | a user id ' + socket.id + ' connected');
@@ -56,22 +56,22 @@ var startListening = function () {
 
         // frontend sends message
         socket.on('frontendOutboundMessage', function (message) {
-            if(frontend != 0) {
+            if (frontend != 0) {
                 callback.onFrontendOutboundMessage(message.type, message.data, function (result) {
                     // callback from session handling - not needed atm
                 });
                 if (debug)util.log('serverNetwork | Frontend sent a message with type ' + message.type + ' : ' + message.data);
-            }else{
+            } else {
                 util.log('serverNetwork | ERROR: Frontend sent a message without being initiated! (' + message.type + ' : ' + message.data + ')');
             }
         });
 
         // frontend sends data or data request
-        socket.on('frontendOutboundData', function(data, callbackFromClient){
-            if(frontend != 0) {
+        socket.on('frontendOutboundData', function (data, callbackFromClient) {
+            if (frontend != 0) {
                 callback.onFrontendOutboundData(data.request, data.data, callbackFromClient);
                 if (debug)util.log('serverNetwork | Frontend sent data with request ' + data.request + ' : ' + data.data);
-            }else{
+            } else {
                 util.log('serverNetwork | ERROR: Frontend sent data without being initiated! (' + data.request + ' : ' + data.data + ')');
             }
         });
@@ -79,7 +79,7 @@ var startListening = function () {
         // client registers
         socket.on('register', function (message) {
             callback.onRegister(socket.id, message.username, message.password, function (result) {
-                if(debug)util.log('serverNetwork | Register result from sessionHandling', result);
+                if (debug)util.log('serverNetwork | Register result from sessionHandling', result);
                 sendToClient(socket.id, 'register', result);
             });
         });
@@ -96,16 +96,16 @@ var startListening = function () {
         // client anonymous login
         socket.on('anonymousLogin', function () {
             // call callback method and get return value
-            callback.onAnonymousLogin(socket.id, function(result){
+            callback.onAnonymousLogin(socket.id, function (result) {
                 // send anonymous login result back to client
                 sendToClient(socket.id, 'anonymousLogin', result);
             });
         });
 
         // client sends message
-        socket.on('message', function (message) {
+        socket.on('message', function (message, _callbackFromEmit) {
             // call callback method
-            callback.onMessage(socket.id, message.type, message.data, function(result){
+            callback.onMessage(socket.id, message.type, message.data, _callbackFromEmit, function (result) {
                 // callback from session handling - not needed atm
             });
             if (debug)util.log('serverNetwork | a user id ' + socket.id + ' sent a message with type \'' + message.type + '\' : ' + JSON.stringify(message.data));
@@ -113,7 +113,7 @@ var startListening = function () {
 
         // client disconnects
         socket.on('disconnect', function () {
-            callback.onDisconnect(socket.id, function(result){
+            callback.onDisconnect(socket.id, function (result) {
                 // callback from session handling - not needed atm
             });
             deleteClient(socket.id);
@@ -169,7 +169,7 @@ var sendToClient = function (id, socketEventType, message) {
 // ONLY used by exported messaging functions (see below)
 var sendToFrontend = function (socketEventType, message) {
     if (frontend != 0) {
-        util.log("SEND REBUILD",socketEventType, message);
+        util.log("SEND REBUILD", socketEventType, message);
         frontend.emit(socketEventType, message);
         return true;
     } else {
@@ -231,11 +231,11 @@ var exports = {
         return sendToFrontend('frontendInboundMessage', {type: messageType, data: data});
     },
     // internal data function // DO NOT use for game development
-    sendToFrontend_Data: function(data){
+    sendToFrontend_Data: function (data) {
         return sendToFrontend('frontendInboundData', data);
     },
     // only used for connection establishment
-    sendToFrontend_InitAck: function(data){
+    sendToFrontend_InitAck: function (data) {
         return sendToFrontend('frontendInitAck', data);
     },
     broadcastMessage: function (messageType, data) {
