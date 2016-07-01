@@ -84,11 +84,11 @@ var Keymapping = {
     },
 
     getMapForUser: function (user) {
-        return this.MAP[user];
+        return this.MAP[user] || {"GAME": this.defaultMapping};
     },
-    
+
     updateMapForUser: function (user, map) {
-        
+
         if (typeof map != 'object')
             map = JSON.parse(map);
 
