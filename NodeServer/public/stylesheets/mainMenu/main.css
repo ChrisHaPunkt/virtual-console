@@ -31,7 +31,9 @@
     opacity: 0.4;
     background-color: grey;
     border: 2px dotted white;
-    height: 96px;
+
+    width: 5em;
+    height: 4.8em;
     font-size: 2em;
 }
 
@@ -43,8 +45,8 @@
 }
 
 .gameTile {
-    width: 100px;
-    height: 100px;
+    width: 10em;
+    height: 10em;
     margin-left: 5px;
     margin-right: 5px;
     float: left;
