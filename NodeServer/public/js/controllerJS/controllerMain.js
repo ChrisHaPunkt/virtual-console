@@ -63,10 +63,14 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
         contentDiv.hide();
     };
     var switchVisibleController = function(id){
-        currentActiveController.hide();
-        currentActiveController = $('#controller_' + id);
-        currentActiveController.show();
-        controllerCSS.attr("href", "/stylesheets/controller/" + currentActiveController.attr('controllerCSS') + ".css");
+        var tmpObject = $('#controller_' + id);
+        // check if controller DIV exists
+        if (tmpObject.length > 0) {
+            currentActiveController.hide();
+            currentActiveController = tmpObject;
+            currentActiveController.show();
+            controllerCSS.attr("href", "/stylesheets/controller/" + currentActiveController.attr('controllerCSS') + ".css");
+        }
     };
     var showOverlayMenuButton = function () {
         alignOverlayMenuButton();
