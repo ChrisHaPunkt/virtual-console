@@ -72,7 +72,7 @@ sessionHandling.init(server, {
         if (app.get('selectedGame').namespace == 'external') {
             var key;
 
-            if (Keymapping.HWSUPP) {
+            if (Keymapping.HWSUPP && message.buttonName !== "btn-overlayMenu") {
                 // TODO: Distinguish between button and sensorData
                 // Anonymer Benutzer, dann nutze generisches Keymapping
                 /**
