@@ -1,12 +1,12 @@
 {
   "name": "config",
-  "version": "0.0.1",
+  "version": "beta1",
   "dbhost": "localhost",
   "dbport": "27111",
   "dbcollection": "virtualConsole",
   "debug": true,
   "dynamicHostname": true,
-  "runningHost": "192.168.5.133",
-  "runningPort": 5223,
+  "runningHost": "localhost",
+  "runningPort": 80,
   "runningProtocoll": "http"
 }
