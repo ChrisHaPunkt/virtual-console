@@ -1,3 +1,6 @@
+## TODO 
+# GameApi
+
 ### Wichtige Funktionen
 Folgende Funktionen müssen vor dem Spiel implementiert werden (im aktuellen Layout in der 3dgame.js):
 

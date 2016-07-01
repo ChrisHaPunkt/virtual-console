@@ -1,1 +1,8 @@
-## TODO
+## TODO Chris
+
+# database.sh
+
+
+
+# prepareDeps.sh
+
