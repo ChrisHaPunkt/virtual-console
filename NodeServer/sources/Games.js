@@ -16,10 +16,12 @@ var persitNewGame = function (GameVO, callback) {
     var insertCallback = function (state, data) {
         if (state && data.length == 0) {
 
-            database.insert("games", GameVO.strip(), function(result){});
+            database.insert("games", GameVO.strip(), function(result){
+                if (typeof callback == "function")
+                    callback(true, "Game inserted " + GameVO.unique_name);
+            });
 
-            if (typeof callback == "function")
-                callback(true, "Game inserted " + GameVO.unique_name);
+
 
         } else {
             util.log("GameUnique schon vorhanden: " + data[0].unique_name);

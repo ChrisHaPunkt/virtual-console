@@ -99,6 +99,7 @@ var startNetworkServer = function (server) {
                             displayName: data.name,
                             contentUrl: data.url
                         }));
+                        
                         break;
                     case 'getUserKeymapping':
 
