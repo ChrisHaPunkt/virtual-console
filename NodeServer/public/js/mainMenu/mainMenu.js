@@ -41,6 +41,7 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
 
             // add game tiles
             this.gameData.forEach(function (game) {
+                var tileContent = $("<div>").attr("style","line-height: initial;vertical-align: middle;display: inline-flex").html(game.displayName);
                 $('<div/>', {
                     id: game.unique_name + '_tile',
                     class: 'gameTile',
@@ -48,13 +49,14 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
                         gameApi.sendToServer_Data('gameSelected', {
                             gameUniqueName: game.unique_name,
                             gameNamespace: game.namespace
-                        }, function(){});
+                        }, function () {
+                        });
                         window.location = $(this).attr('path');
                     },
                     path: game.fullUrl,
                     //namespace: game.namespace,
                     tileIndex: i++
-                }).html(game.displayName).appendTo(parent);
+                }).html(tileContent).appendTo(parent);
             });
 
             // default adding tile
@@ -62,7 +64,7 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
                 id: 'gameAddButton',
                 class: 'gameTile newPlaceholder',
                 click: function (event, data) {
-                    if(data) {
+                    if (data) {
                         gameApi.sendToUser(data.clientName, {
                             type: 'command-openGameUrlInput',
                             data: false
@@ -73,8 +75,13 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
                             timeout: 5000,
                             layout: 'topCenter'
                         });
-                    }else{
-                        var n = noty({type: 'error', text: "Only possible from handheld device", timeout: 3000, killer: true});
+                    } else {
+                        var n = noty({
+                            type: 'error',
+                            text: "Only possible from handheld device",
+                            timeout: 3000,
+                            killer: true
+                        });
                     }
                 },
                 path: '',
