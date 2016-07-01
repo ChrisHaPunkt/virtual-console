@@ -77,11 +77,29 @@ var Keymapping = {
         util.log("Request HW-Button '" + buttonName + "' for player '" + playerID + "' in game '" + gameID + "'");
         try {
             return this.MAP[playerID][gameID][buttonName];
-        }catch (e){
+        } catch (e) {
             util.log("No entry for this game and this player, delivering default...");
             return this.defaultMapping[buttonName];
         }
     },
+
+    getMapForUser: function (user) {
+        return this.MAP[user];
+    },
+    
+    updateMapForUser: function (user, map) {
+        
+        if (typeof map != 'object')
+            map = JSON.parse(map);
+
+        //tempupdate
+        this.MAP[user] = map;
+
+        // TODO persit to DB
+        // this.persist()
+        // this.init();
+    },
+
 
     hellotest: function (buttonName) {
         uinput.setup(setup_options, function (err, stream) {
@@ -114,6 +132,8 @@ var Keymapping = {
             });
         });
     }
+
+
 };
 var meinStream;
 if (os.platform() == 'linux') {
