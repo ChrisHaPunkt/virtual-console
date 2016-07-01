@@ -311,7 +311,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
          * */
         onIncomingMessage: function (data) {
             if (this.overlayMenu.isActive) {
-                if (data.type === 'button') {
+                if (data.type === 'button' && data.data.message.buttonState === this.BUTTON.UP) {
                     switch (data.data.message.buttonName) {
                         case 'btn-overlayMenu':
                             this.overlayMenu.domElement.css('display', 'none');
