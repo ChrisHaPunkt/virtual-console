@@ -25,7 +25,7 @@ var debug = config.debug;
 var startListening = function () {
     try {
         io.listen(server);
-        util.log('serverNetwork | Server listening on port ' + server.address().port);
+        if (debug) util.log('serverNetwork | Server listening on port ' + server.address().port);
     } catch (e) {
         console.error(e);
     }
@@ -60,9 +60,9 @@ var startListening = function () {
                 callback.onFrontendOutboundMessage(message.type, message.data, function (result) {
                     // callback from session handling - not needed atm
                 });
-                if (debug)util.log('serverNetwork | Frontend sent a message with type ' + message.type + ' : ' + message.data);
+                if (debug) util.log('serverNetwork | Frontend sent a message with type ' + message.type + ' : ' + message.data);
             } else {
-                util.log('serverNetwork | ERROR: Frontend sent a message without being initiated! (' + message.type + ' : ' + message.data + ')');
+                if (debug) util.log('serverNetwork | ERROR: Frontend sent a message without being initiated! (' + message.type + ' : ' + message.data + ')');
             }
         });
 
@@ -72,7 +72,7 @@ var startListening = function () {
                 callback.onFrontendOutboundData(data.request, data.data, callbackFromClient);
                 if (debug)util.log('serverNetwork | Frontend sent data with request ' + data.request + ' : ' + data.data);
             } else {
-                util.log('serverNetwork | ERROR: Frontend sent data without being initiated! (' + data.request + ' : ' + data.data + ')');
+                if (debug) util.log('serverNetwork | ERROR: Frontend sent data without being initiated! (' + data.request + ' : ' + data.data + ')');
             }
         });
 
@@ -169,7 +169,7 @@ var sendToClient = function (id, socketEventType, message) {
 // ONLY used by exported messaging functions (see below)
 var sendToFrontend = function (socketEventType, message) {
     if (frontend != 0) {
-        util.log("SEND REBUILD", socketEventType, message);
+        if (debug) util.log("SEND REBUILD", socketEventType, message);
         frontend.emit(socketEventType, message);
         return true;
     } else {

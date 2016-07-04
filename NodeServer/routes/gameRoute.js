@@ -28,7 +28,7 @@ function rebindGameRoutes(callback) {
                 'games/' + game.namespace + '/' + game.unique_name + '/frontend' :
                     'games/external/frontend';
 
-                util.log(bindUrl, viewRenderPath);
+                if (debug) util.log(bindUrl, viewRenderPath);
                 router.get(bindUrl, function (req, res, next) {
                     if (game.type == TYPES.external) {
                         var url = game.contentUrl.indexOf("http") === 0 ? game.contentUrl : 'http://' + game.contentUrl;

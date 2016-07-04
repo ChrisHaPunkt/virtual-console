@@ -16,15 +16,14 @@ var persitNewGame = function (GameVO, callback) {
     var insertCallback = function (state, data) {
         if (state && data.length == 0) {
 
-            database.insert("games", GameVO.strip(), function(result){
+            database.insert("games", GameVO.strip(), function (result) {
                 if (typeof callback == "function")
                     callback(true, "Game inserted " + GameVO.unique_name);
             });
 
 
-
         } else {
-            util.log("GameUnique schon vorhanden: " + data[0].unique_name);
+            if (debug) util.log("GameUnique schon vorhanden: " + data[0].unique_name);
 
             if (typeof callback == "function")
                 callback(false, "GameUnique schon vorhanden: " + GameVO.unique_name);
@@ -35,7 +34,7 @@ var persitNewGame = function (GameVO, callback) {
         if (typeof callback == "function")
             callback(false, "GameVO broken : " + GameVO.unique_name);
         else
-            util.log("GameVO broken : " + GameVO.unique_name)
+        if (debug) util.log("GameVO broken : " + GameVO.unique_name)
     } else {
         database.query("games", query, insertCallback);
     }
@@ -62,7 +61,7 @@ var updateGame = function (GameVO, callback) {
                 });
             });
         } else {
-            util.log("GameUnique nicht vorhanden: " + filter.unique_name);
+            if (debug) util.log("GameUnique nicht vorhanden: " + filter.unique_name);
 
             if (typeof callback == "function")
                 callback(false, "GameUnique nicht vorhanden: " + filter.unique_name);
@@ -73,7 +72,7 @@ var updateGame = function (GameVO, callback) {
         if (typeof callback == "function")
             callback(false, "GameVO broken : " + GameVO.unique_name);
         else
-            util.log("GameVO broken : " + GameVO.unique_name)
+        if (debug) util.log("GameVO broken : " + GameVO.unique_name)
     } else {
         database.query("games", query, updateCallback);
     }
@@ -138,7 +137,7 @@ var getAllGames = function (onSuccess) {
             var GameVOs = [];
 
             msg.forEach(function (value) {
-                var game = new GameVO(value.type, value.unique_name, value.displayName,bindUrlId);
+                var game = new GameVO(value.type, value.unique_name, value.displayName, bindUrlId);
 
                 if (game.type == exports.TYPES.external)
                     game.addContentUrl(value.contentUrl);
@@ -159,13 +158,13 @@ var reinitGames = function () {
     var gameRoute = require('../routes/gameRoute');
     //TODO:: socket.emit("redrawGames");
     var sessionHandling = require('./sessionHandling');
-    util.log("reinit routes");
-    gameRoute.rebindGameRoutes(function(state){
-        if(state){
+    if (debug) util.log("reinit routes");
+    gameRoute.rebindGameRoutes(function (state) {
+        if (state) {
             sessionHandling.sendToFrontend_Data('gamesUpdated', {});
 
-        }else{
-            if(debug)util.log("rebindgameRoutes Error");
+        } else {
+            if (debug) util.log("rebindgameRoutes Error");
         }
     });
 };

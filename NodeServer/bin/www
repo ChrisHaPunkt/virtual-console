@@ -9,7 +9,7 @@ var debug = require('debug')('NodeServer:server');
 var http = require('http');
 var util = require('util');
 var os = require('os');
-
+var confDebug = require("../../config.json").debug;
 var config = require('../../config.json');
 var sessionHandling = require('../sources/sessionHandling');
 
@@ -50,7 +50,7 @@ console.log('keympapping hat funktioniert');
  * Fetch Keymapping / Game / User from Database and cache it
  */
 Keymapping.init(function (MAP) {
-    util.log("finished MAP: ", MAP)
+    if (confDebug) util.log("finished MAP: ", MAP)
 });
 
 sessionHandling.init(server, {
@@ -65,7 +65,7 @@ sessionHandling.init(server, {
     },
     
     onMessage: function (name, type, message) {
-        util.log('www | user ' + name + ' says: ' + message);
+        if (confDebug) util.log('www | user ' + name + ' says: ' + message);
 
         console.log('onMessage hat funktioniert', app.get('selectedGame').namespace);
 
@@ -85,14 +85,14 @@ sessionHandling.init(server, {
                 } else { // UserAcc
                     // Wähle innerhalb des keymappingschema für jeweiligen user die passende taste des externen games
                     key = Keymapping.getKeyMappingByUserGame(app.get("selectedGame").uniqueName, name, message.buttonName);
-                    util.log("GOT BUTTON: " + message.buttonName, key);
+                    if (confDebug) util.log("GOT BUTTON: " + message.buttonName, key);
                 }
 
                 Keymapping.send_key_event(key, message.buttonState);
                 sessionHandling.sendToFrontend_Message(name, type, message);
             }
             else {
-                util.log("No HW Support, external games not possible");
+                if (confDebug) util.log("No HW Support, external games not possible");
                 //TODO: Noty alertion
                 sessionHandling.sendToFrontend_Message(name, type, message);
             }
@@ -133,7 +133,7 @@ sessionHandling.init(server, {
     onFrontendOutboundData: function (request, data) {
         if (request == 'setControllerTemplate') {
             app.set('chosenControllerTemplate', data);
-            util.log('www | frontend set controller template!');
+            if (confDebug) util.log('www | frontend set controller template!');
         }
     }
 

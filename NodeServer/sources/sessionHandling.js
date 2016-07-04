@@ -171,13 +171,13 @@ var startNetworkServer = function (server) {
                     break;
                 case 'gameSelected':
                     app.set("selectedGame", {uniqueName: data.gameUniqueName, namespace: data.gameNamespace});
-                    util.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName + ', namespace: ' + data.gameNamespace);
+                    if (debug) util.log('sessionHandling | current game running in frontend: ' + data.gameUniqueName + ', namespace: ' + data.gameNamespace);
                     break;
                 case 'gameStarted':
                     userCallback.onGameStarted();
                     break;
                 default:
-                    util.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
+                    if (debug) util.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
         }
     }).start();

@@ -74,11 +74,11 @@ var Keymapping = {
     },
     getKeyMappingByUserGame: function (gameID, playerID, buttonName) {
 
-        util.log("Request HW-Button '" + buttonName + "' for player '" + playerID + "' in game '" + gameID + "'");
+        if (debug) util.log("Request HW-Button '" + buttonName + "' for player '" + playerID + "' in game '" + gameID + "'");
         try {
             return this.MAP[playerID][gameID][buttonName];
         } catch (e) {
-            util.log("No entry for this game and this player, delivering default...");
+            if (debug) util.log("No entry for this game and this player, delivering default...");
             return this.defaultMapping[buttonName];
         }
     },
@@ -116,7 +116,7 @@ var Keymapping = {
 
                 //Database.update("userData", query, msg[0]);
             } else {
-                util.log("Cannot update map, user " + user + " not fount in db");
+                if (debug) util.log("Cannot update map, user " + user + " not fount in db");
             }
         };
         Database.query("userData", query, callback);
