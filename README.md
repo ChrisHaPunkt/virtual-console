@@ -23,6 +23,8 @@ Install
 =======
 
 ## Requirements
+What is needed to run the application?
+-----
 
 ### Operating Systems
 If u want to use the ***hardware emulation*** u have to use one of the following OS for the application:  
