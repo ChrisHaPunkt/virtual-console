@@ -1,4 +1,4 @@
-## TODO @hannes @chrish
+## TODO @hannes
 
 # Routen
 
