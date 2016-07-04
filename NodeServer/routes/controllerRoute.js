@@ -1,7 +1,8 @@
 var express = require('express');
 var requirejs = require('requirejs');
 var util = require('util');
-
+var config = require('../../config.json');
+var debug = config.debug;
 requirejs.config({
     //Pass the top-level main.js/index.js require
     //function to requirejs so that node modules
@@ -63,11 +64,11 @@ router.get('/', function (req, res, next) {
         // wait for all render functions to return
         // TODO: improve, this blocks the program
         while (renderedControllerCount != Object.keys(controller).length) {
-            console.log('.');
+            if (debug) util.log('.');
         }
     }
 
-    console.log(htmlControllerContent);
+    if (debug) util.log(htmlControllerContent);
 
     // render controller main template with all controllers
     res.render('controller/index', {

@@ -3,6 +3,8 @@
  */
 var MongoClient = require('mongodb').MongoClient;
 var config = require('../../config.json');
+var util = require('util');
+var debug = config.debug;
 module.exports = function () {
 
     var System = require('./System');
@@ -22,7 +24,7 @@ module.exports = function () {
               
 
             } else {
-                // if (debug) console.log("Connected to Database!");
+                 if (debug) util.log("Connected to Database!");
                 onSuccess(db);
             }
           
@@ -34,7 +36,7 @@ module.exports = function () {
      * Close database connection
      ***************************************/
     var closeDB = function (db) {
-        // if (debug) console.log("Disconnected from Database!");
+         if (debug) util.log("Disconnected from Database!");
         db.close();
     };
 
@@ -54,10 +56,10 @@ module.exports = function () {
 
             var removeCallback = function (error, doc) {
                 if (error) {
-                    if (debug) console.log(error);
+                    if (debug) util.log(error);
                     callback(false, error);
                 } else {
-                    if (debug) console.log("Database | Remove from DB: ", filter);
+                    if (debug) util.log("Database | Remove from DB: ", filter);
                     callback(true, doc);
                 }
                 closeDB(dbID);
@@ -81,10 +83,10 @@ module.exports = function () {
 
             var insertCallback = function (error, doc) {
                 if (error) {
-                    if (debug) console.log(error);
+                    if (debug) util.log(error);
                     callback(false, error);
                 } else {
-                    if (debug) console.log("Database | Add to DB: ", data);
+                    if (debug) util.log("Database | Add to DB: ", data);
                     if(typeof callback == "function") callback(true, doc);
                 }
                 closeDB(dbID);
@@ -109,10 +111,10 @@ module.exports = function () {
 
             var updateCallback = function (error, doc) {
                 if (error) {
-                    if (debug) console.log(error);
+                    if (debug) util.log(error);
                     callback(false, error);
                 } else {
-                    if (debug) console.log("Database | Update element: ", data);
+                    if (debug) util.log("Database | Update element: ", data);
                     callback(true, doc);
                 }
                 closeDB(dbID);
@@ -137,10 +139,10 @@ module.exports = function () {
 
             var queryCallback = function (error, doc) {
                 if (error) {
-                    if (debug) console.log(error);
+                    if (debug) util.log(error);
                     callback(false, error);
                 } else {
-                    if (debug) console.log("Database | Query successfully!");
+                    if (debug) util.log("Database | Query successfully!");
                     callback(true, doc);
                 }
                 closeDB(dbID);

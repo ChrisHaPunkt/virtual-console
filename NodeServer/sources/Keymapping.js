@@ -3,10 +3,10 @@
  */
 var os = require('os');
 var debug = require('../../config.json').debug;
+var util = require('util');
 
 
 var Database = require('./Database')();
-var util = require('util');
 
 var Keymapping = {
     MAP: {},
@@ -101,7 +101,7 @@ var Keymapping = {
             //The user exist
             if (state == true && msg[0]) {
                 var dbuser = msg[0];
-                console.log(msg[0]);
+                if (debug) util.log(msg[0]);
                 dbuser["keymapping"] = map;
 
                 Database.remove("userData", query, function () {

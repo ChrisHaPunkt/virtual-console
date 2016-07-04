@@ -6,6 +6,9 @@ var config = require('../../config.json');
 var database = require('./Database.js')();
 var Keymapping = require('./Keymapping');
 
+var debug = config.debug;
+var util = require('util');
+
 module.exports = function () {
     var debug = config.debug;
 
@@ -31,7 +34,7 @@ module.exports = function () {
 
             if (name.length == 0 || password.length == 0) {
                 callback(false, "User name or password is empty!");
-                console.log(name.length, password.length);
+                if (debug) util.log(name.length, password.length);
 
             } else {
                 database.query("userData", query, registerCallback);
@@ -58,7 +61,7 @@ module.exports = function () {
                     returnMsg = "Database error: Found to many users! (" + data + ")";
                 }
 
-                if (debug) console.log("UserManagement | " + returnMsg);
+                if (debug) util.log("UserManagement | " + returnMsg);
                 callback(returnState, returnMsg);
             };
             database.query("userData", query, onSuccess);
@@ -74,7 +77,7 @@ module.exports = function () {
             var callback = function (state, msg) {
                 //The user exist
                 if (state == true && msg[0]) {
-                    console.log(msg[0]);
+                    if (debug) util.log(msg[0]);
                     msg[0]["data"] = data;
                     database.update("userData", query, msg[0]);
                 }

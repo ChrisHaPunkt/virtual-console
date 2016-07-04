@@ -2,8 +2,8 @@
  * Created by chris on 19.04.2016.
  */
 var config = require('../../config.json');
-var database = require('./Database')();
 var debug = config.debug;
+var database = require('./Database')();
 var GameVO = require("./ValueObjects/GameVO");
 var util = require('util');
 var $ = require("jquery");

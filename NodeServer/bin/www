@@ -44,7 +44,7 @@ server.on('listening', onListening);
 /**
  * Keymapping object for external controller
  */
-console.log('keympapping hat funktioniert');
+if (confDebug) util.log('keympapping hat funktioniert');
 
 /**
  * Fetch Keymapping / Game / User from Database and cache it
@@ -67,7 +67,7 @@ sessionHandling.init(server, {
     onMessage: function (name, type, message) {
         if (confDebug) util.log('www | user ' + name + ' says: ' + message);
 
-        console.log('onMessage hat funktioniert', app.get('selectedGame').namespace);
+        if (confDebug) util.log('onMessage hat funktioniert', app.get('selectedGame').namespace);
 
         if (app.get('selectedGame').namespace == 'external') {
             var key;
@@ -103,7 +103,7 @@ sessionHandling.init(server, {
     },
     
     onGameStarted: function () {
-        console.log('onGamestarted hat funktioniert');
+        if (confDebug) util.log('onGamestarted hat funktioniert');
         var users = sessionHandling.getUserList();
         /*
          // TODO FIX IF CONDITION
@@ -196,5 +196,5 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    util.log('Listening on ' + bind);
 }
