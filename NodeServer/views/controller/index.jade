@@ -2,9 +2,9 @@ extends layout
 block login
     include loginSite
 block controller
-    div(id='content-body')
+    div(id='content-body',style="margin: auto;")
         |!{ controller }
     //- adding menu button independent of controller template
 
-    div(id='btn-overlayMenu')
+    div(id='btn-overlayMenu',style="top: 1%;display:none")
     div(id='landscape_hint')

@@ -319,13 +319,13 @@ require(['click', 'clientNetwork', 'sensor', 'jquery', '../libs/jquery.noty.pack
     /////////////////////////////////////
     var alignOverlayMenuButton = function (position) {
         if (!position) {
-            overlayMenuButton.css('top', ($('html').height() - overlayMenuButton.height()) / 2);
+            //overlayMenuButton.css('top', ($('html').height() - overlayMenuButton.height()) / 2);
             overlayMenuButton.css('left', ($('html').width() - overlayMenuButton.width()) / 2);
         } else if (position === 'top') {
-            overlayMenuButton.css('top', 0);
+          //  overlayMenuButton.css('top', 0);
             overlayMenuButton.css('left', ($('html').width() - overlayMenuButton.width()) / 2);
         } else if (position === 'bottom') {
-            overlayMenuButton.css('bottom', 0);
+           // overlayMenuButton.css('bottom', 0);
             overlayMenuButton.css('left', ($('html').width() - overlayMenuButton.width()) / 2);
         }
     };
