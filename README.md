@@ -15,7 +15,7 @@ Quick links
 
 [Routes](NodeServer/routes/README.md)
 
-[Server Sources](NodeServer/public/README.md)
+[Server Sources](NodeServer/sources/README.md)
 
 [Views](NodeServer/views/README.md)
 
