@@ -20,7 +20,6 @@ var GameVO = require("./sources/ValueObjects/GameVO");
 
 app.set("fullQualifiedGameVOs", false);
 app.set("selectedGame", {uniqueName: "main_menu", namespace: null});
-
 app.set("handlingDB", false);
 
 var os = require('os');
@@ -39,7 +38,12 @@ for (var k in interfaces) {
     }
 }
 addresses.push(os.hostname());
-app.set("localIps",addresses);
+
+config.localIps = addresses;
+config.hostname = os.hostname();
+
+app.set("serverConfig", config);
+
 var types = GameHandler.TYPES;
 
 
