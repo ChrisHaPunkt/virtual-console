@@ -24,8 +24,6 @@ app.set("handlingDB", false);
 
 var os = require('os');
 
-app.set("localIps",false);
-
 var interfaces = os.networkInterfaces();
 var addresses = [];
 for (var k in interfaces) {
