@@ -38,6 +38,7 @@ for (var k in interfaces) {
         }
     }
 }
+addresses.push(os.hostname());
 app.set("localIps",addresses);
 var types = GameHandler.TYPES;
 
