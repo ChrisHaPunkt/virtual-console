@@ -3,14 +3,26 @@
 ## Database
 MongoDB database handling. Here the database connection is build up and basic CRUD operations are encapsulated in eady to use methods.
 
-## Games
-**TODO @chrish**
+-------
+
+## Games.js / GameVO.js
+We're handling the Games in ValueObjects (VOs). These objects contains all the information to persist and handle game properties.  
+  
+URLs and Routes are generated out of these GameVOs. 
+
+The `Games.js` delivers the CRUD-methods for the games. By Create/Read/Update or Delete Games it uses the GameVOs to work.
+
+-------
 
 ## Keymapping
 **TODO @michaels**
 
+-------
+
 ## System
 Basic system commands for database handling (start/stop), node application shutdown, system shutdown and restart.
+
+-------
 
 ## serverNetwork
 ```
@@ -19,7 +31,7 @@ WARNING The interface of the serverNetwork should never be used directly on the 
 The ```serverNetwork.js``` is the basic network class of the server. Here the incoming socket connections from the different clients (frontend and controller clients) are handled and managed. When a new client connects it gets assigned a random ID and is saved in the list of known clients. At this point is its not known if the client is the frontend or any of the controller clients. If a socket connection is terminated the client is deleted from the list of known clients.
 On this level the native socket event types of the socket.io library are used to differentiate the incoming messages from the clients. Depending on the message type different methods from the next logical layer the ```sessionHandling.js``` are called. So these two classes build up a **two layer architecture** for managing client connections and messaging with the server.
 Also basical outgoing messaging functions like ```sendToClient()```, ```sendToFrontend()``` and ```broadcastMessage()``` are implemented and can be used by the ```sessionHandling```.
-
+-------
 ## sessionHandling
 The ```sessionHandling.js``` represents the next higher level of message and client handling. Here the link between socket connection and user management is made. Therefor a list of ```activeUsers``` is maintained containing informations about all active users being authenticated or anonymous.
 A user is represented in the list by following data structure:
@@ -84,6 +96,8 @@ The sessionHandling also provides an interface to the next layer to handle the a
         // sends data or commands to the frontend
     }
 ```
+
+-------
 
 ## UserManagement
 The ```UserManagement.js``` handles the user registration and authentication.  It uses the ```Database.js``` to connect to the MonoDB and read from the user files.
