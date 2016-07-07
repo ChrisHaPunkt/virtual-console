@@ -7,7 +7,17 @@ MongoDB database handling. Here the database connection is build up and basic CR
 **TODO @chrish**
 
 ## Keymapping
-**TODO @michaels**
+This class is responsible for emulating hardware key input. It does two things. It registers a virtual input device with the operating system and it loads the specific key assignment which depends on the user and the game. The hardware key inputs only work on linux operating systems. 
+
+This is because in our implementation we adress the uinput module within the linux kernel. It is a linux kernel module that allows to handle the input subsystem from user land. It can be used to create and to handle input devices from an application. It creates a character device in /dev/input directory. The device is a virtual interface, it doesn't belong to a physical device.
+
+uinput generally can handle three types of events:
+
+EV_KEY type represents key press and release events,
+EV_REL type represents relative axis events (such as mouse movements),
+EV_ABS type represents absolute axis events (such as touchscreen movements)
+
+In our project so far only EV_KEY is implemented. Keys that shall later be used in a game must be contained in setup_options. The name of each key can be looked up here https://github.com/santigimeno/node-uinput/blob/master/src/uinput.cpp
 
 ## System
 Basic system commands for database handling (start/stop), node application shutdown, system shutdown and restart.
