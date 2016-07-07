@@ -90,7 +90,7 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
              * Server -> Client : 'frontendInitAck'
              */
 
-            // open socket connection to server - the origin ip of the http files is used if not specified
+                // open socket connection to server - the origin ip of the http files is used if not specified
             this.socket = io.connect();
 
             // send init request when socket is connected
@@ -159,23 +159,33 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         },
 
         _initQrCode: function () {
-            // qrcode library cannot use jquery dom element
-            this.qrCode = new QRCode(document.getElementById("qrcode"), {
-                text: "" + this.socket.io.uri,
-                width: 128,
-                height: 128
-            });
-            this.qrCode.domElement = document.getElementById("qrcode");
-            //click listener for hiding qrcode
-            this.qrCode.qrcode_hidden = false;
-            this.qrCode.domElement.addEventListener('click', function () {
-                if (this.qrCode.qrcode_hidden) {
-                    this.qrCode.domElement.style.opacity = 1;
-                    this.qrCode.qrcode_hidden = false;
+            this.getServerConfig(function (serverConfig) {
+
+                var serverURI = 'undefined';
+                if (serverConfig) {
+                    serverURI = serverConfig.runningProtocoll + '://' + serverConfig.localIps[0] + ':' + serverConfig.runningPort + '/';
                 } else {
-                    this.qrCode.domElement.style.opacity = 0;
-                    this.qrCode.qrcode_hidden = true;
+                    serverURI = this.socket.io.uri;
                 }
+
+                // qrcode library cannot use jquery dom element
+                this.qrCode = new QRCode(document.getElementById("qrcode"), {
+                    text: "" + serverURI,
+                    width: 128,
+                    height: 128
+                });
+                this.qrCode.domElement = document.getElementById("qrcode");
+                //click listener for hiding qrcode
+                this.qrCode.qrcode_hidden = false;
+                this.qrCode.domElement.addEventListener('click', function () {
+                    if (this.qrCode.qrcode_hidden) {
+                        this.qrCode.domElement.style.opacity = 1;
+                        this.qrCode.qrcode_hidden = false;
+                    } else {
+                        this.qrCode.domElement.style.opacity = 0;
+                        this.qrCode.qrcode_hidden = true;
+                    }
+                }.bind(this));
             }.bind(this));
         },
 
@@ -225,7 +235,8 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         _initOverlayMenuHandler: function () {
             this.overlayMenu.eventHandler = {
                 'overLayButton_Main_Menu': function () {
-                    this.sendToServer_Data('gameSelected', {gameUniqueName: 'main_menu'}, function(){});
+                    this.sendToServer_Data('gameSelected', {gameUniqueName: 'main_menu'}, function () {
+                    });
                     window.location = '/menu';
                 }.bind(this),
                 'overLayButton_Settings': function () {
@@ -419,6 +430,9 @@ define(['jquery', '/socket.io/socket.io.js', 'qrcode.min', "Chart"], function ($
         },
         tellServerGameIsStarted: function (uniqueName, callback) {
             this.sendToServer_Data('gameStarted', {}, callback);
+        },
+        getServerConfig: function (callback) {
+            this.sendToServer_Data('getServerConfig', {}, callback);
         }
 
     };

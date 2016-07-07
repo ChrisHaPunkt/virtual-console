@@ -17,6 +17,31 @@ define(['jquery', 'gameApi', '../libs/jquery.noty.packaged.min'], function ($, g
             this.gameData = {};
             MainMenu.prototype.loadGameData.call(this); // call prototype function with context of current 'new' object
 
+            // noty server ip
+            gameApi.getServerConfig(function(serverConfig){
+                if(serverConfig){
+                    // open noty
+                    var ipList = '';
+                    serverConfig.localIps.forEach(function(ip){
+                        ipList += '<h2>' + ip + '</h2>';
+                    });
+                    console.log(ipList);
+                    noty({
+                        type: 'Information',
+                        text: ipList,
+                        timeout: 10000,
+                        layout: 'topCenter'
+                    });
+                }else{
+                    noty({
+                        type: 'error',
+                        text: "Cannot get Server IPs",
+                        timeout: 3000,
+                        killer: true
+                    });
+                }
+            });
+
             // init keyboard listening
             MainMenu.prototype.initKeyboardInput.call(this);
 

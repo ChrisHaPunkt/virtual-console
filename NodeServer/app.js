@@ -158,6 +158,6 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-util.log("ipadresses", app.get("localIps"));
+util.log("serverConfig", app.get("serverConfig"));
 
 module.exports = app;

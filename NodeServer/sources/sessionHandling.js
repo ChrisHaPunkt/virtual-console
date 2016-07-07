@@ -176,6 +176,8 @@ var startNetworkServer = function (server) {
                 case 'gameStarted':
                     userCallback.onGameStarted();
                     break;
+                case 'getServerConfig':
+                    callbackFromClient(app.get('serverConfig'));
                 default:
                     if (debug) util.log('sessionHandling | Unknown Data request from Server: ' + request + ' with data: ' + data);
             }
