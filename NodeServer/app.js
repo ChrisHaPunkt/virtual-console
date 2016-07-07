@@ -22,6 +22,23 @@ app.set("fullQualifiedGameVOs", false);
 app.set("selectedGame", {uniqueName: "main_menu", namespace: null});
 
 app.set("handlingDB", false);
+
+var os = require('os');
+
+app.set("localIps",false);
+
+var interfaces = os.networkInterfaces();
+var addresses = [];
+for (var k in interfaces) {
+    for (var k2 in interfaces[k]) {
+        var address = interfaces[k][k2];
+        if (address.family === 'IPv4' && !address.internal && (address.address.indexOf("14") === 0 || address.address.indexOf("192"))) {
+
+            addresses.push(address.address);
+        }
+    }
+}
+app.set("localIps",addresses);
 var types = GameHandler.TYPES;
 
 
@@ -136,5 +153,6 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
+util.log("ipadresses", app.get("localIps"));
 
 module.exports = app;
