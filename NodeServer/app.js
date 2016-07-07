@@ -24,8 +24,6 @@ app.set("handlingDB", false);
 
 var os = require('os');
 
-app.set("localIps",false);
-
 var interfaces = os.networkInterfaces();
 var addresses = [];
 for (var k in interfaces) {
@@ -158,6 +156,6 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-util.log("ipadresses", app.get("localIps"));
+util.log("ipadresses", app.get("serverConfig"));
 
 module.exports = app;
