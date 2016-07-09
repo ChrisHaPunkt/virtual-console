@@ -7,17 +7,17 @@ Virtual Console is a `NodeJS` based gaming console application with controller a
 ----
 Quick links
 
-[Run Scripts](scripts/README.md)
+[Run Scripts](scripts/)
 
-[Node Server Overview](NodeServer/README.md)
+[Node Server Overview](NodeServer/)
 
-[Public Files (Clients / Frontend)](NodeServer/public/README.md)
+[Public Files (Clients / Frontend)](NodeServer/public/)
 
-[Routes](NodeServer/routes/README.md)
+[Routes](NodeServer/routes/)
 
-[Server Sources](NodeServer/sources/README.md)
+[Server Sources](NodeServer/sources/)
 
-[Views](NodeServer/views/README.md)
+[Views](NodeServer/views/)
 
 Install
 =======
