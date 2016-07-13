@@ -163,6 +163,7 @@ if (os.platform() == 'linux') {
     try {
         var uinput = require('uinput');
         Keymapping.HWSUPP = true;
+        // Define available HW emulation keys
         var setup_options = {
             EV_KEY: [uinput.KEY_RIGHT,
                 uinput.KEY_LEFT,
