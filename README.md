@@ -4,7 +4,7 @@ Virtual Console
 #### Play your ```JavaScript``` games developed against our own [GameApi](/..), or embed other sites' HTML5 / JS games.
 Virtual Console is a `NodeJS` based gaming console application with controller and **hardware emulation**.  
   
-A project by 3 students of the [University of Appied Sciences Kiel](https://www.fh-kiel.de/)-
+A project by 3 students of the [University of Appied Sciences Kiel](https://www.fh-kiel.de/).
 
 -----
 Quick links
